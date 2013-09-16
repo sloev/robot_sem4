@@ -17,7 +17,7 @@ class MouseInput:
     '''
     Takes input from two mice connected to input 4 and 5. 
     Delta movements are stored in a matrix
-    lolling
+    lolling fra ivo
     Depends on:
     evdev.py
     '''
