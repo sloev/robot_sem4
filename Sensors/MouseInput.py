@@ -7,7 +7,7 @@ from evdev import InputDevice
 from select import select
 from numpy import array
 
-devices = map(InputDevice,('/dev/input/event4','/dev/input/event5'))
+devices = map(InputDevice,('/dev/input/event3','/dev/input/event3'))
 devices = {dev.fd : dev for dev in devices}
 
 delta = array([[0,0],[0,0]])
@@ -54,3 +54,4 @@ def main():
     
 if __name__== '__main__':
     main()
+
