@@ -16,7 +16,7 @@ class MyClass(object):
         Constructor
         '''
         
-        miceSensors.update()
+        #miceSensors.update()
         pass
     
     def computeAngle(self):
