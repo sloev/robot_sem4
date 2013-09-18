@@ -6,32 +6,45 @@ Created on Sep 16, 2013
 
 from numpy import *
 import math
+from Mouse import Mouse
+from decimal import *
+
+Table = empty((256,256), dtype=object)
 
 class LookUpTable:
     '''
-    classdocs
+    Creates an array of Mouse objects, that each contains
+    x,y coordinates an angle and a length
     '''
-
+    
 
     def __init__(self):
+        global Table
+        entries = 0
 
-        table = arange(65536).reshape(256,256)
-        for x in range(1, 256):
-            newx = x-129
-            for y in range(1, 256):
-                newy = y-129
-                alpha = math.atan(newy/newx)                                  
-                #arcLength = math.fabs((newx/newy)/math.sin(alpha));
-                tuple = (math.degrees(alpha))
-                table[x][y] = tuple
-                print(tuple) 
-        pass
+        for x in range(0, 255):
+            newx = x-128
+            for y in range(0, 255):
+                newy = y-128
+                if(newx!=0 and newy!=0):
+                    angle = float(math.atan(Decimal(newy)/Decimal(newx)))                               
+                    length = math.fabs((newx)/(newy)/(math.sin(angle)))
+                    Table[x][y] = Mouse(newx,newy,angle,length)
+                    #print(Table[x][y].toString())
+                    #entries = entries + 1          
+                    print(Table[x][y].toString())
+        #print(entries)
+        
+        
+        def getTable(self):
+            return Table
+        
                            
             
 
 def main():
+
     app = LookUpTable()
-    
 
     
 if __name__== '__main__':
