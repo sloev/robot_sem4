@@ -2,7 +2,7 @@
 Created on Sep 16, 2013
 
 @author: machon
-@review: johannes
+...
 '''
 
 from numpy import *
@@ -22,9 +22,9 @@ class LookUpTable:
             for y in range(1, 256):
                 newy = y-129
                 alpha = math.atan(newy/newx)                                  
-                #arcLength = ;
-                cell = math.degrees(alpha),math.fabs((newx/newy)/math.sin(alpha))
-                table[x][y] = cell
+                #arcLength = math.fabs((newx/newy)/math.sin(alpha));
+                tuple = (math.degrees(alpha))
+                table[x][y] = tuple
                 print(tuple) 
         pass
                            
