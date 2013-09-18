@@ -2,6 +2,7 @@
 Created on Sep 16, 2013
 
 @author: machon
+@review: johannes
 '''
 
 from numpy import *
@@ -27,9 +28,12 @@ class LookUpTable:
             for y in range(0, 255):
                 newy = y-128
                 if(newx!=0 and newy!=0):
-                    angle = float(math.atan(Decimal(newy)/Decimal(newx)))                               
-                    length = math.fabs((newx)/(newy)/(math.sin(angle)))
-                    Table[x][y] = Mouse(newx,newy,angle,length)
+                    angle = float(math.atan(Decimal(newy)/Decimal(newx)))     
+                    if(angle==0 or angle==math.pi):
+                        length=math.fabs(newx)
+                    else:                          
+                        length = math.fabs((newy)/(math.sin(angle)))
+                        Table[x][y] = Mouse(newx,newy,angle,length)
                     #print(Table[x][y].toString())
                     #entries = entries + 1          
                     print(Table[x][y].toString())
