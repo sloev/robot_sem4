@@ -24,11 +24,6 @@ class LookUpTable:
         initCosTable()
         initAngLenTable()
         
-        
-        
-        def getTable(self):
-            return angLenTable
-        
         def initCosTable(self):
             global cosTable
             for i in range (0,511):
