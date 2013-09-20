@@ -2,7 +2,7 @@
 Created on Sep 16, 2013
 
 @author: machon
-@review: johannes, benjamin
+@review: johannes, benjami
 '''
 
 from numpy import array,empty
@@ -45,15 +45,15 @@ class LookUpTable:
                         length = math.fabs((newy)/(math.sin(angle)))
                         angLenTable[x][y] = Mouse(newx,newy,angle,length)
                         #angLenTable[x][y] = array([angle,length])
-        
+                else:
+                    angLenTable[x][y]=Mouse(0,0,0,0)
     def getCos(self,angle):
         index=round(angle*(1/(math.pi/512)))
         return cosTable[index]
         
     def getAngLen(self,x,y):
-        print(angLenTable[x][y].toString())
-
-        return Mouse(1,2,math.pi,5)
+        a=angLenTable[x][y]
+        return a
         
     def printAngLenTable(self):
         for y in range (0,255):

@@ -9,7 +9,7 @@ from numpy import array
 from CalculateAngle import Calculations
 import threading
 
-devices = map(InputDevice,('/dev/input/event3','/dev/input/event3'))
+devices = map(InputDevice,('/dev/input/event4','/dev/input/event5'))
 devices = {dev.fd : dev for dev in devices}
 
 delta = array([[0,0],[0,0]])
@@ -47,14 +47,20 @@ class MouseInput(threading.Thread):
                     strings = string.split()
                     if strings[6]=="02,":
                         if strings[4]=="00,":
-                            delta[fd-4,:1]=int(strings[8]) 
+                            a=int(strings[8]) 
+                            delta[fd-4,:1]=a
+                          #  print(a)
                         else:
-                            delta[fd-4,1:2]=int(strings[8]) 
+                            a=int(strings[8]) 
+                            delta[fd-4,1:2]=a 
+                           # print(a)
+
             if(hasEvent):
                 hasEvent=0
+                #print(delta)
                 calculator.calcAngle(delta)
 
-            print("mouse3:\t\tmouse4:\n"+str(delta[:1,:])+"\t"+str(delta[1:2,:]))
+            #print("mouse3:\t\tmouse4:\n"+str(delta[:1,:])+"\t"+str(delta[1:2,:]))
 
                 
 def main():
