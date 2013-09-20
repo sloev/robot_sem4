@@ -5,13 +5,13 @@ Created on Sep 16, 2013
 @review: johannes, benjamin
 '''
 
-from numpy import *
+from numpy import array,empty
 import math
 from Mouse import Mouse
 from decimal import *
 
 angLenTable = empty((256,256), dtype=object)
-cosTable = empty((1,512),dtype=object)
+cosTable = empty((512),dtype=object)
 
 class LookUpTable:
     '''
@@ -25,12 +25,12 @@ class LookUpTable:
         self.initAngLenTable()
         
     def initCosTable(self):
-        global cosTable
-        for i in range (0,511):
-            cosTable[i]=cos(i*(math.pi/512))
+#        global cosTable
+        for i in range (0,512):
+            cosTable[i]=math.cos(i*(math.pi/512))
             
     def initAngLenTable(self):
-        global angLenTable
+ #       global angLenTable
 #            entries = 0
 
         for y in range(0, 255):
@@ -43,15 +43,17 @@ class LookUpTable:
                         length=math.fabs(newx)
                     else:                          
                         length = math.fabs((newy)/(math.sin(angle)))
-                        #angLenTable[x][y] = Mouse(newx,newy,angle,length)
-                        angLenTable[x][y] = angle,length
+                        angLenTable[x][y] = Mouse(newx,newy,angle,length)
+                        #angLenTable[x][y] = array([angle,length])
         
     def getCos(self,angle):
         index=round(angle*(1/(math.pi/512)))
         return cosTable[index]
         
     def getAngLen(self,x,y):
-        return angLenTable[x][y]
+        print(angLenTable[x][y].toString())
+
+        return Mouse(1,2,math.pi,5)
         
     def printAngLenTable(self):
         for y in range (0,255):
