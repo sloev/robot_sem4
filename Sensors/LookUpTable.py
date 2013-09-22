@@ -8,10 +8,10 @@ Created on Sep 16, 2013
 from numpy import array,empty
 import math
 from Mouse import Mouse
-from decimal import *
+from decimal import Decimal
+import cPickle as pickle
 
-angLenTable = empty((256,256), dtype=object)
-cosTable = empty((512),dtype=object)
+
 
 class LookUpTable:
     '''
@@ -21,17 +21,17 @@ class LookUpTable:
     
 
     def __init__(self):
+        self.angLenTable = empty((256,256), dtype=object)
+        self.cosTable = empty((512),dtype=object)        
         self.initCosTable()
         self.initAngLenTable()
         
     def initCosTable(self):
 #        global cosTable
         for i in range (0,512):
-            cosTable[i]=math.cos(i*(math.pi/512))
+            self.cosTable[i]=math.cos(i*(math.pi/512))
             
     def initAngLenTable(self):
- #       global angLenTable
-#            entries = 0
 
         for y in range(0, 255):
             newy = y-128
@@ -43,29 +43,55 @@ class LookUpTable:
                         length=math.fabs(newx)
                     else:                          
                         length = math.fabs((newy)/(math.sin(angle)))
-                        angLenTable[x][y] = Mouse(newx,newy,angle,length)
+                        self.angLenTable[x][y] = Mouse(newx,newy,angle,length)
                         #angLenTable[x][y] = array([angle,length])
                 else:
-                    angLenTable[x][y]=Mouse(0,0,0,0)
+                    self.angLenTable[x][y]=Mouse(0,0,0,0)
+                    
+    
     def getCos(self,angle):
         index=round(angle*(1/(math.pi/512)))
-        return cosTable[index]
+        return self.cosTable[index]
+    
         
     def getAngLen(self,x,y):
-        a=angLenTable[x][y]
+        a=self.angLenTable[x][y]
+        
         return a
         
     def printAngLenTable(self):
         for y in range (0,255):
             for x in range(0,255):
-                print(angLenTable[x][y].toString())
-
+                print(self.angLenTable[x][y].toString())
+                
+                
+    def pickleTable(self):
+        pickle.dump(self, open("table.p", "wb"), protocol=-1)
+        
+        
+    @staticmethod
+    def unpickleTable():
+        LookUpTable = pickle.load(open("table.p", "rb"))
+        return LookUpTable
+        
+        
+    def toString(self):
+        return self.angLenTable.shape                  
+        
         
 
 def main():
-
-    app = LookUpTable()
-
+   
+    Table = LookUpTable.unpickleTable()
+    mus2 = Table.getAngLen(129,129)
+    print mus2.toString()
+    
+    if(isinstance(mus2, Mouse)):
+        print "Yes"
+    else:
+        print "No"
+ 
+    
     
 if __name__== '__main__':
     main()

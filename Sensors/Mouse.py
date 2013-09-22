@@ -21,6 +21,7 @@ class Mouse():
     def toString(self):
         a=str(str(self.x)+" "+str(self.y)+" "+str(self.angle)+" "+str(self.length))
         return a
+    
     def getAngle(self):
         return self.angle
     
