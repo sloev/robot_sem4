@@ -21,6 +21,15 @@ SetPosition:           Programmers a target and secure position            0x8B
 SoftStop:              Motor stopping with deceleration phase              0x8F
 '''
 
+''' 
+StepMode parameter:         Mode: 
+        
+00                          Half Stepping 
+01                          1/4 µStepping 
+10                          1/8 µStepping 
+11                          1/16 µStepping
+'''  
+
 import smbus
 import time
 
@@ -43,9 +52,11 @@ class Motor_I2C:
     def getFullstatus2(self):
         response = self.bus.write_byte(self.devAddress, 0xFC)
         return response
-    
+        
+        '''Read OTP *One-Time Programable) memory''' 
     def getOTPParam(self):
-        pass
+        response = self.bus.write_byte(self.address, 0x82)
+        return response
     
     def goToSecurePosition(self):
         pass
@@ -60,10 +71,22 @@ class Motor_I2C:
         pass
     
     def runInit(self):
-        pass
-    
-    def setMotorParam(self):
-        pass
+        pass 
+        
+        '''Set the stepper motor parameters in the RAM:
+          
+           Byte 1: 0xFF
+           Byte 2: 0xFF
+           Byte 3: 7-4=Coil peak current value (Irun), 3-0=Coil hold current value (Ihold) 
+           Byte 4: 7-4=Max velocity, 3-0=Min velocity
+           Byte 5: 7-5=Secure position, 4=Motion direction, 3-0=Acceleration
+           Byte 6: 7-0=Secure position of the stepper motor
+           Byte 7: 4=Acceleration shape, 3-2=Stepmode      
+        '''          
+    def setMotorParam(self):          
+        byteCode = bytes([0xFF, 0xFF, 0x00, 0x00, 0x08, 0x00, 0x00])
+        self.bus.write_block_data(self.address, 0x89, byteCode)
+      
     
     def setOTPParam(self):
         pass
