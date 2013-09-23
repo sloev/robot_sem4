@@ -55,6 +55,8 @@ class LookUpTable:
     
         
     def getAngLen(self,x,y):
+        x+=128
+        y+=128
         a=self.angLenTable[x][y]
         
         return a
