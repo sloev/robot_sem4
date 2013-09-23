@@ -31,7 +31,6 @@ StepMode parameter:         Mode:
 '''  
 
 import smbus
-import time
 
 class Motor_I2C:
     '''
@@ -53,7 +52,7 @@ class Motor_I2C:
         response = self.bus.write_byte(self.devAddress, 0xFC)
         return response
         
-        '''Read OTP *One-Time Programable) memory''' 
+        '''Read OTP *One-Time Programmable) memory''' 
     def getOTPParam(self):
         response = self.bus.write_byte(self.address, 0x82)
         return response
@@ -88,9 +87,21 @@ class Motor_I2C:
         self.bus.write_block_data(self.address, 0x89, byteCode)
       
     
+        '''Drive the motor to a given position relative to 
+           the zero position, defined in number of half or micro steps, 
+           according to StepMode[1:0] value:
+           
+           Byte 1: 0xFF
+           Byte 2: 0xFF
+           Byte 3: 
+           Byte 4: 
+        '''   
     def setOTPParam(self):
-        pass
+        byteCode = bytes([0xFF, 0xFF, 0x00, 0x00])
+        self.bus.write_block_data(self.address, 0x90 ,byteCode)
     
+        
+        
     def setPosition(self):
         pass
     
