@@ -12,9 +12,6 @@ import threading
 devices = map(InputDevice,('/dev/input/event3','/dev/input/event3'))
 devices = {dev.fd : dev for dev in devices}
 
-delta = array([[0,0],[0,0]])
-
-calculator=Calculations()
 
 class MouseInput(threading.Thread):
     '''
@@ -27,7 +24,7 @@ class MouseInput(threading.Thread):
 
     def __init__(self, calc):
         threading.Thread.__init__(self)
-        
+        self.delta = array([[0,0],[0,0]])
         self.calculator = calc
         hasEvent=0
         '''
@@ -48,17 +45,14 @@ class MouseInput(threading.Thread):
                     if strings[6]=="02,":
                         if strings[4]=="00,":
                             a=int(strings[8]) 
-                            delta[fd-4,:1]=a
-                          #  print(a)
+                            self.delta[fd-4,:1]=a
                         else:
                             a=int(strings[8]) 
-                            delta[fd-4,1:2]=a 
-                           # print(a)
-
+                            self.delta[fd-4,1:2]=a 
             if(hasEvent):
                 hasEvent=0
                 #print(delta)
-                calculator.calcAngle(delta)
+                self.calculator.calcAngle(self.delta)
 
             #print("mouse3:\t\tmouse4:\n"+str(delta[:1,:])+"\t"+str(delta[1:2,:]))
 
