@@ -26,8 +26,7 @@ class MouseInput(threading.Thread):
     '''
 
     def __init__(self, calc):
-        threading.Thread.__init__(self)
-        
+        threading.Thread.__init__(self)       
         self.calculator = calc
         hasEvent=0
         '''
@@ -49,11 +48,11 @@ class MouseInput(threading.Thread):
                         if strings[4]=="00,":
                             a=int(strings[8]) 
                             delta[fd-4,:1]=a
-                          #  print(a)
+                        #  print(a)
                         else:
                             a=int(strings[8]) 
                             delta[fd-4,1:2]=a 
-                           # print(a)
+                           
 
             if(hasEvent):
                 hasEvent=0

@@ -2,7 +2,7 @@
 Created on Sep 16, 2013
 
 @author: machon
-@review: johannes, benjami
+@review: johannes, benjamin
 '''
 
 from numpy import array,empty

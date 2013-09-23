@@ -1,7 +1,7 @@
 '''
 Created on Sep 17, 2013
 
-@author: machon
+@author: Daniel Machon
 '''
 
 class Mouse():
