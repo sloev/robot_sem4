@@ -45,7 +45,7 @@ class Motor_I2C:
         
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
-        response = self.bus.write_byte(self.devAddress, 0x81)
+        response = self.bus.read_i2c_block_data(self.devAddress, 0x81, 11)
         return response
         
         '''Status of the position of the stepper motor'''
@@ -71,7 +71,8 @@ class Motor_I2C:
         pass
     
     def runInit(self):
-        pass 
+        byteCode = [self.devAddress, 0x88, 0xFF, 0xFF, 0x81, 0x00, 0x01, 0x00, 0xFF]
+        self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
         
         '''Set the stepper motor parameters in the RAM:
           
@@ -84,8 +85,10 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self):          
-        byteCode = [0xFF, 0xFF, 0x60, 0xF1, 0x92, 0x00, 0x1C]
-        self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)       
+        byteCode = [self.devAddress, 0x89, 0xFF, 0xFF, 0x33, 0x51, 0x91, 0x00, 0x08]
+        #byteCode = [255, 255, 96, 241, 146, 00, 28]
+        self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)  
+         
 
               
     
@@ -99,15 +102,16 @@ class Motor_I2C:
            Byte 4: 
         '''   
     def setOTPParam(self):
-        byteCode = bytes([0xFF, 0xFF, 0x00, 0x00])
+        byteCode = [0xFF, 0xFF, 0xFB, 0xD5]
         self.bus.write_block_data(self.devAddress, 0x90 ,byteCode)
     
         
         
     def setPosition(self):
-        byteCode = [0xFF, 0xFF, 0xAF, 0xCF]
+        byteCode = [0xFF, 0xFF, 0xA5, 0x00]
+        #while(1):
         self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
-        
+        time.sleep(0.01)
     
     def softStop(self):
         pass
@@ -121,10 +125,13 @@ class Motor_I2C:
     
 def main():
     motor = Motor_I2C(0x60)
+    motor.getFullStatus1()
+    motor.setOTPParam()
     motor.setMotorParam()
-    while(1):
-        motor.setPosition()
-        time.sleep(1)
+    motor.runInit()        
+    motor.setPosition()
+    
+    
 
 if __name__== '__main__':
     main()
