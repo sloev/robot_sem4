@@ -83,9 +83,8 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self):          
-        byteCode = bytes([0xFF, 0xFF, 0x00, 0x00, 0x08, 0x00, 0x00])
+        byteCode = bytes([0xFF, 0xFF, 0x86, 0xA4, 0x08, 0x98, 0x1C])
         self.bus.write_block_data(self.address, 0x89, byteCode)
-      
     
         '''Drive the motor to a given position relative to 
            the zero position, defined in number of half or micro steps, 
@@ -103,7 +102,8 @@ class Motor_I2C:
         
         
     def setPosition(self):
-        pass
+        self.bus.write_block_data(self.address, 0x8B)
+        self.byteCode = bytes([0xFF, 0xFF, 0xFF, 0xFF])
     
     def softStop(self):
         pass
@@ -116,7 +116,9 @@ class Motor_I2C:
         
     
 def main():
-    pass
+    motor = Motor_I2C(0x60)
+    motor.setPosition()
+    
 
 if __name__== '__main__':
     main()
