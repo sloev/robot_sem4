@@ -1,7 +1,7 @@
 '''
 Created on Sep 17, 2013
 
-@author: machon
+@author: Daniel Machon
 '''
 
 class Mouse():
@@ -19,5 +19,12 @@ class Mouse():
         self.length = length
         
     def toString(self):
-        return str(self.x)+" "+str(self.y)+" "+str(self.angle)+" "+str(self.length)
+        a=str(str(self.x)+" "+str(self.y)+" "+str(self.angle)+" "+str(self.length))
+        return a
+    
+    def getAngle(self):
+        return self.angle
+    
+    def getLength(self):
+        return self.length
         
