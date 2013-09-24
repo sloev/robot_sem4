@@ -84,7 +84,7 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self):          
-        byteCode = (0xFF, 0xFF, 0x60, 0xF1, 0x08, 0x98, 0x1C)       
+        byteCode = [0xFF, 0xFF, 0x60, 0xF1, 0x08, 0x98, 0x1C]       
         while(1):
             result = self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)
             print result           
@@ -107,7 +107,7 @@ class Motor_I2C:
         
         
     def setPosition(self):
-        byteCode = (0xFF, 0xFF, 0xFF, 0xFF)
+        byteCode = [0xFF, 0xFF, 0xFF, 0xFF]
         self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
         
     
