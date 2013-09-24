@@ -31,6 +31,7 @@ StepMode parameter:         Mode:
 '''  
 
 import smbus
+import time as time
 
 class Motor_I2C:
     '''
@@ -40,7 +41,7 @@ class Motor_I2C:
 
     def __init__(self, devAddress):
         self.devAddress = devAddress
-        self.bus = smbus.SMBus(0)
+        self.bus = smbus.SMBus(1)
         
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
@@ -83,8 +84,12 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self):          
-        byteCode = [0xFF, 0xFF, 0x60, 0xF1, 0x08, 0x98, 0x1C]
-        self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)
+        byteCode = (0xFF, 0xFF, 0x60, 0xF1, 0x08, 0x98, 0x1C)       
+        while(1):
+            result = self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)
+            print result           
+            time.sleep(1)
+              
     
         '''Drive the motor to a given position relative to 
            the zero position, defined in number of half or micro steps, 
@@ -102,7 +107,7 @@ class Motor_I2C:
         
         
     def setPosition(self):
-        byteCode = [0xFF, 0xFF, 0xFF, 0xFF]
+        byteCode = (0xFF, 0xFF, 0xFF, 0xFF)
         self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
         
     
