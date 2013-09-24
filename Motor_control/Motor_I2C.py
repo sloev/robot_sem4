@@ -25,9 +25,9 @@ SoftStop:              Motor stopping with deceleration phase              0x8F
 StepMode parameter:         Mode: 
         
 00                          Half Stepping 
-01                          1/4 µStepping 
-10                          1/8 µStepping 
-11                          1/16 µStepping
+01                          1/4 Stepping 
+10                          1/8 Stepping
+11                          1/16 Stepping
 '''  
 
 import smbus
@@ -83,8 +83,8 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self):          
-        byteCode = bytes([0xFF, 0xFF, 0x86, 0xA4, 0x08, 0x98, 0x1C])
-        self.bus.write_block_data(self.address, 0x89, byteCode)
+        byteCode = bytes([0xFF, 0xFF, 0x60, 0xF1, 0x08, 0x98, 0x1C])
+        self.bus.write_i2c_block_data((self.devAddress, 0x89, byteCode))
     
         '''Drive the motor to a given position relative to 
            the zero position, defined in number of half or micro steps, 
@@ -97,13 +97,14 @@ class Motor_I2C:
         '''   
     def setOTPParam(self):
         byteCode = bytes([0xFF, 0xFF, 0x00, 0x00])
-        self.bus.write_block_data(self.address, 0x90 ,byteCode)
+        self.bus.write_block_data(self.devAddress, 0x90 ,byteCode)
     
         
         
     def setPosition(self):
-        self.bus.write_block_data(self.address, 0x8B)
-        self.byteCode = bytes([0xFF, 0xFF, 0xFF, 0xFF])
+        byteCode = [0xFF, 0xFF, 0xFF, 0xFF]
+        self.bus.write_i2c_block_data((self.devAddress, 0x8B, byteCode))
+        
     
     def softStop(self):
         pass
@@ -117,6 +118,7 @@ class Motor_I2C:
     
 def main():
     motor = Motor_I2C(0x60)
+    motor.setMotorParam()
     motor.setPosition()
     
 
