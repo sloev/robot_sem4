@@ -70,7 +70,9 @@ class Motor_I2C:
     
     def resetToDefault(self):
         self.bus.write_byte(self.devAddress, 0x87)
-    
+    '''
+    toTwoBytes returns a list with two ints maximum value 255
+    '''
     def toTwoBytes(self,temp):
         a,b=divmod(temp,0x100)
         return [a,b]
@@ -92,10 +94,11 @@ class Motor_I2C:
            Byte 6: 7-0=Secure position of the stepper motor
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
-    def setMotorParam(self,direction, velocityHex): 
-                 
+    def setMotorParam(self,direction, maxVelocity, minVelocity): 
+        byte4=minVelocity<<0 | maxVelocity << 4
+        byte5=0x88 | direction<<4
         #byteCode1 = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
-        byteCode = [0xFF, 0xFF, 0x32, velocityHex, 0x88 | direction<<5, 0x00, 0x08]
+        byteCode = [0xFF, 0xFF, 0x32, byte4, byte5, 0x00, 0x08]
         self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)
          
 
