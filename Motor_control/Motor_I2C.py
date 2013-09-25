@@ -35,7 +35,8 @@ import time as time
 
 class Motor_I2C:
     '''
-    Stepper motor driver module.
+
+/    Stepper motor driver module.
     '''
 
 
@@ -76,8 +77,8 @@ class Motor_I2C:
         self.bus.write_byte(self.devAddress2, 0x87)
     
     def runInit(self):
-        byteCode1 = [0xFF, 0xFF, 0x84, 0x00, 0x50, 0xAA, 0x10]
-        byteCode2 = [0xFF, 0xFF, 0x84, 0x00, 0x50, 0xAA, 0x10]
+        byteCode1 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]              
+        byteCode2 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
         self.bus.write_i2c_block_data(self.devAddress1, 0x88, byteCode1) 
         self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode2)
         
@@ -92,8 +93,8 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self):          
-        byteCode1 = [0xFF, 0xFF, 0x84, 0x84, 0x98, 0x00, 0x08]
-        byteCode2 = [0xFF, 0xFF, 0x84, 0x84, 0x98, 0x00, 0x08]
+        byteCode1 = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
+        byteCode2 = [0xFF, 0xFF, 0x32, 0x32, 0x98, 0x00, 0x08]
         #byteCode = [255, 255, 96, 241, 146, 00, 28]
         self.bus.write_i2c_block_data(self.devAddress1, 0x89, byteCode1)
         self.bus.write_i2c_block_data(self.devAddress2, 0x89, byteCode2)  
@@ -123,8 +124,8 @@ class Motor_I2C:
            steps or microsteps:
         '''   
     def setPosition(self):
-        byteCode1 = [0xFF, 0xFF, 0xA5, 0x00]
-        byteCode2 = [0xFF, 0xFF, 0xA5, 0x00]
+        byteCode1 = [0xFF, 0xFF, 0xAA, 0x10]
+        byteCode2 = [0xFF, 0xFF, 0xAA, 0x10]
         self.bus.write_i2c_block_data(self.devAddress1, 0x8B, byteCode1)
         self.bus.write_i2c_block_data(self.devAddress2, 0x8B, byteCode2)
     
@@ -142,13 +143,14 @@ class Motor_I2C:
     
 def main():
     motor = Motor_I2C(0x60, 0x61)
-    motor.getFullStatus1()
-    motor.setOTPParam()
+#    motor.getFullStatus1()
+#    motor.setOTPParam()
     motor.setMotorParam()
     motor.runInit()        
     motor.setPosition()
-    
-    
+#    motor.resetToDefault()   
+#    motor.hardStop()
+#    motor.getFullStatus1()    
 
 if __name__== '__main__':
     main()
