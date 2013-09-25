@@ -11,14 +11,14 @@ import math
 from numpy import array
 from LookUpTable import LookUpTable
 from Mouse import Mouse
-delta = array([[0,0],[0,0]])
-lookupTable=LookUpTable()   
 
 class Calculations:
     
 
     #Constructor
     def __init__(self):
+        self.delta = array([[0,0],[0,0]])
+        self.lookupTable=LookUpTable()   
         pass
     
 
@@ -27,24 +27,30 @@ class Calculations:
         
         D = 5
         
-        mus1=lookupTable.getAngLen(delta[0][0], delta[0][1])
-        mus2=lookupTable.getAngLen(delta[1][0], delta[1][1])
+        mus1=self.lookupTable.getAngLen(delta[0][0], delta[0][1])
+        mus2=self.lookupTable.getAngLen(delta[1][0], delta[1][1])
 
-        if isinstance(mus1, Mouse) and isinstance(mus2, Mouse):
+        #if isinstance(mus1, Mouse) and isinstance(mus2, Mouse):
+        try:
             print("both mice are mice") 
-            angleY = math.fabs(mus1.getAngle() - mus2.getAngle() )
+            my = math.fabs(mus1.getAngle() - mus2.getAngle() )
  
-            thetaRad = ((
-                         math.sqrt(
-                                   math.pow(mus1.getLength(), 2) +
-                                   math.pow(mus2.getLength(), 2) -
-                                   (2* lookupTable.getCos(angleY) * mus1.getLength()*mus2.getLength()))
-                     )/D) * math.fabs(delta[0][1] - delta[1][1])
-                      
-            print "angle="+str(thetaRad) +" len="+ str(math.fabs((mus1.getLength()+mus2.getLength())/2))
+#             thetaRad = ((
+#                          math.sqrt(
+#                                    math.pow(mus1.getLength(), 2) +
+#                                    math.pow(mus2.getLength(), 2) -
+#                                    (2* self.lookupTable.getCos(angleY) * mus1.getLength()*mus2.getLength()))
+#                      )/D) * math.fabs(delta[0][1] - delta[1][1])
+            
+            thetaRad=self.getThetaRad(mus1.getLength(),mus2.getLength(),delta[0][1],delta[1][1],)        
+            print "angle="+str(thetaRad) +" len="+ str(math.fabs((mus1.getLength()+mus2.getLength())/2),my)
                      
-        else:
+        #else:
+        except:
             print("both mice are not mice")
+        
+    def calcThetaRad(self,l1,l2,y1,y2,D,my):
+        thetaRad = ((math.sqrt(math.pow(l1, 2) + math.pow(l2, 2) -(2* self.lookupTable.getCos(my) * l1*l2)))/D) * math.fabs(y1 - y2)
             
 def main(): 
  
