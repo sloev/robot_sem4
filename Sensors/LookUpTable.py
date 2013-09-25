@@ -11,8 +11,6 @@ from Mouse import Mouse
 from decimal import Decimal
 import cPickle as pickle
 
-
-
 class LookUpTable:
     '''
     Creates an array of Mouse objects, that each contains
@@ -55,6 +53,8 @@ class LookUpTable:
     
         
     def getAngLen(self,x,y):
+        x+=128
+        y+=128
         a=self.angLenTable[x][y]
         
         return a

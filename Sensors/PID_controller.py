@@ -8,8 +8,6 @@ from MouseInput import MouseInput
 from CalculateAngle import Calculations
 import thread
 
-calculator=Calculations()
-miceSensors = MouseInput(calculator)
 
 class Pid(object):
     '''
@@ -18,7 +16,9 @@ class Pid(object):
 
 
     def __init__(self):
-        global calculator
+        self.calculator=Calculations()
+        self.mice = MouseInput(self.calculator)
+
         '''
         Constructor
         '''
@@ -31,13 +31,13 @@ class Pid(object):
     def computeAngle(self):
         pass
 
-    def initMouseThread(self):
-        miceSensors.start()
+    def initMiceThread(self):
+        self.mice.start()
 
 
 def main():
     pid=Pid()
-    pid.initMouseThread()
+    pid.initMiceThread()
     
     while(1):
         pass
