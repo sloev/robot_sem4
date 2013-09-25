@@ -39,14 +39,16 @@ class Motor_I2C:
     '''
 
 
-    def __init__(self, devAddress):
-        self.devAddress = devAddress
+    def __init__(self, devAddress1, devAddress2):
+        self.devAddress1 = devAddress1
+        self.devAddress2 = devAddress2
         self.bus = smbus.SMBus(1)
         
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
-        response = self.bus.read_i2c_block_data(self.devAddress, 0x81, 11)
-        return response
+        response1 = self.bus.read_i2c_block_data(self.devAddress1, 0x81, 11)
+        response2 = self.bus.read_i2c_block_data(self.devAddress2, 0x81, 11)
+        return str(response1)+"\n"+str(response2)
         
         '''Status of the position of the stepper motor'''
     def getFullstatus2(self):
@@ -71,8 +73,9 @@ class Motor_I2C:
         pass
     
     def runInit(self):
-        byteCode = [self.devAddress, 0x88, 0xFF, 0xFF, 0x81, 0x00, 0x01, 0x00, 0xFF]
+        byteCode = [self.devAddress1, 0x88, 0xFF, 0xFF, 0x81, 0x00, 0x01, 0x00, 0xFF]
         self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
+        self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode)
         
         '''Set the stepper motor parameters in the RAM:
           
@@ -87,7 +90,8 @@ class Motor_I2C:
     def setMotorParam(self):          
         byteCode = [self.devAddress, 0x89, 0xFF, 0xFF, 0x33, 0x51, 0x91, 0x00, 0x08]
         #byteCode = [255, 255, 96, 241, 146, 00, 28]
-        self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)  
+        self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress2, 0x89, byteCode)  
          
 
               
@@ -103,14 +107,15 @@ class Motor_I2C:
         '''   
     def setOTPParam(self):
         byteCode = [0xFF, 0xFF, 0xFB, 0xD5]
-        self.bus.write_block_data(self.devAddress, 0x90 ,byteCode)
-    
+        self.bus.write_i2c_block_data(self.devAddress1, 0x90, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress2, 0x90, byteCode)
         
         
     def setPosition(self):
         byteCode = [0xFF, 0xFF, 0xA5, 0x00]
         #while(1):
-        self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress1, 0x8B, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode)
         time.sleep(0.01)
     
     def softStop(self):
