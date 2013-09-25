@@ -104,25 +104,35 @@ class Motor_I2C:
            Byte 2: 0xFF
            Byte 3: 
            Byte 4: 
-        '''   
+        ''' 
+        
+        '''Zap the One-Time Programmable memory'''  
     def setOTPParam(self):
         byteCode = [0xFF, 0xFF, 0xFB, 0xD5]
         self.bus.write_i2c_block_data(self.devAddress1, 0x90, byteCode)
         self.bus.write_i2c_block_data(self.devAddress2, 0x90, byteCode)
         
         
+        '''Drive the motors to a given position in number of
+           steps or microsteps:
+        '''   
     def setPosition(self):
         byteCode = [0xFF, 0xFF, 0xA5, 0x00]
         #while(1):
         self.bus.write_i2c_block_data(self.devAddress1, 0x8B, byteCode)
-        self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress2, 0x8B, byteCode)
         time.sleep(0.01)
     
     def softStop(self):
         pass
               
     def writeToMotor(self, value):
-        self.bus.write_byte_data(self.address, 0, value)
+        self.bus.write_i2c_block_data(self.devAddress1, 0x00, 0x00)
+    
+    def driveAngle(self):
+        pass
+    
+    
         
     
     
