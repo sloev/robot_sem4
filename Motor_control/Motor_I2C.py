@@ -71,10 +71,15 @@ class Motor_I2C:
     def resetToDefault(self):
         self.bus.write_byte(self.devAddress, 0x87)
     
+    def toTwoBytes(self,temp):
+        a,b=divmod(temp,0x100)
+        return [a,b]
+    
     def runInit(self,position1, position2):
-        a,b=divmod(position1,0x100)
-        c,d=divmod(position2,0x100)
-        byteCode = [0xFF, 0xFF, 0x80, hex(a), hex(b), hex(c), hex(d)]              
+        position1=self.toTwoBytes(position1)
+        position2=self.toTwoBytes(position2)
+
+        byteCode = [0xFF, 0xFF, 0x80, position1[0],position1[1],position2[0],position2[1]]              
         self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
         
         '''Set the stepper motor parameters in the RAM:
@@ -116,8 +121,9 @@ class Motor_I2C:
            steps or microsteps:
         '''   
     def setPosition(self, position):
-        a,b=divmod(position,0x100)
-        byteCode = [0xFF, 0xFF, hex(a),hex(b)]
+        position=self.toTwoBytes(position)
+        
+        byteCode = [0xFF, 0xFF, position[0],position[1]]
         self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
     
     def softStop(self):
@@ -141,28 +147,10 @@ def main():
     motor1.runInit(100,100)  
     motor2.runInit(100,100)  
     
-    for i in range(1,100):
-        motor1.setMotorParam(i % 2,0x80)
-        motor2.setMotorParam((i+1) % 2,0x40)
-        
-        motor1.setPosition(i*100)
-        motor2.setPosition(i*100)
-        time.sleep(7)
-        motor1.hardStop()
-        motor2.hardStop()
-        time.sleep(7)
-        
-        motor1.setMotorParam(i % 2,0x40)
-        motor2.setMotorParam((i+1) % 2,0x80)
-        
-        motor1.setPosition(i*100)
-        motor2.setPosition(i*100)
-        
-        time.sleep(7)
-        
-        motor1.hardStop()
-        motor2.hardStop()
-        time.sleep(7)
+    motor1.setPosition(100)
+    motor2.setPosition(100)
+    
+   
 #    motor.resetToDefault()   
 #    motor.hardStop()
 #    motor.getFullStatus1()    
