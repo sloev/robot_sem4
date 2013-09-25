@@ -35,7 +35,7 @@ import time as time
 
 class Motor_I2C:
     '''
-    classdocs
+    Stepper motor driver module.
     '''
 
 
@@ -64,18 +64,22 @@ class Motor_I2C:
         pass
     
     def hardStop(self):
-        pass
+        self.bus.write_byte(self.devAddress1, 0x85)
+        self.bus.write_byte(self.devAddress2, 0x85)
     
     def resetPosition(self):
-        pass
+        self.bus.write_byte(self.devAddress1, 0x86)
+        self.bus.write_byte(self.devAddress2, 0x86)
     
     def resetToDefault(self):
-        pass
+        self.bus.write_byte(self.devAddress2, 0x87)
+        self.bus.write_byte(self.devAddress2, 0x87)
     
     def runInit(self):
-        byteCode = [self.devAddress1, 0x88, 0xFF, 0xFF, 0x81, 0x00, 0x01, 0x00, 0xFF]
-        self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
-        self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode)
+        byteCode1 = [0xFF, 0xFF, 0x81, 0x00, 0x01, 0x00, 0xFF]
+        byteCode2 = [0xFF, 0xFF, 0x81, 0x00, 0x10, 0x00, 0xE7]
+        self.bus.write_i2c_block_data(self.devAddress1, 0x88, byteCode1) 
+        self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode2)
         
         '''Set the stepper motor parameters in the RAM:
           
@@ -88,10 +92,11 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self):          
-        byteCode = [self.devAddress, 0x89, 0xFF, 0xFF, 0x33, 0x51, 0x91, 0x00, 0x08]
+        byteCode1 = [0xFF, 0xFF, 0x33, 0x51, 0x91, 0x00, 0x08]
+        byteCode2 = [0xFF, 0xFF, 0x33, 0x51, 0x91, 0x00, 0x08]
         #byteCode = [255, 255, 96, 241, 146, 00, 28]
-        self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)
-        self.bus.write_i2c_block_data(self.devAddress2, 0x89, byteCode)  
+        self.bus.write_i2c_block_data(self.devAddress1, 0x89, byteCode1)
+        self.bus.write_i2c_block_data(self.devAddress2, 0x89, byteCode2)  
          
 
               
@@ -108,23 +113,26 @@ class Motor_I2C:
         
         '''Zap the One-Time Programmable memory'''  
     def setOTPParam(self):
-        byteCode = [0xFF, 0xFF, 0xFB, 0xD5]
-        self.bus.write_i2c_block_data(self.devAddress1, 0x90, byteCode)
-        self.bus.write_i2c_block_data(self.devAddress2, 0x90, byteCode)
+        byteCode1 = [0xFF, 0xFF, 0xFB, 0xD5]
+        byteCode2 = [0xFF, 0xFF, 0xFB, 0xD5]
+        self.bus.write_i2c_block_data(self.devAddress1, 0x90, byteCode1)
+        self.bus.write_i2c_block_data(self.devAddress2, 0x90, byteCode2)
         
         
         '''Drive the motors to a given position in number of
            steps or microsteps:
         '''   
     def setPosition(self):
-        byteCode = [0xFF, 0xFF, 0xA5, 0x00]
+        byteCode1 = [0xFF, 0xFF, 0xA5, 0x00]
+        byteCode2 = [0xFF, 0xFF, 0xA5, 0x00]
         #while(1):
-        self.bus.write_i2c_block_data(self.devAddress1, 0x8B, byteCode)
-        self.bus.write_i2c_block_data(self.devAddress2, 0x8B, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress1, 0x8B, byteCode1)
+        self.bus.write_i2c_block_data(self.devAddress2, 0x8B, byteCode2)
         time.sleep(0.01)
     
     def softStop(self):
-        pass
+        self.bus.write_byte(self.devAddress1, 0x8F)
+        self.bus.write_byte(self.devAddress2, 0x8F)
               
     def writeToMotor(self, value):
         self.bus.write_i2c_block_data(self.devAddress1, 0x00, 0x00)
@@ -132,14 +140,10 @@ class Motor_I2C:
     def driveAngle(self):
         pass
     
-    
-        
-    
-    
         
     
 def main():
-    motor = Motor_I2C(0x60)
+    motor = Motor_I2C(0x60, 0x61)
     motor.getFullStatus1()
     motor.setOTPParam()
     motor.setMotorParam()
