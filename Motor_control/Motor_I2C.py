@@ -21,6 +21,7 @@ SetPosition:           Programmers a target and secure position            0x8B
 SoftStop:              Motor stopping with deceleration phase              0x8F
 '''
 
+
 ''' 
 StepMode parameter:         Mode: 
         
@@ -30,8 +31,24 @@ StepMode parameter:         Mode:
 11                          1/16 Stepping
 '''  
 
+
 import smbus
 import time as time
+
+#Motor commands:        ByteCode:    Description:                                        
+
+cmdGetFullStatus1     = 0x81       # Returns complete status of the chip 
+cmdGetFullStatus2     = 0xFC       # Returns actual, target and secure position 
+cmdGetOTPParam        = 0x82       # Returns OTP parameter        
+cmdGotoSecurePosition = 0x84       # Drives motor to secure position 
+cmdHardStop           = 0x85       # Immediate full stop 
+cmdResetPosition      = 0x86       # Sets actual position to zero   
+cmdResetToDefault     = 0x87       # Overwrites the chip RAM with OTP contents   
+cmdRunInit            = 0x88       # Reference Search              
+cmdSetMotorParam      = 0x89       # Sets motor parameter      
+cmdSetOTPParam        = 0x90       # Zaps the OTP memory    
+cmdSetPosition        = 0x8B       # Programmers a target and secure position 
+cmdSoftStop           = 0x8F       # Motor stopping with deceleration phase 
 
 class Motor_I2C:
     '''
@@ -43,46 +60,49 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
+        self.lrun=0
+        self.lhold=14
         
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
-        response1 = self.bus.read_i2c_block_data(self.devAddress, 0x81, 11)
-        return str(response1)
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 11)
+        #response1 = self.bus.read_i2c_block_data(self.devAddress, 0x81, 11)
+        return str(response)
         
         '''Status of the position of the stepper motor'''
     def getFullstatus2(self):
-        response = self.bus.write_byte(self.devAddress, 0xFC)
+        response = self.bus.write_byte(self.devAddress, cmdGetFullStatus2)
+        #response = self.bus.write_byte(self.devAddress, 0xFC)
         return response
         
         '''Read OTP *One-Time Programmable) memory''' 
     def getOTPParam(self):
-        response = self.bus.write_byte(self.devAddress, 0x82)
+        response = self.bus.write_byte(self.devAddress, cmdGetOTPParam)
+        #response = self.bus.write_byte(self.devAddress, 0x82)
         return response
     
     def goToSecurePosition(self):
         pass
     
     def hardStop(self):
-        self.bus.write_byte(self.devAddress, 0x85)
+        self.bus.write_byte(self.devAddress, cmdHardStop)
+        #self.bus.write_byte(self.devAddress, 0x85)
     
     def resetPosition(self):
-        self.bus.write_byte(self.devAddress, 0x86)
+        self.bus.write_byte(self.devAddress, cmdResetPosition)
+        #self.bus.write_byte(self.devAddress, 0x86)
     
     def resetToDefault(self):
-        self.bus.write_byte(self.devAddress, 0x87)
-    '''
-    toTwoBytes returns a list with two ints maximum value 255
-    '''
-    def toTwoBytes(self,temp):
-        a,b=divmod(temp,0x100)
-        return [a,b]
-    
+        self.bus.write_byte(self.devAddress, cmdResetToDefault)
+        #self.bus.write_byte(self.devAddress, 0x87)
+ 
     def runInit(self,position1, position2):
         position1=self.toTwoBytes(position1)
         position2=self.toTwoBytes(position2)
 
         byteCode = [0xFF, 0xFF, 0x80, position1[0],position1[1],position2[0],position2[1]]              
-        self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
+        self.bus.write_i2c_block_data(self.devAddress, cmdRunInit, byteCode) 
+        #self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
         
         '''Set the stepper motor parameters in the RAM:
           
@@ -99,10 +119,8 @@ class Motor_I2C:
         byte5=0x88 | direction<<4
         #byteCode1 = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
         byteCode = [0xFF, 0xFF, 0x32, byte4, byte5, 0x00, 0x08]
-        self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)
-         
-
-              
+        self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
+        #self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)   
     
         '''Drive the motor to a given position relative to 
            the zero position, defined in number of half or micro steps, 
@@ -117,7 +135,8 @@ class Motor_I2C:
         '''Zap the One-Time Programmable memory'''  
     def setOTPParam(self):
         byteCode = [0xFF, 0xFF, 0xFB, 0xD5]
-        self.bus.write_i2c_block_data(self.devAddress, 0x90, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress, cmdSetOTPParam, byteCode)
+        #self.bus.write_i2c_block_data(self.devAddress, 0x90, byteCode)
         
         
         '''Drive the motors to a given position in number of
@@ -127,16 +146,33 @@ class Motor_I2C:
         position=self.toTwoBytes(position)
         
         byteCode = [0xFF, 0xFF, position[0],position[1]]
-        self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
+        self.bus.write_i2c_block_data(self.devAddress, cmdSetPosition, byteCode)
+        #self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
     
     def softStop(self):
-        self.bus.write_byte(self.devAddress, 0x8F)
+        self.bus.write_byte(self.devAddress, cmdSoftStop)
+        #self.bus.write_byte(self.devAddress, 0x8F)
               
     def writeToMotor(self, value):
         self.bus.write_i2c_block_data(self.devAddress, 0x00, 0x00)
     
     def driveAngle(self):
         pass
+    
+    '''toTwoBytes returns a list with two ints maximum value 255
+    '''
+    def toTwoBytes(self,temp):
+        a,b=divmod(temp,0x100)
+        return [a,b]
+    
+    '''to metoder til at sætte torque for drift og stilstand lrun/lhold
+    '''
+    def setLrun(self,lrun):
+        self.lrun=lrun
+    
+    def setLhold(self,lhold):
+        self.lhold=lhold
+    
     
 def main():
     motor1 = Motor_I2C(0x60)
