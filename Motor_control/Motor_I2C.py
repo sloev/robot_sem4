@@ -40,8 +40,8 @@ class Motor_I2C:
     '''
 
 
-    def __init__(self, devAddress1, devAddress):
-        self.devAddress1 = devAddress
+    def __init__(self, devAddress):
+        self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
         
         '''Status of circuit and stepper motor'''
@@ -69,12 +69,12 @@ class Motor_I2C:
         self.bus.write_byte(self.devAddress, 0x86)
     
     def resetToDefault(self):
-        self.bus.write_byte(self.devAddress1, 0x87)
+        self.bus.write_byte(self.devAddress, 0x87)
     
     def runInit(self,position1, position2):
         a,b=divmod(position1,0x100)
         c,d=divmod(position2,0x100)
-        byteCode = [0xFF, 0xFF, 0x80, a, b, c, d]              
+        byteCode = [0xFF, 0xFF, 0x80, hex(a), hex(b), hex(c), hex(d)]              
         self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
         
         '''Set the stepper motor parameters in the RAM:
@@ -117,7 +117,7 @@ class Motor_I2C:
         '''   
     def setPosition(self, position):
         a,b=divmod(position,0x100)
-        byteCode = [0xFF, 0xFF, a,b]
+        byteCode = [0xFF, 0xFF, hex(a),hex(b)]
         self.bus.write_i2c_block_data(self.devAddress, 0x8B, byteCode)
     
     def softStop(self):
