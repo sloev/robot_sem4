@@ -42,7 +42,6 @@ class LookUpTable:
                     else:                          
                         length = math.fabs((newy)/(math.sin(angle)))
                         self.angLenTable[x][y] = Mouse(newx,newy,angle,length)
-                        #angLenTable[x][y] = array([angle,length])
                 else:
                     self.angLenTable[x][y]=Mouse(0,0,0,0)
                     
