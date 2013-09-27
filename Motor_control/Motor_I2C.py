@@ -228,7 +228,7 @@ def main():
         returner=motor2.getFullStatus2()
         position+=100
         motor2.setPosition(position)
-        print(str(int(returner[0]))+","+str(int(returner[1]))+","+str(int(returner[2]))+","+str(int(returner[3]))+","+str(int(returner[4]))+","+str(int(returner[5]))+","+str(int(returner[6]))+","+str(int(returner[7]))+","+str(int(returner[8])))
+        print(str(int(returner[0]))+"\t"+str(int(returner[1]))+"\t"+str(int(returner[2]))+"\t"+str(int(returner[3]))+"\t"+str(int(returner[4]))+"\t"+str(int(returner[5]))+"\t"+str(int(returner[6]))+"\t"+str(int(returner[7]))+"\t"+str(int(returner[8])))
         time.sleep(0.1)
     
     
