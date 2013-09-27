@@ -206,7 +206,7 @@ def main():
     motor2.setMotorParam(1,3,2)
     #time.sleep(2)
     position=200
-
+    print("runInit:")
     motor1.runInit(100,200)  
     motor2.runInit(100,200)  
     #time.sleep(2)
@@ -216,6 +216,7 @@ def main():
 #     for i in range(0,100):
 #         motor1.setMotorParam(0,(i%5)+1,2)
 #         time.sleep(1)
+    print("running with 16step inc at 1/8 stepmode\n byte 0 is most left")
 
     for i in range(0,1000):
         returner=motor2.getFullStatus2()
