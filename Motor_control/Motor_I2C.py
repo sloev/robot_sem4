@@ -181,14 +181,20 @@ def main():
 
 #    motor.getFullStatus1()
 #    motor.setOTPParam()
-    motor1.setMotorParam(0,0x80)
-    motor2.setMotorParam(1,0x80)
+    motor1.setMotorParam(0,4,0)
+    motor2.setMotorParam(1,4,0)
 
     motor1.runInit(100,100)  
     motor2.runInit(100,100)  
     
-    motor1.setPosition(100)
-    motor2.setPosition(100)
+    motor1.setPosition(10000)
+    motor2.setPosition(10000)
+    i=0
+    while(true):
+        i++
+        motor2.setMotorParam(1,(i%6)+1,0)
+        time.sleep(2)
+    
     
    
 #    motor.resetToDefault()   
