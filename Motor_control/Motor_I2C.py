@@ -220,7 +220,7 @@ def main():
         position+=i*1000
         motor2.setMotorParam(1,(i%5)+1,2)
         returner=motor2.getFullstatus2()
-        print(str(returner)+"\tclass="+str(returner.__class__.__name__))
+        print(str(returner[3])+"\tclass="+str(returner[3].__class__.__name__))
         
 #        motor1.setPosition(position)
         time.sleep(2)
