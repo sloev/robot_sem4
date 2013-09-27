@@ -217,7 +217,7 @@ def main():
     print("afterinit\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     motor1.setPosition(position)
-    position=40000
+    position=50000
     motor2.setPosition(position)
     time.sleep(5)
     
@@ -225,7 +225,7 @@ def main():
     print("aftersetpos\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     for i in range(0,100):
-        print("extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
+        print(int(returner[0])+","+int(returner[1])+","+int(returner[2])+","+int(returner[3])+","+int(returner[4])+","+int(returner[5])+","+int(returner[6])+","+int(returner[7])+","+int(returner[8]))
         time.sleep(0.1)
     
     
