@@ -99,8 +99,8 @@ class Motor_I2C:
     def runInit(self,position1, position2):
         position1=self.toTwoBytes(position1)
         position2=self.toTwoBytes(position2)
-
-        byteCode = [0xFF, 0xFF, 0x80, position1[0],position1[1],position2[0],position2[1]]              
+        byteCode = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
+        #byteCode = [0xFF, 0xFF, 0x80, position1[0],position1[1],position2[0],position2[1]]              
         self.bus.write_i2c_block_data(self.devAddress, cmdRunInit, byteCode) 
         #self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
         
