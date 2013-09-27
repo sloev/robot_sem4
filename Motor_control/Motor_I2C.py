@@ -219,7 +219,7 @@ def main():
         i+=1
         position+=i*1000
         motor2.setMotorParam(1,(i%5)+1,2)
-        print(motor2.getFullstatus2())
+        print(str(motor2.getFullstatus2()))
         
 #        motor1.setPosition(position)
         time.sleep(2)
