@@ -210,14 +210,20 @@ def main():
     motor1.runInit(300,600)  
     motor2.runInit(300,600)  
     #time.sleep(2)
-
+    motor1.setPosition(30000)
+    motor2.setPosition(30000)
+    
     for i in range(0,100):
-        returner=motor2.getFullStatus2()
-        position+=100
-        motor2.setPosition(position)
-        str1="".join(map(hex, returner))
-        print(str1)
-        time.sleep(2)
+        motor1.setMotorParam(0,(i%5)+1,2)
+        time.sleep(1)
+
+#     for i in range(0,100):
+#         returner=motor2.getFullStatus2()
+#         position+=100
+#         motor2.setPosition(position)
+#         str1="".join(map(hex, returner))
+#         print(str1)
+#         time.sleep(2)
     
     
    
