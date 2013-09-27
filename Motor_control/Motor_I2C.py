@@ -210,14 +210,14 @@ def main():
     returner=motor2.getFullStatus2()
     print("beforeINIT\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
-    motor1.runInit(3000,6000)  
-    motor2.runInit(3000,6000)  
+    motor1.runInit(300,600)  
+    motor2.runInit(300,600)  
     #time.sleep(2)
     returner=motor2.getFullStatus2()
     print("afterinit\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     motor1.setPosition(position)
-    position=50000
+    position=100
     motor2.setPosition(position)
     time.sleep(5)
     
@@ -226,7 +226,8 @@ def main():
     
     for i in range(0,100):
         returner=motor2.getFullStatus2()
-
+        position+=100
+        motor2.setPosition(position)
         print(str(int(returner[0]))+","+str(int(returner[1]))+","+str(int(returner[2]))+","+str(int(returner[3]))+","+str(int(returner[4]))+","+str(int(returner[5]))+","+str(int(returner[6]))+","+str(int(returner[7]))+","+str(int(returner[8])))
         time.sleep(0.1)
     
