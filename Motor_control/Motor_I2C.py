@@ -209,14 +209,17 @@ def main():
     motor1.runInit(3000,6000)  
     motor2.runInit(3000,6000)  
     #time.sleep(2)
+    position=40000
+    motor1.setPosition(position)
+    motor2.setPosition(position)
     
-    motor1.setPosition(20000)
-    motor2.setPosition(20000)
-#     i=0
-#     while(1):
-#         i+=1
-#         motor2.setMotorParam(1,(i%6)+1,0)
-#         time.sleep(2)
+    for i in range(0,100):
+        i+=1
+        position+=i*100
+        motor2.setMotorParam(1,(i%5)+1,2)
+        motor1.setPosition(position)
+        motor2.setPosition(position)
+        time.sleep(1)
     
     
    
