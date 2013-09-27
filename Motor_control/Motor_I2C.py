@@ -212,6 +212,7 @@ def main():
     position=10000
     motor1.setPosition(position)
     motor2.setPosition(position)
+    time.sleep(5)
     
     for i in range(0,10):
         i+=1
