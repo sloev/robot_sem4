@@ -211,16 +211,15 @@ def main():
     #time.sleep(2)
     position=10000
     motor1.setPosition(position)
+    position=40000
     motor2.setPosition(position)
     time.sleep(5)
     
     for i in range(0,100):
         i+=1
-        position+=i*100
         motor2.setMotorParam(1,(i%5)+1,2)
         
 #        motor1.setPosition(position)
-        motor2.setPosition(position)
         time.sleep(1)
     
     
