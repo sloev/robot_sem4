@@ -215,15 +215,15 @@ def main():
     motor2.setPosition(position)
     time.sleep(5)
     
-    for i in range(0,20):
+    for i in range(0,10):
         i+=1
         position+=i*1000
         motor2.setMotorParam(1,(i%5)+1,2)
         returner=motor2.getFullStatus2()
-        print(str(int(returner[3])))
+        print(str(int(returner[2]<<8 | returner[3]<<0)))
         
 #        motor1.setPosition(position)
-        time.sleep(2)
+        time.sleep(5)
     
     
    
