@@ -198,8 +198,8 @@ def main():
 #     motor2.getFullstatus2()
 #     time.sleep(2)
 #         
-    motor1.setMotorParam(0,4,1)
-    motor2.setMotorParam(1,4,1)
+    motor1.setMotorParam(0,9,0)
+    motor2.setMotorParam(1,9,0)
 
     motor1.runInit(100,300)  
     motor2.runInit(100,300)  
