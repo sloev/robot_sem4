@@ -191,6 +191,7 @@ def main():
     
     motor1.getFullStatus1()
     motor1.getFullstatus2()
+    time.sleep(1)
     motor2.getFullStatus1()
     motor2.getFullstatus2()
     time.sleep(2)
