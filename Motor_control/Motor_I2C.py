@@ -214,13 +214,13 @@ def main():
     motor2.runInit(300,600)  
     #time.sleep(2)
 
-    for i in range(0,1000):
+    for i in range(0,100):
         returner=motor2.getFullStatus2()
-        position+=1
+        position+=100
         motor2.setPosition(position)
         print(str(int(returner[2]<<8 | returner[3]<<0))+"\t"+str(int(returner[4]<<8 | returner[5]<<0))+"\t"+hex(returner[6])+"\t")
 
-        time.sleep(0.1)
+        time.sleep(2)
     
     
    
