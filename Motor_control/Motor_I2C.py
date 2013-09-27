@@ -206,10 +206,7 @@ def main():
     motor2.setMotorParam(1,3,2)
     #time.sleep(2)
     position=0
-    
-    returner=motor2.getFullStatus2()
-    print("beforeINIT\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
-    
+
     motor1.runInit(300,600)  
     motor2.runInit(300,600)  
     #time.sleep(2)
@@ -218,8 +215,8 @@ def main():
         returner=motor2.getFullStatus2()
         position+=100
         motor2.setPosition(position)
-        print(str(int(returner[2]<<8 | returner[3]<<0))+"\t"+str(int(returner[4]<<8 | returner[5]<<0))+"\t"+hex(returner[6])+"\t")
-
+        str1="".join(map(hex, returner))
+        print(str1)
         time.sleep(2)
     
     
