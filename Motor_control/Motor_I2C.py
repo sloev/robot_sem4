@@ -205,15 +205,24 @@ def main():
     motor1.setMotorParam(0,3,2)
     motor2.setMotorParam(1,3,2)
     #time.sleep(2)
+    position=1000
+    
+    returner=motor2.getFullStatus2()
+    print("beforeINIT\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     motor1.runInit(3000,6000)  
     motor2.runInit(3000,6000)  
     #time.sleep(2)
-    position=1000
+    returner=motor2.getFullStatus2()
+    print("afterinit\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
+    
     motor1.setPosition(position)
     position=1000
     motor2.setPosition(position)
     time.sleep(5)
+    
+    returner=motor2.getFullStatus2()
+    print("aftersetpos\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     for i in range(0,10):
         i+=1
