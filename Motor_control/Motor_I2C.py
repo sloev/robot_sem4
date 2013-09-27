@@ -219,7 +219,7 @@ def main():
 #         time.sleep(1)
     print("running with 16step inc at 1/8 stepmode\n byte 0 is most left")
 
-    for i in range(0,200):
+    for i in range(0,100):
         returner=motor2.getFullStatus2()
         position+=16
         motor2.setPosition(position)
