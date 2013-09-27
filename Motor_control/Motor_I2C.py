@@ -204,8 +204,8 @@ def main():
     motor1.runInit(100,300)  
     motor2.runInit(100,300)  
     
-    motor1.setPosition(10000)
-    motor2.setPosition(10000)
+    motor1.setPosition(500)
+    motor2.setPosition(500)
 #     i=0
 #     while(1):
 #         i+=1
