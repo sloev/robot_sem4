@@ -190,7 +190,7 @@ def main():
     motor1.setPosition(10000)
     motor2.setPosition(10000)
     i=0
-    while(true):
+    while(1):
         i+=1
         motor2.setMotorParam(1,(i%6)+1,0)
         time.sleep(2)
