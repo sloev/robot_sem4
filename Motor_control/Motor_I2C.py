@@ -166,7 +166,7 @@ class Motor_I2C:
         a,b=divmod(temp,0x100)
         return [a,b]
     
-    '''to metoder til at sætte torque for drift og stilstand lrun/lhold
+    '''to metoder til at satte torque for drift og stilstand lrun/lhol
     '''
     def setLrun(self,lrun):
         self.lrun=lrun
