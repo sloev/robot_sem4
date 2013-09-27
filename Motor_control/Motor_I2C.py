@@ -228,7 +228,7 @@ def main():
         returner=motor2.getFullStatus2()
         position+=100
         motor2.setPosition(position)
-        print(hex(returner[2])+"\t"+hex(returner[3])+"\t"+hex(returner[4])+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7]))
+        print(str(int(returner[2]<<8 | returner[3]<<0))+"\t"+str(int(returner[4]<<8 | returner[5]<<0))+"\t"+hex(returner[6])+"\t"+hex(returner[7]))
 
         time.sleep(0.1)
     
