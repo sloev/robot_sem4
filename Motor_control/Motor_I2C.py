@@ -225,7 +225,7 @@ def main():
     print("aftersetpos\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     for i in range(0,100):
-        print(int(returner[0])+","+int(returner[1])+","+int(returner[2])+","+int(returner[3])+","+int(returner[4])+","+int(returner[5])+","+int(returner[6])+","+int(returner[7])+","+int(returner[8]))
+        print(str(int(returner[0]))+","+str(int(returner[1]))+","+str(int(returner[2]))+","+str(int(returner[3]))+","+str(int(returner[4]))+","+str(int(returner[5]))+","+str(int(returner[6]))+","+str(int(returner[7]))+","+str(int(returner[8])))
         time.sleep(0.1)
     
     
