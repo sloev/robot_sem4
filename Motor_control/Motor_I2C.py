@@ -200,18 +200,18 @@ def main():
 #         
     motor1.setOTPParam()
     motor2.setOTPParam()
-    time.sleep(2)
+    #time.sleep(2)
     
     motor1.setMotorParam(0,3,2)
     motor2.setMotorParam(1,3,2)
-    time.sleep(2)
+    #time.sleep(2)
     
     motor1.runInit(300,600)  
     motor2.runInit(300,600)  
-    time.sleep(2)
+    #time.sleep(2)
     
-    motor1.setPosition(1000)
-    motor2.setPosition(1000)
+    motor1.setPosition(2000)
+    motor2.setPosition(2000)
 #     i=0
 #     while(1):
 #         i+=1
