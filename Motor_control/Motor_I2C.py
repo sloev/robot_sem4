@@ -209,20 +209,19 @@ def main():
     motor1.runInit(3000,6000)  
     motor2.runInit(3000,6000)  
     #time.sleep(2)
-    position=10000
+    position=1000
     motor1.setPosition(position)
-    position=30000
+    position=1000
     motor2.setPosition(position)
     time.sleep(5)
     
     for i in range(0,10):
         i+=1
-        position+=i*1000
-        motor2.setMotorParam(1,(i%5)+1,2)
+        position+=100
         returner=motor2.getFullStatus2()
-        print(str(int(returner[2]<<8 | returner[3]<<0)))
-        
-#        motor1.setPosition(position)
+        print("intpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
+        motor2.setMotorParam(1,(i%5)+1,2)
+        motor1.setPosition(position)
         time.sleep(5)
     
     
