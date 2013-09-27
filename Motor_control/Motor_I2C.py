@@ -119,7 +119,7 @@ class Motor_I2C:
         byte4=minVelocity<<0 | maxVelocity << 4
         byte5=0x88 | direction<<4
         #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
-        byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0xc]
+        byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0x08]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
         #self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)   
     
