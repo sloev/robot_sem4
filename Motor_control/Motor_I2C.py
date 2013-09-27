@@ -225,6 +225,8 @@ def main():
     print("aftersetpos\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     for i in range(0,100):
+        returner=motor2.getFullStatus2()
+
         print(str(int(returner[0]))+","+str(int(returner[1]))+","+str(int(returner[2]))+","+str(int(returner[3]))+","+str(int(returner[4]))+","+str(int(returner[5]))+","+str(int(returner[6]))+","+str(int(returner[7]))+","+str(int(returner[8])))
         time.sleep(0.1)
     
