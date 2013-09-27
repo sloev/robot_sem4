@@ -211,7 +211,7 @@ def main():
     #time.sleep(2)
     position=10000
     motor1.setPosition(position)
-    position=40000
+    position=80000
     motor2.setPosition(position)
     time.sleep(5)
     
