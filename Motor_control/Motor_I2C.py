@@ -181,23 +181,23 @@ def main():
 
 #    motor.getFullStatus1()
 #    motor.setOTPParam()
-    motor1.resetToDefault()  
-    motor2.resetToDefault()  
-    time.sleep(2)
-    
-    motor1.hardStop()
-    motor2.hardStop()
-    time.sleep(2)
-    
-    motor1.getFullStatus1()
-    motor1.getFullstatus2()
-    
-    time.sleep(1)
-    
-    motor2.getFullStatus1()
-    motor2.getFullstatus2()
-    time.sleep(2)
-        
+#     motor1.resetToDefault()  
+#     motor2.resetToDefault()  
+#     time.sleep(2)
+#     
+#     motor1.hardStop()
+#     motor2.hardStop()
+#     time.sleep(2)
+#     
+#     motor1.getFullStatus1()
+#     motor1.getFullstatus2()
+#     
+#     time.sleep(1)
+#     
+#     motor2.getFullStatus1()
+#     motor2.getFullstatus2()
+#     time.sleep(2)
+#         
     motor1.setMotorParam(0,4,1)
     motor2.setMotorParam(1,4,1)
 
