@@ -206,12 +206,12 @@ def main():
     motor2.setMotorParam(1,3,2)
     #time.sleep(2)
     
-    motor1.runInit(300,600)  
-    motor2.runInit(300,600)  
+    motor1.runInit(3000,6000)  
+    motor2.runInit(3000,6000)  
     #time.sleep(2)
     
-    motor1.setPosition(2000)
-    motor2.setPosition(2000)
+    motor1.setPosition(20000)
+    motor2.setPosition(20000)
 #     i=0
 #     while(1):
 #         i+=1
