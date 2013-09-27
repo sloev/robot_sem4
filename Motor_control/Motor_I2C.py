@@ -119,7 +119,7 @@ class Motor_I2C:
         byte4=minVelocity<<0 | maxVelocity << 4
         byte5=0x88 | direction<<4
         #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
-        byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0x08]
+        byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0xc]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
         #self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)   
     
@@ -211,16 +211,17 @@ def main():
     #time.sleep(2)
     position=10000
     motor1.setPosition(position)
-    position=80000
+    position=64000
     motor2.setPosition(position)
     time.sleep(5)
     
-    for i in range(0,100):
+    for i in range(0,20):
         i+=1
+        position+=i*100
         motor2.setMotorParam(1,(i%5)+1,2)
         
 #        motor1.setPosition(position)
-        time.sleep(1)
+        time.sleep(2)
     
     
    
