@@ -99,8 +99,8 @@ class Motor_I2C:
     def runInit(self,position1, position2):
         position1=self.toTwoBytes(position1)
         position2=self.toTwoBytes(position2)
-        byteCode = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
-        #byteCode = [0xFF, 0xFF, 0x80, position1[0],position1[1],position2[0],position2[1]]              
+        #byteCode = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
+        byteCode = [0xFF, 0xFF, 0x80, position1[0],position1[1],position2[0],position2[1]]              
         self.bus.write_i2c_block_data(self.devAddress, cmdRunInit, byteCode) 
         #self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
         
@@ -118,8 +118,8 @@ class Motor_I2C:
         byte3=self.lrun<<4 | self.lhold<<0
         byte4=minVelocity<<0 | maxVelocity << 4
         byte5=0x88 | direction<<4
-        byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
-        #byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0x08]
+        #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
+        byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0x08]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
         #self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)   
     
@@ -198,11 +198,17 @@ def main():
 #     motor2.getFullstatus2()
 #     time.sleep(2)
 #         
-    motor1.setMotorParam(0,9,0)
-    motor2.setMotorParam(1,9,0)
-
+    motor1.setOTPParam()
+    motor2.setOTPParam()
+    #time.sleep(2)
+    
+    motor1.setMotorParam(0,9,1)
+    motor2.setMotorParam(1,9,1)
+    #time.sleep(2)
+    
     motor1.runInit(100,300)  
     motor2.runInit(100,300)  
+    #time.sleep(2)
     
     motor1.setPosition(500)
     motor2.setPosition(500)
