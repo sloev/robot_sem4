@@ -217,7 +217,7 @@ def main():
     print("afterinit\nintpos="+str(position)+"extpos="+str(int(returner[2]<<8 | returner[3]<<0)))
     
     motor1.setPosition(position)
-    position=30000
+    position=40000
     motor2.setPosition(position)
     time.sleep(5)
     
