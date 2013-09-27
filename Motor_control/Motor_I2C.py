@@ -191,7 +191,9 @@ def main():
     
     motor1.getFullStatus1()
     motor1.getFullstatus2()
+    
     time.sleep(1)
+    
     motor2.getFullStatus1()
     motor2.getFullstatus2()
     time.sleep(2)
@@ -199,8 +201,8 @@ def main():
     motor1.setMotorParam(0,4,1)
     motor2.setMotorParam(1,4,1)
 
-    motor1.runInit(300,100)  
-    motor2.runInit(300,100)  
+    motor1.runInit(100,300)  
+    motor2.runInit(100,300)  
     
     motor1.setPosition(10000)
     motor2.setPosition(10000)
