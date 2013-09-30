@@ -60,18 +60,18 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.lrun=0
-        self.lhold=14
+        self.lrun=3
+        self.lhold=2
         
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
         response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 11)
         #response1 = self.bus.read_i2c_block_data(self.devAddress, 0x81, 11)
-        return str(response)
+        return response
         
         '''Status of the position of the stepper motor'''
-    def getFullstatus2(self):
-        response = self.bus.write_byte(self.devAddress, cmdGetFullStatus2)
+    def getFullStatus2(self):
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,8)
         #response = self.bus.write_byte(self.devAddress, 0xFC)
         return response
         
@@ -99,7 +99,7 @@ class Motor_I2C:
     def runInit(self,position1, position2):
         position1=self.toTwoBytes(position1)
         position2=self.toTwoBytes(position2)
-
+        #byteCode = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
         byteCode = [0xFF, 0xFF, 0x80, position1[0],position1[1],position2[0],position2[1]]              
         self.bus.write_i2c_block_data(self.devAddress, cmdRunInit, byteCode) 
         #self.bus.write_i2c_block_data(self.devAddress, 0x88, byteCode) 
@@ -118,7 +118,7 @@ class Motor_I2C:
         byte3=self.lrun<<4 | self.lhold<<0
         byte4=minVelocity<<0 | maxVelocity << 4
         byte5=0x88 | direction<<4
-        #byteCode1 = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
+        #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
         byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0x08]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
         #self.bus.write_i2c_block_data(self.devAddress, 0x89, byteCode)   
@@ -166,7 +166,7 @@ class Motor_I2C:
         a,b=divmod(temp,0x100)
         return [a,b]
     
-    '''to metoder til at sætte torque for drift og stilstand lrun/lhold
+    '''to metoder til at satte torque for drift og stilstand lrun/lhol
     '''
     def setLrun(self,lrun):
         self.lrun=lrun
@@ -181,14 +181,52 @@ def main():
 
 #    motor.getFullStatus1()
 #    motor.setOTPParam()
-    motor1.setMotorParam(0,0x80)
-    motor2.setMotorParam(1,0x80)
-
-    motor1.runInit(100,100)  
-    motor2.runInit(100,100)  
+#     motor1.resetToDefault()  
+#     motor2.resetToDefault()  
+#     time.sleep(2)
+#     
+#     motor1.hardStop()
+#     motor2.hardStop()
+#     time.sleep(2)
+#     
+#     motor1.getFullStatus1()
+#     motor1.getFullstatus2()
+#     
+#     time.sleep(1)
+#     
+#     motor2.getFullStatus1()
+#     motor2.getFullstatus2()
+#     time.sleep(2)
+#         
+    motor1.setOTPParam()
+    motor2.setOTPParam()
+    #time.sleep(2)
     
-    motor1.setPosition(100)
-    motor2.setPosition(100)
+    motor1.setMotorParam(0,3,2)
+    motor2.setMotorParam(1,3,2)
+    #time.sleep(2)
+    position=200
+    print("runInit:")
+    motor1.runInit(100,200)  
+    motor2.runInit(100,200)  
+    time.sleep(5)
+    #time.sleep(2)
+#     motor1.setPosition(30000)
+#     motor2.setPosition(30000)
+#     
+#     for i in range(0,100):
+#         motor1.setMotorParam(0,(i%5)+1,2)
+#         time.sleep(1)
+    print("running with 16step inc at 1/8 stepmode\n byte 0 is most left")
+
+    for i in range(0,100):
+        returner=motor2.getFullStatus2()
+        position+=16
+        motor2.setPosition(position)
+        str1="\t".join(map(hex, returner))
+        print(str1)
+        time.sleep(0.1)
+    
     
    
 #    motor.resetToDefault()   
