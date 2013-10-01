@@ -60,7 +60,7 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.lrun=3
+        self.lrun=8
         self.lhold=2
         
         '''Status of circuit and stepper motor'''
@@ -71,7 +71,7 @@ class Motor_I2C:
         
         '''Status of the position of the stepper motor'''
     def getFullStatus2(self):
-        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,8)
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2)
         #response = self.bus.write_byte(self.devAddress, 0xFC)
         return response
         
@@ -176,9 +176,10 @@ class Motor_I2C:
     
     
 def main():
+    time.sleep(10)
     motor1 = Motor_I2C(0x60)
     motor2 = Motor_I2C(0x61)
-
+    
 #    motor.getFullStatus1()
 #    motor.setOTPParam()
 #     motor1.resetToDefault()  
@@ -202,36 +203,39 @@ def main():
     motor2.setOTPParam()
     #time.sleep(2)
     
-    motor1.setMotorParam(0,3,2)
-    motor2.setMotorParam(1,3,2)
+    motor1.setMotorParam(0,1,2)
+    motor2.setMotorParam(1,1,2)
     #time.sleep(2)
-    position=200
+    position=30000
     print("runInit:")
     motor1.runInit(100,200)  
     motor2.runInit(100,200)  
-    time.sleep(5)
-    #time.sleep(2)
-#     motor1.setPosition(30000)
-#     motor2.setPosition(30000)
-#     
-#     for i in range(0,100):
-#         motor1.setMotorParam(0,(i%5)+1,2)
-#         time.sleep(1)
-    print("running with 16step inc at 1/8 stepmode\n byte 0 is most left")
+    #time.sleep(5)
+    motor2.setPosition(position)
+    motor1.setPosition(position)
 
-    for i in range(0,100):
+    for i in range(0,15):
         returner=motor2.getFullStatus2()
-        position+=16
-        motor2.setPosition(position)
-        str1="\t".join(map(hex, returner))
+        #position+=16
+        #motor2.setPosition(position)
+        motor2.setMotorParam(1,(i%5)+1,2)
+
+        str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
+        #str1="\t".join(map(hex, returner))
         print(str1)
-        time.sleep(0.1)
-    
-    
-   
-#    motor.resetToDefault()   
-#    motor.hardStop()
-#    motor.getFullStatus1()    
+        time.sleep(1)
+        
+        
+#     for j in range(0,20):
+#         returner=motor2.getFullStatus2()
+#         position+=2500
+#         motor2.setPosition(position)
+#         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
+#         #str1="\t".join(map(hex, returner))
+#         print(str1)
+#         time.sleep(1)
+
+  
 
 if __name__== '__main__':
     main()
