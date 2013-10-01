@@ -203,7 +203,7 @@ def main():
     motor2.setOTPParam()
     #time.sleep(2)
     
-    motor1.setMotorParam(0,7,2)
+    motor1.setMotorParam(0,10,2)
     motor2.setMotorParam(1,7,2)
     #time.sleep(2)
     position=30000
