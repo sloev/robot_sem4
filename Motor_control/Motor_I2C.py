@@ -202,7 +202,7 @@ def main():
     motor1.setOTPParam()
     motor2.setOTPParam()
     #time.sleep(2)
-    
+    #dsadsd
     motor1.setMotorParam(0,1,2)
     motor2.setMotorParam(1,1,2)
     #time.sleep(2)
