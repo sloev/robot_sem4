@@ -176,7 +176,7 @@ class Motor_I2C:
     
     
 def main():
-    time.sleep(10)
+    time.sleep(5)
     motor1 = Motor_I2C(0x60)
     motor2 = Motor_I2C(0x61)
     
@@ -202,7 +202,7 @@ def main():
     motor1.setOTPParam()
     motor2.setOTPParam()
     #time.sleep(2)
-    #dsadsd
+    
     motor1.setMotorParam(0,1,2)
     motor2.setMotorParam(1,1,2)
     #time.sleep(2)
