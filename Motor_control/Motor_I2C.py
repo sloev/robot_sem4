@@ -206,7 +206,7 @@ def main():
     motor1.setMotorParam(0,3,2)
     motor2.setMotorParam(1,1,2)
     #time.sleep(2)
-    position=32000
+    position=30000
     print("runInit:")
     motor1.runInit(10,20)  
     motor2.runInit(10,20)  
@@ -231,7 +231,7 @@ def main():
         #motor2.setPosition(position)
         motor2.setMotorParam(1,5,2)
         motor1.setMotorParam(0,5,2)
-        position+=30000
+        position+=5000
         motor2.setPosition(position)
         motor1.setPosition(position)
 
