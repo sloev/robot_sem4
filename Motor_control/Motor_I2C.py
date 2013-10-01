@@ -217,7 +217,7 @@ def main():
         #position+=16
         #motor2.setPosition(position)
         str1=hex(returner[0])+"\t"+str(returner[1]<<4 | returner[2]<<0 )+"\t"+str(returner[3]<<4 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
-        str1="\t".join(map(hex, returner))
+        #str1="\t".join(map(hex, returner))
         print(str1+"\n")
         time.sleep(0.1)
   
