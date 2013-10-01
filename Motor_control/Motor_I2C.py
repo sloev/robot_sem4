@@ -60,7 +60,7 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.lrun=15
+        self.lrun=8
         self.lhold=2
         
         '''Status of circuit and stepper motor'''
@@ -203,8 +203,8 @@ def main():
     motor2.setOTPParam()
     #time.sleep(2)
     
-    motor1.setMotorParam(0,10,2)
-    motor2.setMotorParam(1,7,2)
+    motor1.setMotorParam(0,3,2)
+    motor2.setMotorParam(1,2,2)
     #time.sleep(2)
     position=30000
     print("runInit:")
@@ -229,8 +229,8 @@ def main():
         returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
-        motor2.setMotorParam(1,15,2)
-        motor1.setMotorParam(0,15,2)
+        motor2.setMotorParam(1,8,2)
+        motor1.setMotorParam(0,8,2)
         position+=7800
         motor2.setPosition(position)
         motor1.setPosition(position)
