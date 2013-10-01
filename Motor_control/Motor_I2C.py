@@ -176,7 +176,7 @@ class Motor_I2C:
     
     
 def main():
-    time.sleep(10)
+    time.sleep(25)
     motor1 = Motor_I2C(0x60)
     motor2 = Motor_I2C(0x61)
     
@@ -219,6 +219,21 @@ def main():
         #position+=16
         #motor2.setPosition(position)
         motor2.setMotorParam(1,(i%5)+1,2)
+
+        str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
+        #str1="\t".join(map(hex, returner))
+        print(str1)
+        time.sleep(1)
+        
+    for i in range(0,10):
+        returner=motor2.getFullStatus2()
+        #position+=16
+        #motor2.setPosition(position)
+        motor2.setMotorParam(1,5,2)
+        motor1.setMotorParam(0,5,2)
+        position+=30000
+        motor2.setPosition(position)
+        motor1.setPosition(position)
 
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
