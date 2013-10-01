@@ -71,7 +71,7 @@ class Motor_I2C:
         
         '''Status of the position of the stepper motor'''
     def getFullStatus2(self):
-        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,9)
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,8)
         #response = self.bus.write_byte(self.devAddress, 0xFC)
         return response
         
@@ -202,23 +202,15 @@ def main():
     motor2.setOTPParam()
     #time.sleep(2)
     
-    motor1.setMotorParam(0,3,2)
-    motor2.setMotorParam(1,3,2)
+    motor1.setMotorParam(0,1,2)
+    motor2.setMotorParam(1,1,2)
     #time.sleep(2)
-    position=4000
+    position=10000
     print("runInit:")
     motor1.runInit(100,200)  
     motor2.runInit(100,200)  
-    time.sleep(2)
+    time.sleep(1)
     motor2.setPosition(position)
-    #time.sleep(2)
-#     motor1.setPosition(30000)
-#     motor2.setPosition(30000)
-#     
-#     for i in range(0,100):
-#         motor1.setMotorParam(0,(i%5)+1,2)
-#         time.sleep(1)
-    print("running with 16step inc at 1/8 stepmode\n byte 0 is most left")
 
     for i in range(0,100):
         returner=motor2.getFullStatus2()
@@ -227,12 +219,7 @@ def main():
         str1="\t".join(map(hex, returner))
         print(str1+"\n")
         time.sleep(0.1)
-    
-    
-   
-#    motor.resetToDefault()   
-#    motor.hardStop()
-#    motor.getFullStatus1()    
+  
 
 if __name__== '__main__':
     main()
