@@ -225,13 +225,13 @@ def main():
         print(str1)
         time.sleep(1)
         
-    for j in range(0,60):
+    for j in range(0,50):
         returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
-        motor2.setMotorParam(1,13,2)
-        motor1.setMotorParam(0,13,2)
-        position+=8000
+        motor2.setMotorParam(1,10,2)
+        motor1.setMotorParam(0,10,2)
+        position+=7800
         motor2.setPosition(position)
         motor1.setPosition(position)
 
