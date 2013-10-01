@@ -203,8 +203,8 @@ def main():
     motor2.setOTPParam()
     #time.sleep(2)
     
-    motor1.setMotorParam(0,3,2)
-    motor2.setMotorParam(1,1,2)
+    motor1.setMotorParam(0,7,2)
+    motor2.setMotorParam(1,7,2)
     #time.sleep(2)
     position=30000
     print("runInit:")
@@ -218,19 +218,19 @@ def main():
         returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
-        motor2.setMotorParam(1,(i%5)+1,2)
+        motor2.setMotorParam(1,(i%5)+7,2)
 
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
         print(str1)
         time.sleep(1)
         
-    for j in range(0,30):
+    for j in range(0,50):
         returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
-        motor2.setMotorParam(1,5,2)
-        motor1.setMotorParam(0,5,2)
+        motor2.setMotorParam(1,10,2)
+        motor1.setMotorParam(0,10,2)
         position+=5000
         motor2.setPosition(position)
         motor1.setPosition(position)
