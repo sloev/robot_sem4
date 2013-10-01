@@ -53,7 +53,7 @@ cmdSoftStop           = 0x8F       # Motor stopping with deceleration phase
 class Motor_I2C:
     '''
 
-/    Stepper motor driver module.
+    Stepper motor driver module.
     '''
 
     '''Constructor'''
