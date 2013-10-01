@@ -71,7 +71,7 @@ class Motor_I2C:
         
         '''Status of the position of the stepper motor'''
     def getFullStatus2(self):
-        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2)
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,9)
         #response = self.bus.write_byte(self.devAddress, 0xFC)
         return response
         
@@ -209,7 +209,7 @@ def main():
     print("runInit:")
     motor1.runInit(100,200)  
     motor2.runInit(100,200)  
-    time.sleep(5)
+    time.sleep(2)
     motor2.setPosition(position)
     #time.sleep(2)
 #     motor1.setPosition(30000)
