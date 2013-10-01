@@ -210,6 +210,7 @@ def main():
     motor1.runInit(100,200)  
     motor2.runInit(100,200)  
     time.sleep(5)
+    motor2.setPosition(position)
     #time.sleep(2)
 #     motor1.setPosition(30000)
 #     motor2.setPosition(30000)
