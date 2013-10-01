@@ -223,7 +223,7 @@ def main():
         print(str1)
         time.sleep(1)
         
-    for j in range(0,15):
+    for j in range(0,20):
         returner=motor2.getFullStatus2()
         position+=2500
         motor2.setPosition(position)
