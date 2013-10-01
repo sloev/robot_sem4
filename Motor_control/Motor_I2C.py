@@ -208,8 +208,8 @@ def main():
     #time.sleep(2)
     position=20000
     print("runInit:")
-    motor1.runInit(1,2)  
-    motor2.runInit(1,2)  
+    motor1.runInit(100,200)  
+    motor2.runInit(100,200)  
     #time.sleep(5)
     motor2.setPosition(position)
     motor1.setPosition(position)
