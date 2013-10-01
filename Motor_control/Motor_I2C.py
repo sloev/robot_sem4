@@ -225,7 +225,7 @@ def main():
         print(str1)
         time.sleep(1)
         
-    for j in range(0,10):
+    for j in range(0,30):
         returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
