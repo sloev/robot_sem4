@@ -225,7 +225,8 @@ def main():
         
     for j in range(0,10):
         returner=motor2.getFullStatus2()
-        motor2.setPosition(position=position+500)
+        position+=500
+        motor2.setPosition(position)
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
         print(str1)
