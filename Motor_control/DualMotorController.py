@@ -107,11 +107,11 @@ class DualMotorController:
 def main():
     print("create motor instances")
     dualMotors=DualMotorController(0x60,0x61)
-    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
+    #print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
 
     print("running init")
-    dualMotors.runInit(100, 200)
-    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
+    dualMotors.runInit(300, 400)
+    #print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
 # 
 #     print("turning left 90")
 #     dualMotors.turnLeft()
