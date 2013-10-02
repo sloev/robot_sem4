@@ -2,6 +2,7 @@
 Created on Sep 23, 2013
 
 @author: Daniel Machon
+eview:johannes, benjamin
 '''
 
 '''
@@ -60,8 +61,8 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.lrun=3
-        self.lhold=2
+        self.lrun=6
+        self.lhold=1
         
         '''This method returns the status of the circuit of the
            stepper motor'''
@@ -100,7 +101,12 @@ class Motor_I2C:
     def resetToDefault(self):
         self.bus.write_byte(self.devAddress, cmdResetToDefault)
         #self.bus.write_byte(self.devAddress, 0x87)
- 
+#old     def runInit(self):
+#         byteCode1 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
+#         byteCode2 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
+#         self.bus.write_i2c_block_data(self.devAddress1, 0x88, byteCode1)
+#         self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode2)
+        
     def runInit(self,position1, position2):
         position1=self.toTwoBytes(position1)
         position2=self.toTwoBytes(position2)        
@@ -205,21 +211,21 @@ def main():
     motor1.setMotorParam(0,3,2)
     motor2.setMotorParam(1,3,2)
     #time.sleep(2)
-    position=32000
+    position=20000
     
     print("runInit:")
-    motor1.runInit(10,20)  
-    motor2.runInit(10,20)  
+    motor1.runInit(100,200)  
+    motor2.runInit(100,200)  
     time.sleep(7)
     
     motor2.setPosition(position)
     motor1.setPosition(position)
 
     for i in range(0,15):
-        returner=motor1.getFullStatus2()
+        returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
-        motor1.setMotorParam(1,(i%5)+1,2)
+        motor2.setMotorParam(1,(i%5)+1,2)
 
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
@@ -229,9 +235,9 @@ def main():
         
         
     for j in range(0,25):
-        returner=motor1.getFullStatus2()
+        returner=motor2.getFullStatus2()
         position+=2500
-        motor1.setPosition(position)
+        motor2.setPosition(position)
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
         print(str1)
