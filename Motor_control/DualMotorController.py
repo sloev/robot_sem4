@@ -88,6 +88,9 @@ class DualMotorController:
     def setDualPosition(self,position):
         self.posLeft=position
         self.posRight=position
+        
+        self.left.setPosition(self.posLeft)
+        self.right.setPosition(self.posRight)
     
     def dualUpdateMotorParams(self):
         self.left.setMotorParam(self.leftDir,self.leftSpeed,1)
