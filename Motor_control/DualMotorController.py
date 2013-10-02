@@ -41,7 +41,7 @@ class DualMotorController:
         self.turn90(1, 2)
     
     def turnLeft(self):
-        self.turn90(1,1)
+        self.turn90(1,2)
     
     def turnRight(self):
         self.turn90(0,1)
