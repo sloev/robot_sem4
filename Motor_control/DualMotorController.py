@@ -71,19 +71,16 @@ class DualMotorController:
     
     def setLeftSpeed(self,leftSpeed):
         self.leftSpeed=leftSpeed
-        self.updateMotorParams()
+
  
     def setRightSpeed(self,rightSpeed):
         self.rightSpeed=rightSpeed
-        self.dualUpdateMotorParams()
         
     def setLeftDirection(self,leftDir):
         self.leftDir=leftDir
-        self.dualUpdateMotorParams()
  
     def setRightDirection(self,rightDir):
         self.rightDir=rightDir
-        self.updateMotorParams()
     
     def dualSetPosition(self,position):
         self.posLeft+=position
@@ -131,6 +128,8 @@ def main():
     print("turning 180")
     dualMotors.setLeftDirection(0)
     dualMotors.setRightDirection(1)
+    dualMotors.dualUpdateMotorParams()
+
     dualMotors.dualSetPosition(4000)
     time.sleep(2)
     dualMotors.turnLeft()
