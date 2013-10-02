@@ -13,9 +13,6 @@ class DualMotorController:
         self.left = Motor_I2C(add1)
         self.right = Motor_I2C(add2)
         
-        self.left.runInit(100, 200)
-        self.right.runInit(100, 200)
-        
         self.posLeft=0
         self.posRight=0
         
@@ -47,16 +44,31 @@ class DualMotorController:
 
         self.left.setPosition(self.posLeft)
         self.right.setPosition(self.posRight)
+    
+    def runInit(self,posA,posB):
+        self.left.runInit(posA, posB)
+        self.right.runInit(posA, posB)
+    
+    def getActPosTarPosMatrix(self):
+        leftstatus = self.left.getFullStatus2()
+        rightstatus = self.right.getFullStatus2()
+        leftActPos = leftstatus[1]<<8 | leftstatus[2]<<0
+        leftTarPos= leftstatus[3]<<8 | leftstatus[4]<<0
+        rightActPos = rightstatus[1]<<8 | rightstatus[2]<<0
+        rightTarPos = rightstatus[3]<<8 | rightstatus[4]<<0
+        return [[leftActPos,leftTarPos],[rightActPos,rightTarPos]]
+        
 
 def main():
     dualMotors=DualMotorController(0x60,0x61)
+    dualMotors.runInit(100, 200)
     
     dualMotors.turnLeft()
-    while(dualMotors.busy()):
-        print("turning left")
-        time.sleep(1)
-    print("finished...not busy")
-    
+#     while(self.getActPosTarPosMatrix[):
+#         print("turning left")
+#         time.sleep(1)
+#     print("finished...not busy")
+#     
     time.sleep(1)
 
     dualMotors.turnRight()
