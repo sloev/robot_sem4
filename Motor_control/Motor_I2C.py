@@ -61,7 +61,7 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.lrun=3
+        self.lrun=10
         self.lhold=2
         
         '''This method returns the status of the circuit of the

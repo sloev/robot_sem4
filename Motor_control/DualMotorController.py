@@ -13,6 +13,9 @@ class DualMotorController:
         self.left = Motor_I2C(add1)
         self.right = Motor_I2C(add2)
         
+        self.left.runInit(100, 200)
+        self.right.runInit(100, 200)
+        
         self.posLeft=0
         self.posRight=0
         
