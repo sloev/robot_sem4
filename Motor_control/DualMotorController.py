@@ -20,8 +20,8 @@ class DualMotorController:
         self.right.setOTPParam()
     
     def busy(self):
-        leftstatus=self.left.getFullStatus2
-        rightstatus=self.right.getFullStatus2
+        leftstatus=self.left.getFullStatus2()
+        rightstatus=self.right.getFullStatus2()
         print(leftstatus.__class__.__name__ +"\t" +rightstatus.__class__.__name__)
         if(len(leftstatus)>4 and len(rightstatus)>4):
             leftstatus=(leftstatus[1]<<8 | leftstatus[2]<<0) | (leftstatus[3]<<8 | leftstatus[4]<<0)
