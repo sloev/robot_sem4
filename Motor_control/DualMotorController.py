@@ -19,8 +19,9 @@ class DualMotorController:
         self.rightDir=1
         self.leftSpeed=3
         self.rightSpeed=3
+        self.dualSetOTPParam()
         
-    def dualSetOTP(self):
+    def dualSetOTPParam(self):
         self.left.setOTPParam()
         self.right.setOTPParam()
         
@@ -87,7 +88,7 @@ class DualMotorController:
         self.posLeft=position
         self.posRight=position
     
-    def updateMotorParams(self):
+    def dualUpdateMotorParams(self):
         self.left.setMotorParam(self.leftDir,self.leftSpeed,1)
         self.right.setMotorParam(self.rightDir,self.rightSpeed,1)
         
