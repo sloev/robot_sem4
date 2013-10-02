@@ -17,7 +17,7 @@ class DualMotorController:
         self.posRight=0
         
         self.left.setOTPParam()
-        self.rigth.setOTPParam()
+        self.right.setOTPParam()
     
     def busy(self):
         leftstatus=self.left.getFullStatus2
