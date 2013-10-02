@@ -41,7 +41,7 @@ class DualMotorController:
         self.turn90(1, 2)
     
     def turnLeft(self):
-        self.turn90(1,2)
+        self.turn90(1,1)
     
     def turnRight(self):
         self.turn90(0,1)
@@ -126,7 +126,7 @@ def main():
     time.sleep(3)
      
     print("turning 180")
-    dualMotors.turnLeft()
+    dualMotors.turn180()
     while 1:
         tmp=dualMotors.getActPosTarPosMatrix()
         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
