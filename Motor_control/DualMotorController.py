@@ -103,14 +103,14 @@ class DualMotorController:
 def main():
     dualMotors=DualMotorController(0x60,0x61)
     dualMotors.runInit(100, 200)
+    time.sleep(4)
     
     dualMotors.turnLeft()
-#     while(self.getActPosTarPosMatrix[):
-#         print("turning left")
-#         time.sleep(1)
-#     print("finished...not busy")
-#     
-    time.sleep(1)
+    while(dualMotors.busy()):
+        print("turning right")
+        time.sleep(1)
+    print("finished...not busy")
+    time.sleep(3)
 
     dualMotors.turnRight()
     while(dualMotors.busy()):
@@ -118,7 +118,7 @@ def main():
         time.sleep(1)
     print("finished...not busy")
     
-    time.sleep(1)
+    time.sleep(3)
 
     dualMotors.turn180()
     while(dualMotors.busy()):
