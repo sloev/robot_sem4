@@ -103,7 +103,6 @@ class DualMotorController:
 def main():
     dualMotors=DualMotorController(0x60,0x61)
     dualMotors.runInit(100, 200)
-    time.sleep(4)
     
     dualMotors.turnLeft()
 
