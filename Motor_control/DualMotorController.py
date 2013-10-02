@@ -126,7 +126,9 @@ def main():
     time.sleep(3)
      
     print("turning 180")
-    dualMotors.turnAround()
+    dualMotors.turnLeft()
+    dualMotors.turnLeft()
+
 #     while 1:
 #         tmp=dualMotors.getActPosTarPosMatrix()
 #         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
