@@ -13,8 +13,8 @@ class DualMotorController:
         self.left = Motor_I2C(add1)
         self.right = Motor_I2C(add2)
         
-        self.posLeft=200
-        self.posRight=200
+        self.posLeft=201
+        self.posRight=201
         
         self.leftDir=0
         self.rightDir=1
@@ -24,6 +24,7 @@ class DualMotorController:
         
         self.dualSetOTPParam()
         self.dualUpdateMotorParams()
+        
     def dualSetOTPParam(self):
         self.left.setOTPParam()
         self.right.setOTPParam()
@@ -111,29 +112,29 @@ def main():
     print("running init")
     dualMotors.runInit(100, 200)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
-
-    print("turning left 90")
-    dualMotors.turnLeft()
-    while 1:
-        tmp=dualMotors.getActPosTarPosMatrix()
-        if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
-            break 
-        print("turning:"+str(tmp))
-        time.sleep(0.1)
-    
-    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
-    print("sleeping in 3 seconds")
-    time.sleep(3)
-    
-    print("turning 180")
-    dualMotors.turn180()
-    while 1:
-        tmp=dualMotors.getActPosTarPosMatrix()
-        if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
-            break 
-        print("turning:"+str(tmp))
-        time.sleep(0.1)
-    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
+# 
+#     print("turning left 90")
+#     dualMotors.turnLeft()
+#     while 1:
+#         tmp=dualMotors.getActPosTarPosMatrix()
+#         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
+#             break 
+#         print("turning:"+str(tmp))
+#         time.sleep(0.1)
+#     
+#     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
+#     print("sleeping in 3 seconds")
+#     time.sleep(3)
+#     
+#     print("turning 180")
+#     dualMotors.turn180()
+#     while 1:
+#         tmp=dualMotors.getActPosTarPosMatrix()
+#         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
+#             break 
+#         print("turning:"+str(tmp))
+#         time.sleep(0.1)
+#     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
 
 
 if __name__ == '__main__':
