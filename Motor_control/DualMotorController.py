@@ -23,7 +23,7 @@ class DualMotorController:
         self.rightSpeed=3
         
         self.dualSetOTPParam()
-        
+        self.dualUpdateMotorParams()
     def dualSetOTPParam(self):
         self.left.setOTPParam()
         self.right.setOTPParam()
