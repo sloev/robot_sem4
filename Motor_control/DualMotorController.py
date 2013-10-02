@@ -136,6 +136,8 @@ def main():
 #         time.sleep(0.3)
     time.sleep(3)
     dualMotors.turnLeft()
+    dualMotors.dualHardstop()
+    dualMotors.dualResettoDefault()
 
 
 #    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
