@@ -106,25 +106,16 @@ def main():
     time.sleep(4)
     
     dualMotors.turnLeft()
-    while(dualMotors.busy()):
-        print("turning right")
-        time.sleep(1)
-    print("finished...not busy")
+
     time.sleep(3)
 
     dualMotors.turnRight()
-    while(dualMotors.busy()):
-        print("turning right")
-        time.sleep(1)
-    print("finished...not busy")
+
     
     time.sleep(3)
 
     dualMotors.turn180()
-    while(dualMotors.busy()):
-        print("turning right")
-        time.sleep(1)
-    print("finished...not busy")
+
 
 if __name__ == '__main__':
     main()
