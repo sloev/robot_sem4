@@ -4,11 +4,18 @@ Created on Oct 1, 2013
 @author: Daniel Machon
 '''
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-' This module is a decorator, to get the status of the stepper    '
-' motor in printed text. The decorator takes the getFulStatus2,   '
-' decorates it, and print the result in a more understandable way '                                        
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' This class is a decorator. Its purpose is to return the status   '
+' of the stepper motor in printed text. The decorator takes the    '
+' getFullStatus2 method, decorates it, and prints the result in a  '
+' more understandable way.                                         '
+'                                                                  '
+' The decorator can be used on the getFullStatus2 method, by using ' 
+' the following syntax:                                            '
+'                                                                  '
+'@TMCStatus222                                                     '
+'getFullStatus2()                                                  '
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 class TMC222Status(object):
 
@@ -91,7 +98,7 @@ class TMC222Status(object):
         
 @TMC222Status
 def getFullStatus2(self):
-    r = [0x55, 0xAA, 0xBB, 0xCC, 0xFF, 0x43, 0x62, 0x11, 0x99]
+    r = [0x55, 0xAA, 0xBB, 0xCC, 0x00, 0x43, 0x62, 0x11, 0x99]
     return r
    
         
