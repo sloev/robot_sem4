@@ -134,7 +134,7 @@ def main():
         print("turning:"+str(tmp))
         time.sleep(0.1)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
-    dualMotors.dualHardstop()
-    
+    time.sleep(1)
+    dualMotors.dualResettoDefault()    
 if __name__ == '__main__':
     main()
