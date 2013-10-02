@@ -127,12 +127,12 @@ def main():
      
     print("turning 180")
     dualMotors.turnAround()
-    while 1:
-        tmp=dualMotors.getActPosTarPosMatrix()
-        if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
-            break 
-        print("turning:"+str(tmp))
-        time.sleep(0.3)
+#     while 1:
+#         tmp=dualMotors.getActPosTarPosMatrix()
+#         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
+#             break 
+#         print("turning:"+str(tmp))
+#         time.sleep(0.3)
     time.sleep(3)
 
 #    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
