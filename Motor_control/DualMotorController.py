@@ -37,7 +37,7 @@ class DualMotorController:
         rightstatus=(rightstatus[1]<<8 | rightstatus[2]<<0) | (rightstatus[3]<<8 | rightstatus[4]<<0)
         return (leftstatus & rightstatus)==0
     
-    def turn180(self):
+    def turnAround(self):
         self.turn90(1, 2)
     
     def turnLeft(self):
@@ -126,16 +126,16 @@ def main():
     time.sleep(3)
      
     print("turning 180")
-    dualMotors.turn180()
+    dualMotors.turnAround()
     while 1:
         tmp=dualMotors.getActPosTarPosMatrix()
         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
             break 
         print("turning:"+str(tmp))
         time.sleep(0.1)
+    time.sleep(3)
+
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
-    time.sleep(1)
-    dualMotors.dualResettoDefault()   
      
 if __name__ == '__main__':
     main()
