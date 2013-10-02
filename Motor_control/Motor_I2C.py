@@ -62,7 +62,7 @@ class Motor_I2C:
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
         self.lrun=6
-        self.lhold=2
+        self.lhold=1
         
         '''This method returns the status of the circuit of the
            stepper motor'''
