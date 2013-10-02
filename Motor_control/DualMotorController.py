@@ -75,11 +75,11 @@ class DualMotorController:
  
     def setRightSpeed(self,rightSpeed):
         self.rightSpeed=rightSpeed
-        self.updateMotorParams()
+        self.dualUpdateMotorParams()
         
     def setLeftDirection(self,leftDir):
         self.leftDir=leftDir
-        self.updateMotorParams()
+        self.dualUpdateMotorParams()
  
     def setRightDirection(self,rightDir):
         self.rightDir=rightDir
