@@ -15,9 +15,18 @@ class DualMotorController:
         
         self.posLeft=0
         self.posRight=0
+        self.leftDir=0
+        self.rightDir=1
+        self.leftSpeed=3
+        self.rightSpeed=3
         
+    def dualSetOTP(self):
         self.left.setOTPParam()
         self.right.setOTPParam()
+        
+    def dualResettoDefault(self):
+        self.left.resetToDefault()
+        self.right.resetToDefault()
     
     def busy(self):
         leftstatus=self.left.getFullStatus2()
@@ -57,7 +66,38 @@ class DualMotorController:
         rightActPos = rightstatus[1]<<8 | rightstatus[2]<<0
         rightTarPos = rightstatus[3]<<8 | rightstatus[4]<<0
         return [[leftActPos,leftTarPos],[rightActPos,rightTarPos]]
+    
+    def setLeftSpeed(self,leftSpeed):
+        self.leftSpeed=leftSpeed
+        self.updateMotorParams()
+ 
+    def setRightSpeed(self,rightSpeed):
+        self.rightSpeed=rightSpeed
+        self.updateMotorParams()
         
+    def setLeftDirection(self,leftDir):
+        self.leftDir=leftDir
+        self.updateMotorParams()
+ 
+    def setRightDirection(self,rightDir):
+        self.rightDir=rightDir
+        self.updateMotorParams()
+    
+    def setDualPosition(self,position):
+        self.posLeft=position
+        self.posRight=position
+    
+    def updateMotorParams(self):
+        self.left.setMotorParam(self.leftDir,self.leftSpeed,1)
+        self.right.setMotorParam(self.rightDir,self.rightSpeed,1)
+        
+    def dualHardstop(self):
+        self.left.hardStop()
+        self.right.hardStop()
+    
+    def dualSoftstop(self):
+        self.left.softStop()
+        self.right.softStop()
 
 def main():
     dualMotors=DualMotorController(0x60,0x61)
