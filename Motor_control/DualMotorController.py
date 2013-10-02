@@ -135,6 +135,7 @@ def main():
         time.sleep(0.1)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     time.sleep(1)
-    dualMotors.dualResettoDefault()    
+    dualMotors.dualResettoDefault()   
+     
 if __name__ == '__main__':
     main()
