@@ -3,7 +3,7 @@ Created on Oct 2, 2013
 
 @author: johannes, benjamin
 '''
-from Motor_control import Motor_I2C
+from Motor_I2C import Motor_I2C
 import time as time
 
 class DualMotorController:
