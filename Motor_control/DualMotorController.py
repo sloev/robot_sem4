@@ -13,12 +13,15 @@ class DualMotorController:
         self.left = Motor_I2C(add1)
         self.right = Motor_I2C(add2)
         
-        self.posLeft=0
-        self.posRight=0
+        self.posLeft=200
+        self.posRight=200
+        
         self.leftDir=0
         self.rightDir=1
-        self.leftSpeed=200
-        self.rightSpeed=200
+        
+        self.leftSpeed=3
+        self.rightSpeed=3
+        
         self.dualSetOTPParam()
         
     def dualSetOTPParam(self):
@@ -37,7 +40,7 @@ class DualMotorController:
         return (leftstatus & rightstatus)==0
     
     def turn180(self):
-        self.turn90(0, 2)
+        self.turn90(1, 2)
     
     def turnLeft(self):
         self.turn90(1,1)
@@ -101,20 +104,33 @@ class DualMotorController:
         self.right.softStop()
 
 def main():
+    print("create motor instances")
     dualMotors=DualMotorController(0x60,0x61)
+    
+    print("running init")
     dualMotors.runInit(100, 200)
     
+    print("turning left 90")
     dualMotors.turnLeft()
-
-    time.sleep(3)
-
-    dualMotors.turnRight()
-
+    while 1:
+        tmp=dualMotors.getActPosTarPosMatrix()
+        if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
+            break 
+        print("turning:"+str(tmp))
+        time.sleep(0.1)
     
+    print("sleeping in 3 seconds")
     time.sleep(3)
-
+    
+    print("turning 180")
     dualMotors.turn180()
-
+    while 1:
+        tmp=dualMotors.getActPosTarPosMatrix()
+        if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
+            break 
+        print("turning:"+str(tmp))
+        time.sleep(0.1)
+    
 
 if __name__ == '__main__':
     main()
