@@ -14,11 +14,12 @@ Created on Oct 1, 2013
 ' the following syntax:                                            '
 '                                                                  '
 '@TMCStatus222                                                     '
-'getFullStatus2()                                                  '
+'getFullStatus1()                                                  '
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 class TMC222Status(object):
 
+    '''Constructor'''    
     def __init__(self, f):
         print "Daniel Machon's awesome decorator initialized!"
         self.f = f
@@ -26,6 +27,7 @@ class TMC222Status(object):
         print "Decorating function " + self.f.__name__
 
 
+    '''Called after the class is instantiated'''        
     def __call__(self):
         print str(len(self.data)) + " bytes received"
         print "Slave located at " + self.slaveAdd
@@ -36,7 +38,7 @@ class TMC222Status(object):
         
         
         
-        
+    '''Retrieve data from the original function'''    
     def setData(self, f):
         self.data = f(self)
         self.slaveAdd = str(hex(self.data[0]))
@@ -49,6 +51,8 @@ class TMC222Status(object):
         self.NA1 = str(self.data[7])
         self.NA2 = str(self.data[8])
         
+     
+    '''Manipulate data from the stat1 byte'''    
     def getStat1(self, byte):
         data = byte
         self.accShape = (data >> (1-1)) & 1
@@ -75,7 +79,7 @@ class TMC222Status(object):
             print "Robot is moving backwards"
         
             
-            
+    '''Manipulate data from the stat2 byte'''        
     def getStat2(self, byte):
         self.data = byte
         self.vddReset = (self.data >> 1) & 1
@@ -87,6 +91,7 @@ class TMC222Status(object):
         self.Tinfo = (self.data >> 7) & 1
         
         
+    '''Manipulate data from the stat3 byte'''    
     def getStat3(self, byte):
         self.data = byte
         self.motion = (self.data >> 3) & 111
@@ -96,6 +101,7 @@ class TMC222Status(object):
         self.CPFail = (self.data >> 7) & 1
         
         
+'''Example of use'''        
 @TMC222Status
 def getFullStatus2(self):
     r = [0x55, 0xAA, 0xBB, 0xCC, 0x00, 0x43, 0x62, 0x11, 0x99]
