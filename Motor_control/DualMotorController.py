@@ -13,7 +13,7 @@ class DualMotorController:
         self.left = Motor_I2C(add1)
         self.right = Motor_I2C(add2)
         
-        self.posleft=0
+        self.posLeft=0
         self.posRight=0
         
         self.left.setOTPParam()
