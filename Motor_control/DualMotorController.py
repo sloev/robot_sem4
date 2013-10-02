@@ -22,9 +22,6 @@ class DualMotorController:
         self.leftSpeed=3
         self.rightSpeed=3
         
-        self.dualSetOTPParam()
-        self.dualUpdateMotorParams()
-        
     def dualSetOTPParam(self):
         self.left.setOTPParam()
         self.right.setOTPParam()
@@ -108,9 +105,11 @@ def main():
     print("create motor instances")
     dualMotors=DualMotorController(0x60,0x61)
     #print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
-
+    dualMotors.dualSetOTPParam()
+    dualMotors.dualUpdateMotorParams()
     print("running init")
     dualMotors.runInit(300, 400)
+    time.sleep(7)
     #print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
 # 
 #     print("turning left 90")
