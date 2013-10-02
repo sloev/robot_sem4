@@ -22,9 +22,11 @@ class DualMotorController:
     def busy(self):
         leftstatus=self.left.getFullStatus2
         rightstatus=self.right.getFullStatus2
-        leftstatus=(leftstatus[1]<<8 | leftstatus[2]<<0) | (leftstatus[3]<<8 | leftstatus[4]<<0)
-        rightstatus=(rightstatus[1]<<8 | rightstatus[2]<<0) | (rightstatus[3]<<8 | rightstatus[4]<<0)
-        return (leftstatus & rightstatus)==0
+        if(len(leftstatus)>4 and len(rightstatus)>4):
+            leftstatus=(leftstatus[1]<<8 | leftstatus[2]<<0) | (leftstatus[3]<<8 | leftstatus[4]<<0)
+            rightstatus=(rightstatus[1]<<8 | rightstatus[2]<<0) | (rightstatus[3]<<8 | rightstatus[4]<<0)
+            return (leftstatus & rightstatus)==0
+        return 0
     
     def turn180(self):
         self.turn90(0, 2)
