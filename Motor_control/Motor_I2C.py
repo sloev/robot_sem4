@@ -209,18 +209,18 @@ def main():
     position=20000
     
     print("runInit:")
-    motor1.runInit(10,20)  
-    motor2.runInit(10,20)  
+    motor1.runInit(100,200)  
+    motor2.runInit(100,200)  
     time.sleep(7)
     
     motor2.setPosition(position)
     motor1.setPosition(position)
 
     for i in range(0,15):
-        returner=motor1.getFullStatus2()
+        returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
-        motor1.setMotorParam(1,(i%5)+1,2)
+        motor2.setMotorParam(1,(i%5)+1,2)
 
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
@@ -230,9 +230,9 @@ def main():
         
         
     for j in range(0,25):
-        returner=motor1.getFullStatus2()
+        returner=motor2.getFullStatus2()
         position+=2500
-        motor1.setPosition(position)
+        motor2.setPosition(position)
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
         print(str1)
