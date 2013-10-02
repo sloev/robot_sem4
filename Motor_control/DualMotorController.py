@@ -132,17 +132,6 @@ def main():
     dualMotors.dualUpdateMotorParams()
 
     dualMotors.dualSetPosition(12000)
-    time.sleep(2)
-    dualMotors.turnLeft()
-    time.sleep(2)
-    dualMotors.turnRight()
-    time.sleep(2)
-    dualMotors.turnLeft()
-    time.sleep(2)
-    dualMotors.turnRight()
-
-
-#    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
      
 if __name__ == '__main__':
     main()
