@@ -126,7 +126,7 @@ def main():
      
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     print("sleeping in 3 seconds")
-    time.sleep(3)
+    time.sleep(2)
      
     print("turning 180")
     dualMotors.turnLeft()
@@ -137,8 +137,14 @@ def main():
 #             break 
 #         print("turning:"+str(tmp))
 #         time.sleep(0.3)
-    time.sleep(3)
-    dualMotors.setDualPosition(20000)
+    time.sleep(2)
+    dualMotors.turnLeft()
+    time.sleep(2)
+    dualMotors.turnRight()
+    time.sleep(2)
+    dualMotors.turnLeft()
+    time.sleep(2)
+    dualMotors.turnRight()
 
 
 #    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
