@@ -85,9 +85,9 @@ class DualMotorController:
         self.rightDir=rightDir
         self.updateMotorParams()
     
-    def setDualPosition(self,position):
-        self.posLeft=position
-        self.posRight=position
+    def dualSetPosition(self,position):
+        self.posLeft+=position
+        self.posRight+=position
         
         self.left.setPosition(self.posLeft)
         self.right.setPosition(self.posRight)
@@ -105,6 +105,7 @@ class DualMotorController:
         self.right.softStop()
 
 def main():
+    time.sleep(20)
     print("create motor instances")
     dualMotors=DualMotorController(0x60,0x61)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
@@ -129,14 +130,9 @@ def main():
     time.sleep(2)
      
     print("turning 180")
-    dualMotors.turnLeft()
-
-#     while 1:
-#         tmp=dualMotors.getActPosTarPosMatrix()
-#         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
-#             break 
-#         print("turning:"+str(tmp))
-#         time.sleep(0.3)
+    dualMotors.setLeftDirection(0)
+    dualMotors.setRightDirection(1)
+    dualMotors.dualSetPosition(4000)
     time.sleep(2)
     dualMotors.turnLeft()
     time.sleep(2)
