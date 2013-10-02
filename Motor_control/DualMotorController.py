@@ -102,6 +102,7 @@ class DualMotorController:
         self.right.softStop()
 
 def main():
+    time.sleep(25)
     print("create motor instances")
     dualMotors=DualMotorController(0x60,0x61)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
@@ -130,7 +131,7 @@ def main():
     dualMotors.setRightDirection(1)
     dualMotors.dualUpdateMotorParams()
 
-    dualMotors.dualSetPosition(4000)
+    dualMotors.dualSetPosition(12000)
     time.sleep(2)
     dualMotors.turnLeft()
     time.sleep(2)
