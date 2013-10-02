@@ -108,7 +108,7 @@ def main():
     dualMotors.dualSetOTPParam()
     dualMotors.dualUpdateMotorParams()
     print("running init")
-    dualMotors.runInit(300, 400)
+    dualMotors.runInit(3000, 4000)
     time.sleep(7)
     #print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
 # 
