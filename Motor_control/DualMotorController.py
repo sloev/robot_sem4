@@ -109,7 +109,7 @@ def main():
     dualMotors.dualUpdateMotorParams()
     print("running init")
     dualMotors.runInit(3000, 4000)
-    time.sleep(7)
+    time.sleep(3)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
  
     print("turning left 90")
@@ -119,7 +119,7 @@ def main():
         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
             break 
         print("turning:"+str(tmp))
-        time.sleep(0.1)
+        time.sleep(0.3)
      
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     print("sleeping in 3 seconds")
@@ -132,10 +132,10 @@ def main():
         if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
             break 
         print("turning:"+str(tmp))
-        time.sleep(0.1)
+        time.sleep(0.3)
     time.sleep(3)
 
-    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
+#    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
      
 if __name__ == '__main__':
     main()
