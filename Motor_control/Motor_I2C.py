@@ -61,7 +61,7 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.lrun=10
+        self.lrun=6
         self.lhold=2
         
         '''This method returns the status of the circuit of the
@@ -101,7 +101,12 @@ class Motor_I2C:
     def resetToDefault(self):
         self.bus.write_byte(self.devAddress, cmdResetToDefault)
         #self.bus.write_byte(self.devAddress, 0x87)
- 
+#old     def runInit(self):
+#         byteCode1 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
+#         byteCode2 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
+#         self.bus.write_i2c_block_data(self.devAddress1, 0x88, byteCode1)
+#         self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode2)
+        
     def runInit(self,position1, position2):
         position1=self.toTwoBytes(position1)
         position2=self.toTwoBytes(position2)        
