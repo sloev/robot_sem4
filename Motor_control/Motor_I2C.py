@@ -70,7 +70,7 @@ class Motor_I2C:
         '''This method returns the status of the circuit of the
            stepper motor'''
     def getFullStatus1(self):
-        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 11)
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
         return response
     
         

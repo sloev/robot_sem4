@@ -4,6 +4,7 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 from Motor_I2C import Motor_I2C
+from Decorators import TMC222Status.py
 import time as time
 
 class DualMotorController:
@@ -95,7 +96,6 @@ class DualMotorController:
         self.setLeftMaxVel(maxVelocity)
         self.setRightMaxVel(maxVelocity)
         
-        
     def setLeftDirection(self,direction):
         self.left.setDirection(direction)
  
@@ -105,8 +105,19 @@ class DualMotorController:
     def dualSetDirection(self,direction):
         self.setRightDirection(direction)
         self.setLeftDirection(direction)
+        
+    @TMC222Status    
+    def leftGetFullstatus1(self):
+        r=self.left.getFullStatus1()
+        return r
+        
+    @TMC222Status    
+    def rightGetFullstatus1(self):
+        r=self.right.getFullStatus1()
+        return r
     
-
+        
+        
 def main():
     print("create motor instances")
     dualMotors=DualMotorController(0x60,0x61)
@@ -131,6 +142,9 @@ def main():
         dualMotors.dualSetPosition(position)
         time.sleep(1)
         print("IRun is="+str(i))
+    
+    print(dualMotors.leftGetFullstatus1())
+    print(dualMotors.rightGetFullstatus1())
         
         
         
