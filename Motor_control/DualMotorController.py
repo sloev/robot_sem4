@@ -63,12 +63,9 @@ class DualMotorController:
         return [[leftActPos,leftTarPos],[rightActPos,rightTarPos]]
     
  
-    def dualSetPosition(self,position):
-        self.posLeft+=position
-        self.posRight+=position
-        
-        self.left.setPosition(self.posLeft)
-        self.right.setPosition(self.posRight)
+    def dualSetPosition(self,position):        
+        self.left.setPosition(position)
+        self.right.setPosition(position)
     
     def dualUpdateMotorParams(self):
         self.left.setMotorParam()
@@ -122,12 +119,14 @@ def main():
     dualMotors.runInit(3000, 4000)
     time.sleep(3)
     position=1500
+    dualMotors.dualSetPosition(position)
+
     for i in range(2,15):
-        position+=2000
+        position+=4000
         dualMotors.dualSetIrun(i)
         dualMotors.dualUpdateMotorParams()
         dualMotors.dualSetPosition(position)
-        time.sleep(1)
+        time.sleep(2)
         print("IRun is="+str(i))
         
     dualMotors.dualSoftstop()
