@@ -134,10 +134,11 @@ def main():
 
     for i in range(2,30):
         position+=4000
-        dualMotors.dualSetIrun(int(round(i/2)))
+        irun=int(round(i/2))
+        dualMotors.dualSetIrun(irun)
         dualMotors.dualUpdateMotorParams()
         dualMotors.dualSetPosition(position)
-        time.sleep(1)
+        time.sleep(2)
         print("IRun is="+str(i)+" current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
 
     
