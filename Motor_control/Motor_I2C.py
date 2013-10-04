@@ -102,13 +102,7 @@ class Motor_I2C:
     
     def resetToDefault(self):
         self.bus.write_byte(self.devAddress, cmdResetToDefault)
-        #self.bus.write_byte(self.devAddress, 0x87)
-#old     def runInit(self):
-#         byteCode1 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
-#         byteCode2 = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]
-#         self.bus.write_i2c_block_data(self.devAddress1, 0x88, byteCode1)
-#         self.bus.write_i2c_block_data(self.devAddress2, 0x88, byteCode2)
-        
+    
     def runInit(self,position1, position2):
         position1=self.toTwoBytes(position1)
         position2=self.toTwoBytes(position2)        
@@ -129,11 +123,10 @@ class Motor_I2C:
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
     def setMotorParam(self): 
-        #byte3=self.irun<<4 | self.ihold<<0
+        byte3=self.irun<<4 | self.ihold<<0
         byte4=self.maxVelocity << 4 |self.minVelocity<<0 
-        byte3=self.maxVelocity << 4 |self.minVelocity<<0 
 
-        byte5=0x08 | self.direction<<4
+        byte5=0x88 | self.direction<<4
         byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0x08]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
     
