@@ -141,7 +141,7 @@ def main():
         time.sleep(1)
         print("IRun is="+str(i)+" current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     
-    dualMotors.dualSoftstop()
+    #dualMotors.dualSoftstop()
     print(dualMotors.leftGetFullstatus1())
     print(dualMotors.rightGetFullstatus1())
         
