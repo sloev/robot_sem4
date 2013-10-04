@@ -131,7 +131,7 @@ def main():
     position=1500
     dualMotors.dualSetPosition(position)
 
-    for i in range(1,18):
+    for i in range(1,30):
         position+=4000
         index=(i%6)+1
         dualMotors.dualSetMaxVel(index)
