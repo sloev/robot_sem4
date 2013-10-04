@@ -4,7 +4,6 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 
-from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
 import time as time
 
@@ -115,9 +114,7 @@ class DualMotorController:
     def rightGetFullstatus1(self):
         r=self.right.getFullStatus1()
         return r
-    
-        
-        
+     
 def main():
     print("create motor instances")
     dualMotors=DualMotorController(0x60,0x61)
