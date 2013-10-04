@@ -61,8 +61,8 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.irun=6
-        self.ihold=1
+        self.irun=3
+        self.ihold=2
         self.maxVelocity=3
         self.minVelocity=2
         self.direction=0
