@@ -3,7 +3,8 @@ Created on Oct 4, 2013
 
 @author: slavegnuen
 '''
-from Decorators.TMC222Status import TMC222Status
+from Decorators.TMC222Status import getFullStatus1
+
 def main():
     print("success2")
     
