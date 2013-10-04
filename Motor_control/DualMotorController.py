@@ -121,7 +121,7 @@ def main():
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     dualMotors.dualSetOTPParam()
     dualMotors.dualSetIrun(3)
-    dualMotors.dualSetMaxVel(3)
+    dualMotors.dualSetMaxVel(4)
     dualMotors.setLeftDirection(1)
     dualMotors.setRightDirection(0)
     dualMotors.dualUpdateMotorParams()
@@ -140,8 +140,7 @@ def main():
         dualMotors.dualSetPosition(position)
         time.sleep(2)
         print("IRun is="+str(i)+" current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
-
-    
+    dualMotors.dualHardstop()
     print(dualMotors.leftGetFullstatus1())
     print(dualMotors.rightGetFullstatus1())
         
