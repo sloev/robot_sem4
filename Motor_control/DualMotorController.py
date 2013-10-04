@@ -134,7 +134,7 @@ def main():
 
     for i in range(2,30):
         position+=4000
-        dualMotors.dualSetIrun(round(i/2))
+        dualMotors.dualSetIrun(int(round(i/2)))
         dualMotors.dualUpdateMotorParams()
         dualMotors.dualSetPosition(position)
         time.sleep(1)
