@@ -69,7 +69,7 @@ class DualMotorController:
     
     def dualIncTargetPosition(self,incPosition):   
         self.targetPosition+=incPosition     
-        self.left.setPosition(self.position+self.targetPosition)
+        self.left.setPosition(self.targetPosition)
         self.right.setPosition(self.targetPosition)
     
     def dualUpdateMotorParams(self):
