@@ -119,7 +119,7 @@ def main():
     dualMotors.dualUpdateMotorParams()
     
     print("running init")
-    dualMotors.runInit(3000, 4000)
+    dualMotors.runInit(100, 200)
     time.sleep(4)
     position=1500
     dualMotors.dualSetPosition(position)
