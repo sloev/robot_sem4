@@ -3,9 +3,10 @@ Created on Oct 2, 2013
 
 @author: johannes, benjamin
 '''
+from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
-import Decorators.TMC222Status
 import time as time
+
 
 class DualMotorController:
     def __init__(self, add1, add2):
