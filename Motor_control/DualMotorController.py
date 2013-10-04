@@ -143,6 +143,7 @@ def main():
     #time.sleep(8)
     #dualMotors.dualHardstop()
     print(dualMotors.leftGetFullstatus1())
+    time.sleep(0.1)
     print(dualMotors.rightGetFullstatus1())
         
         
