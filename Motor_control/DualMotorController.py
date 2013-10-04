@@ -4,7 +4,7 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 from Motor_I2C import Motor_I2C
-from Decorators import TMC222Status
+from Decorators.TMC222Status import TMC222Status
 import time as time
 
 class DualMotorController:
