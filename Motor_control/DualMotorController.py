@@ -16,6 +16,8 @@ class DualMotorController:
         self.posLeft=201
         self.posRight=201
         
+        self.irun=3
+        
         self.leftDir=0
         self.rightDir=1
         
@@ -71,10 +73,13 @@ class DualMotorController:
     
     def setLeftSpeed(self,leftSpeed):
         self.leftSpeed=leftSpeed
-
- 
+        
     def setRightSpeed(self,rightSpeed):
         self.rightSpeed=rightSpeed
+        
+    def dulaSetSpeed(self,speed):
+        self.setLeftSpeed(speed)
+        self.setRightSpeed(speed)
         
     def setLeftDirection(self,leftDir):
         self.leftDir=leftDir
@@ -100,6 +105,10 @@ class DualMotorController:
     def dualSoftstop(self):
         self.left.softStop()
         self.right.softStop()
+    
+    def dualSetIrun(self,irun):
+        self.irun=irun
+    
 
 def main():
     time.sleep(25)
@@ -107,31 +116,24 @@ def main():
     dualMotors=DualMotorController(0x60,0x61)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     dualMotors.dualSetOTPParam()
+    dualMotors.dualSetLrun(3)
+    dualMotors.dulaSetSpeed(3)
     dualMotors.dualUpdateMotorParams()
     print("running init")
     dualMotors.runInit(3000, 4000)
     time.sleep(3)
-    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
- 
-    print("turning left 90")
-    dualMotors.turnLeft()
-    while 1:
-        tmp=dualMotors.getActPosTarPosMatrix()
-        if(tmp[0][0]==tmp[0][1] and tmp[1][0]==tmp[1][1]):
-            break 
-        print("turning:"+str(tmp))
-        time.sleep(0.3)
-     
-    print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
-    print("sleeping in 3 seconds")
-    time.sleep(2)
-     
-    print("turning 180")
-    dualMotors.setLeftDirection(0)
-    dualMotors.setRightDirection(1)
-    dualMotors.dualUpdateMotorParams()
-
-    dualMotors.dualSetPosition(12000)
+    position=5000
+    for i in range(2,15):
+        position+=2000
+        dualMotors.dualSetIrun(i)
+        dualMotors.dualUpdateMotorParams()
+        dualMotors.dualSetPosition(position)
+        time.sleep(1)
+        print("IRun is="+str(i))
+        
+    dualMotors.dualSoftstop()
+        
+        
      
 if __name__ == '__main__':
     main()
