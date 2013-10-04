@@ -121,14 +121,13 @@ def main():
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     dualMotors.dualSetOTPParam()
     dualMotors.dualSetIrun(3)
-    dualMotors.dualSetMaxVel(4)
+    #dualMotors.dualSetMaxVel(3)
     dualMotors.setLeftDirection(1)
     dualMotors.setRightDirection(0)
     dualMotors.dualUpdateMotorParams()
     
     print("running init")
     dualMotors.runInit(100, 200)
-    time.sleep(4)
     position=1500
     dualMotors.dualSetPosition(position)
 
