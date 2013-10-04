@@ -18,7 +18,7 @@ class DualMotorController:
         self.stepsPrStep=8
         self.posLeft=201
         self.posRight=201
-        self.targetPosition=0
+        self.targetPosition=400
         
         
     def dualSetOTPParam(self):
@@ -123,7 +123,7 @@ def main():
     dualMotors=DualMotorController(0x60,0x61)
     print("current positions (act/tar/act/tar):"+str(dualMotors.getActPosTarPosMatrix()))
     dualMotors.dualSetOTPParam()
-    dualMotors.dualSetIrun(11)
+    dualMotors.dualSetIrun(3)
     #dualMotors.dualSetMaxVel(3)
     dualMotors.setLeftDirection(1)
     dualMotors.setRightDirection(0)
@@ -131,7 +131,8 @@ def main():
     
     print("running init")
     dualMotors.runInit(100, 200)
-    
+    dualMotors.dualIncTargetPosition(0)
+    time.sleep(3)
     dualMotors.turnLeft()
     while(dualMotors.busy()):
         time.sleep(0.1)
