@@ -231,7 +231,7 @@ def main():
         returner=motor2.getFullStatus2()
         #position+=16
         #motor2.setPosition(position)
-        motor2.setMotorParam(1,(i%5)+1,2)
+        motor2.setMotorParam()
 
         str1="length="+str(len(returner))+"\t"+hex(returner[0])+"\t"+str(returner[1]<<8 | returner[2]<<0 )+"\t"+str(returner[3]<<8 | returner[4]<<0 )+"\t"+hex(returner[5])+"\t"+hex(returner[6])+"\t"+hex(returner[7])
         #str1="\t".join(map(hex, returner))
