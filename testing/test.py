@@ -3,7 +3,7 @@ Created on Oct 4, 2013
 
 @author: slavegnuen
 '''
-import lib.Decorators.TMC222Status 
+from Decorators.TMC222Status import TMC222Status
 
 def main():
     print("success2")
