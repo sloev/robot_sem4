@@ -131,15 +131,15 @@ def main():
     
     print("running init")
     dualMotors.runInit(1000, 2000)
-    dualMotors.dualIncTargetPosition(3000)
+    #dualMotors.dualIncTargetPosition(3000)
     time.sleep(3)
-    dualMotors.turnLeft()
+    #dualMotors.turnLeft()
     while(dualMotors.busy()):
         time.sleep(0.1)
     print("turned left")
     time.sleep(3)
     
-    dualMotors.turnRight()
+    #dualMotors.turnRight()
     while(dualMotors.busy()):
         time.sleep(0.1)
     print("turned right")
