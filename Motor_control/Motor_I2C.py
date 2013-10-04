@@ -74,8 +74,8 @@ class Motor_I2C:
         return self.lol(response)
     
     @TMC222Status    
-    def lol(self,str):
-        return str
+    def lol(self,lolstr):
+        return lolstr
         
         '''This method returns the actual- and target position of
            the stepper motor'''
