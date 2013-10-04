@@ -32,7 +32,7 @@ StepMode parameter:         Mode:
 11                          1/16 Stepping
 '''  
 
-
+from Decorators.TMC222Status import TMC222Status
 import smbus
 import time as time
 
@@ -69,6 +69,7 @@ class Motor_I2C:
         
         '''This method returns the status of the circuit of the
            stepper motor'''
+    @TMC222Status    
     def getFullStatus1(self):
         response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
         return response

@@ -108,12 +108,10 @@ class DualMotorController:
         self.setRightDirection(direction)
         self.setLeftDirection(direction)
         
-    @TMC222Status    
     def leftGetFullstatus1(self):
         r=self.left.getFullStatus1()
         return r
         
-    @TMC222Status    
     def rightGetFullstatus1(self):
         r=self.right.getFullStatus1()
         return r
