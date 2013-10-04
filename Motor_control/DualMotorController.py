@@ -4,7 +4,7 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 
-
+from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
 import time as time
 
