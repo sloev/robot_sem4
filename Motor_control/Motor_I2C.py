@@ -61,8 +61,11 @@ class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress = devAddress
         self.bus = smbus.SMBus(1)
-        self.lrun=6
-        self.lhold=1
+        self.irun=6
+        self.ihold=1
+        self.maxVelocity=3
+        self.minVelocity=2
+        self.direction=0
         
         '''This method returns the status of the circuit of the
            stepper motor'''
@@ -126,13 +129,13 @@ class Motor_I2C:
            Byte 6: 7-0=Secure position of the stepper motor
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
-    def setMotorParam(self,direction, maxVelocity, minVelocity): 
-        byte3=self.lrun<<4 | self.lhold<<0
-        byte4=minVelocity<<0 | maxVelocity << 4
-        byte5=0x88 | direction<<4
+    def setMotorParam(self): 
+        byte3=self.irun<<4 | self.ihold<<0
+        byte4=self.minVelocity<<0 | self.maxVelocity << 4
+        byte5=0x88 | self.direction<<4
         byteCode = [0xFF, 0xFF, byte3, byte4, byte5, 0x00, 0x08]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
-        
+    
            
     
         '''Drive the motor to a given position relative to 
@@ -190,12 +193,21 @@ class Motor_I2C:
        to metoder til at satte torque for drift og stilstand lrun/lhol
     '''
     
-    def setLrun(self,lrun):
-        self.lrun=lrun
+    def setIrun(self,irun):
+        self.irun=irun
     
     
-    def setLhold(self,lhold):
+    def setIhold(self,lhold):
         self.lhold=lhold
+    
+    def setMaxVelocity(self,maxVelocity):
+        self.maxVelocity=maxVelocity
+    
+    def setMinVelocity(self,minVelocity):
+        self.minVelocity=minVelocity
+        
+    def setDirection(self,direction):
+        self.direction=direction
     
     
 def main():
