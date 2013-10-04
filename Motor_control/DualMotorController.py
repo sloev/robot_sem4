@@ -132,7 +132,6 @@ def main():
         time.sleep(1)
         print("IRun is="+str(i))
         
-    #dualMotors.dualSoftstop()
         
         
      
