@@ -114,22 +114,25 @@ def main():
     dualMotors.dualSetOTPParam()
     dualMotors.dualSetIrun(3)
     dualMotors.dualSetMaxVel(3)
+    dualMotors.setLeftDirection(1)
+    dualMotors.setRightDirection(0)
     dualMotors.dualUpdateMotorParams()
+    
     print("running init")
     dualMotors.runInit(3000, 4000)
-    time.sleep(3)
+    time.sleep(4)
     position=1500
     dualMotors.dualSetPosition(position)
 
     for i in range(2,15):
-        position+=4000
+        position+=2000
         dualMotors.dualSetIrun(i)
         dualMotors.dualUpdateMotorParams()
         dualMotors.dualSetPosition(position)
-        time.sleep(2)
+        time.sleep(1)
         print("IRun is="+str(i))
         
-    dualMotors.dualSoftstop()
+    #dualMotors.dualSoftstop()
         
         
      
