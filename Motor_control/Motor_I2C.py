@@ -69,11 +69,13 @@ class Motor_I2C:
         
         '''This method returns the status of the circuit of the
            stepper motor'''
-    @TMC222Status    
     def getFullStatus1(self):
         response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
-        return response
+        return self.lol(response)
     
+    @TMC222Status    
+    def lol(self,str):
+        return str
         
         '''This method returns the actual- and target position of
            the stepper motor'''
