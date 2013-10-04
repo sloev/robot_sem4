@@ -118,7 +118,7 @@ class TMC222Status(object):
             string += "|Temperature warning! (Above 155)|"+"\t"
         else:
             if(self.TW==1):
-                string += "|Temprature warning (above 145)|"+"\n"
+                string += "|Temperature warning (above 145)|"+"\n"
             else:
                 string+= "|Temperature OK|"+"\n"
         if(self.Tinfo==0):
@@ -184,7 +184,7 @@ class TMC222Status(object):
 '''Example of use'''        
 @TMC222Status
 def getFullStatus1(self):
-    r = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF]
+    r = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0x8B, 0xFF, 0xFF]
     return r
    
         
