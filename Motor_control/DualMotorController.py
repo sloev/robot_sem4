@@ -136,11 +136,14 @@ def main():
     while(dualMotors.busy()):
         time.sleep(0.1)
     print("turned left")
+    time.sleep(3)
     
     dualMotors.turnRight()
     while(dualMotors.busy()):
         time.sleep(0.1)
     print("turned right")
+    time.sleep(3)
+
 #     for i in range(1,30):
 #         index=(i%6)+1
 #         dualMotors.dualSetMaxVel(index)
