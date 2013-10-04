@@ -131,7 +131,7 @@ def main():
     
     print("running init")
     dualMotors.runInit(100, 200)
-    dualMotors.dualIncTargetPosition(0)
+    dualMotors.dualIncTargetPosition(3000)
     time.sleep(3)
     dualMotors.turnLeft()
     while(dualMotors.busy()):
