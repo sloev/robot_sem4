@@ -18,6 +18,7 @@ class DualMotorController:
         
     def dualSetOTPParam(self):
         self.left.setOTPParam()
+        time.sleep(0.1)
         self.right.setOTPParam()
         
     def dualResettoDefault(self):
@@ -53,6 +54,7 @@ class DualMotorController:
     
     def runInit(self,posA,posB):
         self.left.runInit(posA, posB)
+        time.sleep(0.1)
         self.right.runInit(posA, posB)
     
     def getActPosTarPosMatrix(self):
@@ -67,10 +69,12 @@ class DualMotorController:
  
     def dualSetPosition(self,position):        
         self.left.setPosition(position)
+        time.sleep(0.1)
         self.right.setPosition(position)
     
     def dualUpdateMotorParams(self):
         self.left.setMotorParam()
+        time.sleep(0.1)
         self.right.setMotorParam()
         
     def dualHardstop(self):
