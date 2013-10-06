@@ -53,6 +53,9 @@ class DualMotorController:
         
         self.motorLeft.setPosition(self.positionLeft)
         self.motorLeft.setPosition(self.positionRight)
+        
+    def getOfflinePosition(self):
+        return [self.positionLeft,self.positionRight]
     
     def isBusy(self,fullStatus2Matrix):
         leftstatus=fullStatus2Matrix[0][:]
@@ -64,12 +67,43 @@ class DualMotorController:
     def hardStop(self):
         self.motorLeft.hardStop()
         self.motorRight.hardStop()
-        
-        
-        
-        
-
-
+def main():
+    print("init")
+    motors=DualMotorController(0x60,0x61)
+    motors.setOtpParam()
+    motors.setMotorParams(1, 0, 3, 3)
+    motors.runInit()
+    print("drive straight")
+    motors.setPosition(2000, 2000)
+    print(str(motors.getOfflinePosition()))
+    print("turn left")
+    time.sleep(4)
+    motors.turn90(1, 3)
+    tmp=motors.getFullStatus2()
+    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
+    time.sleep(2)
+    tmp=motors.getFullStatus2()
+    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
+    time.sleep(2)
+    
+    print("turn right")
+    motors.turn90(0, 3)
+    tmp=motors.getFullStatus2()
+    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))    
+    time.sleep(2)
+    tmp=motors.getFullStatus2()
+    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
+    time.sleep(2)
+    
+    print("turn 180")
+    motors.turn180(3)
+    tmp=motors.getFullStatus2()
+    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
+    time.sleep(2)
+    tmp=motors.getFullStatus2()
+    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
+              
+    print("end of test")
      
 if __name__ == '__main__':
     main()
