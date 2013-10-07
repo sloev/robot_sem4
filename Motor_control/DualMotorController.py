@@ -79,11 +79,14 @@ def main():
     motors.setOtpParam()
     motors.setMotorParams(1, 0, 3, 3)
     motors.runInit()
+    
     print("drive straight")
     motors.setPosition(2000, 2000)
+    
     print("offlinepos="+str(motors.getOfflinePosition()))
     print("turn left")
     time.sleep(4)
+    
     motors.turn90(1, 3)
     tmp=motors.getFullStatus2()
     print("busy="+str(motors.isBusy(tmp))+"\n"+str(tmp))
