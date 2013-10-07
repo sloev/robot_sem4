@@ -4,8 +4,8 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 'class variables:'
-turn90Steps=2000
-turn180Steps=4000
+turn90Steps=3158
+turn180Steps=6316
 
 from Motor_I2C import Motor_I2C
 import time as time
