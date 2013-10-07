@@ -90,7 +90,12 @@ def main():
     time.sleep(6)
     print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     motors.turn90(1, 4)
+    
+    time.sleep(6)
+
     motors.turn90(0, 4)
+    time.sleep(6)
+    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     
 if __name__ == '__main__':
     main()
