@@ -28,7 +28,8 @@ stepModeByte=0x08
 class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress=devAddress
-        
+        self.bus = smbus.SMBus(1)
+
             
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
