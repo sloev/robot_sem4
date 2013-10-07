@@ -25,7 +25,7 @@ cmdSoftStop           = 0x8F       # Motor stopping with deceleration phase
 
 minVelocity           = 2
 stepModeByte          = 0x08
-currentByte           = 0x62
+currentByte           = 0x52
 
 class Motor_I2C:
     def __init__(self, devAddress):
@@ -60,7 +60,7 @@ class Motor_I2C:
         self.bus.write_byte(self.devAddress, cmdResetToDefault)
     
     def runInit(self):
-        byteCode = [0xFF, 0xFF, 0x52, 0x00, 0x0F, 0x00, 0xFF]              
+        byteCode = [0xFF, 0xFF, currentByte, 0x00, 0x0F, 0x00, 0xFF]              
         self.bus.write_i2c_block_data(self.devAddress, cmdRunInit, byteCode) 
     
         '''Set the stepper motor parameters in the RAM:
