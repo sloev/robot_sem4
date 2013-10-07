@@ -31,7 +31,7 @@ class DualMotorController:
         self.motorRight.setMotorParam(rightDir, rightMaxVel)
     
     def getFullStatus1(self):
-        return [self.motorLeft.getFullStatus1(),self.motorLeft.getFullStatus1()]
+        return [self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
 
     
     def test(self):
@@ -39,7 +39,7 @@ class DualMotorController:
 
     
     def getFullStatus2(self):
-        return [self.motorLeft.getFullStatus2(),self.motorLeft.getFullStatus2()]
+        return [self.motorLeft.getFullStatus2(),self.motorRight.getFullStatus2()]
     
     def turn90(self,direction,maxVel):
         self.motorLeft.setMotorParam(direction, maxVel)
