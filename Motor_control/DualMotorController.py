@@ -78,6 +78,7 @@ class DualMotorController:
     def softStop(self):
         self.motorLeft.softStop()
         self.motorRight.softStop()
+        git tag -a v0.1 -m 'working dualmotors'
         
 def main():
     print("init")
