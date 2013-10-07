@@ -43,13 +43,13 @@ class DualMotorController:
     
     def turn90(self,direction,maxVel):
         self.motorLeft.setMotorParam(direction, maxVel)
-        self.motorRight.setMotorParam(not direction, maxVel)
+        self.motorRight.setMotorParam(direction, maxVel)
         
         self.setPosition(turn90Steps, turn90Steps)
         
     def turn180(self,maxVel):
         self.motorLeft.setMotorParam(1, maxVel)
-        self.motorRight.setMotorParam(0, maxVel)
+        self.motorRight.setMotorParam(1, maxVel)
         
         self.setPosition(turn180Steps, turn180Steps)
         
@@ -89,6 +89,8 @@ def main():
     motors.runInit()
     time.sleep(6)
     print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-
+    motors.turn90(1, 4)
+    motors.turn90(0, 4)
+    
 if __name__ == '__main__':
     main()
