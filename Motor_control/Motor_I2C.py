@@ -22,8 +22,9 @@ cmdSetOTPParam        = 0x90       # Zaps the OTP memory
 cmdSetPosition        = 0x8B       # Programmers a target and secure position 
 cmdSoftStop           = 0x8F       # Motor stopping with deceleration phase 
 
-minVelocity=2
-stepModeByte=0x08
+minVelocity           = 2
+stepModeByte          = 0x08
+currentByte           = 0x62
 
 class Motor_I2C:
     def __init__(self, devAddress):
@@ -70,7 +71,7 @@ class Motor_I2C:
         byte4=maxVelocity << 4 | minVelocity<<0 
         byte5=0x88 | direction<<4
         #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
-        byteCode = [0xFF, 0xFF, 0x32, byte4, byte5, 0x00, stepModeByte]
+        byteCode = [0xFF, 0xFF, currentByte, byte4, byte5, 0x00, stepModeByte]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
     
         '''Zap the One-Time Programmable memory'''  
