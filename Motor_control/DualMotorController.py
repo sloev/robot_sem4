@@ -87,6 +87,7 @@ def main():
 
     motors.setMotorParams(1, 0, 3, 3)
     motors.runInit()
+    time.sleep(4)
     print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
 
 
