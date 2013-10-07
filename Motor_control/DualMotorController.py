@@ -42,8 +42,8 @@ class DualMotorController:
         self.setPosition(turn90Steps, turn90Steps)
         
     def turn180(self,maxVel):
-        self.motorLeft.setMotorParam(dir, maxVel)
-        self.motorRight.setMotorParam(not dir, maxVel)
+        self.motorLeft.setMotorParam(1, maxVel)
+        self.motorRight.setMotorParam(0, maxVel)
         
         self.setPosition(turn180Steps, turn180Steps)
         
