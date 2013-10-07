@@ -60,7 +60,7 @@ class Motor_I2C:
         self.bus.write_byte(self.devAddress, cmdResetToDefault)
     
     def runInit(self):
-        byteCode = [0xFF, 0xFF, currentByte, 0x00, 0x0F, 0x00, 0xFF]              
+        byteCode = [0xFF, 0xFF, 0x80, 0x00, 0x50, 0xAA, 0x10]              
         self.bus.write_i2c_block_data(self.devAddress, cmdRunInit, byteCode) 
     
         '''Set the stepper motor parameters in the RAM:
@@ -76,8 +76,8 @@ class Motor_I2C:
     def setMotorParam(self,direction,maxVelocity):          
         byte4=maxVelocity << 4 | minVelocity<<0 
         byte5=0x88 | direction<<4
-        #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
-        byteCode = [0xFF, 0xFF, currentByte, byte4, byte5, 0x00, stepModeByte]
+        byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
+        #byteCode = [0xFF, 0xFF, currentByte, byte4, byte5, 0x00, stepModeByte]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
     
         '''Zap the One-Time Programmable memory'''  
