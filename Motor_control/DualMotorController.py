@@ -86,6 +86,7 @@ def main():
     motors.setMotorParams(1, 0, 3, 3)
     motors.runInit()
     motors.test()
+    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     
 
 if __name__ == '__main__':
