@@ -25,7 +25,7 @@ cmdSoftStop           = 0x8F       # Motor stopping with deceleration phase
 
 minVelocity           = 2
 stepModeByte          = 8
-currentByte           = 0x52
+currentByte           = 66
 
 class Motor_I2C:
     def __init__(self, devAddress):
@@ -36,11 +36,6 @@ class Motor_I2C:
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
         return self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
-
-        '''Status of circuit and stepper motor'''
-    @TMC222Status    
-    def printFullStatus1(self):
-        return self.bus.read_i2c_block_data(0x60, 0x81, 9)
 
         '''Status of the position of the stepper motor'''
     def getFullStatus2(self):
@@ -77,7 +72,7 @@ class Motor_I2C:
         byte4=maxVelocity << 4 | minVelocity<<0 
         byte5=0x88 | direction<<4
         #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
-        byteCode = [0xFF, 0xFF, 0x32, byte4, byte5, 0x00, stepModeByte]
+        byteCode = [0xFF, 0xFF, currentByte, byte4, byte5, 0x00, stepModeByte]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
     
         '''Zap the One-Time Programmable memory'''  
