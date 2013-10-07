@@ -3,6 +3,7 @@ Created on Oct 6, 2013
 
 @author: slavegnuen
 '''
+from Decorators.TMC222Status import TMC222Status
 import smbus
 import time as time
 
@@ -34,6 +35,11 @@ class Motor_I2C:
             
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
+        return self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
+
+        '''Status of circuit and stepper motor'''
+    @TMC222Status    
+    def printFullStatus1(self):
         return self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
 
         '''Status of the position of the stepper motor'''

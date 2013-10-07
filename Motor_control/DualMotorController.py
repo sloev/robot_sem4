@@ -35,11 +35,8 @@ class DualMotorController:
 
     
     def test(self):
-        self.r=self.motorLeft.getFullStatus1()
-    
-    @TMC222Status    
-    def lol(self):
-        return self.r
+        self.motorLeft.printFullStatus1()
+
     
     def getFullStatus2(self):
         return [self.motorLeft.getFullStatus2(),self.motorLeft.getFullStatus2()]
@@ -89,7 +86,6 @@ def main():
     motors.setMotorParams(1, 0, 3, 3)
     motors.runInit()
     motors.test()
-    motors.lol()
     
 
 if __name__ == '__main__':
