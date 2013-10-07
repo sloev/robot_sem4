@@ -67,6 +67,11 @@ class DualMotorController:
     def hardStop(self):
         self.motorLeft.hardStop()
         self.motorRight.hardStop()
+        
+    def softStop(self):
+        self.motorLeft.softStop()
+        self.motorRight.softStop()
+        
 def main():
     print("init")
     motors=DualMotorController(0x60,0x61)
@@ -75,7 +80,7 @@ def main():
     motors.runInit()
     print("drive straight")
     motors.setPosition(2000, 2000)
-    print(str(motors.getOfflinePosition()))
+    print("offlinepos="+str(motors.getOfflinePosition()))
     print("turn left")
     time.sleep(4)
     motors.turn90(1, 3)
@@ -103,6 +108,7 @@ def main():
     tmp=motors.getFullStatus2()
     print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
               
+    print("offlinepos="+str(motors.getOfflinePosition()))
     print("end of test")
      
 if __name__ == '__main__':
