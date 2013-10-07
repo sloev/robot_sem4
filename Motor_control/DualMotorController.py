@@ -7,6 +7,7 @@ Created on Oct 2, 2013
 turn90Steps=3158
 turn180Steps=6316
 
+from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
 import time as time
 
@@ -31,6 +32,11 @@ class DualMotorController:
     
     def getFullStatus1(self):
         return [self.motorLeft.getFullStatus1(),self.motorLeft.getFullStatus1()]
+
+    @TMC222Status
+    def test(self):
+        r=self.motorLeft.getFullStatus1()
+        return r
     
     def getFullStatus2(self):
         return [self.motorLeft.getFullStatus2(),self.motorLeft.getFullStatus2()]
@@ -79,41 +85,8 @@ def main():
     motors.setOtpParam()
     motors.setMotorParams(1, 0, 3, 3)
     motors.runInit()
+    motors.test()
     
-    print("drive straight")
-    motors.setPosition(2000, 2000)
-    
-    print("offlinepos="+str(motors.getOfflinePosition()))
-    print("turn left")
-    time.sleep(4)
-    
-    motors.turn90(1, 3)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp))+"\n"+str(tmp))
-    time.sleep(2)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp))+"\n"+str(tmp))
-    time.sleep(2)
-    
-    print("turn right")
-    motors.turn90(0, 3)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp))+"\n"+str(tmp))    
-    time.sleep(2)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp))+"\n"+str(tmp))
-    time.sleep(2)
-    
-    print("turn 180")
-    motors.turn180(3)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp))+"\n"+str(tmp))
-    time.sleep(2)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp))+"\n"+str(tmp))
-              
-    print("offlinepos="+str(motors.getOfflinePosition()))
-    print("end of test")
-     
+
 if __name__ == '__main__':
     main()

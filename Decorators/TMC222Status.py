@@ -16,6 +16,7 @@ Created on Oct 1, 2013
 '@TMCStatus222                                                     '
 'getFullStatus1()                                                  '
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+import smbus
 
 class TMC222Status(object):
 
