@@ -83,9 +83,12 @@ def main():
     print("init")
     motors=DualMotorController(0x60,0x61)
     motors.setOtpParam()
-    #motors.setMotorParams(1, 0, 3, 3)
     print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-    
+
+    motors.setMotorParams(1, 0, 3, 3)
+    motors.runInit()
+    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+
 
 if __name__ == '__main__':
     main()
