@@ -4,9 +4,10 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 'class variables:'
-turn90Steps=2000
-turn180Steps=4000
+turn90Steps=3158
+turn180Steps=6316
 
+from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
 import time as time
 
@@ -30,20 +31,25 @@ class DualMotorController:
         self.motorRight.setMotorParam(rightDir, rightMaxVel)
     
     def getFullStatus1(self):
-        return [self.motorLeft.getFullStatus1(),self.motorLeft.getFullStatus1()]
+        return [self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
+
+    
+    def test(self):
+        self.motorLeft.printFullStatus1()
+
     
     def getFullStatus2(self):
-        return [self.motorLeft.getFullStatus2(),self.motorLeft.getFullStatus2()]
+        return [self.motorLeft.getFullStatus2(),self.motorRight.getFullStatus2()]
     
     def turn90(self,direction,maxVel):
         self.motorLeft.setMotorParam(direction, maxVel)
-        self.motorRight.setMotorParam(not direction, maxVel)
+        self.motorRight.setMotorParam(direction, maxVel)
         
         self.setPosition(turn90Steps, turn90Steps)
         
     def turn180(self,maxVel):
-        self.motorLeft.setMotorParam(dir, maxVel)
-        self.motorRight.setMotorParam(not dir, maxVel)
+        self.motorLeft.setMotorParam(1, maxVel)
+        self.motorRight.setMotorParam(1, maxVel)
         
         self.setPosition(turn180Steps, turn180Steps)
         
@@ -52,17 +58,18 @@ class DualMotorController:
         self.positionRight+=incRightPos
         
         self.motorLeft.setPosition(self.positionLeft)
-        self.motorLeft.setPosition(self.positionRight)
+        self.motorRight.setPosition(self.positionRight)
         
     def getOfflinePosition(self):
         return [self.positionLeft,self.positionRight]
     
     def isBusy(self,fullStatus2Matrix):
-        leftstatus=fullStatus2Matrix[0][:]
-        rightstatus=fullStatus2Matrix[1][:]
-        leftstatus=(leftstatus[1]<<8 | leftstatus[2]<<0) & (leftstatus[3]<<8 | leftstatus[4]<<0)
-        rightstatus=(rightstatus[1]<<8 | rightstatus[2]<<0) & (rightstatus[3]<<8 | rightstatus[4]<<0)
-        return (leftstatus & rightstatus)==1
+        return 1
+#         leftstatus=fullStatus2Matrix[0][:]
+#         rightstatus=fullStatus2Matrix[1][:]
+#         leftstatus=(leftstatus[1]<<8 | leftstatus[2]<<0) & (leftstatus[3]<<8 | leftstatus[4]<<0)
+#         rightstatus=(rightstatus[1]<<8 | rightstatus[2]<<0) & (rightstatus[3]<<8 | rightstatus[4]<<0)
+#         return (leftstatus & rightstatus)==1
         
     def hardStop(self):
         self.motorLeft.hardStop()
@@ -76,40 +83,19 @@ def main():
     print("init")
     motors=DualMotorController(0x60,0x61)
     motors.setOtpParam()
+    #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+
     motors.setMotorParams(1, 0, 3, 3)
     motors.runInit()
-    print("drive straight")
-    motors.setPosition(2000, 2000)
-    print("offlinepos="+str(motors.getOfflinePosition()))
-    print("turn left")
-    time.sleep(4)
-    motors.turn90(1, 3)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
-    time.sleep(2)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
-    time.sleep(2)
+    time.sleep(6)
+    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+    motors.turn90(1, 4)
     
-    print("turn right")
-    motors.turn90(0, 3)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))    
-    time.sleep(2)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
-    time.sleep(2)
+    time.sleep(6)
+
+    motors.turn90(0, 4)
+    time.sleep(6)
+    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     
-    print("turn 180")
-    motors.turn180(3)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
-    time.sleep(2)
-    tmp=motors.getFullStatus2()
-    print("busy="+str(motors.isBusy(tmp)+"\n"+str(tmp)))
-              
-    print("offlinepos="+str(motors.getOfflinePosition()))
-    print("end of test")
-     
 if __name__ == '__main__':
     main()
