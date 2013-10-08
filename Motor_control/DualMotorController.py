@@ -59,12 +59,11 @@ class DualMotorController:
         return [self.positionLeft,self.positionRight]
     
     def isBusy(self,fullStatus2Matrix):
-        return 1
-#         leftstatus=fullStatus2Matrix[0][:]
-#         rightstatus=fullStatus2Matrix[1][:]
-#         leftstatus=(leftstatus[1]<<8 | leftstatus[2]<<0) & (leftstatus[3]<<8 | leftstatus[4]<<0)
-#         rightstatus=(rightstatus[1]<<8 | rightstatus[2]<<0) & (rightstatus[3]<<8 | rightstatus[4]<<0)
-#         return (leftstatus & rightstatus)==1
+        leftstatus=fullStatus2Matrix[0][:]
+        rightstatus=fullStatus2Matrix[1][:]
+        leftstatus=(leftstatus[1] == leftstatus[3]) & (leftstatus[2] == leftstatus[4])
+        rightstatus=(rightstatus[1] == rightstatus[3]) & (rightstatus[2] == rightstatus[4])
+        return (leftstatus & rightstatus)==1
         
     def hardStop(self):
         self.motorLeft.hardStop()
@@ -79,7 +78,8 @@ def main():
     motors=DualMotorController(0x60,0x61)
     motors.setOtpParam()
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-
+    tmp=motors.getFullStatus2()
+    print("busy="+motors.isBusy(tmp))
     motors.setMotorParams(1, 0, 5, 5)
     motors.runInit()
     time.sleep(6)
