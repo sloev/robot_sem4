@@ -16,13 +16,11 @@ Created on Oct 1, 2013
 '@TMCStatus222                                                     '
 'getFullStatus1()                                                  '
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-import smbus
 
 class TMC222Status(object):
 
     '''Constructor'''    
     def __init__(self, f):
-        self.bus = smbus.SMBus(1)
         print "\n"
         print "Daniel Machon's awesome decorator initialized!"
         self.f = f
