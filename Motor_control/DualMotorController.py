@@ -32,11 +32,6 @@ class DualMotorController:
     
     def getFullStatus1(self):
         return [self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
-
-    
-    def test(self):
-        self.motorLeft.printFullStatus1()
-
     
     def getFullStatus2(self):
         return [self.motorLeft.getFullStatus2(),self.motorRight.getFullStatus2()]
