@@ -97,7 +97,7 @@ def main():
     test = IR_Sensors_Controller(0x20)
     
     while True:
-        inp = test.readSensorBlock(Vin2, ConversionResultReg)
+        inp = test.readSensorBlock(Vin1, ConversionResultReg)
         inp=inp & 0b0000111111111111
         a,b=divmod(inp,0x100)
         
