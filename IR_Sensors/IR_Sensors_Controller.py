@@ -85,7 +85,6 @@ class IR_Sensors_Controller():
         le=len(sensorRead)
         if(le>1):
             tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
-            #return rangeTable.lookupCm(int(tmp))
             return int(tmp)
         return -1
         
@@ -101,7 +100,7 @@ class IR_Sensors_Controller():
         her er issuet:
         https://github.com/sloev/robot_sem4/issues/42
         '''
-    def getDistanceInCm(self,rawDistance):
+    def getDistanceCm(self,rawDistance):
         if (rawDistance>0):
             return self.rangeTable.lookupCm(rawDistance)
         return -1
@@ -120,6 +119,7 @@ class IR_Sensors_Controller():
             tmp = self.readSensorBlock(channel, ConversionResultReg)
             tmp = self.getDistanceRaw(tmp)
             average+=tmp
+            time.sleep(0.005)
         return int(average/amount)
     
 def main():
