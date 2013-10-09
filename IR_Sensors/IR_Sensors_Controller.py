@@ -1,7 +1,8 @@
 '''
 Created on Oct 8, 2013
 
-@author: Daniel Machon
+@author: Daniel Machon, 
+        Johannes
 '''
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -11,8 +12,6 @@ Sensors                                              '
 
 import smbus
 import time as time
-
- 
  
 #Read/Write registers               #byteCode 4 LSB's
 ConversionResultReg                 =   0x00
@@ -74,55 +73,43 @@ class IR_Sensors_Controller():
         byte1 = MSBs
         byte2  = 0x0F | LSBs << 4
         self.bus.write_i2c_block_data(self.slaveAddress, chosenRegister,[byte1, byte2])
-        
-    
-    
-    '''Read input from IR sensor'''
-    def readSensor(self, channel, register):
-        chosenRegister = register | channel << 4
-        self.bus.write_byte(self.slaveAddress, chosenRegister)
-        sensorInput = self.bus.read_byte(self.slaveAddress)
-        return sensorInput
     
         '''Read input from IR sensor'''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        #self.bus.write_byte(self.slaveAddress, chosenRegister)
-       # sensorInput = self.bus.read_word_data(self.slaveAddress,chosenRegister)
         sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister)
-
         return sensorInput
+        
+        '''
+        takes sensorRead as param and returns the distance in integer
+        skal laves om så den bruger en lookup tabel hvor den slår op i med adc-værdien og 
+        får en cm afstand
+        se https://docs.google.com/document/d/1CW-QlNemOHGzK-vDWvWlM75J6Kc-zCyTyzmfmKkCj3U/edit
+        '''
+    def getDistance(self,sensorRead):
+        le=len(sensorRead)
+        if(le>1):
+            tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
+            return int(tmp)
+        return -1
     
+        '''takes sensorRead as param and returns the alerts from a conversion'''
+    def getAlerts(self,sensorRead):
+        le=len(sensorRead)
+        if(le>1):
+            alert=sensorRead[0] >> 7
+            return alert
+        return -1
+
     
 def main():
-    test = IR_Sensors_Controller(0x20)
-    counter=0
-    old=[0,0,0]
-    average=0
+    IR_sensor = IR_Sensors_Controller(0x20)
     while True:
-        inp = test.readSensorBlock(Vin2, ConversionResultReg)
-        le=len(inp)
-        if(le>1):
-            tmp=(inp[0] & 0b00001111) <<8 | inp[1]<<0
-            alert=inp[0] >>7
-            messure=int(tmp)
-            old[counter]=messure
-            counter=counter+1
-            if(counter>2):
-                counter=0
-                average=(old[0]+old[1]+old[2])/3
-            
-            #print("number of bytes="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp)+"\t\tfloat="+str(messure)+"\taverage="+str(average))
-            print '*'.rjust(average/2000 *40)
-        else:
-            print("len="+str(le))
-
-        time.sleep(0.01)
-    
-    
-  
-    
-    
+        sample = IR_sensor.readSensorBlock(Vin2, ConversionResultReg)
+        distance=IR_sensor.getDistance(sample)
+        alerts=IR_sensor.getAlerts(sample)
+        print("Alerts="+alerts+"\tDistance="+distance)
+        time.sleep(0.05)
     
 if __name__== '__main__':
     main() 
