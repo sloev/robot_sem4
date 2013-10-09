@@ -98,7 +98,7 @@ def main():
     test = IR_Sensors_Controller(0x20)
     
     while True:
-        inp = test.readSensorBlock(Vin1, ConversionResultReg)
+        inp = test.readSensorBlock(Vin2, ConversionResultReg)
         le=len(inp)
         if(le>1):
             tmp=inp[0]<<8 | inp[1]<<0
