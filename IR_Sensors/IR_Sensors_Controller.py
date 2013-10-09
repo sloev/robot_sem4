@@ -84,12 +84,20 @@ class IR_Sensors_Controller():
         sensorInput = self.bus.read_byte(self.slaveAddress)
         return sensorInput
     
+        '''Read input from IR sensor'''
+    def readSensorBlock(self, channel, register):
+        chosenRegister = register | channel << 4
+        #self.bus.write_byte(self.slaveAddress, chosenRegister)
+        sensorInput=self.bus.read_i2c_block_data(self.devAddress,chosenRegister)
+        sensorInput = self.bus.read_byte(self.slaveAddress)
+        return sensorInput
+    
     
 def main():
     test = IR_Sensors_Controller(0x20)
     
     while True:
-        inp = test.readSensor(Vin1, ConversionResultReg)
+        inp = test.readSensorBlock(Vin1, ConversionResultReg)
         print inp
         time.sleep(0.025)
     
