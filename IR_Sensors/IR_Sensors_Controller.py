@@ -72,7 +72,7 @@ class IR_Sensors_Controller():
     def setConfigurationRegister(self, MSBs, LSBs):
         chosenRegister = ConfigurationReg | multiChannels << 4
         byte1 = MSBs
-        byte2  = 0x0F | LSBs << 4
+        byte2  = 0x00 | LSBs << 4
         self.bus.write_i2c_block_data(self.slaveAddress, chosenRegister,[byte1, byte2])
         
     
@@ -87,9 +87,8 @@ class IR_Sensors_Controller():
         '''Read input from IR sensor'''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        #self.bus.write_byte(self.slaveAddress, chosenRegister)
-        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister)
-        #sensorInput = self.bus.read_byte(self.slaveAddress)
+        self.bus.write_byte(self.slaveAddress, chosenRegister)
+        sensorInput = self.bus.read_byte(self.slaveAddress)
         return sensorInput
     
     
