@@ -99,6 +99,7 @@ def main():
     
     while True:
         inp = test.readSensorBlock(Vin1, ConversionResultReg)
+        inp=inp[0]<<8 | inp[1]<<0
         print(bin(inp))
         time.sleep(0.5)
     
