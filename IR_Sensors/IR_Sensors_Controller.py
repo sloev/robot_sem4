@@ -101,7 +101,7 @@ def main():
         inp = test.readSensorBlock(Vin2, ConversionResultReg)
         le=len(inp)
         if(le>1):
-            tmp=inp[0] & 0b00001111 <<8 | inp[1]<<0
+            tmp=(inp[0] & 0b00001111) <<8 | inp[1]<<0
             alert=inp[0] >>7
             print("len="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp))
         else:
