@@ -99,8 +99,9 @@ def main():
     
     while True:
         inp = test.readSensorBlock(Vin1, ConversionResultReg)
-        inp=inp[0]<<8 | inp[1]<<0
-        print(bin(inp))
+        tmp=inp[0]<<8 | inp[1]<<0
+        alert=inp[0] >>7
+        print("alert="+str(alert)+"\tbin"+bin(tmp))
         time.sleep(0.5)
     
     
