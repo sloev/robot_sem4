@@ -88,8 +88,30 @@ class IR_Sensors_Controller():
     
 def main():
     test = IR_Sensors_Controller()
-    inp = test.readSensor(Vin1, DataHighRegCH1)
-    print inp
+    inp1 = test.readSensor(Vin1, DataHighRegCH1)
+    print inp1
+    inp2 = test.readSensor(Vin1, DataLowRegCH1)
+    print inp2
+    inp3 = test.readSensor(Vin1, HysteresisRegCH1)
+    print inp3
+    inp4 = test.readSensor(Vin2, DataHighRegCH2)
+    print inp4
+    inp5 = test.readSensor(Vin2, DataLowRegCH2)
+    print inp5
+    inp6 = test.readSensor(Vin2, HysteresisRegCH2)
+    print inp6
+    inp7 = test.readSensor(Vin3, DataHighRegCH3)
+    print inp7
+    inp8 = test.readSensor(Vin3, DataLowRegCH3)
+    print inp8
+    inp9 = test.readSensor(Vin3, HysteresisRegCH3)
+    print inp9
+    inp10 = test.readSensor(Vin4, DataHighRegCH4)
+    print inp10
+    inp11 = test.readSensor(Vin4, DataLowRegCH4)
+    print inp11
+    inp12 = test.readSensor(Vin4, HysteresisRegCH4)
+    print inp12
     
     
     
