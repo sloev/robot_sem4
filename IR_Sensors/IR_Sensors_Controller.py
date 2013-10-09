@@ -113,7 +113,7 @@ def main():
                 average=(old[0]+old[1]+old[2])/3
             
             #print("number of bytes="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp)+"\t\tfloat="+str(messure)+"\taverage="+str(average))
-            print '*'.rjust((40/2000)*average)
+            print '*'.rjust(average/2000 *40)
         else:
             print("len="+str(le))
 
