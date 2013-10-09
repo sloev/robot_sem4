@@ -88,6 +88,8 @@ class IR_Sensors_Controller():
     
 def main():
     test = IR_Sensors_Controller()
+    inp = test.readSensor(Vin1, ConversionResultReg)
+    print inp
     inp1 = test.readSensor(Vin1, DataHighRegCH1)
     print inp1
     inp2 = test.readSensor(Vin1, DataLowRegCH1)
