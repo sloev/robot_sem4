@@ -112,7 +112,9 @@ def main():
                 counter=0
                 average=(old[0]+old[1]+old[2])/3
             
-            print("number of bytes="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp)+"\t\tfloat="+str(messure)+"\taverage="+str(average))
+            #print("number of bytes="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp)+"\t\tfloat="+str(messure)+"\taverage="+str(average))
+            lol="*"
+            print lol.zfill((30/2000)*average)
         else:
             print("len="+str(le))
 
