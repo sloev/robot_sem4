@@ -99,7 +99,7 @@ def main():
     while True:
         inp = test.readSensorBlock(Vin1, ConversionResultReg)
         print inp
-        time.sleep(0.025)
+        time.sleep(1)
     
     
   
