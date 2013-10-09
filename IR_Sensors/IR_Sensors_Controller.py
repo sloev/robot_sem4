@@ -72,7 +72,7 @@ class IR_Sensors_Controller():
     def setConfigurationRegister(self, MSBs, LSBs):
         chosenRegister = ConfigurationReg | multiChannels << 4
         byte1 = MSBs
-        byte2  = 0x00 | LSBs << 4
+        byte2  = 0b1000 | LSBs << 4
         self.bus.write_i2c_block_data(self.slaveAddress, chosenRegister,[byte1, byte2])
         
     
