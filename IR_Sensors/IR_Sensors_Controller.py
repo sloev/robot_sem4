@@ -88,8 +88,8 @@ class IR_Sensors_Controller():
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
         #self.bus.write_byte(self.slaveAddress, chosenRegister)
-        sensorInput=self.bus.read_i2c_block_data(self.devAddress,chosenRegister)
-        sensorInput = self.bus.read_byte(self.slaveAddress)
+        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister)
+        #sensorInput = self.bus.read_byte(self.slaveAddress)
         return sensorInput
     
     
