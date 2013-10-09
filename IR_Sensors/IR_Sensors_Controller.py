@@ -98,7 +98,7 @@ def main():
     
     while True:
         inp = test.readSensorBlock(Vin1, ConversionResultReg)
-        alert=inp << 1
+        alert=inp>>15
         inp=inp & 0b0000111111111111
         a,b=divmod(inp,0x100)
         
