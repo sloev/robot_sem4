@@ -70,7 +70,6 @@ class IR_Sensors_Controller():
     Byte 2 = D7+D6+D5+D4+1+AlertEN+Busy/Alert+Alert/BusyPolatiry
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     def setConfigurationRegister(self, MSBs, LSBs):
-        global ConfigurationReg, multiChannels
         chosenRegister = ConfigurationReg | multiChannels << 4
         byte1 = MSBs
         byte2  = 0x0F | LSBs << 4
@@ -92,7 +91,7 @@ def main():
     while True:
         inp = test.readSensor(Vin1, ConversionResultReg)
         print inp
-        time.sleep(0.1)
+        time.sleep(0.025)
     
     
   
