@@ -80,12 +80,17 @@ class IR_Sensors_Controller():
     def readSensor(self, channel, register):
         chosenRegister = register | channel << 4
         self.bus.write_byte(slaveAddress, chosenRegister)
-        input = self.bus.read_byte(slaveAddress)
-        return input
+        sensorInput = self.bus.read_byte(slaveAddress)
+        return sensorInput
     
     
 def main():
-    pass
+    global Vin1, ConversionResultReg
+    test = IR_Sensors_Controller
+    inp = test.readSensor(Vin1, ConversionResultReg)
+    print inp
+    
+    
     
 if __name__== '__main__':
     main() 
