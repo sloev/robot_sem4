@@ -99,9 +99,14 @@ def main():
     
     while True:
         inp = test.readSensorBlock(Vin1, ConversionResultReg)
-        tmp=inp[0]<<8 | inp[1]<<0
-        alert=inp[0] >>7
-        print("alert="+str(alert)+"\tbin"+bin(tmp))
+        le=len(inp)
+        if(le>0):
+            tmp=inp[0]<<8 | inp[1]<<0
+            alert=inp[0] >>7
+            print("len="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp))
+        else:
+            print("len="+str(le))
+
         time.sleep(0.5)
     
     
