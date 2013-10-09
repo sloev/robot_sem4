@@ -85,6 +85,9 @@ class IR_Sensors_Controller():
         skal laves om så den bruger en lookup tabel hvor den slår op i med adc-værdien og 
         får en cm afstand
         se https://docs.google.com/document/d/1CW-QlNemOHGzK-vDWvWlM75J6Kc-zCyTyzmfmKkCj3U/edit
+        
+        her er issuet:
+        https://github.com/sloev/robot_sem4/issues/42
         '''
     def getDistance(self,sensorRead):
         le=len(sensorRead)
