@@ -103,7 +103,7 @@ def main():
         if(le>1):
             tmp=(inp[0] & 0b00001111) <<8 | inp[1]<<0
             alert=inp[0] >>7
-            print("len="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp))
+            print("number of bytes="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp)+"\tfloat="+str(float(tmp)))
         else:
             print("len="+str(le))
 
