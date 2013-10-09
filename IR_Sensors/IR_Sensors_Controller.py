@@ -98,10 +98,11 @@ def main():
     
     while True:
         inp = test.readSensorBlock(Vin1, ConversionResultReg)
+        alert=inp << 1
         inp=inp & 0b0000111111111111
         a,b=divmod(inp,0x100)
         
-        print (str(inp)+" bin="+bin(inp)+" a="+str(a)+" b="+str(b))
+        print ("alert="+str(alert)+"\t"+str(inp)+"\tbin="+bin(inp)+"\ta="+str(a)+"\tb="+str(b))
         time.sleep(0.5)
     
     
