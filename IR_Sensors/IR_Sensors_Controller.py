@@ -72,7 +72,7 @@ class IR_Sensors_Controller():
     def setConfigurationRegister(self, MSBs, LSBs):
         chosenRegister = ConfigurationReg | multiChannels << 4
         byte1 = MSBs
-        byte2  = 0x00 | LSBs << 4
+        byte2  = 0x0F | LSBs << 4
         self.bus.write_i2c_block_data(self.slaveAddress, chosenRegister,[byte1, byte2])
         
     
@@ -89,7 +89,7 @@ class IR_Sensors_Controller():
         chosenRegister = register | channel << 4
         #self.bus.write_byte(self.slaveAddress, chosenRegister)
        # sensorInput = self.bus.read_word_data(self.slaveAddress,chosenRegister)
-        sensorInput=self.bus.read_word_data(self.slaveAddress,chosenRegister)
+        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister)
 
         return sensorInput
     
@@ -99,9 +99,14 @@ def main():
     
     while True:
         inp = test.readSensorBlock(Vin2, ConversionResultReg)
-        alert=bin(inp).__len__()-2 > 15
-        print("len="+str(bin(inp).__len__()-2)+"\talert="+str(alert)+"\tbin"+bin(inp))
- 
+        le=len(inp)
+        if(le>1):
+            tmp=inp[0] & 0b00001111 <<8 | inp[1]<<0
+            alert=inp[0] >>7
+            print("len="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp))
+        else:
+            print("len="+str(le))
+
         time.sleep(0.5)
     
     
