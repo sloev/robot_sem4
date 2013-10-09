@@ -96,14 +96,23 @@ class IR_Sensors_Controller():
     
 def main():
     test = IR_Sensors_Controller(0x20)
-    
+    counter=0
+    old=[0,0,0]
+    average=0
     while True:
         inp = test.readSensorBlock(Vin2, ConversionResultReg)
         le=len(inp)
         if(le>1):
             tmp=(inp[0] & 0b00001111) <<8 | inp[1]<<0
             alert=inp[0] >>7
-            print("number of bytes="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp)+"\tfloat="+str(int(tmp)))
+            messure=int(tmp)
+            old[counter]=messure
+            counter=counter+1
+            if(counter>2):
+                counter=0
+                average=(old[0]+old[1]+old[2])/3
+            
+            print("number of bytes="+str(le)+"\talert="+str(alert)+"\tbin"+bin(tmp)+"\t\tfloat="+str(messure)+"\taverage="+average)
         else:
             print("len="+str(le))
 
