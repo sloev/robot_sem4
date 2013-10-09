@@ -9,8 +9,6 @@ This class handles converted input from the Sharp IR '
 Sensors                                              ' 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-slaveAddress = 0x20
-
 import smbus
 import time as time
 
@@ -50,8 +48,9 @@ multiChannels                       =   0x07
 class IR_Sensors_Controller():
     
     
-    def __init__(self):
+    def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
+        self.slaveAddress = slaveAddress
         
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -75,25 +74,25 @@ class IR_Sensors_Controller():
         chosenRegister = ConfigurationReg | multiChannels << 4
         byte1 = MSBs
         byte2  = 0x0F | LSBs << 4
-        self.bus.write_i2c_block_data(slaveAddress, chosenRegister,[byte1, byte2])
+        self.bus.write_i2c_block_data(self.slaveAddress, chosenRegister,[byte1, byte2])
         
     
     
     '''Read input from IR sensor'''
     def readSensor(self, channel, register):
         chosenRegister = register | channel << 4
-        self.bus.write_byte(slaveAddress, chosenRegister)
-        sensorInput = self.bus.read_byte(slaveAddress)
+        self.bus.write_byte(self.slaveAddress, chosenRegister)
+        sensorInput = self.bus.read_byte(self.slaveAddress)
         return sensorInput
     
     
 def main():
-    test = IR_Sensors_Controller()
+    test = IR_Sensors_Controller(0x20)
     
     while True:
         inp = test.readSensor(Vin1, ConversionResultReg)
         print inp
-        time.sleep(0.15)
+        time.sleep(0.01)
     
     
   
