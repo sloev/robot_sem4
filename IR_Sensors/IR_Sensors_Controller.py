@@ -13,38 +13,40 @@ slaveAddress = 0x20
 
 import smbus
 
-class IR_Sensors_Controller():
  
  
-    #Read/Write registers               #byteCode 4 LSB's
-    ConversionResultReg                 =   0x00
-    AlertStatusReg                      =   0x01
-    ConfigurationReg                    =   0x02
-    CycleTimerReg                       =   0x03        
-    DataLowRegCH1                       =   0x04
-    DataHighRegCH1                      =   0x05
-    HysteresisRegCH1                    =   0x06
-    DataLowRegCH2                       =   0x07
-    DataHighRegCH2                      =   0x08
-    HysteresisRegCH2                    =   0x09
-    DataLowRegCH3                       =   0x0A
-    DataHighRegCH3                      =   0x0B
-    HysteresisRegCH3                    =   0x0C
-    DataLowRegCH4                       =   0x0D
-    DataHighRegCH4                      =   0x0E
-    HysteresisRegCH4                    =   0x0F
+#Read/Write registers               #byteCode 4 LSB's
+ConversionResultReg                 =   0x00
+AlertStatusReg                      =   0x01
+ConfigurationReg                    =   0x02
+CycleTimerReg                       =   0x03        
+DataLowRegCH1                       =   0x04
+DataHighRegCH1                      =   0x05
+HysteresisRegCH1                    =   0x06
+DataLowRegCH2                       =   0x07
+DataHighRegCH2                      =   0x08
+HysteresisRegCH2                    =   0x09
+DataLowRegCH3                       =   0x0A
+DataHighRegCH3                      =   0x0B
+HysteresisRegCH3                    =   0x0C
+DataLowRegCH4                       =   0x0D
+DataHighRegCH4                      =   0x0E
+HysteresisRegCH4                    =   0x0F
 
-    #Channels                           "ByteCode" 4 MSB's
-    NotSelected                         =   0x00
-    Vin1                                =   0x08
-    Vin2                                =   0x09
-    Vin3                                =   0x0A
-    Vin4                                =   0x0B
-    Vin5                                =   0x0C
-    Vin6                                =   0x0D
-    Vin7                                =   0x0E
-    Vin8                                =   0x0F
-    multiChannels                       =   0x07
+#Channels                           "ByteCode" 4 MSB's
+NotSelected                         =   0x00
+Vin1                                =   0x08
+Vin2                                =   0x09
+Vin3                                =   0x0A
+Vin4                                =   0x0B
+Vin5                                =   0x0C
+Vin6                                =   0x0D
+Vin7                                =   0x0E
+Vin8                                =   0x0F
+multiChannels                       =   0x07
+
+
+class IR_Sensors_Controller():
     
     
     def __init__(self):
@@ -85,7 +87,6 @@ class IR_Sensors_Controller():
     
     
 def main():
-    global Vin1, ConversionResultReg
     test = IR_Sensors_Controller
     inp = test.readSensor(Vin1, ConversionResultReg)
     print inp
