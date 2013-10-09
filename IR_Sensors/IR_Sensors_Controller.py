@@ -9,7 +9,7 @@ Created on Oct 8, 2013
 This class handles converted input from the Sharp IR ' 
 Sensors                                              ' 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
-
+from RangeTable import RangeTable
 import smbus
 import time as time
  
@@ -50,6 +50,7 @@ class IR_Sensors_Controller():
     def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
+        self.rangeTable=RangeTable.unpickleTable()
         
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -80,20 +81,28 @@ class IR_Sensors_Controller():
         sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister)
         return sensorInput
         
+    def getDistanceRaw(self,sensorRead):
+        le=len(sensorRead)
+        if(le>1):
+            tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
+            return int(tmp)
+        return -1
+        
         '''
         takes sensorRead as param and returns the distance in integer
         skal laves om så den bruger en lookup tabel hvor den slår op i med adc-værdien og 
         får en cm afstand
         se https://docs.google.com/document/d/1CW-QlNemOHGzK-vDWvWlM75J6Kc-zCyTyzmfmKkCj3U/edit
         
+        return rangeTable.lookupCm(int(tmp))
+        bruger lookup tabellen.
+        
         her er issuet:
         https://github.com/sloev/robot_sem4/issues/42
         '''
-    def getDistance(self,sensorRead):
-        le=len(sensorRead)
-        if(le>1):
-            tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
-            return int(tmp)
+    def getDistanceCm(self,rawDistance):
+        if (rawDistance>0):
+            return self.rangeTable.lookupCm(rawDistance)
         return -1
     
         '''takes sensorRead as param and returns the alerts from a conversion'''
@@ -103,7 +112,15 @@ class IR_Sensors_Controller():
             alert=sensorRead[0] >> 7
             return alert
         return -1
-
+    
+    def getAverage(self,channel,amount):
+        average=0
+        for i in range(0,amount):
+            tmp = self.readSensorBlock(channel, ConversionResultReg)
+            tmp = self.getDistanceRaw(tmp)
+            average+=tmp
+            time.sleep(0.005)
+        return int(average/amount)
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
