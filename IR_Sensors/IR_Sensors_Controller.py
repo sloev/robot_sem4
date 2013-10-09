@@ -98,7 +98,7 @@ def main():
     test = IR_Sensors_Controller(0x20)
     
     while True:
-        inp = test.readSensorBlock(Vin2, ConversionResultReg)
+        inp = test.readSensorBlock(Vin1 | Vin2, ConversionResultReg)
         a,b=divmod(inp,0x100)
         print (bin(inp)+" a="+str(a)+" b="+str(b))
         time.sleep(0.5)
