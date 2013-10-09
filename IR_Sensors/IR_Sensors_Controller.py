@@ -87,9 +87,8 @@ class IR_Sensors_Controller():
         '''Read input from IR sensor'''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        self.bus.write_byte(self.slaveAddress, chosenRegister)
-        sensorInput = self.bus.read_byte(self.slaveAddress)
-        sensorInput = sensorInput <<8 | self.bus.read_byte(self.slaveAddress)
+        #self.bus.write_byte(self.slaveAddress, chosenRegister)
+        sensorInput = self.bus.read_word_data(self.slaveAddress,chosenRegister)
 
         return sensorInput
     
