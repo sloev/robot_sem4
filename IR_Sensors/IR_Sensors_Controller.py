@@ -89,6 +89,8 @@ class IR_Sensors_Controller():
         chosenRegister = register | channel << 4
         self.bus.write_byte(self.slaveAddress, chosenRegister)
         sensorInput = self.bus.read_byte(self.slaveAddress)
+        sensorInput = sensorInput <<8 | self.bus.read_byte(self.slaveAddress)
+
         return sensorInput
     
     
@@ -97,7 +99,8 @@ def main():
     
     while True:
         inp = test.readSensorBlock(Vin2, ConversionResultReg)
-        print inp
+        a,b=divmod(inp,0x100)
+        print (bin(inp)+" a="+str(a)+" b="+str(b))
         time.sleep(0.5)
     
     
