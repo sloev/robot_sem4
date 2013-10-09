@@ -89,7 +89,7 @@ class IR_Sensors_Controller():
         chosenRegister = register | channel << 4
         #self.bus.write_byte(self.slaveAddress, chosenRegister)
        # sensorInput = self.bus.read_word_data(self.slaveAddress,chosenRegister)
-        sensorInput=self.bus.read_block_data(self.slaveAddress,chosenRegister)
+        sensorInput=self.bus.read_word_data(self.slaveAddress,chosenRegister)
 
         return sensorInput
     
