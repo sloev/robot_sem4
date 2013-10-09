@@ -9,7 +9,7 @@ Created on Oct 8, 2013
 This class handles converted input from the Sharp IR ' 
 Sensors                                              ' 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
-
+from RangeTable import RangeTable
 import smbus
 import time as time
  
@@ -50,6 +50,7 @@ class IR_Sensors_Controller():
     def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
+        self.rangeTable=RangeTable.unpickleTable()
         
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -86,6 +87,9 @@ class IR_Sensors_Controller():
         får en cm afstand
         se https://docs.google.com/document/d/1CW-QlNemOHGzK-vDWvWlM75J6Kc-zCyTyzmfmKkCj3U/edit
         
+        return rangeTable.lookupCm(int(tmp))
+        bruger lookup tabellen.
+        
         her er issuet:
         https://github.com/sloev/robot_sem4/issues/42
         '''
@@ -93,6 +97,7 @@ class IR_Sensors_Controller():
         le=len(sensorRead)
         if(le>1):
             tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
+            #return rangeTable.lookupCm(int(tmp))
             return int(tmp)
         return -1
     
