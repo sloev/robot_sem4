@@ -96,9 +96,9 @@ def main():
     test = IR_Sensors_Controller(0x20)
     
     while True:
-        inp = test.readSensorBlock(Vin1, ConversionResultReg)
+        inp = test.readSensorBlock(Vin2, ConversionResultReg)
         print inp
-        time.sleep(1)
+        time.sleep(0.5)
     
     
   
