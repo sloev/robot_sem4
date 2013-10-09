@@ -98,7 +98,7 @@ def main():
     test = IR_Sensors_Controller(0x20)
     
     while True:
-        inp = test.readSensorBlock(Vin1, ConversionResultReg)
+        inp = test.readSensorBlock(Vin2, ConversionResultReg)
         alert=bin(inp).__len__()-2 > 15
         print("len="+str(bin(inp).__len__()-2)+"\talert="+str(alert)+"\tbin"+bin(inp))
  
