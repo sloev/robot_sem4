@@ -21,7 +21,7 @@ class RangeTable:
         
     def initLookupTable(self):
         for i in range (0,adcMax):
-            self.lookupTable.extend(self.calcAdcToCm(i))
+            self.lookupTable.extend([self.calcAdcToCm(i)])
             
         '''praecis conversion skal indsaettes'''
     def calcAdcToCm(self,adc):
