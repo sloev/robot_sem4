@@ -23,7 +23,7 @@ class RangeTable:
         for i in range (0,adcMax):
             self.lookupTable.extend(self.calcAdcToCm(i))
             
-        '''praecis conversion skal indsættes'''
+        '''praecis conversion skal indsaettes'''
     def calcAdctoCm(self,adc):
         return 1
             
