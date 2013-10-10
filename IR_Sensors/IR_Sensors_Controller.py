@@ -50,7 +50,7 @@ class IR_Sensors_Controller():
     def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
-        self.rangeTable=RangeTable.unpickleTable()
+        self.rangeTable=RangeTable()
         
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
