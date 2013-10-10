@@ -7,7 +7,7 @@ Created on Sep 16, 2013
 import cPickle as pickle
 import math
 
-adcMax=512
+adcMax=3000
 class RangeTable:
     '''
     creates a a conversion ookup table from sharp ir adc values to centimeters 
@@ -35,8 +35,10 @@ class RangeTable:
         return cm
             
     def lookupCm(self,adc):
-        return self.lookupTable[adc]
-                
+        if(adc>0 and adc <adcMax):
+            return self.lookupTable[adc]
+        return -1
+        
     def pickleTable(self):
         pickle.dump(self, open("rangeTable.p", "wb"), protocol=-1)
         
