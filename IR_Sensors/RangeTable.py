@@ -12,7 +12,7 @@ class RangeTable:
     creates a a conversion ookup table from sharp ir adc values to centimeters 
     using an approximated linear equation based on mesurements
     
-    adcmax sætter hvilken spændevide vi kan opleve adc outputted i
+    adcmax sAEtter hvilken spEndevide vi kan opleve adc outputted i
     '''
 
     def __init__(self):
@@ -23,7 +23,7 @@ class RangeTable:
         for i in range (0,adcMax):
             self.lookupTable.extend(self.calcAdcToCm(i))
             
-        '''præcis conversion skal indsættes'''
+        '''praecis conversion skal indsættes'''
     def calcAdctoCm(self,adc):
         return 1
             
