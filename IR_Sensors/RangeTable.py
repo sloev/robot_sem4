@@ -5,6 +5,7 @@ Created on Sep 16, 2013
 '''
 
 import cPickle as pickle
+import math
 
 adcMax=512
 class RangeTable:
@@ -25,7 +26,13 @@ class RangeTable:
             
         '''praecis conversion skal indsaettes'''
     def calcAdcToCm(self,adc):
-        return 1
+        a =       46.25  ;
+        b =   -0.004601  ;
+        c =       22.92  ;
+        d =  -0.0007897 ;
+
+        cm = a*math.exp(b*adc) + c*math.exp(d*adc)
+        return cm
             
     def lookupCm(self,adc):
         return self.lookupTable[adc]
