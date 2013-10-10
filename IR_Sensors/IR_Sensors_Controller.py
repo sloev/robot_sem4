@@ -119,17 +119,13 @@ class IR_Sensors_Controller():
             tmp = self.readSensorBlock(channel, ConversionResultReg)
             tmp = self.getDistanceRaw(tmp)
             average+=tmp
-            time.sleep(0.005)
+            time.sleep(0.01)
         return int(average/amount)
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    while True:
-        sample = IR_sensor.readSensorBlock(Vin2, ConversionResultReg)
-        distance=IR_sensor.getDistance(sample)
-        alerts=IR_sensor.getAlerts(sample)
-        print("Alerts="+alerts+"\tDistance="+distance)
-        time.sleep(0.05)
+    tmp = IR_sensor.getAverage(Vin2, 200)
+    print(str(tmp))
     
 if __name__== '__main__':
     main() 
