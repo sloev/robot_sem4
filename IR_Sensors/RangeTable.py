@@ -24,7 +24,7 @@ class RangeTable:
             self.lookupTable.extend(self.calcAdcToCm(i))
             
         '''praecis conversion skal indsaettes'''
-    def calcAdctoCm(self,adc):
+    def calcAdcToCm(self,adc):
         return 1
             
     def lookupCm(self,adc):
