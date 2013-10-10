@@ -50,7 +50,7 @@ class IR_Sensors_Controller():
     def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
-        self.rangeTable=RangeTable.unpickleTable()
+        self.rangeTable=RangeTable()
         
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -89,16 +89,7 @@ class IR_Sensors_Controller():
         return -1
         
         '''
-        takes sensorRead as param and returns the distance in integer
-        skal laves om så den bruger en lookup tabel hvor den slår op i med adc-værdien og 
-        får en cm afstand
-        se https://docs.google.com/document/d/1CW-QlNemOHGzK-vDWvWlM75J6Kc-zCyTyzmfmKkCj3U/edit
-        
-        return rangeTable.lookupCm(int(tmp))
-        bruger lookup tabellen.
-        
-        her er issuet:
-        https://github.com/sloev/robot_sem4/issues/42
+        takes sensorRead as param and returns the distance in cm float
         '''
     def getDistanceCm(self,rawDistance):
         if (rawDistance>0):
@@ -119,17 +110,15 @@ class IR_Sensors_Controller():
             tmp = self.readSensorBlock(channel, ConversionResultReg)
             tmp = self.getDistanceRaw(tmp)
             average+=tmp
-            time.sleep(0.005)
+            time.sleep(0.10)
         return int(average/amount)
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    while True:
-        sample = IR_sensor.readSensorBlock(Vin2, ConversionResultReg)
-        distance=IR_sensor.getDistance(sample)
-        alerts=IR_sensor.getAlerts(sample)
-        print("Alerts="+alerts+"\tDistance="+distance)
-        time.sleep(0.05)
-    
+    while(1):
+        tmp=IR_sensor.getAverage(Vin2, 10)
+        cm=IR_sensor.getDistanceCm(tmp)
+        print("average="+str(tmp)+"\tcm="+str(cm))
+        time.sleep(0.2)
 if __name__== '__main__':
     main() 
