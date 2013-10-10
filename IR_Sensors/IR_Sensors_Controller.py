@@ -89,16 +89,7 @@ class IR_Sensors_Controller():
         return -1
         
         '''
-        takes sensorRead as param and returns the distance in integer
-        skal laves om saa den bruger en lookup tabel hvor den slaar op i med adc-vaerdien og 
-        faar en cm afstand
-        se https://docs.google.com/document/d/1CW-QlNemOHGzK-vDWvWlM75J6Kc-zCyTyzmfmKkCj3U/edit
-        
-        return rangeTable.lookupCm(int(tmp))
-        bruger lookup tabellen.
-        
-        her er issuet:
-        https://github.com/sloev/robot_sem4/issues/42
+        takes sensorRead as param and returns the distance in cm float
         '''
     def getDistanceCm(self,rawDistance):
         if (rawDistance>0):

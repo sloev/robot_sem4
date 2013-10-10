@@ -1,7 +1,7 @@
 '''
 Created on Sep 16, 2013
 
-@author: johannes
+@author: johannes, ivo
 '''
 
 import cPickle as pickle
