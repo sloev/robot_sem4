@@ -1,18 +1,19 @@
 '''
 Created on Sep 16, 2013
 
-@author: johannes
+@author: johannes, ivo
 '''
 
 import cPickle as pickle
+import math
 
-adcMax=512
+adcMax=3000
 class RangeTable:
     '''
     creates a a conversion ookup table from sharp ir adc values to centimeters 
     using an approximated linear equation based on mesurements
     
-    adcmax sætter hvilken spændevide vi kan opleve adc outputted i
+    adcmax sAEtter hvilken spEndevide vi kan opleve adc outputted i
     '''
 
     def __init__(self):
@@ -21,15 +22,23 @@ class RangeTable:
         
     def initLookupTable(self):
         for i in range (0,adcMax):
-            self.lookupTable.extend(self.calcAdcToCm(i))
+            self.lookupTable.extend([self.calcAdcToCm(i)])
             
-        '''præcis conversion skal indsættes'''
-    def calcAdctoCm(self,adc):
-        return 1
+        '''praecis conversion skal indsaettes'''
+    def calcAdcToCm(self,adc):
+        a =       46.25  ;
+        b =   -0.004601  ;
+        c =       22.92  ;
+        d =  -0.0007897 ;
+
+        cm = a*math.exp(b*adc) + c*math.exp(d*adc)
+        return cm
             
     def lookupCm(self,adc):
-        return self.lookupTable[adc]
-                
+        if(adc>0 and adc <adcMax):
+            return self.lookupTable[adc]
+        return -1
+        
     def pickleTable(self):
         pickle.dump(self, open("rangeTable.p", "wb"), protocol=-1)
         
