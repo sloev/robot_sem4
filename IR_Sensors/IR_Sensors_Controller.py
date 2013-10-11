@@ -115,7 +115,7 @@ class IR_Sensors_Controller():
     
     def multiChannelRead(self):
             response = self.readSensorBlock(0x07, 0x00)
-            self.getDistanceRaw(response)
+            print self.getDistanceRaw(response)
             
             
         
