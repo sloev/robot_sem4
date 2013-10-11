@@ -120,7 +120,7 @@ class IR_Sensors_Controller():
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    IR_sensor.setConfigurationRegister(0x00,0x3F)
+    IR_sensor.setConfigurationRegister(0x00,0x7F)
     IR_sensor.multiChannelRead()
 
 #     while(1):
@@ -128,6 +128,6 @@ def main():
 #         cm=IR_sensor.getDistanceCm(tmp)
 #         print("average="+str(tmp)+"\tcm="+str(cm))
 #         time.sleep(0.2)
-        
+            
 if __name__== '__main__':
     main() 
