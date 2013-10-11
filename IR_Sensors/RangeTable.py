@@ -32,7 +32,6 @@ class RangeTable:
         d =  -0.0007897 ;
         
         cm = a*math.exp(b*adc) + c*math.exp(d*adc)
-        "{0:.4f}".format(cm)
         return cm
             
     def lookUpDistance(self,adc):
