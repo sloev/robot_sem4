@@ -116,8 +116,8 @@ class IR_Sensors_Controller():
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
     IR_sensor.setConfigurationRegister(0x00,0x3F)
-    print IR_sensor.readSensorBlock(0x07, ConversionResultReg)
-    print IR_sensor.readSensorBlock(0x07, ConversionResultReg)
+    print "Vin1" + IR_sensor.readSensorBlock(0x07, ConversionResultReg)
+    print "Vin2" + IR_sensor.readSensorBlock(0x07, ConversionResultReg)
 #     while(1):
 #         tmp=IR_sensor.getAverage(multiChannels, 10)
 #         cm=IR_sensor.getDistanceCm(tmp)
