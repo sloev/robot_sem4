@@ -134,8 +134,7 @@ class IR_Sensors_Controller():
             print distances
             
             
-        
-        
+                
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
