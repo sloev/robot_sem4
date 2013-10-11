@@ -113,11 +113,17 @@ class IR_Sensors_Controller():
             time.sleep(0.10)
         return int(average/amount)
     
+    def multiRead(self, channel):
+        read1byte = self.readSensorBlock(channel, ConversionResultReg)
+        read1Raw = self.getDistanceCm(read1byte)
+        read1CM = self.getDistanceCm(read1Raw)
+        print read1CM
+    
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
     IR_sensor.setConfigurationRegister(0x00,0x3F)
-    print IR_sensor.readSensorBlock(0x07, ConversionResultReg)
-    print IR_sensor.readSensorBlock(0x07, ConversionResultReg)
+    IR_sensor.multiRead(0x07)
+    IR_sensor.multiRead(0x07)
 #     while(1):
 #         tmp=IR_sensor.getAverage(multiChannels, 10)
 #         cm=IR_sensor.getDistanceCm(tmp)
