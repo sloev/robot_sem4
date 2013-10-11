@@ -34,7 +34,7 @@ class RangeTable:
         cm = a*math.exp(b*adc) + c*math.exp(d*adc)
         return cm
             
-    def lookupCm(self,adc):
+    def lookUpDistance(self,adc):
         if(adc>0 and adc <adcMax):
             return self.lookupTable[adc]
         return -1

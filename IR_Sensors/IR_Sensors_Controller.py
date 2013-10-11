@@ -91,9 +91,9 @@ class IR_Sensors_Controller():
         '''
         takes sensorRead as param and returns the distance in cm float
         '''
-    def getDistanceCm(self,rawDistance):
+    def getDistance(self,rawDistance):
         if (rawDistance>0):
-            return self.rangeTable.lookupCm(rawDistance)
+            return self.rangeTable.lookUpDistance(rawDistance)
         return -1
     
     def getDistances(self, distances):
@@ -138,11 +138,10 @@ def main():
     IR_sensor.multiChannelRead(5)
 
 
-#     while(1):
-#         tmp=IR_sensor.getAverage(Vin1, 10)
-#         cm=IR_sensor.getDistanceCm(tmp)
-#         print("average="+str(tmp)+"\tcm="+str(cm))
-#         time.sleep(0.2)
+    while(1):
+        IR_sensor.multiChannelRead(5)
+        time.sleep(0.2)
+        
             
 if __name__== '__main__':
     main() 
