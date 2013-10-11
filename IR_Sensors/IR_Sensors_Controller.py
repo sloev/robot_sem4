@@ -115,10 +115,13 @@ class IR_Sensors_Controller():
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    while(1):
-        tmp=IR_sensor.getAverage(Vin2, 10)
-        cm=IR_sensor.getDistanceCm(tmp)
-        print("average="+str(tmp)+"\tcm="+str(cm))
-        time.sleep(0.2)
+    IR_sensor.setConfigurationRegister(0x00,0x3F)
+    print IR_sensor.readSensorBlock(0x07, ConversionResultReg)
+    print IR_sensor.readSensorBlock(0x07, ConversionResultReg)
+#     while(1):
+#         tmp=IR_sensor.getAverage(multiChannels, 10)
+#         cm=IR_sensor.getDistanceCm(tmp)
+#         print("average="+str(tmp)+"\tcm="+str(cm))
+#         time.sleep(0.2)
 if __name__== '__main__':
     main() 
