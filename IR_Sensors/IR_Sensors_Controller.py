@@ -83,6 +83,7 @@ class IR_Sensors_Controller():
         
     def getDistanceRaw(self,sensorRead):
         le=len(sensorRead)
+        print le
         if(le>1):
             tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
             return int(tmp)
@@ -109,7 +110,6 @@ class IR_Sensors_Controller():
         for i in range(0,amount):
             tmp = self.readSensorBlock(channel, ConversionResultReg)
             tmp = self.getDistanceRaw(tmp)
-            print tmp
             average+=tmp
             time.sleep(0.10)
         return int(average/amount)
