@@ -116,8 +116,10 @@ class IR_Sensors_Controller():
     def multiChannelRead(self):
             response1 = self.readSensorBlock(0x08, ConversionResultReg)
             response2 = self.readSensorBlock(0x09, ConversionResultReg)
+            response3 = self.readSensorBlock(0x0A, ConversionResultReg)
             print self.getDistanceCm(self.getDistanceRaw(response1))
             print self.getDistanceCm(self.getDistanceRaw(response2))
+            print self.getDistanceCm(self.getDistanceRaw(response3))
             
             
         
@@ -126,7 +128,6 @@ class IR_Sensors_Controller():
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
     IR_sensor.setConfigurationRegister(0x00,0x3F)
-    IR_sensor.multiChannelRead()
     IR_sensor.multiChannelRead()
 
 
