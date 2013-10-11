@@ -31,7 +31,7 @@ class RangeTable:
         b =   -0.004601  ;
         c =       22.92  ;
         d =  -0.0007897 ;
-        getcontext().prec(4)
+        getcontext().prec = 4
         cm = Decimal(a*math.exp(b*adc) + c*math.exp(d*adc))
         return cm
             
