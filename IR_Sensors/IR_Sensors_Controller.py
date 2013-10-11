@@ -78,7 +78,7 @@ class IR_Sensors_Controller():
         '''Read input from IR sensor'''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister)
+        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
         return sensorInput
         
     def getDistanceRaw(self,sensorRead):
@@ -114,7 +114,6 @@ class IR_Sensors_Controller():
         return int(average/amount)
     
     def multiChannelRead(self):
-        for i in range(0, 2):
             response = self.readSensorBlock(0x07, 0x00)
             
             
@@ -123,14 +122,16 @@ class IR_Sensors_Controller():
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    #IR_sensor.setConfigurationRegister(0x00,0x7F)
+    IR_sensor.setConfigurationRegister(0x00,0x7F)
+    IR_sensor.multiChannelRead()
+    IR_sensor.multiChannelRead()
 
 
-    while(1):
-        tmp=IR_sensor.getAverage(Vin1, 10)
-        cm=IR_sensor.getDistanceCm(tmp)
-        print("average="+str(tmp)+"\tcm="+str(cm))
-        time.sleep(0.2)
+#     while(1):
+#         tmp=IR_sensor.getAverage(Vin1, 10)
+#         cm=IR_sensor.getDistanceCm(tmp)
+#         print("average="+str(tmp)+"\tcm="+str(cm))
+#         time.sleep(0.2)
             
 if __name__== '__main__':
     main() 
