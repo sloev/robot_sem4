@@ -113,13 +113,16 @@ class IR_Sensors_Controller():
             time.sleep(0.10)
         return int(average/amount)
     
-    def multiChannelRead(self):
-            response1 = self.readSensorBlock(0x08, ConversionResultReg)
-            response2 = self.readSensorBlock(0x09, ConversionResultReg)
-            response3 = self.readSensorBlock(0x0A, ConversionResultReg)
-            print self.getDistanceCm(self.getDistanceRaw(response1))
-            print self.getDistanceCm(self.getDistanceRaw(response2))
-            print self.getDistanceCm(self.getDistanceRaw(response3))
+    def multiChannelRead(self, amount):
+            CH1 = CH2 = CH3 = 0
+            for i in range(0,range):
+                CH1 += self.getDistanceRaw(self.readSensorBlock(0x08, ConversionResultReg))
+                CH2 += self.getDistanceRaw(self.readSensorBlock(0x09, ConversionResultReg))
+                CH3 += self.getDistanceRaw(self.readSensorBlock(0x0A, ConversionResultReg))
+                
+                Distances = [(CH1/amount), CH2/amount, (CH3/amount)]
+                
+                print Distances
             
             
         
