@@ -122,6 +122,8 @@ class IR_Sensors_Controller():
     '''Read input from CH1, CH2, CH3
        Returns a list with sensor distances'''
     def multiChannelRead(self, amount):
+            counter = 0
+            failMargin = 0
             CH1 = CH2 = CH3 = 0
             for i in range(0,amount):
                 CH1 += self.getDistanceRaw(self.readSensorBlock(0x08, ConversionResultReg))
@@ -130,8 +132,10 @@ class IR_Sensors_Controller():
                 
                 rawDistances = [(CH1/amount), CH2/amount, (CH3/amount)]
                 distances = self.getDistances(rawDistances)
-                
-            print distances
+                failMargin += distances[1]
+                counter = counter + 1
+                failMargin = failMargin/counter
+            print failMargin
             
             
                 
