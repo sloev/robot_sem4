@@ -115,7 +115,7 @@ class IR_Sensors_Controller():
     
     def multiChannelRead(self, amount):
             CH1 = CH2 = CH3 = 0
-            for i in range(0,range):
+            for i in range(0,amount):
                 CH1 += self.getDistanceRaw(self.readSensorBlock(0x08, ConversionResultReg))
                 CH2 += self.getDistanceRaw(self.readSensorBlock(0x09, ConversionResultReg))
                 CH3 += self.getDistanceRaw(self.readSensorBlock(0x0A, ConversionResultReg))
@@ -131,7 +131,7 @@ class IR_Sensors_Controller():
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
     IR_sensor.setConfigurationRegister(0x00,0x3F)
-    IR_sensor.multiChannelRead()
+    IR_sensor.multiChannelRead(5)
 
 
 #     while(1):
