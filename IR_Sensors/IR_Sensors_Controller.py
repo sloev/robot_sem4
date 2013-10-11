@@ -114,21 +114,23 @@ class IR_Sensors_Controller():
         return int(average/amount)
     
     def multiChannelRead(self):
-        response = self.readSensorBlock(0x07, 0x00)
-        print response
+        for i in range(0, 2):
+            response = self.readSensorBlock(0x07, 0x00)
+            
+            
+        
         
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    IR_sensor.setConfigurationRegister(0x00,0x7F)
-    IR_sensor.multiChannelRead()
-    IR_sensor.multiChannelRead()
+    #IR_sensor.setConfigurationRegister(0x00,0x7F)
 
-#     while(1):
-#         tmp=IR_sensor.getAverage(multiChannels, 10)
-#         cm=IR_sensor.getDistanceCm(tmp)
-#         print("average="+str(tmp)+"\tcm="+str(cm))
-#         time.sleep(0.2)
+
+    while(1):
+        tmp=IR_sensor.getAverage(Vin1, 10)
+        cm=IR_sensor.getDistanceCm(tmp)
+        print("average="+str(tmp)+"\tcm="+str(cm))
+        time.sleep(0.2)
             
 if __name__== '__main__':
     main() 
