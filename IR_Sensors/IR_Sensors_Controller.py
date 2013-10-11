@@ -146,7 +146,7 @@ def main():
 
 
     while(1):
-        IR_sensor.multiChannelRead(10)
+        IR_sensor.multiChannelRead(1)
         time.sleep(0.2)
         
             
