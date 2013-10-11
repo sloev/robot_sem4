@@ -120,7 +120,7 @@ class IR_Sensors_Controller():
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    IR_sensor.setConfigurationRegister(0x00,0x0F)
+    IR_sensor.setConfigurationRegister(0x00,0x3F)
     IR_sensor.multiChannelRead()
 
 #     while(1):
