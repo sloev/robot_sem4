@@ -78,7 +78,7 @@ class IR_Sensors_Controller():
         '''Read input from IR sensor'''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
+        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 4)
         return sensorInput
         
     def getDistanceRaw(self,sensorRead):
@@ -115,7 +115,7 @@ class IR_Sensors_Controller():
     
     def multiChannelRead(self):
             response = self.readSensorBlock(0x07, 0x00)
-            print response
+            self.getDistanceRaw(response)
             
             
         
