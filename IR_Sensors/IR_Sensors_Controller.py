@@ -115,6 +115,7 @@ class IR_Sensors_Controller():
     
     def multiChannelRead(self):
             response = self.readSensorBlock(0x07, 0x00)
+            print response
             
             
         
