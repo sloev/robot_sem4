@@ -107,6 +107,8 @@ class IR_Sensors_Controller():
             return alert
         return -1
     
+    
+    '''Read average measurement from a single sensor'''
     def getAverage(self,channel,amount):
         average=0
         for i in range(0,amount):
@@ -116,6 +118,9 @@ class IR_Sensors_Controller():
             time.sleep(0.10)
         return int(average/amount)
     
+    
+    '''Read input from CH1, CH2, CH3
+       Returns a list with sensor distances'''
     def multiChannelRead(self, amount):
             CH1 = CH2 = CH3 = 0
             for i in range(0,amount):

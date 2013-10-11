@@ -6,6 +6,7 @@ Created on Sep 16, 2013
 
 import cPickle as pickle
 import math
+from decimal import Decimal, getcontext
 
 adcMax=3000
 class RangeTable:
@@ -30,8 +31,8 @@ class RangeTable:
         b =   -0.004601  ;
         c =       22.92  ;
         d =  -0.0007897 ;
-
-        cm = a*math.exp(b*adc) + c*math.exp(d*adc)
+        getcontext().prec(4)
+        cm = Decimal(a*math.exp(b*adc) + c*math.exp(d*adc))
         return cm
             
     def lookUpDistance(self,adc):
