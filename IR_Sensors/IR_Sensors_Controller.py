@@ -96,6 +96,9 @@ class IR_Sensors_Controller():
             return self.rangeTable.lookupCm(rawDistance)
         return -1
     
+    def getDistances(self, distances):
+        return self.rangeTable.LookUpDistances(distances)
+    
         '''takes sensorRead as param and returns the alerts from a conversion'''
     def getAlerts(self,sensorRead):
         le=len(sensorRead)
@@ -120,9 +123,10 @@ class IR_Sensors_Controller():
                 CH2 += self.getDistanceRaw(self.readSensorBlock(0x09, ConversionResultReg))
                 CH3 += self.getDistanceRaw(self.readSensorBlock(0x0A, ConversionResultReg))
                 
-                Distances = [(CH1/amount), CH2/amount, (CH3/amount)]
+                rawDistances = [(CH1/amount), CH2/amount, (CH3/amount)]
+                distances = self.getDistances(rawDistances)
                 
-                print Distances
+            print distances
             
             
         

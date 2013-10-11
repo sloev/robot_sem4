@@ -38,6 +38,9 @@ class RangeTable:
         if(adc>0 and adc <adcMax):
             return self.lookupTable[adc]
         return -1
+    
+    def LookUpDistances(self, distances):
+        return distances[self.lookupTable[0], self.lookupTable[1], self.lookupTable[2]]
         
     def pickleTable(self):
         pickle.dump(self, open("rangeTable.p", "wb"), protocol=-1)
