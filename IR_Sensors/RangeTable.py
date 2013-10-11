@@ -40,7 +40,7 @@ class RangeTable:
         return -1
     
     def LookUpDistances(self, distances):
-        return distances[self.lookupTable[distances[0]], self.lookupTable[distances[1]], self.lookupTable[distances[2]]
+        return distances[self.lookupTable[distances[0]], self.lookupTable[distances[1]], self.lookupTable[distances[2]]]
         
     def pickleTable(self):
         pickle.dump(self, open("rangeTable.p", "wb"), protocol=-1)
