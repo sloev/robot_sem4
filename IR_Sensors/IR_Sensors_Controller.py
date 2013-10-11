@@ -108,8 +108,8 @@ class IR_Sensors_Controller():
         average=0
         for i in range(0,amount):
             tmp = self.readSensorBlock(channel, ConversionResultReg)
-            print tmp
             tmp = self.getDistanceRaw(tmp)
+            print tmp
             average+=tmp
             time.sleep(0.10)
         return int(average/amount)
