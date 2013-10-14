@@ -83,7 +83,7 @@ class IR_Sensors_Controller():
         return sensorInput
     
         
-    def getDistanceRaw(self,sensorRead):
+    def extractRawDistance(self,sensorRead):
         le=len(sensorRead)
 
         if(le>1):
@@ -95,61 +95,56 @@ class IR_Sensors_Controller():
         '''
         takes sensorRead as param and returns the distance in cm float
         '''
-    def getDistance(self,rawDistance):
+    def lookupCm(self,rawDistance):
         if (rawDistance>0):
             return self.rangeTable.lookUpDistance(rawDistance)
         return -1
     
-    
-    def getDistances(self, distances):
-        return self.rangeTable.LookUpDistances(distances)
-    
-    
         '''takes sensorRead as param and returns the alerts from a conversion'''
     def getAlerts(self,sensorRead):
-        le=len(sensorRead)
-        if(le>1):
+        if(len(sensorRead)>1):
             alert=sensorRead[0] >> 7
             return alert
         return -1
     
     
     '''Read average measurement from a single sensor'''
-    def getAverage(self,channel,amount):
+    def getAverageInCm(self,channel,amount):
         average=0
         for i in range(0,amount):
             tmp = self.readSensorBlock(channel, ConversionResultReg)
-            tmp = self.getDistanceRaw(tmp)
+            tmp = self.extractRawDistance(tmp)
             average+=tmp
             time.sleep(0.10)
-        return int(average/amount)
+        return self.lookupCm(int(average/amount))
     
     
-    '''Read input from CH1, CH2, CH3
-       Returns a list with sensor distances'''
-    def multiChannelRead(self, amount):
-            CH1 = CH2 = CH3 = 0
-            for i in range(0,amount):
-                CH1 += self.getDistanceRaw(self.readSensorBlock(0x08, ConversionResultReg))
-                CH2 += self.getDistanceRaw(self.readSensorBlock(0x09, ConversionResultReg))
-                CH3 += self.getDistanceRaw(self.readSensorBlock(0x0A, ConversionResultReg))
-                
-                rawDistances = [(CH1/amount), CH2/amount, (CH3/amount)]
-                distances = self.getDistances(rawDistances)
-                
-            print distances
-            
-            
-              
+    '''Read input from channels described in the channels list
+       Returns a list with sensor distances in cm'''
+    def multiChannelReadCm(self,channels, amount):
+        distances = [0 for i in range(len(channels))]
+        for i in range(amount):
+            for j in range(len(distances)):
+                distances[j] = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))  
+                if(amount-i==1):
+                    distances[j]=self.lookupCm(int(distances[j]/amount))
+        return distances
+    
+    def printMultiChannelReadCm(self,distances):
+        print("sensor readout in cm:")
+        for i in range(len(distances)):
+            print("sensor "+str(i)+"\t\t")
+        for i in range(len(distances)):
+            print(str(distances[i]))
+        
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
     IR_sensor.setConfigurationRegister(0x00,0x3F)
-    IR_sensor.multiChannelRead(5)
-
+    sensorChannels=[0x08,0x09,0x0A]
 
     while(1):
-        IR_sensor.multiChannelRead(5)
+        IR_sensor.printMultiChannelReadCm(IR_sensor.multiChannelRead(sensorChannels,5))
         time.sleep(0.2)
         
             
