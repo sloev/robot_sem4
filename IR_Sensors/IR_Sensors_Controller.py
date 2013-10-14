@@ -97,7 +97,7 @@ class IR_Sensors_Controller():
         '''
     def lookupCm(self,rawDistance):
         if (rawDistance>0):
-            return self.rangeTable.lookUpDistance(rawDistance)
+            return self.rangeTable.lookupTable.lookUpDistance(rawDistance)
         return -1
     
         '''takes sensorRead as param and returns the alerts from a conversion'''
