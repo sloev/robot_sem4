@@ -9,7 +9,7 @@ import math
 import os.path
 
 
-class RangeTable:
+class RangeTable():
     '''
     creates a a conversion ookup table from sharp ir adc values to centimeters 
     using an approximated linear equation based on mesurements
@@ -19,13 +19,14 @@ class RangeTable:
 
     def __init__(self):
         self.adcMax=3000
-        self.lookupTable = self.unpickleTable()
+        self.lookupTable = RangeTable.unpickleTable()
         
         if(self.lookupTable==0):
             self.initLookupTable()
             self.pickleTable()
         
     def initLookupTable(self):
+        self.lookupTable = []
         for i in range (0,self.adcMax):
             self.lookupTable.extend([self.calcAdcToCm(i)])
             
@@ -40,7 +41,7 @@ class RangeTable:
         return cm
             
     def lookUpDistance(self,adc):
-        if(adc>0 and adc <adcMax):
+        if(adc>0 and adc <self.adcMax):
             return self.lookupTable[adc]
         return -1
     
@@ -58,8 +59,8 @@ class RangeTable:
         return returnValue
 
 def main():
-    LUT = RangeTable()
-    print(LUT.lookupCM(900))
+    LUT = RangeTable.unpickleTable()
+    print(LUT.lookUpDistance(900))
     
 if __name__== '__main__':
     main()
