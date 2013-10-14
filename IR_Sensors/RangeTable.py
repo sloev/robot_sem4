@@ -20,7 +20,6 @@ class RangeTable():
     def __init__(self):
         self.adcMax=3000
         self.lookupTable = RangeTable.unpickleTable()
-
         if(self.lookupTable==0):
             self.initLookupTable()
             self.pickleTable()
@@ -55,12 +54,12 @@ class RangeTable():
             try:
                 returnValue = pickle.load(open("rangeTable.p", "rb"))
             except EOFError:
-                pass
+                print "Error"
         return returnValue
 
 def main():
     LUT = RangeTable()
-    print(LUT.lookUpDistance(900))
+    print(LUT.lookupTable.lookUpDistance(900))
     
 if __name__== '__main__':
     main()

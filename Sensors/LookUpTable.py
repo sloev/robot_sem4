@@ -80,9 +80,9 @@ class LookUpTable:
         
 
 def main():
-   
+       
     Table = LookUpTable.unpickleTable()
-    mus2 = Table.getAngLen(129,129)
+    mus2 = Table.getAngLen(1,9)
     print mus2.toString()
     
     if(isinstance(mus2, Mouse)):
