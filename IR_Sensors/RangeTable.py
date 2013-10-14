@@ -8,7 +8,7 @@ import cPickle as pickle
 import math
 import os.path
 
-adcMax=3000
+
 class RangeTable:
     '''
     creates a a conversion ookup table from sharp ir adc values to centimeters 
@@ -18,6 +18,7 @@ class RangeTable:
     '''
 
     def __init__(self):
+        self.adcMax=3000
         self.lookupTable = self.unpickleTable()
         
         if(self.lookupTable==0):
@@ -25,7 +26,7 @@ class RangeTable:
             self.pickleTable()
         
     def initLookupTable(self):
-        for i in range (0,adcMax):
+        for i in range (0,self.adcMax):
             self.lookupTable.extend([self.calcAdcToCm(i)])
             
         '''praecis conversion skal indsaettes'''
