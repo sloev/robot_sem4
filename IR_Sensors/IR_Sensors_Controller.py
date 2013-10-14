@@ -144,7 +144,7 @@ def main():
     sensorChannels=[0x08,0x09,0x0A]
 
     while(1):
-        IR_sensor.printMultiChannelReadCm(IR_sensor.multiChannelRead(sensorChannels,5))
+        IR_sensor.printMultiChannelReadCm(IR_sensor.multiChannelReadCm(sensorChannels,5))
         time.sleep(0.2)
         
             
