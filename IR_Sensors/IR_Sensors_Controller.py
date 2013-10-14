@@ -125,7 +125,7 @@ class IR_Sensors_Controller():
         distances = [0 for i in range(len(channels))]
         for i in range(amount):
             for j in range(len(distances)):
-                distances[j] = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))  
+                distances[j] += self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))  
                 if(amount-i==1):
                     distances[j]=self.lookupCm(int(distances[j]/amount))
         return distances
