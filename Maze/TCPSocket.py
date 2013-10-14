@@ -23,7 +23,10 @@ class TCPSocket():
         self.socket.send(self.message)
         self.response = self.socket.recv(BUFFER)
         self.checkResponse(self.response)
+        
+    def __del__(self):
         self.socket.close()
+        del self.socket
  
     def checkResponse(self, response):
         if(self.response == "OK"):
