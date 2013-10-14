@@ -1,11 +1,12 @@
 '''
 Created on Sep 16, 2013
 
-@author: johannes, ivo
+@author: johannes, ivo, daniel
 '''
 
 import cPickle as pickle
 import math
+import os.path
 
 adcMax=3000
 class RangeTable:
@@ -17,8 +18,11 @@ class RangeTable:
     '''
 
     def __init__(self):
-        self.lookupTable = []      
-        self.initLookupTable()
+        self.lookupTable = self.unpickleTable()
+        
+        if(self.lookupTable==0):
+            self.initLookupTable()
+            self.pickleTable()
         
     def initLookupTable(self):
         for i in range (0,adcMax):
@@ -39,20 +43,21 @@ class RangeTable:
             return self.lookupTable[adc]
         return -1
     
-    def LookUpDistances(self, distances):
-        result = [self.lookupTable[distances[0]], self.lookupTable[distances[1]], self.lookupTable[distances[2]]]
-        return result
-    
     def pickleTable(self):
         pickle.dump(self, open("rangeTable.p", "wb"), protocol=-1)
         
     @staticmethod
     def unpickleTable():
-        RangeTable = pickle.load(open("rangeTable.p", "rb"))
-        return RangeTable
+        returnValue=0
+        if(os.path.exists("rangeTable.p")):
+            try:
+                returnValue = pickle.load(open("rangeTable.p", "rb"))
+            except EOFError:
+                pass
+        return returnValue
 
 def main():
-    LUT = RangeTable.unpickleTable()
+    LUT = RangeTable()
     print(LUT.lookupCM(900))
     
 if __name__== '__main__':
