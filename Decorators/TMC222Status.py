@@ -16,6 +16,7 @@ Created on Oct 1, 2013
 '@TMCStatus222                                                     '
 'getFullStatus1()                                                  '
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+import smbus
 
 class TMC222Status(object):
 
@@ -23,6 +24,7 @@ class TMC222Status(object):
     def __init__(self, f):
         print "\n"
         print "Daniel Machon's awesome decorator initialized!"
+        self.bus = smbus.SMBus(1)
         self.f = f
         self.setData(f)
         print "Decorating function " + self.f.__name__ + "\n"
