@@ -85,6 +85,7 @@ class IR_Sensors_Controller():
         
     def getDistanceRaw(self,sensorRead):
         le=len(sensorRead)
+
         if(le>1):
             tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
             return int(tmp)
