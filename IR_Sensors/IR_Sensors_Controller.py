@@ -52,8 +52,8 @@ class IR_Sensors_Controller():
         self.slaveAddress = slaveAddress
         self.rangeTable=RangeTable().unpickleTable()
         if(self.rangeTable==0):
-            self.rangeTable.initLookupTable()
-            self.rangeTable.pickleTable()
+            self.rangeTable=RangeTable()
+           
         
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
