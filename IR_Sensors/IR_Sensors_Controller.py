@@ -74,12 +74,14 @@ class IR_Sensors_Controller():
         byte1 = MSBs
         byte2  = 0x0F | LSBs << 4
         self.bus.write_i2c_block_data(self.slaveAddress, chosenRegister,[byte1, byte2])
+        
     
         '''Read input from IR sensor'''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
         sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
         return sensorInput
+    
         
     def getDistanceRaw(self,sensorRead):
         le=len(sensorRead)
@@ -87,6 +89,7 @@ class IR_Sensors_Controller():
             tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
             return int(tmp)
         return -1
+    
         
         '''
         takes sensorRead as param and returns the distance in cm float
@@ -96,8 +99,10 @@ class IR_Sensors_Controller():
             return self.rangeTable.lookUpDistance(rawDistance)
         return -1
     
+    
     def getDistances(self, distances):
         return self.rangeTable.LookUpDistances(distances)
+    
     
         '''takes sensorRead as param and returns the alerts from a conversion'''
     def getAlerts(self,sensorRead):
