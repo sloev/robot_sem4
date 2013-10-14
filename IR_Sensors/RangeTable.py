@@ -30,15 +30,19 @@ class RangeTable:
         b =   -0.004601  ;
         c =       22.92  ;
         d =  -0.0007897 ;
-
+        
         cm = a*math.exp(b*adc) + c*math.exp(d*adc)
         return cm
             
-    def lookupCm(self,adc):
+    def lookUpDistance(self,adc):
         if(adc>0 and adc <adcMax):
             return self.lookupTable[adc]
         return -1
-        
+    
+    def LookUpDistances(self, distances):
+        result = [self.lookupTable[distances[0]], self.lookupTable[distances[1]], self.lookupTable[distances[2]]]
+        return result
+    
     def pickleTable(self):
         pickle.dump(self, open("rangeTable.p", "wb"), protocol=-1)
         

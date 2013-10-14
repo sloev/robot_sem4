@@ -85,7 +85,7 @@ class IR_Sensors_Controller():
         
     def getDistanceRaw(self,sensorRead):
         le=len(sensorRead)
-
+        print le
         if(le>1):
             tmp=(sensorRead[0] & 0b00001111) <<8 | sensorRead[1]<<0
             return int(tmp)
@@ -144,6 +144,7 @@ class IR_Sensors_Controller():
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
+<<<<<<< HEAD
     IR_sensor.setConfigurationRegister(0x00,0x3F)
     IR_sensor.multiChannelRead(5)
 
@@ -152,6 +153,15 @@ def main():
         IR_sensor.multiChannelRead(5)
         time.sleep(0.2)
         
+=======
+
+
+    while(1):
+        tmp=IR_sensor.getAverage(Vin1, 10)
+        cm=IR_sensor.getDistanceCm(tmp)
+        print("average="+str(tmp)+"\tcm="+str(cm))
+        time.sleep(0.2)
+>>>>>>> master
             
 if __name__== '__main__':
     main() 
