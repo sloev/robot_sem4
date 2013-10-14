@@ -50,7 +50,7 @@ class IR_Sensors_Controller():
     def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
-        self.rangeTable=RangeTable().unpickleTable()
+        self.rangeTable=RangeTable.unpickleTable()
         if(self.rangeTable==0):
             self.rangeTable=RangeTable()
            
@@ -143,7 +143,7 @@ class IR_Sensors_Controller():
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
-    IR_sensor.setConfigurationRegister(0x00,0x3F)
+    IR_sensor.setConfigurationRegister(0x00,0x7F)
     sensorChannels=[0x08,0x09,0x0A]
 
     while(1):
