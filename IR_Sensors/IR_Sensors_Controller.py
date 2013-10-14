@@ -122,6 +122,7 @@ class IR_Sensors_Controller():
     '''Read input from channels described in the channels list
        Returns a list with sensor distances in cm'''
     def multiChannelReadCm(self,channels, amount):
+        print channels
         distances = [0 for i in range(len(channels))]
         for i in range(amount):
             for j in range(len(distances)):
