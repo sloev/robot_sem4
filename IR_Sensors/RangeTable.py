@@ -19,10 +19,7 @@ class RangeTable():
 
     def __init__(self):
         self.adcMax=3000
-        self.lookupTable = RangeTable.unpickleTable()
-        if(self.lookupTable==0):
-            self.initLookupTable()
-            self.pickleTable()
+        self.lookupTable = []
         
     def initLookupTable(self):
         self.lookupTable = []
@@ -58,8 +55,11 @@ class RangeTable():
         return returnValue
 
 def main():
-    LUT = RangeTable()
-    print(LUT.lookupTable.lookUpDistance(900))
+    LUT = RangeTable.unpickleTable()
+    if(LUT==0):
+        LUT.initLookupTable()
+        LUT.pickleTable()
+    print(LUT.lookUpDistance(900))
     
 if __name__== '__main__':
     main()

@@ -50,7 +50,10 @@ class IR_Sensors_Controller():
     def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
-        self.rangeTable=RangeTable()
+        self.rangeTable=RangeTable().unpickleTable()
+        if(self.rangeTable==0):
+            self.rangeTable.initLookupTable()
+            self.rangeTable.pickleTable()
         
         
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -97,7 +100,7 @@ class IR_Sensors_Controller():
         '''
     def lookupCm(self,rawDistance):
         if (rawDistance>0):
-            return self.rangeTable.lookupTable.lookUpDistance(rawDistance)
+            return self.rangeTable.lookUpDistance(rawDistance)
         return -1
     
         '''takes sensorRead as param and returns the alerts from a conversion'''
