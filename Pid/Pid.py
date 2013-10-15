@@ -34,7 +34,7 @@ class Pid():
         self.controlValues=[0,0]
         
     'missing the option to send new values to motors'
-    def doPd(self):
+    def doPid(self):
         sample=self.ir_sensors.multiChannelReadCm(self.sensorChannels,5)
         self.currentError=[self.setPoint-sample[self.left],self.setPoint-sample[self.right]] 
         self.dError=[self.currentError[self.left]-self.lastError[self.left],self.currentError[self.right]-self.lastError[self.right]]
