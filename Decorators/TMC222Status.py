@@ -7,7 +7,7 @@ Created on Oct 1, 2013
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' This class is a decorator. Its purpose is to return the status   '
 ' of the stepper motor in printed text. The decorator takes the    '
-' getFullStatus2 method, decorates it, and prints the result in a  '
+' getFullStatus1 method, decorates it, and prints the result in a  '
 ' more understandable way.                                         '
 '                                                                  '
 ' The decorator can be used on the getFullStatus2 method, by using ' 
@@ -17,10 +17,13 @@ Created on Oct 1, 2013
 'getFullStatus1()                                                  '
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+import smbus
+
 class TMC222Status(object):
 
     '''Constructor'''    
     def __init__(self, f):
+        self.bus = smbus.SMBus(1)
         print "\n"
         print "Daniel Machon's awesome decorator initialized!"
         self.f = f
@@ -28,7 +31,8 @@ class TMC222Status(object):
         print "Decorating function " + self.f.__name__ + "\n"
 
 
-    '''Called after the class is instantiated'''        
+    '''Called after the class is instantiated
+       Makes the object callable'''        
     def __call__(self):
         string =""
         string += "|"+str(len(self.data)) + " bytes received from slave located at "+self.slaveAdd+"|"+"\n"
