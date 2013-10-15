@@ -13,6 +13,10 @@ import time as time
 import logging
 
 class DualMotorController:
+    '''
+        for controlling two stepper motors through i2c
+    '''
+    
     def __init__(self, add1, add2):
         self.logger = logging.getLogger(__name__)
         self.logger.debug("Initializing DualMotorController")
