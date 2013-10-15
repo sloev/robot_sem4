@@ -23,29 +23,33 @@ import smbus
 class PositionStatus():
    
 
-
+    'Constructor'
     def __init__(self, f):
         self.bus = smbus.SMBus(1)
         self.setData(f)
-        
+     
+    'Makes the object callable'    
     def __call__(self):
         print self.getActPos()
         print self.getTagPos()
 
-    
+    'Fetch data from original function'    
     def setData(self, f):
         self.data = f(self)
         self.actPos1 = self.data[2]
         self.actPos2 = self.data[3]
         self.tagPos1 = self.data[4]
         self.tagPos2 = self.data[5]
-        
+     
+    'Convert actual position to decimal number'    
     def getActPos(self):
         return "Actual position is: " + str((self.actPos1<<8) | self.actPos2)
     
+    'Convert target position to decimal number'
     def getTagPos(self):
         return "Target position is: " + str((self.tagPos1<<8) | self.actPos2)
-   
+ 
+'Test function' 
 @PositionStatus 
 def getFullStatus2(self):
     r = [0x00, 0x00, 0x02, 0x0F, 0xFF, 0xFF]

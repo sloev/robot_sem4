@@ -31,7 +31,8 @@ class TMC222Status(object):
         print "Decorating function " + self.f.__name__ + "\n"
 
 
-    '''Called after the class is instantiated'''        
+    '''Called after the class is instantiated
+       Makes the object callable'''        
     def __call__(self):
         string =""
         string += "|"+str(len(self.data)) + " bytes received from slave located at "+self.slaveAdd+"|"+"\n"
