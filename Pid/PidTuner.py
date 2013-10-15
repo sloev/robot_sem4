@@ -14,7 +14,7 @@ class PidTuner():
         used to tune the pid gain factors
     '''
     def __init__(self):
-        logging.basicConfig(filename='mother_log.log', level=logging.INFO)
+        logging.basicConfig(filename='myLog.log', level=logging.INFO)
         self.ir_sensor = IR_Sensors_Controller(0x20)
         self.ir_sensor.setConfigurationRegister(0x00,0x7F)
         self.dual_motors=DualMotorController(0x60,0x61)
