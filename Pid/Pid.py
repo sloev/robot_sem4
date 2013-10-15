@@ -1,17 +1,16 @@
 '''
 Created on Oct 15, 2013
 
-@author: slavegnuen
+@author: johannes
 '''
 Vin1                                =   0x08
 Vin2                                =   0x09
 Vin3                                =   0x0A
 class Pid():
     '''
-    creates a a conversion ookup table from sharp ir adc values to centimeters 
-    using an approximated linear equation based on mesurements
-    
-    adcmax sAEtter hvilken spEndevide vi kan opleve adc outputted i
+    pid control
+    inspired by:
+    http://letsmakerobots.com/node/865
     '''
 
     def __init__(self,ir_sensors, dual_motors):
