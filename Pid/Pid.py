@@ -31,14 +31,26 @@ class Pid():
         self.iError=[0,0]
         self.pGain=[0,0]  #proportional gain factor
         self.dGain=[0,0]  #differential gain factor
+        self.iGain=[0,0]  #integral gain factor
         self.controlValues=[0,0]
         
+    'missing the option to send new values to motors'
     def doPd(self):
         sample=self.ir_sensors.multiChannelReadCm(self.sensorChannels,5)
-        self.error=[self.setPoint-sample[self.left],self.setPoint-sample[self.right]]
+        self.currentError=[self.setPoint-sample[self.left],self.setPoint-sample[self.right]] 
+        self.dError=[self.currentError[self.left]-self.lastError[self.left],self.currentError[self.right]-self.lastError[self.right]]
         
-        self.dError=[self.error[self.left]-self.lastError[self.left],self.error[self.right]-self.lastError[self.right]]
+        self.controlValues=[self.computeControlValues(self.left),self.computeControlValues(self.right)]
         
+        self.lastError=self.currentError
+        self.iError=[self.currentError[self.left]+self.iError[self.left],self.currentError[self.right]+self.iError[self.right]]
+    
+    def computeControlValues(self,wheel):
+        value=self.pGain[wheel]*self.currentError[wheel]
+        value+=self.dGain[wheel]*self.dError[wheel]
+        value+=self.iGain[wheel]*self.iError[wheel]
+        value=self.convertCmToVelocity(value)
+        return value
         
     def constrain(self,cm):
         if(cm > self.cmMax):
@@ -48,6 +60,7 @@ class Pid():
         return cm
     
     def convertCmToVelocity(self,cm):
+        cm=self.constrain(cm)
         velocity=((cm/(self.cmMax-self.cmMin))*6)+1
         return velocity
         
