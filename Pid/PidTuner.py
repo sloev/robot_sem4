@@ -120,14 +120,7 @@ def main(stdscr):
         # get keyboard input, returns -1 if none available
         c = stdscr.getch()
         if c != -1:
-            c=c.lower()
             fncDict.get(c, "error")()
             PidTuner.printGains()
-
-
-num = raw_input("Enter a number between 0 and 3")
-# if num is found as a key in the dictionary fncDict, then corresponding function is called
-# else the function errorMessage is called
-                
 if __name__ == '__main__':
     curses.wrapper(main)
