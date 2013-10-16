@@ -108,12 +108,12 @@ def main(stdscr):
                'x': PidTuner.rpgsub(),
                'd': PidTuner.ldgadd(),
                'c': PidTuner.ldgsub(),
-               'f': PidTuner.ldgadd(),
-               'v': PidTuner.ldgsub(),
+               'f': PidTuner.rdgadd(),
+               'v': PidTuner.rdgsub(),
                'g': PidTuner.ligadd(),
                'b': PidTuner.ligsub(),
-               'h': PidTuner.ligadd(),
-               'n': PidTuner.ligsub(),
+               'h': PidTuner.rigadd(),
+               'n': PidTuner.rigsub(),
                'q': PidTuner.save()
                 }
     while 1:
