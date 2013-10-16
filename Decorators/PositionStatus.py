@@ -47,7 +47,7 @@ class PositionStatus():
     
     'Convert target position to decimal number'
     def getTagPos(self):
-        return "Target position is: " + str((self.tagPos1<<8) | self.actPos2)
+        return "Target position is: " + str((self.tagPos1<<8) | self.tagPos2)
  
 'Test function' 
 @PositionStatus 
