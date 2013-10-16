@@ -127,6 +127,9 @@ class Pid():
         else:
             self.iGain=iGain
         self.logger.debug("pTune new iGain:"+str(self.iGain))
+    
+    def getGainFactors(self):
+        return [self.pGain,self.dGain,self.iGain]
 
             
     def computeControlValues(self,wheel,currentError,dError):
