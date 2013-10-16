@@ -26,6 +26,7 @@ class TMC222Status(object):
         self.bus = smbus.SMBus(1)
         print "\n"
         print "Daniel Machon's awesome decorator initialized!"
+        self.bus = smbus.SMBus(1)
         self.f = f
         self.setData(f)
         print "Decorating function " + self.f.__name__ + "\n"
