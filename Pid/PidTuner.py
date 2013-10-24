@@ -100,21 +100,32 @@ class PidTuner():
             self.pid.doPid()
             
 def main(stdscr):
-    PidTuner=PidTuner()
+    print("\
+        used to tune the pid gain factors using keyboard input\
+        \npress q to save\
+        \ntune    wheel    +    -     \
+        \npGain   left     a    z \
+        \npGain   right    s    x\
+        \ndGain   left     d    c\
+        \ndGain   right    f    v\
+        \niGain   left     g    b\
+        \niGain   right    h    n\
+        ")
+    pidtuner=PidTuner()
     stdscr.nodelay(1)
-    fncDict = {'a': PidTuner.lpgadd(),
-               'z': PidTuner.lpgsub(),
-               's': PidTuner.rpgadd(),
-               'x': PidTuner.rpgsub(),
-               'd': PidTuner.ldgadd(),
-               'c': PidTuner.ldgsub(),
-               'f': PidTuner.rdgadd(),
-               'v': PidTuner.rdgsub(),
-               'g': PidTuner.ligadd(),
-               'b': PidTuner.ligsub(),
-               'h': PidTuner.rigadd(),
-               'n': PidTuner.rigsub(),
-               'q': PidTuner.save()
+    fncDict = {'a': pidtuner.lpgadd(),
+               'z': pidtuner.lpgsub(),
+               's': pidtuner.rpgadd(),
+               'x': pidtuner.rpgsub(),
+               'd': pidtuner.ldgadd(),
+               'c': pidtuner.ldgsub(),
+               'f': pidtuner.rdgadd(),
+               'v': pidtuner.rdgsub(),
+               'g': pidtuner.ligadd(),
+               'b': pidtuner.ligsub(),
+               'h': pidtuner.rigadd(),
+               'n': pidtuner.rigsub(),
+               'q': pidtuner.save()
                 }
     while 1:
         # get keyboard input, returns -1 if none available
