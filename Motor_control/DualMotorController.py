@@ -4,7 +4,7 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 'class variables:'
-turn90Steps=3158
+turn90Steps=3158*2
 turn180Steps=6316
 
 from Decorators.TMC222Status import TMC222Status
@@ -112,8 +112,9 @@ def main():
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     tmp=motors.getFullStatus2()
     #print("busy="+motors.isBusy(tmp))
-    motors.setMotorParams(1, 0, 5, 5)
     motors.runInit()
+    motors.setMotorParams(1, 0, 5, 5)
+
     print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     motors.turn90(1, 5)
     
