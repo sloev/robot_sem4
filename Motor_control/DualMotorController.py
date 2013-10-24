@@ -4,14 +4,14 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 'class variables:'
-turn90Steps=int(3158/2)
+turn90Steps=int(1500)
 turn180Steps=6316
 
 from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
 import time as time
 import logging
-
+import sys
 class DualMotorController:
     '''
         for controlling two stepper motors through i2c
@@ -106,7 +106,9 @@ class DualMotorController:
         self.motorRight.softStop()
         
 def main():
-    print("init")
+    if(len(sys.argv)>0):
+        turn90Steps=sys.argv[1]
+
     motors=DualMotorController(0x60,0x61)
     motors.setOtpParam()
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
