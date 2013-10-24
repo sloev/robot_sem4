@@ -123,7 +123,7 @@ def main():
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     tmp=motors.getFullStatus2()
     #print("busy="+motors.isBusy(tmp))
-    motors.setMotorParams(1, 0, 5, 5)
+    motors.setMotorParams(1, 1, 5, 5)
     motors.runInit()
     time.sleep(5)
     for i in range(0,times):
