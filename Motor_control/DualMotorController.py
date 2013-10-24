@@ -4,26 +4,28 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 'class variables:'
-turn90Steps=3158
-turn180Steps=6316
+
 
 from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
 import time as time
 import logging
-
+import sys
 class DualMotorController:
     '''
         for controlling two stepper motors through i2c
     '''
     
     def __init__(self, add1, add2):
+        self.turn90Steps=1270
+        self.turn180Steps=2540
+        
         self.logger = logging.getLogger(__name__)
         self.logger.debug("Initializing DualMotorController")
         self.motorLeft = Motor_I2C(add1)
         self.motorRight = Motor_I2C(add2)
-        self.positionLeft=200
-        self.positionRight=200
+        self.positionLeft=0
+        self.positionRight=0
         self.logger.debug("Initializing DualMotorController DONE")
 
     
@@ -32,6 +34,7 @@ class DualMotorController:
 
         self.motorLeft.setOTPParam()
         self.motorRight.setOTPParam()
+    
         
     def runInit(self):
         self.logger.debug("runInit")
@@ -61,7 +64,7 @@ class DualMotorController:
         self.motorLeft.setMotorParam(direction, maxVel)
         self.motorRight.setMotorParam(direction, maxVel)
         
-        self.setPosition(turn90Steps, turn90Steps)
+        self.setPosition(self.turn90Steps, self.turn90Steps)
         
     def turn180(self,maxVel):
         self.logger.debug("turn180")
@@ -69,7 +72,7 @@ class DualMotorController:
         self.motorLeft.setMotorParam(1, maxVel)
         self.motorRight.setMotorParam(1, maxVel)
         
-        self.setPosition(turn180Steps, turn180Steps)
+        self.setPosition(self.turn180Steps, self.turn180Steps)
         
     def setPosition(self,incLeftPos,incRightPos):
         self.logger.debug("setPosition"+str(incLeftPos)+","+str(incRightPos))
@@ -106,23 +109,49 @@ class DualMotorController:
         self.motorRight.softStop()
         
 def main():
-    print("init")
+
     motors=DualMotorController(0x60,0x61)
+
+    times=1
+    if(len(sys.argv)>1):
+        times=int(sys.argv[1])
+        print ("times ="+str(times)  )      
+
     motors.setOtpParam()
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     tmp=motors.getFullStatus2()
-    print("busy="+motors.isBusy(tmp))
-    motors.setMotorParams(1, 0, 5, 5)
+    #print("busy="+motors.isBusy(tmp))
+    motors.setMotorParams(1, 1, 5, 5)
     motors.runInit()
-    time.sleep(6)
-    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-    motors.turn90(1, 5)
-    
-    time.sleep(6)
+    time.sleep(5)
+    for i in range(0,times):
+        print("turning 180")
+        motors.turn180(2)
+        time.sleep(4)
+        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        time.sleep(0.1)
+        
+    for i in range(0,times):
+        print("turning left")
+        motors.turn90(1,2)
+        time.sleep(4)
+        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        time.sleep(0.1)
 
-    motors.turn90(0, 5)
-    time.sleep(6)
-    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-    
+    for i in range(0,times):
+        print("turning right")
+        motors.turn90(0,2)
+        time.sleep(4)
+        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        time.sleep(0.1)
+
+        
+   # print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+
+   # motors.turn90(0, 5)
+    #time.sleep(6)
+    #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+    #motors.setPosition(2000, 2000)
+
 if __name__ == '__main__':
     main()

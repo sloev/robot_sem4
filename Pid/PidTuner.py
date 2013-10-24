@@ -4,8 +4,8 @@ Created on Oct 15, 2013
 @author: johannes
 '''
 import logging
-from IR_Sensors import IR_Sensors_Controller
-from Motor_control import DualMotorController
+from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
+from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
 import time
 import curses
@@ -34,7 +34,7 @@ class PidTuner():
         self.ir_sensor.setConfigurationRegister(0x00,0x7F)
         self.dual_motors=DualMotorController(0x60,0x61)
         self.dual_motors.setOtpParam()
-        self.pid=Pid(self.ir_sensors, self.dual_motors)
+        self.pid=Pid(self.ir_sensor, self.dual_motors)
         gainfactors=self.pid.getGainFactors()
         self.pGain=gainfactors[0]
         self.dGain=gainfactors[1]
@@ -100,27 +100,40 @@ class PidTuner():
             self.pid.doPid()
             
 def main(stdscr):
-    PidTuner=PidTuner()
+
+    pidtuner=PidTuner()
     stdscr.nodelay(1)
-    fncDict = {'a': PidTuner.lpgadd(),
-               'z': PidTuner.lpgsub(),
-               's': PidTuner.rpgadd(),
-               'x': PidTuner.rpgsub(),
-               'd': PidTuner.ldgadd(),
-               'c': PidTuner.ldgsub(),
-               'f': PidTuner.rdgadd(),
-               'v': PidTuner.rdgsub(),
-               'g': PidTuner.ligadd(),
-               'b': PidTuner.ligsub(),
-               'h': PidTuner.rigadd(),
-               'n': PidTuner.rigsub(),
-               'q': PidTuner.save()
+    fncDict = {'a': pidtuner.lpgadd(),
+               'z': pidtuner.lpgsub(),
+               's': pidtuner.rpgadd(),
+               'x': pidtuner.rpgsub(),
+               'd': pidtuner.ldgadd(),
+               'c': pidtuner.ldgsub(),
+               'f': pidtuner.rdgadd(),
+               'v': pidtuner.rdgsub(),
+               'g': pidtuner.ligadd(),
+               'b': pidtuner.ligsub(),
+               'h': pidtuner.rigadd(),
+               'n': pidtuner.rigsub(),
+               'q': pidtuner.save()
                 }
+    print("\
+        used to tune the pid gain factors using keyboard input\
+        \npress q to save\
+        \ntune    wheel    +    -     \
+        \npGain   left     a    z \
+        \npGain   right    s    x\
+        \ndGain   left     d    c\
+        \ndGain   right    f    v\
+        \niGain   left     g    b\
+        \niGain   right    h    n\
+        ")
     while 1:
         # get keyboard input, returns -1 if none available
         c = stdscr.getch()
-        if c != -1:
-            fncDict.get(c, "error")()
-            PidTuner.printGains()
+        print(c)
+       # if c != -1:
+            #fncDict.get(c, "error")()
+        #    PidTuner.printGains()
 if __name__ == '__main__':
     curses.wrapper(main)
