@@ -114,7 +114,7 @@ def main():
 
     times=1
     if(len(sys.argv)>1):
-        times=int(sys.argv[2])
+        times=int(sys.argv[1])
         print ("times ="+str(times)  )      
 
     motors.setOtpParam()
