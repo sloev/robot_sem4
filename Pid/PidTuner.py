@@ -100,17 +100,7 @@ class PidTuner():
             self.pid.doPid()
             
 def main(stdscr):
-    print("\
-        used to tune the pid gain factors using keyboard input\
-        \npress q to save\
-        \ntune    wheel    +    -     \
-        \npGain   left     a    z \
-        \npGain   right    s    x\
-        \ndGain   left     d    c\
-        \ndGain   right    f    v\
-        \niGain   left     g    b\
-        \niGain   right    h    n\
-        ")
+
     pidtuner=PidTuner()
     stdscr.nodelay(1)
     fncDict = {'a': pidtuner.lpgadd(),
@@ -127,6 +117,17 @@ def main(stdscr):
                'n': pidtuner.rigsub(),
                'q': pidtuner.save()
                 }
+    print("\
+        used to tune the pid gain factors using keyboard input\
+        \npress q to save\
+        \ntune    wheel    +    -     \
+        \npGain   left     a    z \
+        \npGain   right    s    x\
+        \ndGain   left     d    c\
+        \ndGain   right    f    v\
+        \niGain   left     g    b\
+        \niGain   right    h    n\
+        ")
     while 1:
         # get keyboard input, returns -1 if none available
         c = stdscr.getch()
