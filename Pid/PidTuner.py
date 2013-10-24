@@ -4,8 +4,8 @@ Created on Oct 15, 2013
 @author: johannes
 '''
 import logging
-from IR_Sensors import IR_Sensors_Controller
-from Motor_control import DualMotorController
+from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
+from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
 import time
 import curses
