@@ -113,7 +113,12 @@ def main():
     motors=DualMotorController(0x60,0x61)
     if(len(sys.argv)>0):
         motors.turn90Steps=int(sys.argv[1])
-        print str(motors.turn90Steps)
+        print ("90steps"+str(motors.turn90Steps))
+    times=1
+    if(len(sys.argv)>1):
+        times=int(sys.argv[2])
+        print ("times ="+str(times)  )      
+
     motors.setOtpParam()
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     tmp=motors.getFullStatus2()
@@ -121,11 +126,13 @@ def main():
     motors.setMotorParams(1, 0, 5, 5)
     motors.runInit()
     time.sleep(5)
-    #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-    print("turning left")
-    motors.turn90(1, 5)
-    
-    time.sleep(4)
+    for i in range(0,times):
+        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        print("turning left")
+        motors.turn90(1, 5)
+        time.sleep(2)
+
+        
    # print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
 
    # motors.turn90(0, 5)
