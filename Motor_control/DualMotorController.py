@@ -128,21 +128,21 @@ def main():
         print("turning 180")
         motors.turn180(2)
         time.sleep(4)
-        print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.1)
         
     for i in range(0,times):
         print("turning left")
         motors.turn90(1,2)
         time.sleep(4)
-        print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.1)
 
     for i in range(0,times):
         print("turning right")
         motors.turn90(0,2)
         time.sleep(4)
-        print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.1)
 
         
