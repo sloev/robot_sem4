@@ -121,8 +121,8 @@ def main():
     print("turning left")
     motors.turn90(1, 5)
     
-   # time.sleep(6)
-    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+    time.sleep(4)
+   # print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
 
    # motors.turn90(0, 5)
     #time.sleep(6)
