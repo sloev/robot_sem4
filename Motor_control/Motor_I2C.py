@@ -55,7 +55,7 @@ class Motor_I2C:
         self.bus.write_byte(self.devAddress, cmdResetToDefault)
     
     def runInit(self):
-        byteCode = [0xFF, 0xFF, 0x80, 0x00, 0x10, 0x00, 0x20]              
+        byteCode = [0xFF, 0xFF, 0x80, 0x00, 0xf, 0x00, 0x10]              
         self.bus.write_i2c_block_data(self.devAddress, cmdRunInit, byteCode) 
     
         '''Set the stepper motor parameters in the RAM:
