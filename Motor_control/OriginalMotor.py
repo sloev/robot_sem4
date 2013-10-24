@@ -148,7 +148,9 @@ def main():
 #    motor.resetToDefault()   
     motor.hardStop()
     motor.getFullStatus1()
-    #motor.runInit()    
+    motor.resetToDefault()   
+    motor.setOTPParam()
+    motor.runInit()    
 
 if __name__== '__main__':
     main()
