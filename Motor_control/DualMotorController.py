@@ -107,7 +107,9 @@ class DualMotorController:
         
 def main():
     if(len(sys.argv)>0):
-        turn90Steps=sys.argv[1]
+        print sys.argv[0]
+        sys.argv[1]
+        turn90Steps=sys.argv[0]
         print str(turn90Steps)
     motors=DualMotorController(0x60,0x61)
     motors.setOtpParam()
