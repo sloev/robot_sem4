@@ -144,13 +144,13 @@ class Motor_I2C:
 def main():
     motor = Motor_I2C(0x60, 0x61)
 #    motor.getFullStatus1()
-   # motor.setOTPParam()
+#    motor.setOTPParam()
 #    motor.resetToDefault()   
-    motor.hardStop()
-    motor.getFullStatus1()
+#    motor.hardStop()
+#    motor.getFullStatus1()
     motor.resetToDefault()   
-    motor.setOTPParam()
-    motor.runInit()    
+#    motor.setOTPParam()
+#    motor.runInit()    
 
 if __name__== '__main__':
     main()
