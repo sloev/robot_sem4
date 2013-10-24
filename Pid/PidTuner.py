@@ -34,7 +34,7 @@ class PidTuner():
         self.ir_sensor.setConfigurationRegister(0x00,0x7F)
         self.dual_motors=DualMotorController(0x60,0x61)
         self.dual_motors.setOtpParam()
-        self.pid=Pid(self.ir_sensors, self.dual_motors)
+        self.pid=Pid(self.ir_sensor, self.dual_motors)
         gainfactors=self.pid.getGainFactors()
         self.pGain=gainfactors[0]
         self.dGain=gainfactors[1]
