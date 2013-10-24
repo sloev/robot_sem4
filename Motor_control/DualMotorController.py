@@ -4,8 +4,7 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 'class variables:'
-turn90Steps=int(1500)
-turn180Steps=6316
+
 
 from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
@@ -18,6 +17,9 @@ class DualMotorController:
     '''
     
     def __init__(self, add1, add2):
+        self.turn90Steps=1500
+        self.turn180Steps=6316
+        
         self.logger = logging.getLogger(__name__)
         self.logger.debug("Initializing DualMotorController")
         self.motorLeft = Motor_I2C(add1)
@@ -32,6 +34,7 @@ class DualMotorController:
 
         self.motorLeft.setOTPParam()
         self.motorRight.setOTPParam()
+    
         
     def runInit(self):
         self.logger.debug("runInit")
@@ -61,7 +64,7 @@ class DualMotorController:
         self.motorLeft.setMotorParam(direction, maxVel)
         self.motorRight.setMotorParam(direction, maxVel)
         
-        self.setPosition(turn90Steps, turn90Steps)
+        self.setPosition(self.turn90Steps, self.turn90Steps)
         
     def turn180(self,maxVel):
         self.logger.debug("turn180")
@@ -69,7 +72,7 @@ class DualMotorController:
         self.motorLeft.setMotorParam(1, maxVel)
         self.motorRight.setMotorParam(1, maxVel)
         
-        self.setPosition(turn180Steps, turn180Steps)
+        self.setPosition(self.turn180Steps, self.turn180Steps)
         
     def setPosition(self,incLeftPos,incRightPos):
         self.logger.debug("setPosition"+str(incLeftPos)+","+str(incRightPos))
@@ -106,10 +109,11 @@ class DualMotorController:
         self.motorRight.softStop()
         
 def main():
-    if(len(sys.argv)>0):
-        turn90Steps=int(sys.argv[1])
-        print str(turn90Steps)
+
     motors=DualMotorController(0x60,0x61)
+    if(len(sys.argv)>0):
+        motors.turn90Steps=int(sys.argv[1])
+        print str(motors.turn90Steps)
     motors.setOtpParam()
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     tmp=motors.getFullStatus2()
