@@ -111,9 +111,7 @@ class DualMotorController:
 def main():
 
     motors=DualMotorController(0x60,0x61)
-    if(len(sys.argv)>0):
-        motors.turn90Steps=int(sys.argv[1])
-        print ("90steps"+str(motors.turn90Steps))
+
     times=1
     if(len(sys.argv)>1):
         times=int(sys.argv[2])
