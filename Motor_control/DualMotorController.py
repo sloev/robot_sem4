@@ -4,7 +4,7 @@ Created on Oct 2, 2013
 @author: johannes, benjamin
 '''
 'class variables:'
-turn90Steps=3158*2
+turn90Steps=int8(3158/2)
 turn180Steps=6316
 
 from Decorators.TMC222Status import TMC222Status
