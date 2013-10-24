@@ -25,7 +25,7 @@ cmdSoftStop           = 0x8F       # Motor stopping with deceleration phase
 
 minVelocity           = 2
 stepModeByte          = 8
-currentByte           = 98
+currentByte           = 0x92
 
 class Motor_I2C:
     def __init__(self, devAddress):
