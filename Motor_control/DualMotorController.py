@@ -17,8 +17,8 @@ class DualMotorController:
     '''
     
     def __init__(self, add1, add2):
-        self.turn90Steps=1265
-        self.turn180Steps=2530
+        self.turn90Steps=1270
+        self.turn180Steps=2540
         
         self.logger = logging.getLogger(__name__)
         self.logger.debug("Initializing DualMotorController")
