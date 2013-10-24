@@ -24,8 +24,8 @@ class DualMotorController:
         self.logger.debug("Initializing DualMotorController")
         self.motorLeft = Motor_I2C(add1)
         self.motorRight = Motor_I2C(add2)
-        self.positionLeft=200
-        self.positionRight=200
+        self.positionLeft=0
+        self.positionRight=0
         self.logger.debug("Initializing DualMotorController DONE")
 
     
@@ -127,10 +127,11 @@ def main():
     motors.runInit()
     time.sleep(5)
     for i in range(0,times):
-        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         print("turning left")
         motors.turn90(1, 2)
         time.sleep(2)
+        print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+        time.sleep(0.01)
 
         
    # print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
