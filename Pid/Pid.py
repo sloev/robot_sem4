@@ -95,7 +95,7 @@ class Pid():
         walls=[1,1]
         if(sample[left]>self.cmMax):
             walls[left]=0
-        elif(sample[left]>self.cmMax):
+        if(sample[right]>self.cmMax):
             walls[right]=0
         return walls
     
