@@ -129,7 +129,7 @@ def main():
     for i in range(0,times):
         #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         print("turning left")
-        motors.turn90(1, 5)
+        motors.turn90(1, 2)
         time.sleep(2)
 
         
