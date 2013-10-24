@@ -139,8 +139,6 @@ class Motor_I2C:
     def driveAngle(self):
         pass
     
-        
-    
 def main():
     motor = Motor_I2C(0x60, 0x61)
 #    motor.getFullStatus1()

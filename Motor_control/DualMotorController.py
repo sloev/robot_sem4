@@ -114,15 +114,15 @@ def main():
     #print("busy="+motors.isBusy(tmp))
     motors.runInit()
     motors.setMotorParams(1, 0, 5, 5)
-    motors.setPosition(2000, 2000)
     print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-   # motors.turn90(1, 5)
+    motors.turn90(1, 5)
     
     time.sleep(6)
 
-    #motors.turn90(0, 5)
+    motors.turn90(0, 5)
     time.sleep(6)
     print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-    
+    motors.setPosition(2000, 2000)
+
 if __name__ == '__main__':
     main()
