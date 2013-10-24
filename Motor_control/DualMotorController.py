@@ -17,8 +17,8 @@ class DualMotorController:
     '''
     
     def __init__(self, add1, add2):
-        self.turn90Steps=1500
-        self.turn180Steps=6316
+        self.turn90Steps=1260
+        self.turn180Steps=2520
         
         self.logger = logging.getLogger(__name__)
         self.logger.debug("Initializing DualMotorController")
@@ -128,8 +128,8 @@ def main():
     time.sleep(5)
     for i in range(0,times):
         print("turning left")
-        motors.turn90(1, 2)
-        time.sleep(2)
+        motors.turn180(2)
+        time.sleep(4)
         print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.01)
 
