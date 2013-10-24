@@ -114,7 +114,8 @@ def main():
     #print("busy="+motors.isBusy(tmp))
     motors.setMotorParams(1, 0, 5, 5)
     motors.runInit()
-    print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
+    time.sleep(5)
+    #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     print("turning left")
     motors.turn90(1, 5)
     
