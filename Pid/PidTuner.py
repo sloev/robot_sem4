@@ -96,17 +96,19 @@ class PidTuner():
         self.pid.pickleGainFactors()
         
     def doPid(self):
-        self.dual_motors.setPosition(2000, 2000)
+        self.dual_motors.setPosition(32767, 32767)
         tmp=self.pid.doPid()
         self.printGains()
         if(tmp==[1,0]):
             print("turning left")
             self.dual_motors.softStop()
+            time.sleep(1)
             self.dual_motors.turn90(1, 2)
             time.sleep(3)
         elif(tmp==[0,1]):
             print("turning right")
             self.dual_motors.softStop()
+            time.sleep(1)
             self.dual_motors.turn90(0, 2)
             time.sleep(3)
         
