@@ -139,6 +139,7 @@ def main():
         # get keyboard input, returns -1 if none available
         while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
             c = sys.stdin.readline()
+            print("c is ="+c)
             if c:
                 if(c=='a'): 
                     pidtuner.lpgadd()
