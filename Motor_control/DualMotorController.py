@@ -55,8 +55,10 @@ class DualMotorController:
     
     def getFullStatus2(self):
         self.logger.debug("getFullStatus2")
+        var=[]
+        var=[self.motorLeft.getFullStatus2(),self.motorRight.getFullStatus2()]
 
-        return [self.motorLeft.getFullStatus2(),self.motorRight.getFullStatus2()]
+        return var
     
     def turn90(self,direction,maxVel):
         self.logger.debug('turn 90:'+str(direction))
