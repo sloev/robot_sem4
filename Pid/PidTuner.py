@@ -103,13 +103,13 @@ class PidTuner():
             walls=self.pid.doPid()
             self.printGains()
             print("[walls="+str(walls)+"]")
-            if(walls==[1,0]):
+            if(walls[self.left]==0):
                 print("turning left")
                 self.dual_motors.softStop()
                 time.sleep(1)
                 self.dual_motors.turn90(self.left, 2)
                 time.sleep(3)
-            elif(walls==[0,1]):
+            if(walls[self.right]==0):
                 print("turning right")
                 self.dual_motors.softStop()
                 time.sleep(1)
