@@ -113,34 +113,35 @@ def main():
     motors=DualMotorController(0x60,0x61)
 
     times=1
-    if(len(sys.argv)>1):
-        times=int(sys.argv[1])
-        print ("times ="+str(times)  )      
+    if(len(sys.argv)>2):
+        speed=int(sys.argv[1])
+        times=int(sys.argv[2])
+        print ("times ="+str(times)  +"speed"+str(speed))      
 
     motors.setOtpParam()
     #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
     tmp=motors.getFullStatus2()
     #print("busy="+motors.isBusy(tmp))
-    motors.setMotorParams(1, 1, 5, 5)
+    motors.setMotorParams(1, 1, speed, speed)
     motors.runInit()
     time.sleep(5)
     for i in range(0,times):
         print("turning 180")
-        motors.turn180(2)
+        motors.turn180(speed)
         time.sleep(4)
         #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.1)
         
     for i in range(0,times):
         print("turning left")
-        motors.turn90(1,2)
+        motors.turn90(1,speed)
         time.sleep(4)
         #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.1)
 
     for i in range(0,times):
         print("turning right")
-        motors.turn90(0,2)
+        motors.turn90(0,speed)
         time.sleep(4)
         #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.1)
