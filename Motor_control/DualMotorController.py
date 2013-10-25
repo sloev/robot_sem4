@@ -79,8 +79,11 @@ class DualMotorController:
     def setPosition(self,incLeftPos,incRightPos):
         self.logger.debug("setPosition"+str(incLeftPos)+","+str(incRightPos))
         fullstatus2=self.getFullStatus2()
-        self.positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
-        self.positionRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
+        left=fullstatus2[0]
+        right=fullstatus2[1]
+        self.positionLeft=left[1]<<8 | left[2]<<0
+        self.positionRight=right[1]<<8 | right[2]<<0
+        
         self.positionLeft+=incLeftPos
         self.positionRight+=incRightPos
         
