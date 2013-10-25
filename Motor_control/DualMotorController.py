@@ -145,7 +145,8 @@ def main():
         time.sleep(4)
         #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
         time.sleep(0.1)
-
+    motors.setPosition(12000, 12000)
+    time.sleep(10)
         
    # print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
 
