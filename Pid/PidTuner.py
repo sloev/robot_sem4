@@ -140,7 +140,19 @@ def main(stdscr):
         c = stdscr.getch()
         print(c)
         if c != -1:
-            fncDict.get(c, "error")()
+            if(c=='a'): pidtuner.lpgadd()
+            elif(c=='z'): pidtuner.lpgsub()
+            elif(c=='s'): pidtuner.rpgadd()
+            elif(c=='x'): pidtuner.rpgsub()
+            elif(c=='d'): pidtuner.ldgadd()
+            elif(c=='c'): pidtuner.ldgsub()
+            elif(c=='f'): pidtuner.rdgadd()
+            elif(c=='v'): pidtuner.rdgsub()
+            elif(c=='g'): pidtuner.ligadd()
+            elif(c=='b'): pidtuner.ligsub()
+            elif(c=='h'): pidtuner.rigadd()
+            elif(c=='n'): pidtuner.rigsub()
+            elif(c=='q'): pidtuner.save()
             pidtuner.doPid()
             
 if __name__ == '__main__':
