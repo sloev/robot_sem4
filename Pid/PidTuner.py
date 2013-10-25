@@ -109,7 +109,7 @@ class PidTuner():
                 time.sleep(1)
                 self.dual_motors.turn90(self.left, 2)
                 time.sleep(3)
-            if(walls[self.right]==0):
+            elif(walls[self.right]==0):
                 print("turning right")
                 self.dual_motors.softStop()
                 time.sleep(1)
