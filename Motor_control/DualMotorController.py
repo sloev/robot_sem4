@@ -81,8 +81,9 @@ class DualMotorController:
         fullstatus2=self.getFullStatus2()
         left=fullstatus2[0]
         right=fullstatus2[1]
-        self.positionLeft=left[1]<<8 | left[2]<<0
-        self.positionRight=right[1]<<8 | right[2]<<0
+        print(str(right))
+        #self.positionLeft=left[1]<<8 | left[2]<<0
+        #self.positionRight=right[1]<<8 | right[2]<<0
         
         self.positionLeft+=incLeftPos
         self.positionRight+=incRightPos
