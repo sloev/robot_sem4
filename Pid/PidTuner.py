@@ -104,20 +104,23 @@ class PidTuner():
             self.printGains()
             print("[walls="+str(walls)+"]")
             if(walls[self.left]==0):
-                print("turning left")
-                self.dual_motors.softStop()
-                time.sleep(1)
-                self.dual_motors.turn90(self.right, 2)
-                time.sleep(3)
+                self.turn(self.right)
             elif(walls[self.right]==0):
-                print("turning right")
-                self.dual_motors.softStop()
-                time.sleep(1)
-                self.dual_motors.turn90(self.left, 2)
-                time.sleep(3)
+                self.turn(self.left)
         except IOError as ex:
             print("fuck you error\n"+str(ex))
-        
+            
+    def turn(self,direction):
+        print("turning wheel="+str(direction))
+        self.dual_motors.softStop()
+        time.sleep(0.5)
+        self.dual_motors.setPosition(2500, 2500)
+        time.sleep(2)
+        self.dual_motors.turn90(direction, 2)
+        time.sleep(3)
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setPosition(2500, 2500)
+        time.sleep(2)
     def loop(self):
         while(1):
             time.sleep(0.05)
