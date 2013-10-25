@@ -93,7 +93,12 @@ class PidTuner():
     
     def save(self):
         self.pid.pickleGainFactors()
-    
+        
+    def doPid(self):
+        self.dual_motors.setPosition(200, 200)
+        self.pid.doPid()
+        self.printGains()
+        
     def loop(self):
         while(1):
             time.sleep(0.05)
@@ -129,13 +134,14 @@ def main(stdscr):
         \niGain   right    h    n\
         ")
     while 1:
+        time.sleep(0.05)
+
         # get keyboard input, returns -1 if none available
         c = stdscr.getch()
         print(c)
         if c != -1:
             fncDict.get(str(c), "error")()
-            time.sleep(0.05)
-            pidtuner.pid.doPid()
-            pidtuner.printGains()
+            pidtuner.doPid()
+            
 if __name__ == '__main__':
     curses.wrapper(main)
