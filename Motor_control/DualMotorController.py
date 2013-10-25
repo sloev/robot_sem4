@@ -55,8 +55,11 @@ class DualMotorController:
     
     def getFullStatus2(self):
         self.logger.debug("getFullStatus2")
-        var=[]
-        var=[self.motorLeft.getFullStatus2(),self.motorRight.getFullStatus2()]
+        left=self.motorLeft.getFullStatus2()
+        time.sleep(0.05)
+        right=self.motorRight.getFullStatus2()
+        time.sleep(0.05)
+        var=[left,right]
 
         return var
     
