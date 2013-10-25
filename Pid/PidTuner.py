@@ -140,7 +140,9 @@ def main():
         while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
             c = sys.stdin.readline()
             if c:
-                if(c=='a'): pidtuner.lpgadd()
+                if(c=='a'): 
+                    pidtuner.lpgadd()
+                    print("left pgain inc")
                 elif(c=='z'): pidtuner.lpgsub()
                 elif(c=='s'): pidtuner.rpgadd()
                 elif(c=='x'): pidtuner.rpgsub()
