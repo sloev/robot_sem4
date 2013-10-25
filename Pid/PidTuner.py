@@ -98,21 +98,25 @@ class PidTuner():
         self.pid.pickleGainFactors()
         
     def doPid(self):
-        self.dual_motors.setPosition(32767, 32767)
-        tmp=self.pid.doPid()
-        self.printGains()
-        if(tmp==[1,0]):
-            print("turning left")
-            self.dual_motors.softStop()
-            time.sleep(1)
-            self.dual_motors.turn90(self.left, 2)
-            time.sleep(3)
-        elif(tmp==[0,1]):
-            print("turning right")
-            self.dual_motors.softStop()
-            time.sleep(1)
-            self.dual_motors.turn90(self.right, 2)
-            time.sleep(3)
+        try:
+            self.dual_motors.setPosition(32767, 32767)
+            tmp=self.pid.doPid()
+            self.printGains()
+            print("[walls="+str(tmp)+"]")
+            if(tmp==[1,0]):
+                print("turning left")
+                self.dual_motors.softStop()
+                time.sleep(1)
+                self.dual_motors.turn90(self.left, 2)
+                time.sleep(3)
+            elif(tmp==[0,1]):
+                print("turning right")
+                self.dual_motors.softStop()
+                time.sleep(1)
+                self.dual_motors.turn90(self.right, 2)
+                time.sleep(3)
+        except IOError as ex:
+            print("fuck you error\n"+ex)
         
     def loop(self):
         while(1):
