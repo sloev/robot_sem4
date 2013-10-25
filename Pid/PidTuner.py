@@ -147,7 +147,7 @@ def main():
         \niGain   right    h    n\
         ")
     while 1:
-        time.sleep(0.1)
+        time.sleep(0.3)
 
         # get keyboard input, returns -1 if none available
         while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
