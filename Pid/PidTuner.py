@@ -104,11 +104,13 @@ class PidTuner():
         while(1):
             time.sleep(0.05)
             tmp=self.pid.doPid()
-            if(tmp!=[1,0]):
+            if(tmp==[1,0]):
+                print("turning left")
                 self.dual_motors.turn90(1, 2)
                 time.sleep(3)
-            elif(tmp!=[0,1]):
-                self.dual_motors.turn90(1, 2)
+            elif(tmp==[0,1]):
+                print("turning right")
+                self.dual_motors.turn90(0, 2)
                 time.sleep(3)
 
             
