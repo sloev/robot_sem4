@@ -80,16 +80,17 @@ class DualMotorController:
     def setPosition(self,incLeftPos,incRightPos):
         self.logger.debug("setPosition"+str(incLeftPos)+","+str(incRightPos))
         fullstatus2=self.getFullStatus2()
+        
         positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
         positionRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
+        
         print(str(positionLeft)+"\t"+str(positionRight))
+        
         positionLeft+=incLeftPos
         positionRight+=incRightPos
         
         self.motorLeft.setPosition(positionLeft)
-        time.sleep(0.01)
         self.motorRight.setPosition(positionRight)
-        time.sleep(0.01)
 
         
     def getOfflinePosition(self):
