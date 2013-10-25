@@ -63,7 +63,7 @@ class Pid():
         sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
         self.logger.info("sample:"+str(sample))
         walls=self.detectMissingWalls(sample)
-        print("walls from pid="+str(walls))
+        print("walls from pid="+str(walls)+"\t cm="+str(sample))
         if(walls==[1,1]):
             currentError=[self.setPoint-sample[left],self.setPoint-sample[right]] 
             self.logger.info("currentError:"+str(currentError))
