@@ -100,16 +100,16 @@ class PidTuner():
     def doPid(self):
         try:
             self.dual_motors.setPosition(32767, 32767)
-            tmp=self.pid.doPid()
+            walls=self.pid.doPid()
             self.printGains()
-            print("[walls="+str(tmp)+"]")
-            if(tmp==[1,0]):
+            print("[walls="+str(walls)+"]")
+            if(walls==[1,0]):
                 print("turning left")
                 self.dual_motors.softStop()
                 time.sleep(1)
                 self.dual_motors.turn90(self.left, 2)
                 time.sleep(3)
-            elif(tmp==[0,1]):
+            elif(walls==[0,1]):
                 print("turning right")
                 self.dual_motors.softStop()
                 time.sleep(1)
