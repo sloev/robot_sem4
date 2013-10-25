@@ -132,8 +132,10 @@ def main(stdscr):
         # get keyboard input, returns -1 if none available
         c = stdscr.getch()
         print(c)
-       # if c != -1:
-            #fncDict.get(c, "error")()
-        #    PidTuner.printGains()
+        if c != -1:
+            fncDict.get(str(c), "error")()
+            time.sleep(0.05)
+            pidtuner.pid.doPid()
+            pidtuner.printGains()
 if __name__ == '__main__':
     curses.wrapper(main)

@@ -148,8 +148,8 @@ class Pid():
     
     def convertCmToVelocity(self,cm):
         cm=self.constrain(cm)
-        out_range =self.cmMax-self.cmMin
-        in_range = 6-1
+        out_range =5
+        in_range = self.cmMax-self.cmMin
         in_val = cm - self.cmMin
         val=(float(in_val)/in_range)*out_range
         velocity = int(1+val)
