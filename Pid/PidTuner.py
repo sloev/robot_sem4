@@ -103,7 +103,15 @@ class PidTuner():
     def loop(self):
         while(1):
             time.sleep(0.05)
-            self.pid.doPid()
+            tmp=self.pid.doPid()
+            if(tmp!=[1,0]):
+                self.dual_motors.turn90(1, 2)
+                time.sleep(3)
+            elif(tmp!=[0,1]):
+                self.dual_motors.turn90(1, 2)
+                time.sleep(3)
+
+            
             
 def main():
 
