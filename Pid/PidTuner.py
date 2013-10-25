@@ -119,7 +119,7 @@ class PidTuner():
         self.dual_motors.turn90(direction, 2)
         time.sleep(3)
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-        self.dual_motors.setPosition(2500, 2500)
+        self.dual_motors.setPosition(4000, 4000)
         time.sleep(2)
     def loop(self):
         while(1):
