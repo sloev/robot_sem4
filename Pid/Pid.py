@@ -12,8 +12,8 @@ Vin1                                =   0x08
 Vin2                                =   0x09
 Vin3                                =   0x0A
 
-right=1
-left=0
+right=0
+left=1
 
 sensorChannels=[Vin1,Vin2,Vin3]
 
