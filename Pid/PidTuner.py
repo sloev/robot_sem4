@@ -139,8 +139,9 @@ def main():
         # get keyboard input, returns -1 if none available
         while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
             c = sys.stdin.readline()
+            c=c[0:1]
             print("c is =|"+c+"|")
-            if(c=="a"): 
+            if(c=='a'): 
                 pidtuner.lpgadd()
                 print("left pgain inc")
             elif(c=='z'): pidtuner.lpgsub()
