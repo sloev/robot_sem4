@@ -107,13 +107,13 @@ class PidTuner():
                 print("turning left")
                 self.dual_motors.softStop()
                 time.sleep(1)
-                self.dual_motors.turn90(self.left, 2)
+                self.dual_motors.turn90(self.right, 2)
                 time.sleep(3)
             elif(walls[self.right]==0):
                 print("turning right")
                 self.dual_motors.softStop()
                 time.sleep(1)
-                self.dual_motors.turn90(self.right, 2)
+                self.dual_motors.turn90(self.left, 2)
                 time.sleep(3)
         except IOError as ex:
             print("fuck you error\n"+str(ex))
