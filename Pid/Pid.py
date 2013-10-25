@@ -12,8 +12,8 @@ Vin1                                =   0x08
 Vin2                                =   0x09
 Vin3                                =   0x0A
 
-right=0
-left=1
+right=1
+left=0
 
 sensorChannels=[Vin1,Vin2,Vin3]
 
@@ -89,7 +89,7 @@ class Pid():
         return walls
     
     def setMotors(self,controlValues):
-        self.dual_motors.setMotorParams(left, right, controlValues[left], controlValues[right])
+        self.dual_motors.setMotorParams(1, 0, controlValues[left], controlValues[right])
     
     def detectMissingWalls(self,sample):
         walls=[1,1]
