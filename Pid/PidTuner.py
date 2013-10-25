@@ -96,7 +96,7 @@ class PidTuner():
         self.pid.pickleGainFactors()
         
     def doPid(self):
-        self.dual_motors.setPosition(200, 200)
+        self.dual_motors.setPosition(2000, 2000)
         tmp=self.pid.doPid()
         self.printGains()
         if(tmp==[1,0]):
