@@ -89,7 +89,10 @@ class DualMotorController:
         self.positionRight+=incRightPos
         
         self.motorLeft.setPosition(self.positionLeft)
+        time.sleep(0.01)
         self.motorRight.setPosition(self.positionRight)
+        time.sleep(0.01)
+
         
     def getOfflinePosition(self):
         return [self.positionLeft,self.positionRight]
