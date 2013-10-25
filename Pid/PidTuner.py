@@ -116,7 +116,7 @@ class PidTuner():
                 self.dual_motors.turn90(self.right, 2)
                 time.sleep(3)
         except IOError as ex:
-            print("fuck you error\n"+ex)
+            print("fuck you error\n"+str(ex))
         
     def loop(self):
         while(1):
