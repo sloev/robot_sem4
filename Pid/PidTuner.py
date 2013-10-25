@@ -134,13 +134,13 @@ def main(stdscr):
         \niGain   right    h    n\
         ")
     while 1:
-        time.sleep(0.05)
+        time.sleep(0.1)
 
         # get keyboard input, returns -1 if none available
         c = stdscr.getch()
         print(c)
         if c != -1:
-            fncDict.get(str(c), "error")()
+            fncDict.get(c, "error")()
             pidtuner.doPid()
             
 if __name__ == '__main__':
