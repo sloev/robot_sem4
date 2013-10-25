@@ -8,7 +8,8 @@ from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
 from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
 import time
-import curses
+import sys
+import select
 left=0
 right=1
 tuneFactor=0.01
@@ -104,10 +105,9 @@ class PidTuner():
             time.sleep(0.05)
             self.pid.doPid()
             
-def main(stdscr):
+def main():
 
     pidtuner=PidTuner()
-    stdscr.nodelay(1)
     fncDict = {'a': pidtuner.lpgadd(),
                'z': pidtuner.lpgsub(),
                's': pidtuner.rpgadd(),
@@ -137,23 +137,25 @@ def main(stdscr):
         time.sleep(0.1)
 
         # get keyboard input, returns -1 if none available
-        c = stdscr.getch()
-        print(c)
-        if c != -1:
-            if(c=='a'): pidtuner.lpgadd()
-            elif(c=='z'): pidtuner.lpgsub()
-            elif(c=='s'): pidtuner.rpgadd()
-            elif(c=='x'): pidtuner.rpgsub()
-            elif(c=='d'): pidtuner.ldgadd()
-            elif(c=='c'): pidtuner.ldgsub()
-            elif(c=='f'): pidtuner.rdgadd()
-            elif(c=='v'): pidtuner.rdgsub()
-            elif(c=='g'): pidtuner.ligadd()
-            elif(c=='b'): pidtuner.ligsub()
-            elif(c=='h'): pidtuner.rigadd()
-            elif(c=='n'): pidtuner.rigsub()
-            elif(c=='q'): pidtuner.save()
-            pidtuner.doPid()
+        while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
+            c = sys.stdin.readline()
+            if c:
+                if(c=='a'): pidtuner.lpgadd()
+                elif(c=='z'): pidtuner.lpgsub()
+                elif(c=='s'): pidtuner.rpgadd()
+                elif(c=='x'): pidtuner.rpgsub()
+                elif(c=='d'): pidtuner.ldgadd()
+                elif(c=='c'): pidtuner.ldgsub()
+                elif(c=='f'): pidtuner.rdgadd()
+                elif(c=='v'): pidtuner.rdgsub()
+                elif(c=='g'): pidtuner.ligadd()
+                elif(c=='b'): pidtuner.ligsub()
+                elif(c=='h'): pidtuner.rigadd()
+                elif(c=='n'): pidtuner.rigsub()
+                elif(c=='q'): pidtuner.save()            
+            else: # an empty line means stdin has been closed
+                print('eof')
+        pidtuner.doPid()
             
 if __name__ == '__main__':
-    curses.wrapper(main)
+    main()
