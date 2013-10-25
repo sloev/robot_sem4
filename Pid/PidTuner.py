@@ -89,7 +89,7 @@ class PidTuner():
         self.pid.iTune(self.iGain)
         
     def printGains(self):
-        print(str(self.pGain)+"\t"+self.dGain+"\t"+self.iGain)
+        print(str(self.pGain)+"\t"+str(self.dGain)+"\t"+str(self.iGain))
     
     def save(self):
         self.pid.pickleGainFactors()
