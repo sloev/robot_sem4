@@ -89,7 +89,7 @@ class Pid():
         return walls
     
     def setMotors(self,controlValues):
-        self.dual_motors.setMotorParams(1, 0, controlValues[left], controlValues[right])
+        self.dual_motors.setMotorParams(left, right, controlValues[left], controlValues[right])
     
     def detectMissingWalls(self,sample):
         walls=[1,1]
