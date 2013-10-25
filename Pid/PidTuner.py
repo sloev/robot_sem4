@@ -10,9 +10,7 @@ from Pid import Pid
 import time
 import sys
 import select
-left=0
-right=1
-tuneFactor=0.01
+
 class PidTuner():
     '''
         used to tune the pid gain factors using keyboard input
@@ -30,6 +28,10 @@ class PidTuner():
            
     '''
     def __init__(self):
+        
+        self.left=0
+        self.right=1
+        self.tuneFactor=0.01
         logging.basicConfig(filename='myLog.log', level=logging.INFO)
         self.ir_sensor = IR_Sensors_Controller(0x20)
         self.ir_sensor.setConfigurationRegister(0x00,0x7F)
@@ -42,51 +44,51 @@ class PidTuner():
         self.iGain=gainfactors[2]
         
     def lpgadd(self):
-        self.pGain=[self.pGain[left]+tuneFactor,self.pGain[right]]
+        self.pGain=[self.pGain[self.left]+self.tuneFactor,self.pGain[self.right]]
         self.pid.pTune(self.pGain)
         
     def rpgadd(self):
-        self.pGain=[self.pGain[left],self.pGain[right]+tuneFactor]
+        self.pGain=[self.pGain[self.left],self.pGain[self.right]+self.tuneFactor]
         self.pid.pTune(self.pGain)
 
     def lpgsub(self):
-        self.pGain=[self.pGain[left]-tuneFactor,self.pGain[right]]
+        self.pGain=[self.pGain[self.left]-self.tuneFactor,self.pGain[self.right]]
         self.pid.pTune(self.pGain)
         
     def rpgsub(self):
-        self.pGain=[self.pGain[left],self.pGain[right]-tuneFactor]
+        self.pGain=[self.pGain[self.left],self.pGain[self.right]-self.tuneFactor]
         self.pid.pTune(self.pGain)
     
     def ldgadd(self):
-        self.dGain=[self.dGain[left]+tuneFactor,self.dGain[right]]
+        self.dGain=[self.dGain[self.left]+self.tuneFactor,self.dGain[self.right]]
         self.pid.dTune(self.dGain)
       
     def rdgadd(self):
-        self.dGain=[self.dGain[left],self.dGain[right]+tuneFactor]
+        self.dGain=[self.dGain[self.left],self.dGain[self.right]+self.tuneFactor]
         self.pid.dTune(self.dGain)
  
     def ldgsub(self):
-        self.dGain=[self.dGain[left]-tuneFactor,self.dGain[right]]
+        self.dGain=[self.dGain[self.left]-self.tuneFactor,self.dGain[self.right]]
         self.pid.dTune(self.dGain)
        
     def rdgsub(self):
-        self.dGain=[self.dGain[left],self.dGain[right]-tuneFactor]
+        self.dGain=[self.dGain[self.left],self.dGain[self.right]-self.tuneFactor]
         self.pid.dTune(self.dGain)
 
     def ligadd(self):
-        self.iGain=[self.iGain[left]+tuneFactor,self.iGain[right]]
+        self.iGain=[self.iGain[self.left]+self.tuneFactor,self.iGain[self.right]]
         self.pid.iTune(self.iGain)
         
     def rigadd(self):
-        self.iGain=[self.iGain[left],self.iGain[right]+tuneFactor]
+        self.iGain=[self.iGain[self.left],self.iGain[self.right]+self.tuneFactor]
         self.pid.iTune(self.iGain)
  
     def ligsub(self):
-        self.iGain=[self.iGain[left]-tuneFactor,self.iGain[right]]
+        self.iGain=[self.iGain[self.left]-self.tuneFactor,self.iGain[self.right]]
         self.pid.iTune(self.iGain)
        
     def rigsub(self):
-        self.iGain=[self.iGain[left],self.iGain[right]-tuneFactor]
+        self.iGain=[self.iGain[self.left],self.iGain[self.right]-self.tuneFactor]
         self.pid.iTune(self.iGain)
         
     def printGains(self):
@@ -103,13 +105,13 @@ class PidTuner():
             print("turning left")
             self.dual_motors.softStop()
             time.sleep(1)
-            self.dual_motors.turn90(1, 2)
+            self.dual_motors.turn90(self.left, 2)
             time.sleep(3)
         elif(tmp==[0,1]):
             print("turning right")
             self.dual_motors.softStop()
             time.sleep(1)
-            self.dual_motors.turn90(0, 2)
+            self.dual_motors.turn90(self.right, 2)
             time.sleep(3)
         
     def loop(self):
