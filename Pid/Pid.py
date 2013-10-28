@@ -69,13 +69,13 @@ class Pid():
         
         walls=self.detectMissingWalls(sample)
         if(walls==[1,1]):
-            currentError=[self.setPoint-sample[self.self.left],self.setPoint-sample[self.right]] 
+            currentError=[self.setPoint-sample[self.left],self.setPoint-sample[self.right]] 
             self.logger.info("currentError:"+str(currentError))
             
-            dError=[currentError[self.self.left]-self.lastError[self.self.left],currentError[self.right]-self.lastError[self.right]]
+            dError=[currentError[self.left]-self.lastError[self.left],currentError[self.right]-self.lastError[self.right]]
             self.logger.info("dError:"+str(dError))        
             
-            controlValues=[self.computeControlValues(self.self.left,currentError,dError),self.computeControlValues(self.right,currentError,dError)]
+            controlValues=[self.computeControlValues(self.left,currentError,dError),self.computeControlValues(self.right,currentError,dError)]
             self.logger.info("controlValues:"+str(controlValues))
             
             self.lastError=currentError
