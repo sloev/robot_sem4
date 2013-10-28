@@ -162,12 +162,12 @@ class Pid():
     def convertCmToVelocity(self,cm):
         cm=self.constrain(cm)
         value=2
-        if(cm > 0.5):
-            if(cm < 2):
+        if(cm > 0):
+            if(cm < 1):
                 value=3
-            elif(cm < 4):
+            elif(cm < 2):
                 value=4  
-            elif(cm < 8):
+            elif(cm < 4):
                 value=5 
             elif(cm < 10):
                 value=6            
