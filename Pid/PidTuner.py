@@ -121,7 +121,7 @@ class PidTuner():
             
     def turn(self,direction):
         print("turning wheel="+str(direction))
-        time.sleep(2)
+        time.sleep(1)
         self.dual_motors.softStop()
         time.sleep(0.3)
         self.dual_motors.turn90(direction, 2)
@@ -141,6 +141,9 @@ class PidTuner():
                 print("got ioerror in sampling ir sensors")
             time.sleep(0.5)
         print("turning finnished")
+        
+    def stop(self):
+        self.dual_motors.softStop()
 
             
             
@@ -194,6 +197,7 @@ def main():
             print"saved"
         else:
             print("not saved")
+        pidtuner.stop()
             
             
         
