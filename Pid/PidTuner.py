@@ -40,7 +40,7 @@ class PidTuner():
         self.tuneFactor=0.01
         try:
             os.remove("/home/pi/robot_sem4/myLog.log")
-        except IOError:
+        except OSError:
             pass
         logging.basicConfig(filename='myLog.log', level=logging.INFO)
         'sensors'
