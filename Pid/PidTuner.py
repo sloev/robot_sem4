@@ -10,6 +10,7 @@ from Pid import Pid
 import time
 import sys
 import select
+import os
 
 class PidTuner():
     '''
@@ -37,6 +38,10 @@ class PidTuner():
         self.right=direction
         
         self.tuneFactor=0.01
+        try:
+            os.remove("/home/pi/robot_sem4/myLog.log")
+        except IOError:
+            pass
         logging.basicConfig(filename='myLog.log', level=logging.INFO)
         'sensors'
         self.ir_sensor = IR_Sensors_Controller(0x20)
@@ -203,6 +208,7 @@ def main():
         else:
             print("not saved")
         pidtuner.stop()
+        
             
             
         
