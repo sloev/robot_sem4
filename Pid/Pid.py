@@ -68,12 +68,12 @@ class Pid():
         
     def doPid(self):
         self.logger.debug("Doing pid")
-        sample=self.sampleDistances()
+        self.sampleDistances()
         
-        walls=self.detectMissingWalls(sample)
-        print("sample="+str(sample))
+        walls=self.detectMissingWalls(self.sample)
+        print("sample="+str(self.sample))
         if(walls==[1,1]):
-            currentError=[self.setPoint-sample[self.right],self.setPoint-sample[self.left]] 
+            currentError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
             self.logger.info("currentError:"+str(currentError))
             #print("currentError:"+str(currentError))            
             
@@ -87,7 +87,7 @@ class Pid():
             self.iError=[currentError[self.left]+self.iError[self.left],currentError[self.right]+self.iError[self.right]]
             self.logger.info("iError:"+str(self.iError))
             
-            self.setMotors(controlValues,sample)
+            self.setMotors(controlValues)
         else:
             msg="walls missing at:"
             if(walls[self.left]==0):
@@ -99,10 +99,9 @@ class Pid():
         return walls
     
     def sampleDistances(self):
-        sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
-        self.logger.info("sample:"+str(sample))
-        print("sample="+str(sample))
-        return sample
+        self.sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
+        self.logger.info("sample:"+str(self.sample))
+        print("sample="+str(self.sample))
     
     def setMotors(self,controlValues,sample):
         if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and sample[2] >self.setPoint):
