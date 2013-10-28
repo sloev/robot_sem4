@@ -103,8 +103,8 @@ class Pid():
         self.logger.info("sample:"+str(self.sample))
         print("sample="+str(self.sample))
     
-    def setMotors(self,controlValues,sample):
-        if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and sample[2] >self.setPoint):
+    def setMotors(self,controlValues):
+        if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and self.sample[2] >self.setPoint):
             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.right], controlValues[self.left])
         else:
             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
