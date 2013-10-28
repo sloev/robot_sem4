@@ -46,6 +46,7 @@ class PidTuner():
         self.dual_motors.setOtpParam()
         'pid and direction'
         self.pid=Pid(self.left,self.right,self.ir_sensor, self.dual_motors)
+        'load gainfactors'
         gainfactors=self.pid.getGainFactors()
         self.pGain=gainfactors[0]
         self.dGain=gainfactors[1]

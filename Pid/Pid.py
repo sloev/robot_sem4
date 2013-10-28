@@ -29,8 +29,8 @@ class Pid():
     '''
 
     def __init__(self,left,right,ir_sensors, dual_motors):
-        self.self.left=left
-        self.self.right=right
+        self.left=left
+        self.right=right
         
         self.logger = logging.getLogger(__name__)
         self.logger.debug("Initializing Pid")
