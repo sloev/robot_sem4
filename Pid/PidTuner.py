@@ -139,7 +139,7 @@ class PidTuner():
                 walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
             except IOError:
                 print("got ioerror in sampling ir sensors")
-            time.sleep(0.5)
+            time.sleep(0.1)
         print("turning finnished")
         
     def stop(self):
