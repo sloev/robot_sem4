@@ -101,7 +101,7 @@ class Pid():
     
     def setMotors(self,controlValues):
         print("control values="+str(controlValues))
-        self.dual_motors.setMotorParams(0, 1, controlValues[self.left], controlValues[self.right])
+        self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
     
     def detectMissingWalls(self,sample):
         walls=[1,1]
@@ -109,7 +109,7 @@ class Pid():
             walls[self.left]=0
         if(sample[self.right]>self.cmMax):
             walls[self.right]=0
-        return walls
+        return [1,1]
     
     def pTune(self,pGain):
         if(pGain[self.left]==0):
