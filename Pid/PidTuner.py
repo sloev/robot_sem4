@@ -120,15 +120,26 @@ class PidTuner():
             
     def turn(self,direction):
         print("turning wheel="+str(direction))
+        time.sleep(2)
         self.dual_motors.softStop()
-        time.sleep(0.5)
-        self.dual_motors.setPosition(2500, 2500)
-        time.sleep(2)
+        time.sleep(0.3)
         self.dual_motors.turn90(direction, 2)
-        time.sleep(3)
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-        self.dual_motors.setPosition(4000, 4000)
         time.sleep(2)
+        
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setPosition(32767, 32767)
+        '''
+        driving straight until scenario in turn is overdone
+        which means drive out of corner
+        '''
+        walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
+        while(walls==oldWalls):
+            try:
+                walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
+            except IOError:
+                print("got ioerror in sampling ir sensors")
+            time.sleep(0.5)
+        print("turning finnished")
 
             
             
@@ -138,14 +149,14 @@ def main():
 
     print("\
         used to tune the pid gain factors using keyboard input\
-        \npress q to save\
-        \ntune    wheel    +    -     \
-        \npGain   left     a    z \
-        \npGain   right    s    x\
-        \ndGain   left     d    c\
-        \ndGain   right    f    v\
-        \niGain   left     g    b\
-        \niGain   right    h    n\
+        \    npress q to save\
+        \    ntune    wheel    +    -    \
+        \    npGain   left     a    z    \
+        \    npGain   right    s    x    \
+        \    ndGain   left     d    c    \
+        \    ndGain   right    f    v    \
+        \    niGain   left     g    b    \
+        \    niGain   right    h    n    \
         ")
     try:
         while True:
