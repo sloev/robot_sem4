@@ -111,7 +111,6 @@ class PidTuner():
             self.printGains()
             self.dual_motors.setPosition(32767, 32767)
             walls=self.pid.doPid()
-            self.printGains()
             print("[walls="+str(walls)+"]")
 #             if(walls==[0,0]):
 #                 self.dual_motors.softStop()
