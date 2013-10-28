@@ -69,6 +69,7 @@ class Pid():
         
         walls=self.detectMissingWalls(sample)
         if(walls==[1,1]):
+            print("running pid")
             currentError=[self.setPoint-sample[self.left],self.setPoint-sample[self.right]] 
             self.logger.info("currentError:"+str(currentError))
             
@@ -97,7 +98,6 @@ class Pid():
         sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
         self.logger.info("sample:"+str(sample))
         return sample
-
     
     def setMotors(self,controlValues):
         self.dual_motors.setMotorParams(0, 1, controlValues[self.left], controlValues[self.right])
