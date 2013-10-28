@@ -112,10 +112,15 @@ class PidTuner():
             walls=self.pid.doPid()
             self.printGains()
             print("[walls="+str(walls)+"]")
-            if(walls[self.left]==0):
+            if(walls==[0,0]):
+                self.dual_motors.softStop()
+                time.sleep(0.2)
+                if(self.pid.doPid()==[0,0]):
+                    self.turn(self.right)           
+            elif(walls[self.left]==0):
                 self.turn(self.right)
             elif(walls[self.right]==0):
-                self.turn(self.left)
+                self.turn(self.left)                
         except IOError as ex:
             print("fuck you error\n"+str(ex))
             
@@ -125,7 +130,7 @@ class PidTuner():
         self.dual_motors.softStop()
         time.sleep(0.3)
         self.dual_motors.turn90(direction, 2)
-        time.sleep(2)
+        time.sleep(1)
         
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(32767, 32767)
@@ -133,13 +138,15 @@ class PidTuner():
         driving straight until scenario in turn is overdone
         which means drive out of corner
         '''
-        walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-        while(walls==oldWalls):
-            try:
-                walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-            except IOError:
-                print("got ioerror in sampling ir sensors")
-            time.sleep(0.1)
+        time.sleep(1)
+# 
+#         walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
+#         while(walls==oldWalls):
+#             try:
+#                 walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
+#             except IOError:
+#                 print("got ioerror in sampling ir sensors")
+#             time.sleep(0.1)
         print("turning finnished")
         
     def stop(self):
