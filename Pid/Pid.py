@@ -68,6 +68,7 @@ class Pid():
         sample=self.sampleDistances()
         
         walls=self.detectMissingWalls(sample)
+        print("sample="+str(sample))
         if(walls==[1,1]):
             currentError=[self.setPoint-sample[self.right],self.setPoint-sample[self.left]] 
             self.logger.info("currentError:"+str(currentError))
