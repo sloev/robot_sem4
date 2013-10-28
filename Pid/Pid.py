@@ -164,8 +164,8 @@ class Pid():
         cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
-        if(cm < -0.1):
-            if(cm < 0.1 and cm > -1):
+        if(cm < -0.3):
+            if(cm < 0.3 and cm > -1):
                 value=3
             elif(cm < -1 and cm > -3):
                 value=4  
