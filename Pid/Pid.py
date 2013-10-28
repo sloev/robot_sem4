@@ -36,7 +36,7 @@ class Pid():
         self.logger.debug("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=10
+        self.setPoint=15
         self.cmMax=25
         self.cmMin=5
         
@@ -159,13 +159,12 @@ class Pid():
         return cm
     
     def convertCmToVelocity(self,cm):
+        print("raw cm="+str(cm))
         cm=self.constrain(cm)
-        out_range =5
-        in_range = self.cmMax-self.cmMin
-        in_val = cm - self.cmMin
-        val=(float(in_val)/in_range)*out_range
-        velocity = int(1+val)
-        return velocity
+        print("soft cm="+str(cm))
+
+
+        return 2
     
     def pickleGainFactors(self):
         gainFactors=[self.pGain,self.dGain,self.iGain]
