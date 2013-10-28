@@ -152,19 +152,31 @@ class Pid():
         return value
         
     def constrain(self,cm):
-        if(cm > self.cmMax):
-            return self.cmMax
-        elif(cm < self.cmMin):
-            return self.cmMin
+        if(cm > self.cmMax-self.setPoint):
+            return self.cmMax-self.setPoint
+        elif(cm < self.setPoint-self.cmMin):
+            return self.setPoint-self.cmMin
         return cm
     
+    ''' input cm is ranged from -10 to 10'''
     def convertCmToVelocity(self,cm):
-        print("raw cm="+str(cm))
         cm=self.constrain(cm)
-        print("soft cm="+str(cm))
-
-
-        return 2
+        value=3
+        if(cm > 0):
+            if(cm < 2):
+                value=4
+            elif(cm < 4):
+                value=5  
+            else:
+                value=6            
+        else:
+            if(cm > -2):
+                value=2
+            elif(cm > -4):
+                value=2     
+            else:
+                value=1         
+        return value
     
     def pickleGainFactors(self):
         gainFactors=[self.pGain,self.dGain,self.iGain]
