@@ -140,14 +140,14 @@ class PidTuner():
         which means drive out of corner
         '''
         time.sleep(1)
-# 
-#         walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-#         while(walls==oldWalls):
-#             try:
-#                 walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-#             except IOError:
-#                 print("got ioerror in sampling ir sensors")
-#             time.sleep(0.1)
+ 
+        walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
+        while(walls==oldWalls):
+            try:
+                walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
+            except IOError:
+                print("got ioerror in sampling ir sensors")
+            time.sleep(0.1)
         print("turning finnished")
         
     def stop(self):

@@ -110,7 +110,7 @@ class Pid():
             walls[self.left]=0
         if(sample[self.right]>self.cmMax):
             walls[self.right]=0
-        return [1,1]
+        return walls    
     
     def pTune(self,pGain):
         if(pGain[self.left]==0):
@@ -166,13 +166,13 @@ class Pid():
         #print("soft cm="+str(cm))
         value=2
         if(cm < -0.5):
-            if(cm < 0.5 and cm > -1):
+            if(cm < -0.5 and cm < -1):
                 value=3
-            elif(cm < -1 and cm > -3):
+            elif(cm < -1 and cm < -3):
                 value=4  
-            elif(cm < -4 and cm > -8):
+            elif(cm < -4 and cm < -8):
                 value=5 
-            elif(cm <-8 and cm > -10):
+            elif(cm <-8 and cm < -10):
                 value=6            
         return value
     
