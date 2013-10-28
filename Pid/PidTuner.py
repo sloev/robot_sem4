@@ -172,8 +172,7 @@ def main():
         ")
     try:
         while True:
-            time.sleep(1)
-            time.sleep(0.3)
+            time.sleep(0.2)
     
             # get keyboard input, returns -1 if none available
             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
