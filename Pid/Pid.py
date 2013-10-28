@@ -36,8 +36,8 @@ class Pid():
         self.logger.debug("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=12
-        self.cmMax=20
+        self.setPoint=15
+        self.cmMax=22
         self.cmMin=5
         
         self.lastError=[0,0] #last error 
@@ -101,6 +101,7 @@ class Pid():
     def sampleDistances(self):
         sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
         self.logger.info("sample:"+str(sample))
+        print("sample="+str(sample))
         return sample
     
     def setMotors(self,controlValues):
