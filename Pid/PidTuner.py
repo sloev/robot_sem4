@@ -101,13 +101,14 @@ class PidTuner():
         self.pid.iTune(self.iGain)
         
     def printGains(self):
-        print("\n"+str(self.pGain)+"\t"+str(self.dGain)+"\t"+str(self.iGain)+"\n")
+        print("gains="+str(self.pid.getGainFactors()))
     
     def save(self):
         return self.pid.pickleGainFactors()
         
     def doPid(self):
         try:
+            self.printGains()
             self.dual_motors.setPosition(32767, 32767)
             walls=self.pid.doPid()
             self.printGains()
