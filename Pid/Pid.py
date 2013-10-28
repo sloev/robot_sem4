@@ -63,6 +63,9 @@ class Pid():
         calculates errors according to setpoint
         sends calculated new velocities to motors
     '''
+    def reset(self):
+        self.iError=[0,0]
+        
     def doPid(self):
         self.logger.debug("Doing pid")
         sample=self.sampleDistances()

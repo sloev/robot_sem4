@@ -113,12 +113,8 @@ class PidTuner():
             self.dual_motors.setPosition(32767, 32767)
             walls=self.pid.doPid()
             print("[walls="+str(walls)+"]")
-            if(walls==[0,0]):
-                self.dual_motors.softStop()
-                time.sleep(0.2)
-                if(self.pid.doPid()==[0,0]):
-                    self.turn(self.right)           
-            elif(walls[self.left]==0):
+        
+            if(walls[self.left]==0):
                 self.turn(self.right)
             elif(walls[self.right]==0):
                 self.turn(self.left)                
@@ -140,6 +136,7 @@ class PidTuner():
         which means drive out of corner
         '''
         time.sleep(1)
+        self.pid.reset()
 # 
 #         walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
 #         while(walls==oldWalls):
