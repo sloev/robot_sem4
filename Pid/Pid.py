@@ -101,7 +101,7 @@ class Pid():
     
     def setMotors(self,controlValues):
         #print("control values="+str(controlValues))
-        self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
+        self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.right], controlValues[self.left])
     
     def detectMissingWalls(self,sample):
         walls=[1,1]
@@ -164,14 +164,14 @@ class Pid():
         cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
-        if(cm > 0.1):
-            if(cm >0.5 and cm < 1):
+        if(cm < -0.1):
+            if(cm < 0.1 and cm > -1):
                 value=3
-            elif(cm > 1 and cm < 3):
+            elif(cm < -1 and cm > -3):
                 value=4  
-            elif(cm > 4 and cm < 8):
+            elif(cm < -4 and cm > -8):
                 value=5 
-            elif(cm >8 and cm < 10):
+            elif(cm <-8 and cm > -10):
                 value=6            
         return value
     
