@@ -87,7 +87,7 @@ class Pid():
             self.iError=[currentError[self.left]+self.iError[self.left],currentError[self.right]+self.iError[self.right]]
             self.logger.info("iError:"+str(self.iError))
             
-            self.setMotors(controlValues)
+            self.setMotors(controlValues,sample)
         else:
             msg="walls missing at:"
             if(walls[self.left]==0):
@@ -104,9 +104,13 @@ class Pid():
         print("sample="+str(sample))
         return sample
     
-    def setMotors(self,controlValues):
+    def setMotors(self,controlValues,sample):
+        if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and sample[2] >self.setPoint):
+            self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.right], controlValues[self.left])
+        else:
+            self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
+
         #print("control values="+str(controlValues))
-        self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
     
     def detectMissingWalls(self,sample):
         walls=[1,1]
@@ -177,7 +181,7 @@ class Pid():
             elif(cm < -4 and cm < -8):
                 value=5 
             elif(cm <-8 and cm < -10):
-                value=6            
+                value=6     
         return value
     
     def pickleGainFactors(self):
