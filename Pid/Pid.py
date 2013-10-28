@@ -160,7 +160,9 @@ class Pid():
     
     ''' input cm is ranged from -10 to 10'''
     def convertCmToVelocity(self,cm):
+        print("raw cm ="+str(cm))
         cm=self.constrain(cm)
+        print("soft cm="+str(cm))
         value=2
         if(cm > 0):
             if(cm >0 and cm < 1):
