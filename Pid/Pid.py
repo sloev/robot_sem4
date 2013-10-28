@@ -71,7 +71,7 @@ class Pid():
         if(walls==[1,1]):
             currentError=[self.setPoint-sample[self.left],self.setPoint-sample[self.right]] 
             self.logger.info("currentError:"+str(currentError))
-            print("currentError:"+str(currentError))            
+            #print("currentError:"+str(currentError))            
             
             dError=[currentError[self.left]-self.lastError[self.left],currentError[self.right]-self.lastError[self.right]]
             self.logger.info("dError:"+str(dError))        
@@ -100,7 +100,7 @@ class Pid():
         return sample
     
     def setMotors(self,controlValues):
-        print("control values="+str(controlValues))
+        #print("control values="+str(controlValues))
         self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
     
     def detectMissingWalls(self,sample):
@@ -160,9 +160,9 @@ class Pid():
     
     ''' input cm is ranged from -10 to 10'''
     def convertCmToVelocity(self,cm):
-        print("raw cm ="+str(cm))
+        #print("raw cm ="+str(cm))
         cm=self.constrain(cm)
-        print("soft cm="+str(cm))
+        #print("soft cm="+str(cm))
         value=2
         if(cm > 0.5):
             if(cm >0.5 and cm < 2):

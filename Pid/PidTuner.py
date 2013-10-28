@@ -112,7 +112,7 @@ class PidTuner():
             self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
             self.dual_motors.setPosition(32767, 32767)
             walls=self.pid.doPid()
-            print("[walls="+str(walls)+"]")
+            #print("[walls="+str(walls)+"]")
 #             if(walls==[0,0]):
 #                 self.dual_motors.softStop()
 #                 time.sleep(0.2)
