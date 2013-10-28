@@ -69,9 +69,9 @@ class Pid():
         
         walls=self.detectMissingWalls(sample)
         if(walls==[1,1]):
-            print("running pid")
             currentError=[self.setPoint-sample[self.left],self.setPoint-sample[self.right]] 
             self.logger.info("currentError:"+str(currentError))
+            print("currentError:"+str(currentError))            
             
             dError=[currentError[self.left]-self.lastError[self.left],currentError[self.right]-self.lastError[self.right]]
             self.logger.info("dError:"+str(dError))        
@@ -100,6 +100,7 @@ class Pid():
         return sample
     
     def setMotors(self,controlValues):
+        print("control values="+str(controlValues))
         self.dual_motors.setMotorParams(0, 1, controlValues[self.left], controlValues[self.right])
     
     def detectMissingWalls(self,sample):
