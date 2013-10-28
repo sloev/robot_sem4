@@ -154,8 +154,8 @@ class Pid():
     def constrain(self,cm):
         if(cm > self.cmMax-self.setPoint):
             return self.cmMax-self.setPoint
-        elif(cm < self.setPoint-self.cmMin):
-            return self.setPoint-self.cmMin
+        elif(cm < self.cmMin-self.setPoint):
+            return self.cmMin-self.setPoint
         return cm
     
     ''' input cm is ranged from -10 to 10'''
