@@ -161,21 +161,16 @@ class Pid():
     ''' input cm is ranged from -10 to 10'''
     def convertCmToVelocity(self,cm):
         cm=self.constrain(cm)
-        value=3
-        if(cm > 0):
+        value=2
+        if(cm > 0.5):
             if(cm < 2):
-                value=4
+                value=3
             elif(cm < 4):
-                value=5  
+                value=4  
+            elif(cm < 8):
+                value=5 
             else:
                 value=6            
-        else:
-            if(cm > -2):
-                value=2
-            elif(cm > -4):
-                value=2     
-            else:
-                value=1         
         return value
     
     def pickleGainFactors(self):

@@ -113,15 +113,15 @@ class PidTuner():
             walls=self.pid.doPid()
             self.printGains()
             print("[walls="+str(walls)+"]")
-            if(walls==[0,0]):
-                self.dual_motors.softStop()
-                time.sleep(0.2)
-                if(self.pid.doPid()==[0,0]):
-                    self.turn(self.right)           
-            elif(walls[self.left]==0):
-                self.turn(self.right)
-            elif(walls[self.right]==0):
-                self.turn(self.left)                
+#             if(walls==[0,0]):
+#                 self.dual_motors.softStop()
+#                 time.sleep(0.2)
+#                 if(self.pid.doPid()==[0,0]):
+#                     self.turn(self.right)           
+#             elif(walls[self.left]==0):
+#                 self.turn(self.right)
+#             elif(walls[self.right]==0):
+#                 self.turn(self.left)                
         except IOError as ex:
             print("fuck you error\n"+str(ex))
             
