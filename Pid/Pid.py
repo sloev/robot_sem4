@@ -82,29 +82,29 @@ class Pid():
         self.logger.info("/walls/"+str(walls))
 
         if(walls==[1,1]):
-            currentError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
+            pError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
             #print("currentError:"+str(currentError))            
             
-            dError=[currentError[self.left]-self.lastError[self.left],currentError[self.right]-self.lastError[self.right]]
+            dError=[pError[self.left]-self.lastError[self.left],pError[self.right]-self.lastError[self.right]]
             
-            controlValues=[self.computeControlValues(self.left,currentError,dError),self.computeControlValues(self.right,currentError,dError)]
+            controlValues=[self.computeControlValues(self.left,pError,dError),self.computeControlValues(self.right,pError,dError)]
             
-            self.lastError=currentError
-            self.iError=[currentError[self.left]+self.iError[self.left],currentError[self.right]+self.iError[self.right]]
+            self.lastError=pError
+            self.iError=[pError[self.left]+self.iError[self.left],pError[self.right]+self.iError[self.right]]
             
             self.setMotors(controlValues)
             
             self.logger.info("/left/controlValues/%d",controlValues[self.left])
             self.logger.info("/right/controlValues/%d",controlValues[self.right])
             
-            self.logger.info("/left/pError/%f",self.pError[self.left])
-            self.logger.info("/right/pError/%f",self.pError[self.right])
+            self.logger.info("/left/pError/%f",pError[self.left])
+            self.logger.info("/right/pError/%f",pError[self.right])
             
             self.logger.info("/left/iError/%f",self.iError[self.left])
             self.logger.info("/right/iError/%f",self.iError[self.right])
             
-            self.logger.info("/left/dError/%f",self.dError[self.left])
-            self.logger.info("/right/dError/%f",self.dError[self.right])
+            self.logger.info("/left/dError/%f",dError[self.left])
+            self.logger.info("/right/dError/%f",dError[self.right])
  
         else:
             msg="walls missing at:"
