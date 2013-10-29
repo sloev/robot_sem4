@@ -42,7 +42,7 @@ class Pid():
         self.dual_motors=dual_motors
         self.setPoint=16
         self.cmMax=25
-        self.cmMin=5
+        self.cmMin=7
         
         self.lastError=[0,0] #last error 
         self.iError=[0,0]
@@ -224,10 +224,10 @@ class Pid():
         Checks if the overall error is within a certain threshhold
     '''
     def constrain(self,cm):
-        if(cm > self.cmMax-self.setPoint):
-            return self.cmMax-self.setPoint
-        elif(cm < self.cmMin-self.setPoint):
-            return self.cmMin-self.setPoint
+        if(cm > self.setPoint-self.cmMin):
+            return self.cmMin
+        elif(cm < self.setPoint-self.cmMax):
+            return self.cmMax
         return cm
     
     
@@ -237,7 +237,7 @@ class Pid():
     
     def convertCmToVelocity(self,cm):
         #print("raw cm ="+str(cm))
-        #cm=self.constrain(cm)
+        cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
         if(cm < -0.5):
