@@ -58,9 +58,11 @@ class PidTuner():
 
         'motors'
         self.dual_motors=DualMotorController(0x60,0x61)
+        self.dual_motors.hardStop()
+        self.dual_motors.getFullStatus1()
         self.dual_motors.setOtpParam()
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-        self.dual_motors.runInit()
+        #self.dual_motors.runInit()
         time.sleep(2)
         'pid and direction'
         self.pid=Pid(self.left,self.right,self.ir_sensor, self.dual_motors)
