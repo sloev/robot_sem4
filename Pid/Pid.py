@@ -133,19 +133,19 @@ class Pid():
     '''
     def setMotors(self,controlValues):
 
-        if(controlValues[self.left]>=5 and self.sample[self.front] > self.setPoint*0.8):
-            self.dual_motors.setMotorParams(self.left, self.right, 3, controlValues[self.right])
-            self.logger.info("/setMotors/frontSensorLarge/"+str(controlValues))
-            
-        elif(controlValues[self.right]>=5 and self.sample[self.front] > self.setPoint*0.8):
-            self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], 3)
-            self.logger.info("/setMotors/frontSensorLarge/"+str(controlValues))
-            
-        else:
-            self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
-            self.logger.info("/setMotors/frontSensorIgnored/"+str(controlValues))
-#         self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
-#         self.logger.info("/setMotors/frontSensorIgnored/"+str(controlValues))
+#         if(controlValues[self.left]>=5 and self.sample[self.front] > self.setPoint*0.8):
+#             self.dual_motors.setMotorParams(self.left, self.right, 3, controlValues[self.right])
+#             self.logger.info("/setMotors/frontSensorLarge/"+str(controlValues))
+#             
+#         elif(controlValues[self.right]>=5 and self.sample[self.front] > self.setPoint*0.8):
+#             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], 3)
+#             self.logger.info("/setMotors/frontSensorLarge/"+str(controlValues))
+#             
+#         else:
+#             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
+#             self.logger.info("/setMotors/frontSensorIgnored/"+str(controlValues))
+        self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
+        self.logger.info("/setMotors/frontSensorIgnored/"+str(controlValues))
 
         #print("control values="+str(controlValues))
         
