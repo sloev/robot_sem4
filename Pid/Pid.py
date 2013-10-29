@@ -123,7 +123,7 @@ class Pid():
     def sampleDistances(self):
         self.sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
         self.logger.info("sample:"+str(self.sample))
-        print("sample="+str(self.sample))
+        #print("sample="+str(self.sample))
         
         
     '''

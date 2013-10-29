@@ -127,17 +127,18 @@ class PidTuner():
             self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
             self.dual_motors.setPosition(32767, 32767)
             walls=self.pid.doPid()
-            print("[walls="+str(walls)+"]")
+            #print("[walls="+str(walls)+"]")
         
             if(walls[self.left]==0):
                 self.turn(self.right)
             elif(walls[self.right]==0):
                 self.turn(self.left)                
         except IOError as ex:
-            print("fuck you error\n"+str(ex))
+            pass
+            #print("fuck you error\n"+str(ex))
             
     def turn(self,direction):
-        print("turning wheel="+str(direction))
+        #print("turning wheel="+str(direction))
         time.sleep(1)
         self.dual_motors.softStop()
         time.sleep(0.3)
