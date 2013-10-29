@@ -247,7 +247,7 @@ class Pid():
                 value=4  
             elif(cm < -4 and cm > -10):
                 value=5 
-            elif(cm < -10 and cm > - self.setPoint):
+            elif(cm < -10 and cm > - self.cmMax):
                 value=6     
         return value
     
