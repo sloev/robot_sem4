@@ -47,6 +47,9 @@ multiChannels                       =   0x07
 class IR_Sensors_Controller():
     
     
+    '''
+        Constructor
+    '''
     def __init__(self, slaveAddress):
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
@@ -72,6 +75,12 @@ class IR_Sensors_Controller():
     Byte 1 = 0000+D11+D10+D9+D8
     Byte 2 = D7+D6+D5+D4+1+AlertEN+Busy/Alert+Alert/BusyPolatiry
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
+    
+    '''
+        Configure the configurationregister. Can be used to read from
+        a sequence of channels automatically.
+    '''
     def setConfigurationRegister(self, MSBs, LSBs):
         chosenRegister = ConfigurationReg | multiChannels << 4
         byte1 = MSBs
@@ -79,13 +88,18 @@ class IR_Sensors_Controller():
         self.bus.write_i2c_block_data(self.slaveAddress, chosenRegister,[byte1, byte2])
         
     
-        '''Read input from IR sensor'''
+    '''
+        Read input from IR sensor
+    '''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
         sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
         return sensorInput
     
         
+    '''
+        Extract the raw distance from the 2 received bytes (12 LSB's)
+    '''
     def extractRawDistance(self,sensorRead):
         le=len(sensorRead)
 
@@ -95,15 +109,17 @@ class IR_Sensors_Controller():
         return -1
     
         
-        '''
+    '''
         takes sensorRead as param and returns the distance in cm float
-        '''
+    '''
     def lookupCm(self,rawDistance):
         if (rawDistance>0):
             return self.rangeTable.lookUpDistance(rawDistance)
         return -1
     
-        '''takes sensorRead as param and returns the alerts from a conversion'''
+    '''
+        takes sensorRead as param and returns the alerts from a conversion
+    '''
     def getAlerts(self,sensorRead):
         if(len(sensorRead)>1):
             alert=sensorRead[0] >> 7
@@ -111,7 +127,9 @@ class IR_Sensors_Controller():
         return -1
     
     
-    '''Read average measurement from a single sensor'''
+    '''
+        Read average measurement from a single sensor
+    '''
     def getAverageInCm(self,channel,amount):
         average=0
         for i in range(0,amount):
@@ -122,8 +140,10 @@ class IR_Sensors_Controller():
         return self.lookupCm(int(average/amount))
     
     
-    '''Read input from channels described in the channels list
-       Returns a list with sensor distances in cm'''
+    '''
+        Read input from channels described in the channels list
+        Returns a list with sensor distances in cm
+    '''
     def multiChannelReadCm(self,channels, amount):
         distances = [0 for i in range(len(channels))]
         for i in range(amount):
@@ -133,6 +153,10 @@ class IR_Sensors_Controller():
                     distances[j]=self.lookupCm(int(distances[j]/amount))
         return distances
     
+    
+    '''
+        Print the content of the distance list (Redundant!)
+    '''
     def printMultiChannelReadCm(self,distances):
         print("sensor readout in cm:")
         for i in range(len(distances)):
@@ -140,6 +164,7 @@ class IR_Sensors_Controller():
         for i in range(len(distances)):
             print(str(distances[i]))
         
+    
     
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
