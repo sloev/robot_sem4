@@ -1,8 +1,21 @@
 '''
 Created on Oct 15, 2013
 
-@author: johannes
+@author: Johannes Jørgensen
 '''
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'PID control                                                                                '
+'Inspired by:                                                                               ' 
+'http://letsmakerobots.com/node/865                                                         '
+'                                                                                           ' 
+'Uses three sharp ir sensors connected through i2c with ad7998 ad-converter                 '
+'and for output it uses two stepper motors                                                  '
+'                                                                                           '
+'If self.left =0 and self.right=1 it will drive towards the direction of its sensor head    '
+'                                                                                           ' 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 import logging
 import cPickle as pickle
 import os.path
@@ -16,18 +29,11 @@ Vin3                                =   0x0A
 sensorChannels=[Vin1,Vin2,Vin3]
 
 class Pid():
-    '''
-    pid control
-    inspired by:
-    http://letsmakerobots.com/node/865
-    
-    uses three sharp ir sensors connected through i2c with ad7998 ad-converter
-    and for output it uses two stepper motors
-    
-    if self.left =0 and self.right=1 it will drive towards the direction of its sensor head
 
+    
     '''
-
+        Constructor
+    '''
     def __init__(self,left,right,ir_sensors, dual_motors):
         self.left=left
         self.right=right
@@ -58,14 +64,21 @@ class Pid():
             self.logger.debug("gainFactors loaded from pickle")
         self.logger.debug("Initializing Pid DONE")
         
+    
+   
+
     '''
-        doPid:
-        calculates errors according to setpoint
-        sends calculated new velocities to motors
+        Resets the integral error
     '''
     def reset(self):
         self.iError=[0,0]
         
+        
+    '''
+        PID controller:
+        calculates errors according to setpoint
+        sends calculated new velocities to motors
+    '''    
     def doPid(self):
         self.logger.debug("Doing pid")
         self.sampleDistances()
@@ -98,11 +111,19 @@ class Pid():
         self.logger.debug("Doing pid DONE")
         return walls
     
+    
+    '''
+        Get input from the three IR-sensors
+    '''
     def sampleDistances(self):
         self.sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
         self.logger.info("sample:"+str(self.sample))
         print("sample="+str(self.sample))
-    
+        
+        
+    '''
+        Set the motor parameters
+    '''
     def setMotors(self,controlValues):
         if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and self.sample[2] >self.setPoint):
             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.right], controlValues[self.left])
@@ -110,15 +131,22 @@ class Pid():
             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
 
         #print("control values="+str(controlValues))
-    
+        
+    '''
+        Use the input from IR-sensors to determine if any side
+        walls are missing
+    '''
     def detectMissingWalls(self,sample):
         walls=[1,1]
         if(sample[self.left]>self.cmMax):
             walls[self.left]=0
         if(sample[self.right]>self.cmMax):
             walls[self.right]=0
-        return walls    
-    
+        return walls  
+      
+    '''
+        Tunes the proportional gain
+    '''
     def pTune(self,pGain):
         if(pGain[self.left]==0):
             self.pGain=[self.pGain[self.left],pGain[self.right]]
@@ -129,6 +157,9 @@ class Pid():
         self.logger.debug("pTune new pGain:"+str(self.pGain))
 
             
+    '''
+        Tunes the derivative gain
+    '''
     def dTune(self,dGain):
         if(dGain[self.left]==0):
             self.dGain=[self.dGain[self.left],dGain[self.right]]
@@ -138,7 +169,10 @@ class Pid():
             self.dGain=dGain
         self.logger.debug("pTune new dGain:"+str(self.dGain))
 
-        
+      
+    '''
+        Tunes the integral gain
+    '''
     def iTune(self,iGain):
         if(iGain[self.left]==0):
             self.iGain=[self.iGain[self.left],iGain[self.right]]
@@ -147,18 +181,29 @@ class Pid():
         else:
             self.iGain=iGain
         self.logger.debug("pTune new iGain:"+str(self.iGain))
-    
+        
+        
+    '''
+        Fetch current gain factors
+    '''
     def getGainFactors(self):
         return [self.pGain,self.dGain,self.iGain]
 
             
+    '''
+        Computes the overall error using the PID controller algorithm
+    '''
     def computeControlValues(self,wheel,currentError,dError):
         value=self.pGain[wheel]*currentError[wheel]
         value+=self.dGain[wheel]*dError[wheel]
         value+=self.iGain[wheel]*self.iError[wheel]
         value=self.convertCmToVelocity(value)
         return value
+    
         
+    '''
+        Checks if the overall error is within a certain threshhold
+    '''
     def constrain(self,cm):
         if(cm > self.cmMax-self.setPoint):
             return self.cmMax-self.setPoint
@@ -166,7 +211,10 @@ class Pid():
             return self.cmMin-self.setPoint
         return cm
     
-    ''' input cm is ranged from -10 to 10'''
+    
+    ''' 
+        input cm is ranged from -10 to 10
+    '''
     def convertCmToVelocity(self,cm):
         #print("raw cm ="+str(cm))
         cm=self.constrain(cm)
@@ -183,6 +231,10 @@ class Pid():
                 value=6     
         return value
     
+    
+    '''
+        Serializes gain-factors
+    '''
     def pickleGainFactors(self):
         gainFactors=[self.pGain,self.dGain,self.iGain]
         try:
@@ -190,8 +242,12 @@ class Pid():
             return 1
         except IOError:
             pass
-        return 0        
-    
+        return 0     
+     
+      
+    '''
+        Deseriallizes gain-factors
+    '''
     def unpickleGainFactors(self):
         returnValue=0
         if(os.path.exists("PidGainFactors.p")):
@@ -200,6 +256,7 @@ class Pid():
             except EOFError:
                 print("Error unpickling pid")
         return returnValue
+    
         
 def main():
     pass
