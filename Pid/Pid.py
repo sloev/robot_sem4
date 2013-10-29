@@ -39,8 +39,8 @@ class Pid():
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=13
-        self.cmMax=28
+        self.setPoint=15
+        self.cmMax=32
         self.cmMin=5
         
         self.lastError=[0,0] #last error 
