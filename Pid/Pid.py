@@ -240,9 +240,9 @@ class Pid():
                 value=3
             elif(cm < -2 and cm > -4):
                 value=4  
-            elif(cm < -4 and cm > -8):
+            elif(cm < -4 and cm > -10):
                 value=5 
-            elif(cm < -8 and cm > - self.setPoint):
+            elif(cm < -10 and cm > - self.setPoint):
                 value=6     
         return value
     
