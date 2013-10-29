@@ -247,7 +247,7 @@ class Pid():
                 value=4  
             if(cm < -4 and cm > -10):
                 value=5 
-            if(cm < -10 and cm > - self.cmax):
+            if(cm < -10 and cm > - self.cmMax):
                 value=6     
         return value
     
