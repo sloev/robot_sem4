@@ -236,7 +236,7 @@ class Pid():
                 value=4  
             elif(cm < -4 and cm < -8):
                 value=5 
-            elif(cm <-8 and cm < -10):
+            elif(cm <-8):
                 value=6     
         return value
     
