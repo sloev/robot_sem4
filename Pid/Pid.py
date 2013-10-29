@@ -243,11 +243,11 @@ class Pid():
         if(cm < -0.5):
             if(cm < -0.5 and cm > -2):
                 value=3
-            elif(cm < -2 and cm > -4):
+            if(cm < -2 and cm > -4):
                 value=4  
-            elif(cm < -4 and cm > -10):
+            if(cm < -4 and cm > -10):
                 value=5 
-            elif(cm < -10 and cm > - self.cmMax):
+            if(cm < -10 and cm > - self.cmMax):
                 value=6     
         return value
     
