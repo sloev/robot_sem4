@@ -39,7 +39,7 @@ class Pid():
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=15
+        self.setPoint=17
         self.cmMax=32
         self.cmMin=5
         
@@ -90,7 +90,7 @@ class Pid():
             controlValues=[self.computeControlValues(self.left,pError,dError),self.computeControlValues(self.right,pError,dError)]
             
             self.lastError=pError
-            self.iError=[pError[self.left]+self.iError[self.left],pError[self.right]+self.iError[self.right]]
+            self.iError=[pError[self.left]+self.iError[self.left] , pError[self.right]+self.iError[self.right]]
             
             self.setMotors(controlValues)
             
@@ -201,8 +201,8 @@ class Pid():
     '''
         Computes the overall error using the PID controller algorithm
     '''
-    def computeControlValues(self,wheel,currentError,dError):
-        value=self.pGain[wheel]*currentError[wheel]
+    def computeControlValues(self,wheel,pError,dError):
+        value=self.pGain[wheel]*pError[wheel]
         value+=self.dGain[wheel]*dError[wheel]
         value+=self.iGain[wheel]*self.iError[wheel]
         value=self.convertCmToVelocity(value)
