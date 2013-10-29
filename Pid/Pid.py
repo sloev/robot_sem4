@@ -83,7 +83,7 @@ class Pid():
         self.logger.info("walls/"+str(walls))
         self.left
 
-        if(walls[self.left] ==1 and walls[self.left] ==1 ):
+        if(walls[self.left] == 1 and walls[self.right] ==1 ):
             pError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
             #print("currentError:"+str(currentError))            
             
