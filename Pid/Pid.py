@@ -41,8 +41,8 @@ class Pid():
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
         self.setPoint=16
-        self.cmMax=25
-        self.cmMin=7
+        self.cmMax=28
+        self.cmMin=5
         
         self.lastError=[0,0] #last error 
         self.iError=[0,0]
