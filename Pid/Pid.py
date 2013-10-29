@@ -133,7 +133,7 @@ class Pid():
     '''
     def setMotors(self,controlValues):
 
-        if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and self.sample[2] <self.setPoint):
+        if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and self.sample[2] > self.setPoint):
             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.right], controlValues[self.left])
             self.logger.info("/setMotors/frontSensorLarge/"+str(controlValues))
         else:
