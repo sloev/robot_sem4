@@ -232,7 +232,7 @@ class Pid():
     
     def convertCmToVelocity(self,cm):
         #print("raw cm ="+str(cm))
-        cm=self.constrain(cm)
+        #cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
         if(cm < -0.5):
@@ -242,7 +242,7 @@ class Pid():
                 value=4  
             elif(cm < -4 and cm > -8):
                 value=5 
-            elif(cm < -8):
+            elif(cm < -8 and cm > - self.setPoint):
                 value=6     
         return value
     
