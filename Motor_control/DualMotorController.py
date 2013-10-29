@@ -17,16 +17,18 @@ class DualMotorController:
     '''
     
     def __init__(self, add1, add2):
+        self.logger = logging.getLogger('robot.dualMotors')
+
         self.turn90Steps=1270
         self.turn180Steps=2540
         
         self.logger = logging.getLogger(__name__)
-        self.logger.debug("Initializing DualMotorController")
+        self.logger.info("Initializing DualMotorController")
         self.motorLeft = Motor_I2C(add1)
         self.motorRight = Motor_I2C(add2)
         self.positionLeft=0
         self.positionRight=0
-        self.logger.debug("Initializing DualMotorController DONE")
+        self.logger.info("Initializing DualMotorController DONE")
 
     
     def setOtpParam(self):
@@ -37,32 +39,33 @@ class DualMotorController:
     
         
     def runInit(self):
-        self.logger.debug("runInit")
+        self.logger.info("runInit")
 
         self.motorLeft.runInit()
         self.motorRight.runInit()
     
     def setMotorParams(self,leftDir,rightDir,leftMaxVel,rightMaxVel):
-        self.logger.debug("setMotorParams")
+        self.logger.info("setMotorParams")
 
         self.motorLeft.setMotorParam(leftDir, leftMaxVel)
         self.motorRight.setMotorParam(rightDir, rightMaxVel)
     
     def getFullStatus1(self):
-        self.logger.debug("getFullStatus1")
+        self.logger.info("getFullStatus1")
 
         return [self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
     
     def getFullStatus2(self):
-        self.logger.debug("getFullStatus2")
+        self.logger.info("getFullStatus2")
         left=self.motorLeft.getFullStatus2()
         right=self.motorRight.getFullStatus2()
         var=[left,right]
-
+        self.logger.info("/left/fullstatus2/"+str(left))
+        self.logger.info("/right/fullstatus2/"+str(right))
         return var
     
     def turn90(self,direction,maxVel):
-        self.logger.debug('turn 90:'+str(direction))
+        self.logger.info('turn 90:'+str(direction))
 
         self.motorLeft.setMotorParam(direction, maxVel)
         self.motorRight.setMotorParam(direction, maxVel)
@@ -70,7 +73,7 @@ class DualMotorController:
         self.setPosition(self.turn90Steps, self.turn90Steps)
         
     def turn180(self,maxVel):
-        self.logger.debug("turn180")
+        self.logger.info("turn180")
 
         self.motorLeft.setMotorParam(1, maxVel)
         self.motorRight.setMotorParam(1, maxVel)
@@ -78,7 +81,7 @@ class DualMotorController:
         self.setPosition(self.turn180Steps, self.turn180Steps)
         
     def setPosition(self,incLeftPos,incRightPos):
-        self.logger.debug("setPosition"+str(incLeftPos)+","+str(incRightPos))
+        self.logger.info("setPosition"+str(incLeftPos)+","+str(incRightPos))
         fullstatus2=self.getFullStatus2()
         
         positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
@@ -103,17 +106,17 @@ class DualMotorController:
         rightstatus=(rightstatus[1] == rightstatus[3]) & (rightstatus[2] == rightstatus[4])
         value=(leftstatus & rightstatus)==1
        
-        self.logger.debug("isBusy="+str(value))
+        self.logger.info("isBusy="+str(value))
         return value
         
     def hardStop(self):
-        self.logger.debug("hardStop")
+        self.logger.info("hardStop")
 
         self.motorLeft.hardStop()
         self.motorRight.hardStop()
         
     def softStop(self):
-        self.logger.debug("softStop")
+        self.logger.info("softStop")
 
         self.motorLeft.softStop()
         self.motorRight.softStop()

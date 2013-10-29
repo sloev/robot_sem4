@@ -39,10 +39,19 @@ class PidTuner():
         
         self.tuneFactor=0.01
         try:
-            os.remove("/home/pi/robot_sem4/myLog.log")
+            os.remove("/home/pi/robot_sem4/robot.log")
         except OSError:
             pass
-        logging.basicConfig(filename='myLog.log', level=logging.INFO)
+        logger = logging.getLogger('robot')
+        logger.setLevel(logging.INFO)
+        
+        fh = logging.FileHandler('robot.log')
+        fh.setLevel(logging.INFO)
+
+        formatter = logging.Formatter('%(asctime)s/%(name)s/%(message)s')
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
+        
         'sensors'
         self.ir_sensor = IR_Sensors_Controller(0x20)
         self.ir_sensor.setConfigurationRegister(0x00,0x7F)

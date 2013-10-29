@@ -20,17 +20,14 @@ import logging
 import cPickle as pickle
 import os.path
 
-
 Vin1                                =   0x08
 Vin2                                =   0x09
 Vin3                                =   0x0A
-
 
 sensorChannels=[Vin1,Vin2,Vin3]
 
 class Pid():
 
-    
     '''
         Constructor
     '''
@@ -38,8 +35,8 @@ class Pid():
         self.left=left
         self.right=right
         
-        self.logger = logging.getLogger(__name__)
-        self.logger.debug("Initializing Pid")
+        self.logger = logging.getLogger('robot.pid')
+        self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
         self.setPoint=15
@@ -56,23 +53,20 @@ class Pid():
         gainFactors=self.unpickleGainFactors()
 
         if(gainFactors==0):           
-            self.logger.debug("gainFactors not unpickled")
+            self.logger.info("gainFactors not unpickled")
         else:
             self.pGain=gainFactors[0]
             self.dGain=gainFactors[1]
             self.iGain=gainFactors[2]
-            self.logger.debug("gainFactors loaded from pickle")
-        self.logger.debug("Initializing Pid DONE")
+            self.logger.info("gainFactors loaded from pickle")
+        self.logger.info("Initializing Pid DONE")
         
-    
-   
-
     '''
         Resets the integral error
     '''
     def reset(self):
+        self.logger.info("/resetting ierrors")
         self.iError=[0,0]
-        
         
     '''
         PID controller:
@@ -80,27 +74,38 @@ class Pid():
         sends calculated new velocities to motors
     '''    
     def doPid(self):
-        self.logger.debug("Doing pid")
+
+        self.logger.info("Doing pid")
         self.sampleDistances()
         
         walls=self.detectMissingWalls(self.sample)
-        print("sample="+str(self.sample))
+        self.logger.info("/walls/"+str(walls))
+
         if(walls==[1,1]):
             currentError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
-            self.logger.info("currentError:"+str(currentError))
             #print("currentError:"+str(currentError))            
             
             dError=[currentError[self.left]-self.lastError[self.left],currentError[self.right]-self.lastError[self.right]]
-            self.logger.info("dError:"+str(dError))        
             
             controlValues=[self.computeControlValues(self.left,currentError,dError),self.computeControlValues(self.right,currentError,dError)]
-            self.logger.info("controlValues:"+str(controlValues))
             
             self.lastError=currentError
             self.iError=[currentError[self.left]+self.iError[self.left],currentError[self.right]+self.iError[self.right]]
-            self.logger.info("iError:"+str(self.iError))
             
             self.setMotors(controlValues)
+            
+            self.logger.info("/left/controlValues/%d",controlValues[self.left])
+            self.logger.info("/right/controlValues/%d",controlValues[self.right])
+            
+            self.logger.info("/left/pError/%f",self.pError[self.left])
+            self.logger.info("/right/pError/%f",self.pError[self.right])
+            
+            self.logger.info("/left/iError/%f",self.iError[self.left])
+            self.logger.info("/right/iError/%f",self.iError[self.right])
+            
+            self.logger.info("/left/dError/%f",self.dError[self.left])
+            self.logger.info("/right/dError/%f",self.dError[self.right])
+ 
         else:
             msg="walls missing at:"
             if(walls[self.left]==0):
@@ -108,7 +113,7 @@ class Pid():
             if(walls[self.right]==0):
                 msg+=" self.right "
             self.logger.warning(msg)
-        self.logger.debug("Doing pid DONE")
+        self.logger.info("Doing pid DONE")
         return walls
     
     
@@ -125,10 +130,13 @@ class Pid():
         Set the motor parameters
     '''
     def setMotors(self,controlValues):
+
         if((controlValues[self.left]>=6 or controlValues[self.right]>=6) and self.sample[2] >self.setPoint):
             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.right], controlValues[self.left])
+            self.logger.info("/setMotors/frontSensorLarge/"+str(controlValues))
         else:
             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
+            self.logger.info("/setMotors/frontSensorIgnored/"+str(controlValues))
 
         #print("control values="+str(controlValues))
         
@@ -154,7 +162,7 @@ class Pid():
             self.pGain=[pGain[self.left],self.pGain[self.right]]
         else:
             self.pGain=pGain
-        self.logger.debug("pTune new pGain:"+str(self.pGain))
+        self.logger.info("pTune new pGain:"+str(self.pGain))
 
             
     '''
@@ -167,7 +175,7 @@ class Pid():
             self.dGain=[dGain[self.left],self.dGain[self.right]]
         else:
             self.dGain=dGain
-        self.logger.debug("pTune new dGain:"+str(self.dGain))
+        self.logger.info("pTune new dGain:"+str(self.dGain))
 
       
     '''
@@ -180,7 +188,7 @@ class Pid():
             self.iGain=[iGain[self.left],self.iGain[self.right]]
         else:
             self.iGain=iGain
-        self.logger.debug("pTune new iGain:"+str(self.iGain))
+        self.logger.info("pTune new iGain:"+str(self.iGain))
         
         
     '''
@@ -215,6 +223,7 @@ class Pid():
     ''' 
         input cm is ranged from -10 to 10
     '''
+    
     def convertCmToVelocity(self,cm):
         #print("raw cm ="+str(cm))
         cm=self.constrain(cm)
@@ -230,7 +239,6 @@ class Pid():
             elif(cm <-8 and cm < -10):
                 value=6     
         return value
-    
     
     '''
         Serializes gain-factors
@@ -256,7 +264,6 @@ class Pid():
             except EOFError:
                 print("Error unpickling pid")
         return returnValue
-    
         
 def main():
     pass
