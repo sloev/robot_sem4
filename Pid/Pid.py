@@ -79,7 +79,7 @@ class Pid():
         self.sampleDistances()
         
         walls=self.detectMissingWalls(self.sample)
-        self.logger.info("/walls/"+str(walls))
+        self.logger.info("walls/"+str(walls))
 
         if(walls==[1,1]):
             pError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
@@ -94,17 +94,17 @@ class Pid():
             
             self.setMotors(controlValues)
             
-            self.logger.info("/left/controlValues/%d",controlValues[self.left])
-            self.logger.info("/right/controlValues/%d",controlValues[self.right])
+            self.logger.info("left/controlValues/%d",controlValues[self.left])
+            self.logger.info("right/controlValues/%d",controlValues[self.right])
             
-            self.logger.info("/left/pError/%f",pError[self.left])
-            self.logger.info("/right/pError/%f",pError[self.right])
+            self.logger.info("left/pError/%f",pError[self.left])
+            self.logger.info("right/pError/%f",pError[self.right])
             
-            self.logger.info("/left/iError/%f",self.iError[self.left])
-            self.logger.info("/right/iError/%f",self.iError[self.right])
+            self.logger.info("left/iError/%f",self.iError[self.left])
+            self.logger.info("right/iError/%f",self.iError[self.right])
             
-            self.logger.info("/left/dError/%f",dError[self.left])
-            self.logger.info("/right/dError/%f",dError[self.right])
+            self.logger.info("left/dError/%f",dError[self.left])
+            self.logger.info("right/dError/%f",dError[self.right])
  
         else:
             msg="walls missing at:"

@@ -22,7 +22,6 @@ class DualMotorController:
         self.turn90Steps=1270
         self.turn180Steps=2540
         
-        self.logger = logging.getLogger(__name__)
         self.logger.info("Initializing DualMotorController")
         self.motorLeft = Motor_I2C(add1)
         self.motorRight = Motor_I2C(add2)
