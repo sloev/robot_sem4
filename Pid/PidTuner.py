@@ -21,11 +21,11 @@ class PidTuner():
         pGain   left     a    z
         pGain   right    s    x
         
-        dGain   left     d    c
-        dGain   right    f    v
+        iGain   left     d    c
+        iGain   right    f    v
         
-        iGain   left     g    b
-        iGain   right    h    n
+        dGain   left     g    b
+        dGain   right    h    n
            
     '''
     def __init__(self):
@@ -203,14 +203,14 @@ def main():
                 elif(c=='z'): pidtuner.lpgsub()
                 elif(c=='s'): pidtuner.rpgadd()
                 elif(c=='x'): pidtuner.rpgsub()
-                elif(c=='d'): pidtuner.ldgadd()
-                elif(c=='c'): pidtuner.ldgsub()
-                elif(c=='f'): pidtuner.rdgadd()
-                elif(c=='v'): pidtuner.rdgsub()
-                elif(c=='g'): pidtuner.ligadd()
-                elif(c=='b'): pidtuner.ligsub()
-                elif(c=='h'): pidtuner.rigadd()
-                elif(c=='n'): pidtuner.rigsub()
+                elif(c=='d'): pidtuner.ligadd()
+                elif(c=='c'): pidtuner.ligsub()
+                elif(c=='f'): pidtuner.rigadd()
+                elif(c=='v'): pidtuner.rigsub()
+                elif(c=='g'): pidtuner.ldgadd()
+                elif(c=='b'): pidtuner.ldgsub()
+                elif(c=='h'): pidtuner.rdgadd()
+                elif(c=='n'): pidtuner.rdgsub()
                 elif(c=='q'): 
                     print("saved="+str(bool(pidtuner.save()))) 
                 else: # an empty line means stdin has been closed
