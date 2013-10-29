@@ -156,7 +156,7 @@ class PidTuner():
         driving straight until scenario in turn is overdone
         which means drive out of corner
         '''
-        time.sleep(1)
+        time.sleep(0.5)
         self.pid.reset()
 # 
 #         walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
