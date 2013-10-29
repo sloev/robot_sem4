@@ -230,13 +230,13 @@ class Pid():
         #print("soft cm="+str(cm))
         value=2
         if(cm < -0.5):
-            if(cm < -0.5 and cm < -2):
+            if(cm < -0.5 and cm > -2):
                 value=3
-            elif(cm < -2 and cm < -4):
+            elif(cm < -2 and cm > -4):
                 value=4  
-            elif(cm < -4 and cm < -8):
+            elif(cm < -4 and cm > -8):
                 value=5 
-            else:
+            elif(cm < -8):
                 value=6     
         return value
     
