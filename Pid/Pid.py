@@ -237,7 +237,7 @@ class Pid():
     
     def convertCmToVelocity(self,cm):
         #print("raw cm ="+str(cm))
-        cm=self.constrain(cm)
+        #cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
         if(cm < -0.5):
@@ -247,7 +247,7 @@ class Pid():
                 value=4  
             if(cm < -4 and cm > -10):
                 value=5 
-            if(cm < -10 and cm > - self.cmMax):
+            if(cm < -10 and cm > (-1*self.cmMax)):
                 value=6     
         return value
     
