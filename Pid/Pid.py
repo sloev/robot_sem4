@@ -40,7 +40,7 @@ class Pid():
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
         self.setPoint=15
-        self.cmMax=22
+        self.cmMax=25
         self.cmMin=5
         
         self.lastError=[0,0] #last error 
@@ -195,7 +195,7 @@ class Pid():
         Fetch current gain factors
     '''
     def getGainFactors(self):
-        return [self.pGain,self.dGain,self.iGain]
+        return [self.pGain,self.iGain,self.dGain]
 
             
     '''
