@@ -34,13 +34,14 @@ class Pid():
     def __init__(self,left,right,ir_sensors, dual_motors):
         self.left=left
         self.right=right
+        self.front=2
         
         self.logger = logging.getLogger('robot.pid')
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
         self.setPoint=16
-        self.cmMax=32
+        self.cmMax=25
         self.cmMin=5
         
         self.lastError=[0,0] #last error 
@@ -80,8 +81,9 @@ class Pid():
         
         walls=self.detectMissingWalls(self.sample)
         self.logger.info("walls/"+str(walls))
+        self.left
 
-        if(walls==[1,1]):
+        if(walls[self.left] ==1 and walls[self.left] ==1 ):
             pError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
             #print("currentError:"+str(currentError))            
             
@@ -112,7 +114,7 @@ class Pid():
                 msg+=" self.left "
             if(walls[self.right]==0):
                 msg+=" self.right "
-            self.logger.warning(msg)
+            self.logger.info(msg)
         self.logger.info("Doing pid DONE")
         return walls
     
@@ -147,11 +149,13 @@ class Pid():
         walls are missing
     '''
     def detectMissingWalls(self,sample):
-        walls=[1,1]
+        walls=[1,1,0]
         if(sample[self.left]>self.cmMax):
             walls[self.left]=0
         if(sample[self.right]>self.cmMax):
             walls[self.right]=0
+        if(sample[self.front]<self.setPoint):
+            walls[self.front]=1
         return walls  
       
     '''
