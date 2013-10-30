@@ -3,6 +3,8 @@ Created on Oct 30, 2013
 
 @author: johannes
 '''
+import logging
+
 
 class TurnThread():
     def __init__(self):
@@ -12,21 +14,27 @@ class TurnThread():
                        3 : self.turn180(),
                        4 : self.turnLeft()
                        }
+        self.logger=logging.getLogger("robot.TurnThread")
+        self.logger.info("TurnThread initialised")
         pass
     
     def checkForTurn(self,choice):
         self.funcDict[choice]()
         
     def turnLeft(self):
+        self.logger.info("left")
         pass
     
     def turnRight(self):
+        self.logger.info("right")
         pass
     
     def turn180(self):
+        self.logger.info("180")
         pass
     
     def goStraight(self):
+        self.logger.info("straight")
         pass
 
 def main():

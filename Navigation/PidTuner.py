@@ -75,9 +75,14 @@ class PidTuner():
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         #self.dual_motors.runInit()
         time.sleep(2)
+        
         'pid and direction'
         self.pid=Pid(self.left,self.right,self.ir_sensor, self.dual_motors)
+        
+        'wallchecker'
         self.wallChecker=WallsChecker(self.pid.getMinMax(),self.left,self.right,self.front)
+        
+        'turnThread'
         self.turnThread=TurnThread()
         
         'load gainfactors'
@@ -144,15 +149,17 @@ class PidTuner():
         try:
             self.printGains()
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
-            self.logger.info("sample:"+str(sample))   
+            
+
+            self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+            self.dual_motors.setPosition(32767, 32767)
+            self.pid.doPid(sample)
             
             self.wallChecker.checkWalls(sample)  
             self.wallChecker.compareSides()       
             
-            self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-            self.dual_motors.setPosition(32767, 32767)
-            self.pid.doPid(sample)
             #print("[walls="+str(walls)+"]")
+            'choice is fixed on straight'
             choice=1
             thread = Thread(target=self.turnThread.checkForTurn, args=(choice))
             thread.start()
