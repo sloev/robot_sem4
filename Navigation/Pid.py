@@ -94,9 +94,6 @@ class Pid():
         
         self.setMotors(controlValues)
         
-        self.logger.info("left/controlValues/%d",controlValues[self.left])
-        self.logger.info("right/controlValues/%d",controlValues[self.right])
-        
         self.logger.info("left/pError/%f",pError[self.left])
         self.logger.info("right/pError/%f",pError[self.right])
         
@@ -179,12 +176,24 @@ class Pid():
         Computes the overall error using the PID controller algorithm
     '''
     def computeControlValues(self,wheel,pError,dError):
-        value=self.pGain[wheel]*pError[wheel]
-        value+=self.dGain[wheel]*dError[wheel]
-        value+=self.iGain[wheel]*self.iError[wheel]
+        pe=self.pGain[wheel]*pError[wheel]
+        ie=self.iGain[wheel]*self.iError[wheel]
+        de=self.dGain[wheel]*dError[wheel]
+        if(wheel==self.left):
+            strwheel="left"
+        else:
+            strwheel="right"
+        self.logger.info(strwheel+"/pErrorWithGain/",str(pe))
+        
+        self.logger.info(strwheel+"/iErrorWithGain/",str(ie))
+        
+        self.logger.info(strwheel+"/dErrorWithGain/",str(de))
+        
+        value=pe+de+ie
+        self.logger.info(strwheel+"/controlValueCm/",str(value))
         value=self.convertCmToVelocity(value)
+        self.logger.info(strwheel+"/controlValueVelocity/",str(value))
         return value
-    
         
     '''
         Checks if the overall error is within a certain threshhold
