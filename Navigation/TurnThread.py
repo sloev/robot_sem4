@@ -3,7 +3,6 @@ Created on Oct 30, 2013
 
 @author: johannes
 '''
-import threading
 
 class TurnThread():
     def __init__(self):
@@ -14,16 +13,22 @@ class TurnThread():
                        4 : self.turnLeft()
                        }
         pass
+    
     def checkForTurn(self,choice):
         self.funcDict[choice]()
+        
     def turnLeft(self):
         pass
+    
     def turnRight(self):
         pass
+    
     def turn180(self):
         pass
+    
     def goStraight(self):
         pass
+
 def main():
     pass
 

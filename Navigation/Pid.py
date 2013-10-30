@@ -130,21 +130,6 @@ class Pid():
         #print("control values="+str(controlValues))
         
     '''
-        Use the input from IR-sensors to determine if any side
-        walls are missing
-    '''
-    def detectMissingWalls(self):
-        walls=[1,1,0]
-        if(self.sample[self.left]>self.cmMax):
-            walls[self.left]=0
-        if(self.sample[self.right]>self.cmMax):
-            walls[self.right]=0
-        if(self.sample[self.front]<self.setPoint):
-            walls[self.front]=1
-        self.logger.info("walls/"+str(walls))
-        return walls  
-      
-    '''
         Tunes the proportional gain
     '''
     def pTune(self,pGain):

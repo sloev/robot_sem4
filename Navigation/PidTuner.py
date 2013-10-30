@@ -8,6 +8,7 @@ from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
 from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
 from WallsChecker import WallsChecker
+from TurnThread import TurnThread
 import time
 import sys
 import select
@@ -74,10 +75,10 @@ class PidTuner():
         #self.dual_motors.runInit()
         time.sleep(2)
         'pid and direction'
-        cmMax=28
-        cmMin=5
-        self.wallChecker=WallsChecker()
         self.pid=Pid(self.left,self.right,self.ir_sensor, self.dual_motors)
+        self.wallChecker=WallsChecker(self.pid.getMinMax(),self.left,self.right,self.front)
+        self.turnThread=TurnThread()
+        
         'load gainfactors'
         gainfactors=self.pid.getGainFactors()
         self.pGain=gainfactors[0]
@@ -151,7 +152,9 @@ class PidTuner():
             self.dual_motors.setPosition(32767, 32767)
             self.pid.doPid(sample)
             #print("[walls="+str(walls)+"]")
-        
+
+            thread = Thread(target=myfunc, args=(destination_name, destination_config))
+            thread.start()
      
         except IOError as ex:
             pass
