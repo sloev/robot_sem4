@@ -13,6 +13,7 @@ class WallsChecker():
         
     def checkWalls(self,sample):
         self.lastWalls=self.walls
+        
         walls=[1,1,0]
         if(self.sample[self.left]>self.cmMax):
             walls[self.left]=0

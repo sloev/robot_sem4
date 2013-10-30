@@ -9,6 +9,7 @@ from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
 from WallsChecker import WallsChecker
 from TurnThread import TurnThread
+from threading import Thread
 import time
 import sys
 import select
@@ -152,11 +153,12 @@ class PidTuner():
             self.dual_motors.setPosition(32767, 32767)
             self.pid.doPid(sample)
             #print("[walls="+str(walls)+"]")
-
-            thread = Thread(target=myfunc, args=(destination_name, destination_config))
+            choice=1
+            thread = Thread(target=self.turnThread.checkForTurn, args=(choice))
             thread.start()
+            thread.join
      
-        except IOError as ex:
+        except IOError:
             pass
             #print("fuck you error\n"+str(ex))
             
