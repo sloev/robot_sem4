@@ -68,7 +68,7 @@ class TMC222Status(object):
         shaft = (data >> 5-1) & 1
         ACC = (data >> 1-1) & 1111
         
-        if(self.accShape==0):
+        if(accShape==0):
             string += "|Robot is accelerating|"+"\t"
         else: 
             string +="|Robot is decelerating|"+"\t"
