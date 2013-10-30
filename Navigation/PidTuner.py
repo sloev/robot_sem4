@@ -150,26 +150,32 @@ class PidTuner():
             self.printGains()
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
             
-
             self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
             self.dual_motors.setPosition(32767, 32767)
             self.pid.doPid(sample)
             
-            self.wallChecker.checkWalls(sample)  
-            self.wallChecker.compareSides()       
-            
+            walls=self.wallChecker.checkWalls(sample)  
+            debounce=self.wallChecker.compareSides()   
+                
+            choice=self.makeChoice(walls, debounce)
             #print("[walls="+str(walls)+"]")
             'choice is fixed on straight'
-            choice=1
-            thread = Thread(target=self.turnThread.checkForTurn, args=(choice))
+            thread = Thread(target=self.turnThread.checkForTurn, args=[choice])
             thread.start()
             thread.join
      
         except IOError:
             pass
-            #print("fuck you error\n"+str(ex))
-            
-   
+
+    def makeChoice(self,walls,debounce):
+        if(debounce):
+            if(walls[self.left]==0):
+                return 4
+            elif(walls[self.right]==0):
+                return 2
+        else:
+            return 0
+        
         
     def stop(self):
         self.dual_motors.softStop()

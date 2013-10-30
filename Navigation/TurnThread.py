@@ -4,29 +4,34 @@ Created on Oct 30, 2013
 @author: johannes
 '''
 import logging
-
+import time
 
 class TurnThread():
     def __init__(self):
         self.funcDict={
-                       1 : self.goStraight(),
-                       2 : self.turnRight(),
-                       3 : self.turn180(),
-                       4 : self.turnLeft()
+                       1 : self.goStraight,
+                       2 : self.turnRight,
+                       3 : self.turn180,
+                       4 : self.turnLeft
                        }
         self.logger=logging.getLogger("robot.TurnThread")
         self.logger.info("TurnThread initialised")
         pass
     
     def checkForTurn(self,choice):
-        self.funcDict[choice]()
-        
+        try:
+            self.funcDict[choice]()
+        except KeyError:
+            pass
+            
     def turnLeft(self):
         self.logger.info("left")
+        self.oldTurn(0)
         pass
     
     def turnRight(self):
         self.logger.info("right")
+        self.oldTurn(1)
         pass
     
     def turn180(self):
@@ -36,16 +41,8 @@ class TurnThread():
     def goStraight(self):
         self.logger.info("straight")
         pass
-
-def main():
-    pass
-
-if __name__== '__main__':
-    main()
-
-        
-'''
- def turn(self,direction):
+    
+    def oldTurn(self,direction):
         #print("turning wheel="+str(direction))
         time.sleep(1)
         self.dual_motors.softStop()
@@ -58,13 +55,9 @@ if __name__== '__main__':
 
         time.sleep(0.5)
         self.pid.reset()
-# 
-#         walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-#         while(walls==oldWalls):
-#             try:
-#                 walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-#             except IOError:
-#                 print("got ioerror in sampling ir sensors")
-#             time.sleep(0.1)
-        print("turning finnished")
-'''
+
+def main():
+    pass
+
+if __name__== '__main__':
+    main()
