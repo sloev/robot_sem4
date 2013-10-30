@@ -19,6 +19,7 @@ Created on Oct 2, 2013
 
 
 import smbus
+import logging
 
 class PositionStatus():
    
@@ -26,6 +27,7 @@ class PositionStatus():
     'Constructor'
     def __init__(self, f):
         self.bus = smbus.SMBus(1)
+        self.logger = logging.getLogger("robot.PosotionStatus")
         self.setData(f)
      
     'Makes the object callable'    
