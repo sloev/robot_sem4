@@ -19,11 +19,24 @@ Created on Oct 1, 2013
 
 import smbus
 import logging
+import os
 
 class TMC222Status(object):
 
     '''Constructor'''    
     def __init__(self, f):
+        try:
+            os.remove("/home/pi/robot_sem4/robot.log")
+        except OSError:
+            pass
+        
+        fh = logging.FileHandler('robot.log')
+        fh.setLevel(logging.INFO)
+
+        formatter = logging.Formatter('%(asctime)s/%(name)s/%(message)s')
+        fh.setFormatter(formatter)
+        self.logger.addHandler(fh)
+            
         self.f = f
         self.bus = smbus.SMBus(1)
         self.logger = logging.getLogger("robot.TMC222Status")
