@@ -26,7 +26,6 @@ class TMC222Status(object):
         self.bus = smbus.SMBus(1)
         print "\n"
         print "Daniel Machon's awesome decorator initialized!"
-        self.bus = smbus.SMBus(1)
         self.f = f
         self.setData(f)
         print "Decorating function " + self.f.__name__ + "\n"
@@ -35,55 +34,54 @@ class TMC222Status(object):
     '''Called after the class is instantiated
        Makes the object callable'''        
     def __call__(self):
+        self.getMotorStatus(self.left)
+        self.getMotorStatus(self.right)
+        
+        
+    def getMotorStatus(self, data):
         string =""
-        string += "|"+str(len(self.data)) + " bytes received from slave located at "+self.slaveAdd+"|"+"\n"
-        string += "|Bytes read from register " + self.add+"|"+"\n"
-        string += "|IRun is " + str((self.iRun_iHold & 0xF0) >> 4) + " " + "and IHold is " + str(self.iRun_iHold & 0x0F)+"|"+"\t"
-        string +=  "|VMax is " + str((self.vMax_vMin & 0xF0) >> 4) + " " + "and VMin is " + str(self.vMax_vMin & 0x0F)+"|"+""
+        string += "|"+str(len(self.data)) + " bytes received from slave located at "+data[0]+"|"+"\n"
+        string += "|Bytes read from register " + str(hex(data[1])) +"|"+"\n"
+        string += "|IRun is " + str((data[2] & 0xF0) >> 4) + " " + "and IHold is " + (str(hex(data[1])) & 0x0F)+"|"+"\t"
+        string +=  "|VMax is " + str((data[3] & 0xF0) >> 4) + " " + "and VMin is " + str(data[3] & 0x0F)+"|"+""
         print string
-        self.getStat1(self.stat1)
-        self.getStat2(self.stat2)
-        self.getStat3(self.stat3)
+        self.getStat1(data[4])
+        self.getStat2(data[5])
+        self.getStat3(data[6])
         
         
         
     '''Retrieve data from the original function'''    
     def setData(self, f):
         self.data = f(self)
-        self.slaveAdd = str(hex(self.data[0]))
-        self.add = str(hex(self.data[1]))
-        self.iRun_iHold = self.data[2]
-        self.vMax_vMin = self.data[3]
-        self.stat1 = self.data[4]
-        self.stat2 = self.data[5]
-        self.stat3 = self.data[6]
-        self.NA1 = str(self.data[7])
-        self.NA2 = str(self.data[8])
+        self.left = self.data[0]
+        self.right = self.data[1]
+        
         
      
     '''Manipulate data from the stat1 byte'''    
     def getStat1(self, byte):
         string = ""
         data = byte
-        self.accShape = (data >> (8-1)) & 1
-        self.stepMode = (data >> 7-1) & 11
-        self.shaft = (data >> 5-1) & 1
-        self.ACC = (data >> 1-1) & 1111
+        accShape = (data >> (8-1)) & 1
+        stepMode = (data >> 7-1) & 11
+        shaft = (data >> 5-1) & 1
+        ACC = (data >> 1-1) & 1111
         
         if(self.accShape==0):
             string += "|Robot is accelerating|"+"\t"
         else: 
             string +="|Robot is decelerating|"+"\t"
             
-        if(self.stepMode==00):
+        if(stepMode==00):
             string += "|Stepmode is 1/2 steps|"+"\t"
-        elif(self.stepMode==01):
+        elif(stepMode==01):
             string += "|Stepmode is 1/4 steps|"+"\t"
-        elif(self.stepMode==10):
+        elif(stepMode==10):
             string += "|Stepmode is 1/8 steps|"+"\t"
-        elif(self.stepMode==11):
+        elif(stepMode==11):
             string += "|Stepmode is 1/16 steps|"+"\t"    
-        if(self.shaft==0):
+        if(shaft==0):
             string += "|Robot is moving forward|"+"\n"
         else:
             string += "|Robot is moving backwards|"+"\n"
@@ -94,45 +92,45 @@ class TMC222Status(object):
     '''Manipulate data from the stat2 byte'''        
     def getStat2(self, byte):
         string = ""
-        self.data = byte
-        self.vddReset = (self.data >> (8-1)) & 1
-        self.stepLoss = (self.data >> (7-1)) & 1
-        self.EIDef = (self.data >> (6-1)) & 1
-        self.UV2 = (self.data >> (5-1)) & 1
-        self.TSD = (self.data >> (4-1)) & 1
-        self.TW = (self.data >> (3-1)) & 1
-        self.Tinfo = (self.data >> (2-1)) & 11
+        data = byte
+        vddReset = (data >> (8-1)) & 1
+        stepLoss = (data >> (7-1)) & 1
+        EIDef = (data >> (6-1)) & 1
+        UV2 = (data >> (5-1)) & 1
+        TSD = (data >> (4-1)) & 1
+        TW = (data >> (3-1)) & 1
+        Tinfo = (data >> (2-1)) & 11
         
-        if(self.vddReset==1):
+        if(vddReset==1):
             string += "|VdReset=1|"+"\t"
         else:
             string += "|VddReset=0|"+"\t"
-        if(self.stepLoss==1):
+        if(stepLoss==1):
             string += "|Steploss detected!|"+"\t"
         else:
             string += "|No steploss|"+"\t"
-        if(self.EIDef==1):
+        if(EIDef==1):
             string += "|Electrical defect detected!|"+"\n"
         else:
             string += "|No electrical defect|"+"\n"
-        if(self.UV2==1):
+        if(UV2==1):
             string += "|Under voltage detected!|"+"\t"
         else:
             string += "|Voltage level OK|"+"\t"
-        if(self.TSD==1):
+        if(TSD==1):
             string += "|Temperature warning! (Above 155)|"+"\t"
         else:
-            if(self.TW==1):
+            if(TW==1):
                 string += "|Temprature warning (above 145)|"+"\n"
             else:
                 string+= "|Temperature OK|"+"\n"
-        if(self.Tinfo==0):
+        if(Tinfo==0):
             string += "|Chip temperature is Normal|"+"\t"
-        elif(self.Tinfo==1):
+        elif(Tinfo==1):
             string += "|Chip temperature is low (warning)|"+"\t"
-        elif(self.Tinfo==2):
+        elif(Tinfo==2):
             string += "|Chip temperature is high (warning)|"+"\t"
-        elif(self.Tinfo==3):
+        elif(Tinfo==3):
             string += "|Chip temperature TOO HIGH (shutdown)|"+"\n"
         
         print string    
@@ -143,42 +141,42 @@ class TMC222Status(object):
     '''Manipulate data from the stat3 byte'''    
     def getStat3(self, byte):
         string = ""
-        self.data = byte
-        self.motion = (self.data >> (6-1)) & 1
-        self.ESW = (self.data >> (5-1)) & 1
-        self.OVC1 = (self.data >> (4-1)) & 1
-        self.OVC2 = (self.data >> (3-1)) & 1
-        self.CPFail = (self.data >> (1-1)) & 1
+        data = byte
+        motion = (data >> (6-1)) & 1
+        ESW = (data >> (5-1)) & 1
+        OVC1 = (data >> (4-1)) & 1
+        OVC2 = (data >> (3-1)) & 1
+        CPFail = (data >> (1-1)) & 1
         
-        if(self.motion==0):
+        if(motion==0):
             string+= "|Robot has reached its destination!|"+"\t"
-        elif(self.motion==1):
+        elif(motion==1):
             string+= "|Positive Acceleration; Velocity > 0"+"\t"
-        elif(self.motion==2):
+        elif(motion==2):
             string+= "|Negative Acceleration; Velocity > 0|"
-        elif(self.motion==3):
+        elif(motion==3):
             string+= "|Acceleration = 0 Velocity = Max Velocity|"
-        elif(self.motion==4):
+        elif(motion==4):
             string+= "|Actual Position /= Target Position; Velocity = 0|"
-        elif(self.motion==5):
+        elif(motion==5):
             string+= "|Positive Acceleration; Velocity < 0|"
-        elif(self.motion==6):
+        elif(motion==6):
             string+= "|Positive Acceleration; Velocity < 0|"
-        elif(self.motion==7):
+        elif(motion==7):
             string+= "|Acceleration = 0 Velocity = maximum neg. Velocity|"
-        if(self.ESW==1):
+        if(ESW==1):
             string+= "|External switch open|"+"\n"
         else:
             string+= "|External switch closed|"+"\n"
-        if(self.OVC1==1):
+        if(OVC1==1):
             string+= "|Over current in coil#1|"+"\t"
         else:
             string+= "|Coil#1 OK|"+"\t"
-        if(self.OVC2==1):
+        if(OVC2==1):
             string+= "|Over current in coil#2|"+"\t"
         else:
             string+= "|Coil#2 OK|"+"\t"
-        if(self.CPFail==1):
+        if(CPFail==1):
             string+= "|Charge pump failure|"+"\n"
         else:
             string+= "|Charge pump OK|"+"\n"
@@ -189,7 +187,7 @@ class TMC222Status(object):
 '''Example of use'''        
 @TMC222Status
 def getFullStatus1(self):
-    r = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF]
+    r = [(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF),(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF)]
     return r
    
         
