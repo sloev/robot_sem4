@@ -13,6 +13,15 @@ class WallsChecker():
         
     def checkWalls(self,sample):
         self.lastWalls=self.walls
+        walls=[1,1,0]
+        if(self.sample[self.left]>self.cmMax):
+            walls[self.left]=0
+        if(self.sample[self.right]>self.cmMax):
+            walls[self.right]=0
+        if(self.sample[self.front]<self.setPoint):
+            walls[self.front]=1
+        self.logger.info("walls/"+str(walls))
+        
         return self.walls
     
     def compareSides(self):
@@ -23,26 +32,3 @@ class WallsChecker():
      
 if __name__ == '__main__':
     pass
-
-
-    def sampleDistances(self):
-        self.sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
-        self.logger.info("sample:"+str(self.sample))
-        #print("sample="+str(self.sample))
-        
-        
-
-
-
-    def detectMissingWalls(self):
-        self.sampleDistances()
-        walls=[1,1,0]
-        if(self.sample[self.left]>self.cmMax):
-            walls[self.left]=0
-        if(self.sample[self.right]>self.cmMax):
-            walls[self.right]=0
-        if(self.sample[self.front]<self.setPoint):
-            walls[self.front]=1
-        self.logger.info("walls/"+str(walls))
-        return walls  
-      
