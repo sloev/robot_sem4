@@ -20,6 +20,7 @@ import logging
 import cPickle as pickle
 import os.path
 
+
 Vin1                                =   0x08
 Vin2                                =   0x09
 Vin3                                =   0x0A
@@ -62,6 +63,9 @@ class Pid():
             self.logger.info("gainFactors loaded from pickle")
         self.logger.info("Initializing Pid DONE")
         
+    def getMinMax(self):
+        return [self.cmMin,self.cmMax]
+        
     '''
         Resets the integral error
     '''
@@ -74,59 +78,35 @@ class Pid():
         calculates errors according to setpoint
         sends calculated new velocities to motors
     '''    
-    def doPid(self):
-
+    def doPid(self,sample):
+        self.sample=sample
         self.logger.info("Doing pid")
-        self.sampleDistances()
-        
-        walls=self.detectMissingWalls(self.sample)
-        self.logger.info("walls/"+str(walls))
-        self.left
 
-        if(walls[self.left] == 1 and walls[self.right] ==1 ):
-            pError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
-            #print("currentError:"+str(currentError))            
-            
-            dError=[pError[self.left]-self.lastError[self.left],pError[self.right]-self.lastError[self.right]]
-            
-            controlValues=[self.computeControlValues(self.left,pError,dError),self.computeControlValues(self.right,pError,dError)]
-            
-            self.lastError=pError
-            self.iError=[pError[self.left]+self.iError[self.left] , pError[self.right]+self.iError[self.right]]
-            
-            self.setMotors(controlValues)
-            
-            self.logger.info("left/controlValues/%d",controlValues[self.left])
-            self.logger.info("right/controlValues/%d",controlValues[self.right])
-            
-            self.logger.info("left/pError/%f",pError[self.left])
-            self.logger.info("right/pError/%f",pError[self.right])
-            
-            self.logger.info("left/iError/%f",self.iError[self.left])
-            self.logger.info("right/iError/%f",self.iError[self.right])
-            
-            self.logger.info("left/dError/%f",dError[self.left])
-            self.logger.info("right/dError/%f",dError[self.right])
- 
-        else:
-            msg="walls missing at:"
-            if(walls[self.left]==0):
-                msg+=" self.left "
-            if(walls[self.right]==0):
-                msg+=" self.right "
-            self.logger.info(msg)
-        self.logger.info("Doing pid DONE")
-        return walls
-    
-    
-    '''
-        Get input from the three IR-sensors
-    '''
-    def sampleDistances(self):
-        self.sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
-        self.logger.info("sample:"+str(self.sample))
-        #print("sample="+str(self.sample))
+        pError=[self.setPoint-self.sample[self.right],self.setPoint-self.sample[self.left]] 
+        #print("currentError:"+str(currentError))            
         
+        dError=[pError[self.left]-self.lastError[self.left],pError[self.right]-self.lastError[self.right]]
+        
+        controlValues=[self.computeControlValues(self.left,pError,dError),self.computeControlValues(self.right,pError,dError)]
+        
+        self.lastError=pError
+        self.iError=[pError[self.left]+self.iError[self.left] , pError[self.right]+self.iError[self.right]]
+        
+        self.setMotors(controlValues)
+        
+        self.logger.info("left/controlValues/%d",controlValues[self.left])
+        self.logger.info("right/controlValues/%d",controlValues[self.right])
+        
+        self.logger.info("left/pError/%f",pError[self.left])
+        self.logger.info("right/pError/%f",pError[self.right])
+        
+        self.logger.info("left/iError/%f",self.iError[self.left])
+        self.logger.info("right/iError/%f",self.iError[self.right])
+        
+        self.logger.info("left/dError/%f",dError[self.left])
+        self.logger.info("right/dError/%f",dError[self.right])
+ 
+        self.logger.info("Doing pid DONE")    
         
     '''
         Set the motor parameters
@@ -153,14 +133,15 @@ class Pid():
         Use the input from IR-sensors to determine if any side
         walls are missing
     '''
-    def detectMissingWalls(self,sample):
+    def detectMissingWalls(self):
         walls=[1,1,0]
-        if(sample[self.left]>self.cmMax):
+        if(self.sample[self.left]>self.cmMax):
             walls[self.left]=0
-        if(sample[self.right]>self.cmMax):
+        if(self.sample[self.right]>self.cmMax):
             walls[self.right]=0
-        if(sample[self.front]<self.setPoint):
+        if(self.sample[self.front]<self.setPoint):
             walls[self.front]=1
+        self.logger.info("walls/"+str(walls))
         return walls  
       
     '''

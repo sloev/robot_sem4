@@ -7,10 +7,18 @@ import logging
 from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
 from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
+from WallsChecker import WallsChecker
 import time
 import sys
 import select
 import os
+
+Vin1                                =   0x08
+Vin2                                =   0x09
+Vin3                                =   0x0A
+
+sensorChannels=[Vin1,Vin2,Vin3]
+
 
 class PidTuner():
     '''
@@ -36,6 +44,7 @@ class PidTuner():
         direction=1
         self.left=not direction
         self.right=direction
+        self.front=2
         
         self.tuneFactor=0.01
         try:
@@ -65,6 +74,9 @@ class PidTuner():
         #self.dual_motors.runInit()
         time.sleep(2)
         'pid and direction'
+        cmMax=28
+        cmMin=5
+        self.wallChecker=WallsChecker()
         self.pid=Pid(self.left,self.right,self.ir_sensor, self.dual_motors)
         'load gainfactors'
         gainfactors=self.pid.getGainFactors()
@@ -129,44 +141,23 @@ class PidTuner():
     def doPid(self):
         try:
             self.printGains()
+            sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
+            self.logger.info("sample:"+str(sample))   
+            
+            self.wallChecker.checkWalls(sample)  
+            self.wallChecker.compareSides()       
+            
             self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
             self.dual_motors.setPosition(32767, 32767)
-            walls=self.pid.doPid()
+            self.pid.doPid(sample)
             #print("[walls="+str(walls)+"]")
         
-            if(walls[self.left]==0):
-                self.turn(self.right)
-            elif(walls[self.right]==0):
-                self.turn(self.left)                
+     
         except IOError as ex:
             pass
             #print("fuck you error\n"+str(ex))
             
-    def turn(self,direction):
-        #print("turning wheel="+str(direction))
-        time.sleep(1)
-        self.dual_motors.softStop()
-        time.sleep(0.3)
-        self.dual_motors.turn90(direction, 2)
-        time.sleep(0.8)
-        
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-        self.dual_motors.setPosition(32767, 32767)
-        '''
-        driving straight until scenario in turn is overdone
-        which means drive out of corner
-        '''
-        time.sleep(0.5)
-        self.pid.reset()
-# 
-#         walls=oldWalls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-#         while(walls==oldWalls):
-#             try:
-#                 walls=self.pid.detectMissingWalls(self.pid.sampleDistances())
-#             except IOError:
-#                 print("got ioerror in sampling ir sensors")
-#             time.sleep(0.1)
-        print("turning finnished")
+   
         
     def stop(self):
         self.dual_motors.softStop()
