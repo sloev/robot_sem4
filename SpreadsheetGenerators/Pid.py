@@ -32,7 +32,7 @@ class Pid():
                        'right/dError/'
                        ]
 
-        self.allOut="leftPGE\trightPGE\tleftIGE\trightIGE\tleftDGE\trightDGE\tleftValCm\trightValCm\tleftValVel\trightValVel\tleftPE\trightPE\tleftIE\trightIE\tleftDE\trightDE\n"
+        self.allOut="seconds\tleftPGE\trightPGE\tleftIGE\trightIGE\tleftDGE\trightDGE\tleftValCm\trightValCm\tleftValVel\trightValVel\tleftPE\trightPE\tleftIE\trightIE\tleftDE\trightDE\n"
 
         self.functions=[
                         self.start,
@@ -45,7 +45,7 @@ class Pid():
                         self.same,
                         self.same,
                         self.same,
-                        self.same,
+                        self.start,
                         self.same,
                         self.same,
                         self.same,
@@ -64,10 +64,11 @@ class Pid():
             foo.write(self.allOut)
         finally:
             foo.close    
+            
     def start(self,found):
         if found: 
             index=found.span()[0]
-            thisDate=self.currentString[:index]
+            thisDate=self.currentString[:22]
             dt = datetime.strptime(thisDate, "%Y-%m-%d %H:%M:%S,%f")
                         
             if(round(int(self.startTime.strftime('%s')),3)<1):
@@ -75,17 +76,23 @@ class Pid():
                 currentTime=str(0)
             else:
                 delta=(dt-self.startTime).total_seconds()
-                seconds=round(delta,3)
-                currentTime=str(seconds)
-            print(currentTime)
-            
+                seconds=round(delta,5)
+                currentTime=str(seconds)            
             index=found.span()[1]
             perror=self.currentString[index:len(self.currentString)-2]    
                         
             self.allOut=''.join([self.allOut,currentTime+"\t"+perror]) 
         else: 
-            pass          
-
+            pass  
+                
+    def same(self,found):
+        if found: 
+            index=found.span()[1]
+            perror=self.currentString[index:len(self.currentString)-2]                
+            self.allOut='\t'.join([self.allOut,perror]) 
+        else: 
+            pass
+        
     def finnish(self,found):
         if found: 
             index=found.span()[1]
@@ -94,14 +101,6 @@ class Pid():
         else: 
             pass
         
-    def same(self,found):
-        if found: 
-            index=found.span()[1]
-            perror=self.currentString[index:len(self.currentString)-2]                
-            self.allOut='\t'.join([self.allOut,perror]) 
-        else: 
-            pass
-
 def main():
     pidParser=Pid(sys.argv[1])
     pidParser()
