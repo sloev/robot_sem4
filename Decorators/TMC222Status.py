@@ -42,7 +42,7 @@ class TMC222Status(object):
             
         self.f = f
  #       self.bus = smbus.SMBus(1)
-        self.logger = logging.getLogger("robot.TMC222Status")
+     #   self.logger = logging.getLogger("robot.TMC222Status")
         self.logger.info("TMC222Status Decorator initialized!")
         self.logger.info("Decorating function " + self.f.__name__ + "\n")
         self.setData(f)
