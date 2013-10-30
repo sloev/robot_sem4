@@ -154,6 +154,7 @@ class PidTuner():
             self.dual_motors.setPosition(32767, 32767)
             self.pid.doPid(sample)
             
+            
             walls=self.wallChecker.checkWalls(sample)  
             debounce=self.wallChecker.compareSides()   
                 
