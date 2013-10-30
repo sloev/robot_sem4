@@ -17,7 +17,7 @@ Created on Oct 1, 2013
 'getFullStatus1()                                                  '
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-#import smbus
+import smbus
 import logging
 import os
 
@@ -25,24 +25,24 @@ class TMC222Status(object):
 
     '''Constructor'''    
     def __init__(self, f):
-        try:
-            os.remove("/home/pi/robot_sem4/robot.log")
-        except OSError:
-            pass
-        
-        self.logger = logging.getLogger('tmc222status')
-        self.logger.setLevel(logging.INFO)
-        
-        fh = logging.FileHandler('tmc222status.log')
-        fh.setLevel(logging.INFO)
-
-        formatter = logging.Formatter('%(asctime)s/%(name)s/%(message)s')
-        fh.setFormatter(formatter)
-        self.logger.addHandler(fh)
-            
+#         try:
+#             os.remove("/home/pi/robot_sem4/robot.log")
+#         except OSError:
+#             pass
+#         
+#         self.logger = logging.getLogger('tmc222status')
+#         self.logger.setLevel(logging.INFO)
+#         
+#         fh = logging.FileHandler('tmc222status.log')
+#         fh.setLevel(logging.INFO)
+# 
+#         formatter = logging.Formatter('%(asctime)s/%(name)s/%(message)s')
+#         fh.setFormatter(formatter)
+#         self.logger.addHandler(fh)
+#             
         self.f = f
- #       self.bus = smbus.SMBus(1)
-     #   self.logger = logging.getLogger("robot.TMC222Status")
+        self.bus = smbus.SMBus(1)
+        self.logger = logging.getLogger("robot.TMC222Status")
         self.logger.info("TMC222Status Decorator initialized!")
         self.logger.info("Decorating function " + self.f.__name__ + "\n")
         self.setData(f)
