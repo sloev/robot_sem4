@@ -42,7 +42,7 @@ class TMC222Status(object):
         string =""
         string += "|"+str(len(self.data)) + " bytes received from slave located at "+str(data[0])+"|"+"\n"
         string += "|Bytes read from register " + str(hex(data[1])) +"|"+"\n"
-        string += "|IRun is " + str((data[2] & 0xF0) >> 4) + " " + "and IHold is " + str(hex(data[1]) & 0x0F)+"|"+"\t"
+        string += "|IRun is " + str((data[2] & 0xF0) >> 4) + " " + "and IHold is " + str(data[1] & 0x0F)+"|"+"\t"
         string +=  "|VMax is " + str((data[3] & 0xF0) >> 4) + " " + "and VMin is " + str(data[3] & 0x0F)+"|"+""
         self.logger.info(string)
         self.getStat1(data[4])
