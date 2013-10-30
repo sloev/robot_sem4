@@ -18,17 +18,18 @@ Created on Oct 1, 2013
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 import smbus
+import logging
 
 class TMC222Status(object):
 
     '''Constructor'''    
     def __init__(self, f):
         self.bus = smbus.SMBus(1)
-        print "\n"
-        print "Daniel Machon's awesome decorator initialized!"
+        self.logger = logging.getLogger("robot.TMC222Status")
+        self.logger.info("TMC222Status Decorator initialized!")
+        self.logger.info("Decorating function " + self.f.__name__ + "\n")
         self.f = f
         self.setData(f)
-        print "Decorating function " + self.f.__name__ + "\n"
 
 
     '''Called after the class is instantiated
@@ -44,7 +45,7 @@ class TMC222Status(object):
         string += "|Bytes read from register " + str(hex(data[1])) +"|"+"\n"
         string += "|IRun is " + str((data[2] & 0xF0) >> 4) + " " + "and IHold is " + (str(hex(data[1])) & 0x0F)+"|"+"\t"
         string +=  "|VMax is " + str((data[3] & 0xF0) >> 4) + " " + "and VMin is " + str(data[3] & 0x0F)+"|"+""
-        print string
+        self.logger.info(string)
         self.getStat1(data[4])
         self.getStat2(data[5])
         self.getStat3(data[6])
@@ -86,7 +87,7 @@ class TMC222Status(object):
         else:
             string += "|Robot is moving backwards|"+"\n"
             
-        print string
+        self.logger.info(string)
         
             
     '''Manipulate data from the stat2 byte'''        
@@ -133,7 +134,7 @@ class TMC222Status(object):
         elif(Tinfo==3):
             string += "|Chip temperature TOO HIGH (shutdown)|"+"\n"
         
-        print string    
+        self.logger.info(string)   
             
         
                        
@@ -181,7 +182,7 @@ class TMC222Status(object):
         else:
             string+= "|Charge pump OK|"+"\n"
             
-        print string
+        self.logger.info(string)
         
         
 '''Example of use'''        
