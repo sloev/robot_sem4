@@ -30,7 +30,7 @@ class TMC222Status(object):
         except OSError:
             pass
         
-        fh = logging.FileHandler('robot.log')
+        fh = logging.FileHandler('tmc222status.log')
         fh.setLevel(logging.INFO)
 
         formatter = logging.Formatter('%(asctime)s/%(name)s/%(message)s')
