@@ -179,9 +179,7 @@ class PidTuner():
         
     def stop(self):
         self.dual_motors.softStop()
-
-            
-            
+   
 def main():
 
     pidtuner=PidTuner()
