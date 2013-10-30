@@ -158,8 +158,7 @@ class PidTuner():
             debounce=self.wallChecker.compareSides()   
                 
             choice=self.makeChoice(walls, debounce)
-            #print("[walls="+str(walls)+"]")
-            'choice is fixed on straight'
+
             thread = Thread(target=self.turnThread.checkForTurn, args=[choice])
             thread.start()
             thread.join
