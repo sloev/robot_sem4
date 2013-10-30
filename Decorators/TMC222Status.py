@@ -17,7 +17,7 @@ Created on Oct 1, 2013
 'getFullStatus1()                                                  '
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-import smbus
+#import smbus
 import logging
 import os
 
@@ -30,8 +30,8 @@ class TMC222Status(object):
         except OSError:
             pass
         
-        logger = logging.getLogger('tmc222status')
-        logger.setLevel(logging.INFO)
+        self.logger = logging.getLogger('tmc222status')
+        self.logger.setLevel(logging.INFO)
         
         fh = logging.FileHandler('tmc222status.log')
         fh.setLevel(logging.INFO)
@@ -41,7 +41,7 @@ class TMC222Status(object):
         self.logger.addHandler(fh)
             
         self.f = f
-        self.bus = smbus.SMBus(1)
+ #       self.bus = smbus.SMBus(1)
         self.logger = logging.getLogger("robot.TMC222Status")
         self.logger.info("TMC222Status Decorator initialized!")
         self.logger.info("Decorating function " + self.f.__name__ + "\n")
