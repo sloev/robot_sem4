@@ -125,7 +125,7 @@ class Pid():
 #             self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
 #             self.logger.info("/setMotors/frontSensorIgnored/"+str(controlValues))
         self.dual_motors.setMotorParams(self.left, self.right, controlValues[self.left], controlValues[self.right])
-        self.logger.info("/setMotors/frontSensorIgnored/"+str(controlValues))
+        self.logger.info("setMotors/frontSensorIgnored/"+str(controlValues))
 
         #print("control values="+str(controlValues))
         
@@ -224,11 +224,12 @@ class Pid():
         gainFactors=[self.pGain,self.dGain,self.iGain]
         try:
             pickle.dump(gainFactors, open("PidGainFactors.p", "wb"), protocol=-1)
+            self.logger.info("pickleGainFactorsSucces/true")
             return 1
         except IOError:
+            self.logger.info("pickleGainFactorsSucces/false")
             pass
         return 0     
-     
       
     '''
         Deseriallizes gain-factors
@@ -240,6 +241,7 @@ class Pid():
                 returnValue = pickle.load(open("PidGainFactors.p", "rb"))
             except EOFError:
                 print("Error unpickling pid")
+        self.logger.info("unpickleGainFactorsSucces/"+str(returnValue))
         return returnValue
         
 def main():
