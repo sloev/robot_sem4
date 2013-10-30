@@ -7,11 +7,10 @@ import re
 import sys
 
 class Pid():
-    def __init__(self,file):
-        self.filename=file
+    def __init__(self,filename):
+        self.filename=filename
         self.foo=open(file,"r")
         self.strings = self.foo
-        #left file, right file
         self.patterns=[
                        'left/pErrorWithGain/',
                        'right/pErrorWithGain/',
@@ -30,15 +29,7 @@ class Pid():
                        'left/dError/',
                        'right/dError/'
                        ]
-#         self.leftPErrors=""
-#         self.rightPErrors=""
-#         
-#         self.leftIErrors=""
-#         self.rightIErrors=""
-#         
-#         self.leftDErrors=""
-#         self.rightDErrors=""
-#         
+
         self.allOut="leftPGE\trightPGE\tleftIGE\trightIGE\tleftDGE\trightDGE\tleftValCm\trightValCm\tleftValVel\trightValVel\tleftPE\trightPE\tleftIE\trightIE\tleftDE\trightDE\n"
 
         self.functions=[
@@ -65,12 +56,12 @@ class Pid():
             self.currentString=s
             for pattern,case in zip(self.patterns,self.functions):
                 case(re.search(pattern,s))
-        f1 = open(str(self.filename)+"allout.txt", "w")
+        foo = open(str(self.filename)+"allout.txt", "w")
 
         try:
-            f1.write(self.allOut)
+            foo.write(self.allOut)
         finally:
-            f1.close    
+            foo.close    
             
     def leftPGE(self,found):
         if found: 
@@ -194,6 +185,6 @@ class Pid():
 def main():
     pidParser=Pid(sys.argv[1])
     pidParser()
-    pass
+
 if __name__ == '__main__':
     main()
