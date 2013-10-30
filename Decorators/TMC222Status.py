@@ -30,6 +30,9 @@ class TMC222Status(object):
         except OSError:
             pass
         
+        logger = logging.getLogger('tmc222status')
+        logger.setLevel(logging.INFO)
+        
         fh = logging.FileHandler('tmc222status.log')
         fh.setLevel(logging.INFO)
 
