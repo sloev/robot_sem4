@@ -5,10 +5,11 @@ Created on Oct 30, 2013
 '''
 import logging
 class WallsChecker():
-    def __init__(self,minMax,left,right,front):
+    def __init__(self,minMaxSetpoint,left,right,front):
         self.logger=logging.getLogger("robot.wallsChecker")
-        self.min=minMax[0]
-        self.max=minMax[1]
+        self.min=minMaxSetpoint[0]
+        self.max=minMaxSetpoint[1]
+        self.setpoint=minMaxSetpoint[2]
         self.left=left
         self.right=right
         self.front=front
@@ -18,9 +19,9 @@ class WallsChecker():
         self.lastWalls=self.walls
         
         self.walls=[1,1,0]
-        if(sample[self.left]>self.cmMax):
+        if(sample[self.left]>self.min):
             self.walls[self.left]=0
-        if(sample[self.right]>self.cmMax):
+        if(sample[self.right]>self.max):
             self.walls[self.right]=0
         if(sample[self.front]<self.setPoint):
             self.walls[self.front]=1

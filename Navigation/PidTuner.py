@@ -80,7 +80,7 @@ class PidTuner():
         self.pid=Pid(self.left,self.right,self.ir_sensors, self.dual_motors)
         
         'wallchecker'
-        self.wallChecker=WallsChecker(self.pid.getMinMax(),self.left,self.right,self.front)
+        self.wallChecker=WallsChecker(self.pid.getMinMaxSetpoint(),self.left,self.right,self.front)
         
         'turnThread'
         self.turnThread=TurnThread()

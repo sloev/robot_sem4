@@ -63,8 +63,8 @@ class Pid():
             self.logger.info("gainFactors loaded from pickle")
         self.logger.info("Initializing Pid DONE")
         
-    def getMinMax(self):
-        return [self.cmMin,self.cmMax]
+    def getMinMaxSetpoint(self):
+        return [self.cmMin,self.cmMax,self.setPoint]
         
     '''
         Resets the integral error
