@@ -77,7 +77,7 @@ class PidTuner():
         time.sleep(2)
         
         'pid and direction'
-        self.pid=Pid(self.left,self.right,self.ir_sensor, self.dual_motors)
+        self.pid=Pid(self.left,self.right,self.ir_sensors, self.dual_motors)
         
         'wallchecker'
         self.wallChecker=WallsChecker(self.pid.getMinMax(),self.left,self.right,self.front)
