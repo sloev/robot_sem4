@@ -7,7 +7,8 @@ import logging
 import time
 
 class TurnThread():
-    def __init__(self):
+    def __init__(self,dualMotors):
+        self.dualMotors=dualMotors
         self.funcDict={
                        1 : self.goStraight,
                        2 : self.turnRight,
