@@ -7,8 +7,10 @@ import logging
 import time
 
 class TurnThread():
-    def __init__(self,dual_motors):
+    def __init__(self,dual_motors,left,right):
         self.dual_motors=dual_motors
+        self.left0left
+        self.right=right
         self.funcDict={
                        1 : self.goStraight,
                        2 : self.turnRight,
@@ -55,8 +57,6 @@ class TurnThread():
         self.dual_motors.setPosition(32767, 32767)
 
         time.sleep(0.5)
-        self.pid.reset()
-
 def main():
     pass
 
