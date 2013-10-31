@@ -89,7 +89,7 @@ class Pid():
     def same(self,found):
         if found: 
             index=found.span()[1]
-            perror=self.currentString[index:len(self.currentString)-2]                
+            perror=self.currentString[index:len(self.currentString)-1]                
             self.allOut='\t'.join([self.allOut,perror]) 
         else: 
             pass
