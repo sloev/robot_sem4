@@ -9,7 +9,7 @@ import time
 class TurnThread():
     def __init__(self,dual_motors,left,right):
         self.dual_motors=dual_motors
-        self.left0left
+        self.left=left
         self.right=right
         self.funcDict={
                        1 : self.goStraight,
