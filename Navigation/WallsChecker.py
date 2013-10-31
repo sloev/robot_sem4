@@ -18,11 +18,11 @@ class WallsChecker():
         self.lastWalls=self.walls
         
         self.walls=[1,1,0]
-        if(self.sample[self.left]>self.cmMax):
+        if(sample[self.left]>self.cmMax):
             self.walls[self.left]=0
-        if(self.sample[self.right]>self.cmMax):
+        if(sample[self.right]>self.cmMax):
             self.walls[self.right]=0
-        if(self.sample[self.front]<self.setPoint):
+        if(sample[self.front]<self.setPoint):
             self.walls[self.front]=1
         self.logger.info("checkWalls/"+str(self.walls))
         return self.walls
