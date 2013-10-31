@@ -64,8 +64,8 @@ class PidTuner():
         logger.addHandler(fh)
         
         'sensors'
-        self.ir_sensor = IR_Sensors_Controller(0x20)
-        self.ir_sensor.setConfigurationRegister(0x00,0x7F)
+        self.ir_sensors = IR_Sensors_Controller(0x20)
+        self.ir_sensors.setConfigurationRegister(0x00,0x7F)
 
         'motors'
         self.dual_motors=DualMotorController(0x60,0x61)
