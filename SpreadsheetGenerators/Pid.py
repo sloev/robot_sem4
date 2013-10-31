@@ -7,7 +7,8 @@ import re
 import sys
 from datetime import datetime
 class Pid():
-    def __init__(self,filename):
+    def __init__(self,filename,saveName):
+        self.saveName=saveName
         self.filename=filename
         self.foo=open(filename,"r")
         self.strings = self.foo
@@ -58,7 +59,7 @@ class Pid():
             self.currentString=s
             for pattern,case in zip(self.patterns,self.functions):
                 case(re.search(pattern,s))
-        foo = open(str(self.filename)+"allout.txt", "w")
+        foo = open(self.saveName, "w")
 
         try:
             foo.write(self.allOut)
@@ -102,7 +103,7 @@ class Pid():
             pass
         
 def main():
-    pidParser=Pid(sys.argv[1])
+    pidParser=Pid(sys.argv[1],sys.argv[2])
     pidParser()
 
 if __name__ == '__main__':
