@@ -13,16 +13,7 @@ class Pid():
         self.foo=open(filename,"r")
         self.strings = self.foo
         self.startTime= datetime.fromtimestamp(0)
-2013-10-31 10:03:51,477/robot.pid/left/pErrorWithGain/0.0
-2013-10-31 10:03:51,479/robot.pid/left/iErrorWithGain/0.0
-2013-10-31 10:03:51,481/robot.pid/left/dErrorWithGain/0.0
-2013-10-31 10:03:51,482/robot.pid/left/controlValueCm/0.0
-2013-10-31 10:03:51,484/robot.pid/left/controlValueVelocity/2
-2013-10-31 10:03:51,485/robot.pid/right/pErrorWithGain/0.0
-2013-10-31 10:03:51,487/robot.pid/right/iErrorWithGain/0.0
-2013-10-31 10:03:51,489/robot.pid/right/dErrorWithGain/0.0
-2013-10-31 10:03:51,490/robot.pid/right/controlValueCm/0.0
-2013-10-31 10:03:51,492/robot.pid/right/controlValueVelocity/2
+
         self.patterns=[
                        'left/pErrorWithGain/',
                        'right/pErrorWithGain/',
@@ -42,7 +33,24 @@ class Pid():
                        'right/dError/'
                        ]
 
-        self.allOut="seconds\tleftPGE\trightPGE\tleftIGE\trightIGE\tleftDGE\trightDGE\tleftValCm\trightValCm\tleftValVel\trightValVel\tleftPE\trightPE\tleftIE\trightIE\tleftDE\trightDE\n"
+        self.allOut=""+\
+                    "seconds"+\
+                    "\tleftPGE"+\
+                    "\tleftIGE"+\
+                    "\tleftDGE"+\
+                    "\tleftValCm"+\
+                    "\tleftValVel"+\
+                    "\trightPGE"+\
+                    "\trightIGE"+\
+                    "\trightDGE"+\
+                    "\trightValCm"+\
+                    "\trightValVel"+\
+                    "\tleftPE"+\
+                    "\trightPE"+\
+                    "\tleftIE"+\
+                    "\trightIE"+\
+                    "\tleftDE"+\
+                    "\trightDE\n"
 
         self.functions=[
                         self.start,
@@ -98,7 +106,7 @@ class Pid():
     def same(self,found):
         if found: 
             index=found.span()[1]
-            perror=self.currentString[index:]#len(self.currentString)]                
+            perror=self.currentString[index:len(self.currentString)-1]                
             self.allOut='\t'.join([self.allOut,perror]) 
         else: 
             pass
