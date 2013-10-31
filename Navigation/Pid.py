@@ -179,20 +179,21 @@ class Pid():
         pe=self.pGain[wheel]*pError[wheel]
         ie=self.iGain[wheel]*self.iError[wheel]
         de=self.dGain[wheel]*dError[wheel]
+        
         if(wheel==self.left):
             strwheel="left"
         else:
             strwheel="right"
-        self.logger.info(strwheel+"/pErrorWithGain/",str(pe))
+        self.logger.info(strwheel+"/pErrorWithGain/"+str(pe))
         
-        self.logger.info(strwheel+"/iErrorWithGain/",str(ie))
+        self.logger.info(strwheel+"/iErrorWithGain/"+str(ie))
         
-        self.logger.info(strwheel+"/dErrorWithGain/",str(de))
+        self.logger.info(strwheel+"/dErrorWithGain/"+str(de))
         
         value=pe+de+ie
-        self.logger.info(strwheel+"/controlValueCm/",str(value))
+        self.logger.info(strwheel+"/controlValueCm/"+str(value))
         value=self.convertCmToVelocity(value)
-        self.logger.info(strwheel+"/controlValueVelocity/",str(value))
+        self.logger.info(strwheel+"/controlValueVelocity/"+str(value))
         return value
         
     '''
