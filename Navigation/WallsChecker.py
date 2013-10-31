@@ -12,6 +12,7 @@ class WallsChecker():
         self.left=left
         self.right=right
         self.front=front
+        self.walls=[1,1,0]
         
     def checkWalls(self,sample):
         self.lastWalls=self.walls
