@@ -19,6 +19,7 @@ Created on Oct 2, 2013
 
 
 import smbus
+import logging
 
 class PositionStatus():
    
@@ -26,20 +27,28 @@ class PositionStatus():
     'Constructor'
     def __init__(self, f):
         self.bus = smbus.SMBus(1)
+        self.logger = logging.getLogger("robot.PositionStatus")
         self.setData(f)
      
     'Makes the object callable'    
     def __call__(self):
         print self.getActPos()
         print self.getTagPos()
+        
+    def getPositionStatus(self, f):
+        self.data = (self)
+        self.logger = self.data[2]
+        self.actPos2 = self.data[3]
+        self.tagPos1 = self.data[4]
+        self.tagPos2 = self.data[5]
+        
 
     'Fetch data from original function'    
     def setData(self, f):
         self.data = f(self)
-        self.actPos1 = self.data[2]
-        self.actPos2 = self.data[3]
-        self.tagPos1 = self.data[4]
-        self.tagPos2 = self.data[5]
+        self.left = self.data[0]
+        self.right = self.data[1]
+
      
     'Convert actual position to decimal number'    
     def getActPos(self):
