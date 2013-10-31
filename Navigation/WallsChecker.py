@@ -23,7 +23,7 @@ class WallsChecker():
             self.walls[self.left]=0
         if(sample[self.right]>self.max):
             self.walls[self.right]=0
-        if(sample[self.front]<self.setPoint):
+        if(sample[self.front]<self.setpoint):
             self.walls[self.front]=1
         self.logger.info("checkWalls/"+str(self.walls))
         return self.walls
