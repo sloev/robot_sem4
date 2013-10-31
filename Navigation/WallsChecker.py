@@ -16,14 +16,14 @@ class WallsChecker():
     def checkWalls(self,sample):
         self.lastWalls=self.walls
         
-        walls=[1,1,0]
+        self.walls=[1,1,0]
         if(self.sample[self.left]>self.cmMax):
-            walls[self.left]=0
+            self.walls[self.left]=0
         if(self.sample[self.right]>self.cmMax):
-            walls[self.right]=0
+            self.walls[self.right]=0
         if(self.sample[self.front]<self.setPoint):
-            walls[self.front]=1
-        self.logger.info("checkWalls/"+str(walls))
+            self.walls[self.front]=1
+        self.logger.info("checkWalls/"+str(self.walls))
         return self.walls
     
     def compareSides(self):
