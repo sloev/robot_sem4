@@ -18,7 +18,7 @@ class zeroconfTcpServer():
         self.host=''
 
         self.initTcpServer()
-        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever(5)).start()
+        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
 
         print "lol"
         #self.initBonjourServer()
