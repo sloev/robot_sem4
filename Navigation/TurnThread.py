@@ -84,7 +84,6 @@ class TurnThread():
             sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
             walls=self.wallchecker.checkWalls(sample)  
             debounce=self.wallchecker.compare()
-        time.sleep(0.2)
 def main():
     pass
 
