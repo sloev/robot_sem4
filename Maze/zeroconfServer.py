@@ -44,6 +44,7 @@ class zeroconfTcpServer():
                 break
             except IOError:
                 print "%s: didn't get port %s" % (self.name, self.port)
+        print "finnished init"
                 
     def tcpServerServeForever(self):
         self.tcpServer.serve_forever()
