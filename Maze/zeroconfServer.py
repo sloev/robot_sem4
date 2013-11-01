@@ -68,12 +68,12 @@ class zeroconfTcpServer():
         def __init__(self,host,port):
             self.host2=host
             self.port2=port
-            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.message = "lol"
     
         def __call__(self):
-            self.socket.connect((self.host2, self.port2))
-            self.socket.send(self.message)
+            self.socket2.connect((self.host2, self.port2))
+            self.socket2.send(self.message)
             
 def main():
     server=zeroconfTcpServer()
