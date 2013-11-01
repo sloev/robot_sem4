@@ -68,7 +68,7 @@ class zeroconfTcpServer():
 def main():
     server=zeroconfTcpServer()
     index=0
-    while index < 20:
+    while index < 10:
         time.sleep(1)
         print "running for "+str(index)+" seconds"
         index=index+1
