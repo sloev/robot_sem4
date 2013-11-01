@@ -19,13 +19,16 @@ class zeroconfTcpServer():
 
         self.initTcpServer()
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
-
+        
         self.initBonjourServer()
             
     def close(self):
+        self.logger.info("closing tcpServer and zeroconf maze service")
         self.tcpServer.shutdown()
-        #self.tcpServerThread.join()
         self.sdRef.close()
+        print(str(self.tcpServerThread.isAlive()))
+        self.logger.info("closed tcpserver and zeroconf succesfully")
+
 
 
     class MyTCPHandler(SocketServer.StreamRequestHandler):
