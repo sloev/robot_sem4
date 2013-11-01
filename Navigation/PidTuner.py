@@ -153,12 +153,13 @@ class PidTuner():
             self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
             self.dual_motors.setPosition(32767, 32767)
             
-            self.pid.doPid(sample)
             
             
             walls=self.wallChecker.checkWalls(sample)  
             debounce=self.wallChecker.compare()   
-                
+            if(walls==[1,1,1]):                
+                self.pid.doPid(sample)
+
             choice=self.makeChoice(walls, debounce)
             
             self.turnThread.checkForTurn(choice)
