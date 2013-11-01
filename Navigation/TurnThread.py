@@ -64,20 +64,20 @@ class TurnThread():
     def oldTurn(self,direction):
         #print("turning wheel="+str(direction))
 
-        time.sleep(0.5)
+        time.sleep(0.3)
         self.dual_motors.softStop()
         time.sleep(0.3)
         self.dual_motors.turn90(direction, 2)
         time.sleep(0.8)
         
-        sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
+        sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
         walls=self.wallchecker.checkWalls(sample)  
         debounce=self.wallchecker.compare()
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(32767, 32767)
         while(not debounce):
             time.sleep(0.1)
-            sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
+            sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
             walls=self.wallchecker.checkWalls(sample)  
             debounce=self.wallchecker.compare()
 def main():
