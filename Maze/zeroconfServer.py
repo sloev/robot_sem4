@@ -16,21 +16,15 @@ class zeroconfTcpServer():
         self.regType= '_maze._tcp'
         #self.address=address
         self.host=''
-
         self.initTcpServer()
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
-        
         self.initBonjourServer()
             
     def close(self):
-        #self.logger.info("closing tcpServer and zeroconf maze service")
         self.tcpServer.shutdown()
         self.sdRef.close()
-        print(str(self.tcpServerThread.isAlive()))
-        #self.logger.info("closed tcpserver and zeroconf succesfully")
-
-
-
+        print("closed tcpserver and zeroconf succesfully")
+        
     class MyTCPHandler(SocketServer.StreamRequestHandler):
         def handle(self):
             self.data = self.rfile.readline().strip()
@@ -70,11 +64,12 @@ class zeroconfTcpServer():
     
 def main():
     server=zeroconfTcpServer()
-    index=0
-    while index < 10:
-        time.sleep(1)
-        print "running for "+str(index)+" seconds"
-        index=index+1
+    try:
+        print("running tcp and zeroconf")
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass
     server.close()
     
 if __name__ == '__main__':
