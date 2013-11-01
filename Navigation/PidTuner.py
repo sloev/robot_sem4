@@ -171,12 +171,12 @@ class PidTuner():
          
         if(debounce):
             print(str(walls))
-            if(walls[self.front]==1):
-                return 3
-            elif(walls[self.right]==0):
+            if(walls[self.right]==0):
                 return 2
             elif(walls[self.left]==0):
                 return 4
+            elif(walls[self.front]==0):
+                return 3
         else:
             return 0
         
