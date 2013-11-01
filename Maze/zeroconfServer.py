@@ -89,7 +89,7 @@ def main():
         print("running tcp and zeroconf")
         while True:
             
-            client("lol",server.getAddress())
+            client("lol\n",server.getAddress())
             time.sleep(1)
     except KeyboardInterrupt:
         pass
