@@ -18,7 +18,7 @@ class zeroconfTcpServer():
         self.host='127.0.0.1'
 
         self.initTcpServer()
-        self.tcpServerThread = threading.Thread(target=self.tcpServerServeForever()).start()
+        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever(5)).start()
 
         print "lol"
         #self.initBonjourServer()
@@ -46,9 +46,6 @@ class zeroconfTcpServer():
                 print "%s: didn't get port %s" % (self.name, self.port)
         print "finnished init"
                 
-    def tcpServerServeForever(self):
-        self.tcpServer.serve_forever()
-
     def initBonjourServer(self):
         def register_callback(sdRef, flags, errorCode, name, regType, domain):
             if errorCode == pybonjour.kDNSServiceErr_NoError:
