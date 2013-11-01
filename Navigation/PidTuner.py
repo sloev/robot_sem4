@@ -48,7 +48,7 @@ class PidTuner():
         self.right=direction
         self.front=2
         
-        self.tuneFactor=0.01
+        self.tuneFactor=0.1
         try:
             os.remove("/home/pi/robot_sem4/robot.log")
         except OSError:
