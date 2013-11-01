@@ -14,10 +14,14 @@ class WallsChecker():
         self.right=right
         self.front=front
         self.walls=[1,1,0]
+        self.lastWalls=self.walls
+        self.lastLastWalls=self.lastWalls
         
     def checkWalls(self,sample):
+        self.lastLastWalls=self.lastWalls
         self.lastWalls=self.walls
         
+
         self.walls=[1,1,0]
         if(sample[self.left]>self.min):
             self.walls[self.left]=0
@@ -29,7 +33,7 @@ class WallsChecker():
         return self.walls
     
     def compare(self):
-        foo=self.walls==self.lastWalls
+        foo=(self.walls==self.lastWalls) and (self.lastWalls==self.lastLastWalls)
         self.logger.info("compareSidesAndFront/"+str(foo))
         return foo
       
