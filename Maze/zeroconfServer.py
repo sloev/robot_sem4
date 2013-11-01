@@ -70,6 +70,7 @@ class zeroconfTcpServer():
         if self.sdRef in ready[0]:
             print("first victim")
             pybonjour.DNSServiceProcessResult(self.sdRef)
+            
     def getAddress(self):
         return (self.host,self.port)
     
