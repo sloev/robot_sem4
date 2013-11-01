@@ -68,7 +68,7 @@ class TurnThread():
         debounce=self.wallchecker.compare()
         
         self.dual_motors.softStop()
-        time.sleep(0.3)
+        time.sleep(0.7)
         self.dual_motors.turn90(direction, 2)
         time.sleep(0.8)
         
