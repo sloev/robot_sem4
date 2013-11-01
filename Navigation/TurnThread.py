@@ -63,7 +63,10 @@ class TurnThread():
     
     def oldTurn(self,direction):
         #print("turning wheel="+str(direction))
-
+        sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
+        walls=self.wallchecker.checkWalls(sample)  
+        debounce=self.wallchecker.compare()
+        
         time.sleep(0.3)
         self.dual_motors.softStop()
         time.sleep(0.3)
