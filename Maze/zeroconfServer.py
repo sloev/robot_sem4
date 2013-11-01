@@ -49,12 +49,12 @@ class zeroconfTcpServer():
                 print '  name    =', name
                 print '  regtype =', regType
                 print '  domain  =', domain
-    
+        print"registering zeroconf"
+
         self.sdRef = pybonjour.DNSServiceRegister(name = self.name,
                                                   regtype = self.regType,
                                                   port = self.port,
                                                   callBack = register_callback)    
-        print"registering zeroconf"
         ready = select.select([self.sdRef], [], [])
         if self.sdRef in ready[0]:
             print("first victim")
