@@ -17,7 +17,8 @@ class zeroconfTcpServer():
         self.host='127.0.0.1'
         
         self.initTcpServer()
-        self.initBonjourServer()
+        print "lol"
+        #self.initBonjourServer()
             
     def close(self):
         self.tcpServer.shutdown()
