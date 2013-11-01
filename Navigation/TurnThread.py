@@ -56,7 +56,7 @@ class TurnThread():
     def oldTurn(self,direction):
         #print("turning wheel="+str(direction))
         self.dual_motors.softStop()
-        time.sleep(0.3)
+        time.sleep(0.8)
         self.dual_motors.turn90(direction, 2)
         time.sleep(0.8)
         
