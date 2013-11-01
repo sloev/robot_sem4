@@ -78,7 +78,8 @@ class TurnThread():
         
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(32767, 32767)
-        
+        time.sleep(0.3)
+
         while(not debounce):
             sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
             walls=self.wallchecker.checkWalls(sample)  
