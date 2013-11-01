@@ -23,11 +23,11 @@ class zeroconfTcpServer():
         self.initBonjourServer()
             
     def close(self):
-        self.logger.info("closing tcpServer and zeroconf maze service")
+        #self.logger.info("closing tcpServer and zeroconf maze service")
         self.tcpServer.shutdown()
         self.sdRef.close()
         print(str(self.tcpServerThread.isAlive()))
-        self.logger.info("closed tcpserver and zeroconf succesfully")
+        #self.logger.info("closed tcpserver and zeroconf succesfully")
 
 
 
