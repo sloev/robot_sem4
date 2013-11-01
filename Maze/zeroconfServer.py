@@ -16,7 +16,7 @@ class zeroconfTcpServer():
         self.name="r-pi_robot_maze_socket"
         self.regType= '_maze._tcp'
         #self.address=address
-        self.host=''
+        self.host='127.0.0.1'
         self.initTcpServer()
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
         self.initBonjourServer()
@@ -62,8 +62,10 @@ class zeroconfTcpServer():
         if self.sdRef in ready[0]:
             print("first victim")
             pybonjour.DNSServiceProcessResult(self.sdRef)
+            
     def makeClient(self):
         return self.tcpClient(self.host,self.port)
+    
     class tcpClient():
         def __init__(self,host,port):
             self.host2=host
