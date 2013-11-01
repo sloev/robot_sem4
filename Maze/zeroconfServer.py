@@ -15,7 +15,7 @@ class zeroconfTcpServer():
         self.name="r-pi_robot_maze_socket"
         self.regType= '_maze._tcp'
         #self.address=address
-        self.host='127.0.0.1'
+        self.host=''
 
         self.initTcpServer()
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever(5)).start()
