@@ -22,7 +22,7 @@ class WallsChecker():
         self.lastWalls=self.walls
         
         self.walls=[1,1,1]
-        if(sample[self.left]>self.min):
+        if(sample[self.left]>self.max):
             self.walls[self.left]=0
         if(sample[self.right]>self.max):
             self.walls[self.right]=0
