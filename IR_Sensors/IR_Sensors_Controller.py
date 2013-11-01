@@ -12,6 +12,7 @@ Sensors                                              '
 from RangeTable import RangeTable
 import smbus
 import time as time
+import logging
  
 #Read/Write registers               #byteCode 4 LSB's
 ConversionResultReg                 =   0x00
@@ -51,6 +52,7 @@ class IR_Sensors_Controller():
         Constructor
     '''
     def __init__(self, slaveAddress):
+        self.logger=logging.getLogger("robot.IrSensorsController")
         self.bus = smbus.SMBus(1)
         self.slaveAddress = slaveAddress
         self.rangeTable=RangeTable.unpickleTable()
@@ -151,6 +153,7 @@ class IR_Sensors_Controller():
                 distances[j] += self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))  
                 if(amount-i==1):
                     distances[j]=self.lookupCm(int(distances[j]/amount))
+        self.logger.info("sampleAverage/"+str(distances))   
         return distances
     
     

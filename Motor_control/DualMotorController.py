@@ -86,7 +86,7 @@ class DualMotorController:
         positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
         positionRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
         
-        print(str(positionLeft)+"\t"+str(positionRight))
+        #print(str(positionLeft)+"\t"+str(positionRight))
         
         positionLeft+=incLeftPos
         positionRight+=incRightPos

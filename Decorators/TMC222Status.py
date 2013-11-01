@@ -19,6 +19,7 @@ Created on Oct 1, 2013
 
 import smbus
 import logging
+import os
 
 class TMC222Status(object):
 
@@ -28,9 +29,6 @@ class TMC222Status(object):
         self.logger = logging.getLogger("robot.TMC222Status")
         self.logger.info("TMC222Status Decorator initialized!")
         self.logger.info("Decorating function " + self.f.__name__ + "\n")
-        self.f = f
-        self.setData(f)
-
 
     '''Called after the class is instantiated
        Makes the object callable'''        
@@ -41,10 +39,12 @@ class TMC222Status(object):
         
     def getMotorStatus(self, data):
         string =""
-        string += "|"+str(len(self.data)) + " bytes received from slave located at "+data[0]+"|"+"\n"
+
+        string += "|"+str(len(self.data)) + " bytes received from slave located at "+str(data[0])+"|"+"\n"
         string += "|Bytes read from register " + str(hex(data[1])) +"|"+"\n"
-        string += "|IRun is " + str((data[2] & 0xF0) >> 4) + " " + "and IHold is " + (str(hex(data[1])) & 0x0F)+"|"+"\t"
+        string += "|IRun is " + str((data[2] & 0xF0) >> 4) + " " + "and IHold is " + str(data[1] & 0x0F)+"|"+"\t"
         string +=  "|VMax is " + str((data[3] & 0xF0) >> 4) + " " + "and VMin is " + str(data[3] & 0x0F)+"|"+""
+
         self.logger.info(string)
         self.getStat1(data[4])
         self.getStat2(data[5])
@@ -67,7 +67,7 @@ class TMC222Status(object):
         accShape = (data >> (8-1)) & 1
         stepMode = (data >> 7-1) & 11
         shaft = (data >> 5-1) & 1
-        ACC = (data >> 1-1) & 1111
+        #ACC = (data >> 1-1) & 1111
         
         if(accShape==0):
             string += "|Robot is accelerating|"+"\t"
@@ -188,9 +188,8 @@ class TMC222Status(object):
 '''Example of use'''        
 @TMC222Status
 def getFullStatus1(self):
-    r = [(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF),(0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF)]
+    r = [[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF],[0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF]]
     return r
-   
         
 def main():      
     getFullStatus1()
