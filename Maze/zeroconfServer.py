@@ -8,6 +8,7 @@ import select
 import random
 import time
 import SocketServer
+import threading
 
 class zeroconfTcpServer():
     def __init__(self):
@@ -15,13 +16,16 @@ class zeroconfTcpServer():
         self.regType= '_maze._tcp'
         #self.address=address
         self.host='127.0.0.1'
-        
+
         self.initTcpServer()
+        self.tcpServerThread = threading.Thread(target=self.tcpServerServeForever()).start()
+
         print "lol"
         #self.initBonjourServer()
             
     def close(self):
         self.tcpServer.shutdown()
+        self.tcpServerThread.join()
 
     class MyTCPHandler(SocketServer.StreamRequestHandler):
         def handle(self):
@@ -40,7 +44,8 @@ class zeroconfTcpServer():
                 break
             except IOError:
                 print "%s: didn't get port %s" % (self.name, self.port)
-        
+                
+    def tcpServerServeForever(self):
         self.tcpServer.serve_forever()
 
     def initBonjourServer(self):
