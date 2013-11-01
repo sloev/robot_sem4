@@ -64,7 +64,7 @@ class TurnThread():
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(32767, 32767)
 
-        time.sleep(0.2)
+        time.sleep(0.7)
 def main():
     pass
 
