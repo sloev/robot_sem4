@@ -157,14 +157,12 @@ class PidTuner():
             
             
             walls=self.wallChecker.checkWalls(sample)  
-            debounce=self.wallChecker.compareSides()   
+            debounce=self.wallChecker.compare()   
                 
             choice=self.makeChoice(walls, debounce)
             
             self.turnThread.checkForTurn(choice)
-           # thread = Thread(target=self.turnThread.checkForTurn, args=[choice])
-            #thread.start()
-            #thread.join
+
      
         except IOError:
             pass

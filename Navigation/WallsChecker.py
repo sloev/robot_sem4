@@ -28,6 +28,11 @@ class WallsChecker():
         self.logger.info("checkWalls/"+str(self.walls))
         return self.walls
     
+    def compare(self):
+        foo=self.walls==self.lastWalls
+        self.logger.info("compareSidesAndFront/"+str(foo))
+        return foo
+      
     def compareSides(self):
         foo=self.walls[self.left]==self.lastWalls[self.left] and self.walls[self.right]==self.lastWalls[self.right] 
         self.logger.info("compareSides/"+str(foo))
