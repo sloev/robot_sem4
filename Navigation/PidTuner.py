@@ -169,15 +169,16 @@ class PidTuner():
             pass
 
     def makeChoice(self,walls,debounce):
-        return 1
-#         
-#         if(debounce):
-#             if(walls[self.left]==0):
-#                 return 4
-#             elif(walls[self.right]==0):
-#                 return 2
-#         else:
-#             return 0
+         
+        if(debounce):
+            if(walls[self.left]==0):
+                return 4
+            elif(walls[self.right]==0):
+                return 2
+            elif(walls[self.front]==1):
+                return 3
+        else:
+            return 0
         
         
     def stop(self):
