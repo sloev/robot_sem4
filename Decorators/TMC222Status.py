@@ -25,6 +25,7 @@ class TMC222Status(object):
 
     '''Constructor'''    
     def __init__(self, f):
+        self.f=f
         self.bus = smbus.SMBus(1)
         self.logger = logging.getLogger("robot.TMC222Status")
         self.logger.info("TMC222Status Decorator initialized!")
