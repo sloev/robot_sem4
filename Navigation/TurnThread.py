@@ -38,6 +38,7 @@ class TurnThread():
         pass
     
     def turn180(self):
+        print("turning180")
         self.logger.info("180")
         self.dual_motors.softStop()
         time.sleep(0.3)
