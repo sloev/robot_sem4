@@ -71,24 +71,20 @@ class zeroconfTcpServer():
             print("first victim")
             pybonjour.DNSServiceProcessResult(self.sdRef)
             
-    def makeClient(self):
-        return self.tcpClient(self.host,self.port)
-    
-    class tcpClient():
-        def __init__(self,host,port):
-            self.host2=host
-            self.port2=port
-            self.socket2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.message = "lol"
-    
-        def __call__(self):
-            self.socket2.connect((self.host2, self.port2))
-            self.socket2.send(self.message)
-            
+def client(string):
+    HOST, PORT = 'localhost', 2000
+    # SOCK_STREAM == a TCP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    #sock.setblocking(0)  # optional non-blocking
+    sock.connect((HOST, PORT))
+    sock.send(string)
+    reply = sock.recv(16384)  # limit reply to 16K
+    sock.close()
+    return reply
+
 def main():
     server=zeroconfTcpServer()
     try:
-        client=server.makeClient()
         print("running tcp and zeroconf")
         while True:
             client()
