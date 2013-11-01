@@ -23,8 +23,9 @@ class zeroconfTcpServer():
         self.initBonjourServer()
             
     def close(self):
-        self.tcpServerThread.join()
         self.tcpServer.shutdown()
+        self.tcpServerThread.join()
+        self.sdRef.close()
 
 
     class MyTCPHandler(SocketServer.StreamRequestHandler):
