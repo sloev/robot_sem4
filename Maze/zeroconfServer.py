@@ -25,6 +25,14 @@ class zeroconfTcpServer():
         self.tcpServer.shutdown()
         self.sdRef.close()
         print("closed tcpserver and zeroconf succesfully")
+    
+    class SimpleServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+        daemon_threads = True
+        allow_reuse_address = True
+
+        def __init__(self, server_address, RequestHandlerClass):
+            SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass)
+
         
     class MyTCPHandler(SocketServer.StreamRequestHandler):
         def handle(self):
@@ -38,7 +46,7 @@ class zeroconfTcpServer():
         while True:
             try:
                 self.port = 9000 + random.randint(0,999)
-                self.tcpServer = SocketServer.TCPServer((self.host, self.port), self.MyTCPHandler)
+                self.tcpServer=self.SimpleServer((self.host, self.port), self.MyTCPHandler)
                 print "%s: got port %s" % (self.name, self.port)
                 break
             except IOError:
