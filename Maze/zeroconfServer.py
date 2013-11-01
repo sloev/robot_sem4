@@ -35,7 +35,6 @@ class zeroconfTcpServer():
             try:
                 self.port = 9000 + random.randint(0,999)
                 self.tcpServer = SocketServer.TCPServer((self.host, self.port), self.MyTCPHandler)
-
                 print "%s: got port %s" % (self.name, self.port)
                 break
             except IOError:
@@ -55,6 +54,7 @@ class zeroconfTcpServer():
                                                   regtype = self.regType,
                                                   port = self.port,
                                                   callBack = register_callback)    
+        print"registering zeroconf"
         ready = select.select([self.sdRef], [], [])
         if self.sdRef in ready[0]:
             print("first victim")
