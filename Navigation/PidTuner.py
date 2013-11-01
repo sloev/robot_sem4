@@ -172,6 +172,7 @@ class PidTuner():
     def makeChoice(self,walls,debounce):
          
         if(debounce):
+            print(str(walls))
             if(walls[self.front]==1):
                 return 3
             elif(walls[self.right]==0):
