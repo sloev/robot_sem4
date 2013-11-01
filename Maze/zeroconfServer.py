@@ -24,7 +24,7 @@ class zeroconfTcpServer():
             
     def close(self):
         self.tcpServer.shutdown()
-        self.tcpServerThread.join()
+        #self.tcpServerThread.join()
         self.sdRef.close()
 
 
