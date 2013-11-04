@@ -71,7 +71,7 @@ class TurnThread():
             self.logger.info("turning")
             time.sleep(0.1)
         try:
-            input("fuuck")       
+            raw_input("fuuck")       
         finally:
             pass
     
