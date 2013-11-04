@@ -91,7 +91,7 @@ class TurnThread():
             raw_input("press enter straighten up")       
         finally:
             pass
-        
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(5000, 5000)
         
         while(self.dual_motors.isBusy()):
