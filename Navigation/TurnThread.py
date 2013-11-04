@@ -92,11 +92,15 @@ class TurnThread():
         finally:
             pass
         
-        self.dual_motors.setPosition(2600, 2600)
+        self.dual_motors.setPosition(5000, 5000)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
+        try:
+            raw_input("press enter to continnue")       
+        finally:
+            pass
         
     def oldTurn(self,direction):
         #print("turning wheel="+str(direction))
