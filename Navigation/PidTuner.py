@@ -160,7 +160,6 @@ class PidTuner():
             if(self.turnThread.checkForTurn(choice)):
                 self.pid.reset()
 
-     
         except IOError:
             pass
 
@@ -170,7 +169,7 @@ class PidTuner():
             if(walls==[1,1,1]):
                 self.dual_motors.setPosition(32767, 32767)
                 self.pid.doPid(sample)
-                return 1
+                return 0
             elif(walls[self.right]==0):
                 return 4
             elif(walls[self.left]==0):

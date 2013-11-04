@@ -42,26 +42,31 @@ class TurnThread():
             
     def turnLeft(self):
         self.logger.info("left")
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.turn90(0)
     
     def turnRight(self):
         self.logger.info("right")
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.turn90(1)
     
     def turn180(self):
         print("turning180")
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+
         self.logger.info("180")
         self.dual_motors.softStop()
         time.sleep(0.3)
         self.dual_motors.turn180(2)
         time.sleep(1.6)
     
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         time.sleep(0.5)
         pass
     
     def goStraight(self):
         self.logger.info("straight")
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+
         print("straight")
         
     def turn90(self,direction):
