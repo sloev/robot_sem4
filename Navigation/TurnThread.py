@@ -65,13 +65,17 @@ class TurnThread():
         print("straight")
         
     def turn90(self,direction):
+        try:
+            raw_input("press enter")       
+        finally:
+            pass
         self.dual_motors.setPosition(2850, 2850)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
         try:
-            raw_input("fuuck")       
+            raw_input("press enter")       
         finally:
             pass
     
