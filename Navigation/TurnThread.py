@@ -70,8 +70,7 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
-        lol=input("Press Enter to continue...")
-        
+        print("fuuck")        
 
     
     def oldTurn(self,direction):
