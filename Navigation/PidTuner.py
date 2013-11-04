@@ -43,7 +43,7 @@ class PidTuner():
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
-        direction=1
+        direction=0
         self.left=not direction
         self.right=direction
         self.front=2
@@ -176,7 +176,7 @@ class PidTuner():
             return 2
         elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
             self.pid.reset()
-            return 3
+            return 0
         else:
             return 0
         
