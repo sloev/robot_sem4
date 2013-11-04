@@ -41,7 +41,7 @@ class Pid():
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=15
+        self.setPoint=14.9
         self.cmMax=28
         self.cmMin=5
         
@@ -72,6 +72,7 @@ class Pid():
     def reset(self):
         self.logger.info("/resetting ierrors")
         self.iError=[0,0]
+        self.lastError=[0,0]
         
     '''
         PID controller:
@@ -193,7 +194,9 @@ class Pid():
         value=pe+de+ie
         self.logger.info(strwheel+"/controlValueCm/"+str(value))
         value=self.convertCmToVelocity(value)
+        
         self.logger.info(strwheel+"/controlValueVelocity/"+str(value))
+        
         return value
         
     '''
@@ -216,16 +219,16 @@ class Pid():
         #cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
-        if(cm < -0.5):
-            if(cm < -0.5 and cm > -2):
+        if(cm < -0.6):
+            if(cm < -0.6 and cm > -3):
                 value=3
-            if(cm < -2 and cm > -4):
+            if(cm < -3 and cm > -7):
                 value=4  
-            if(cm < -4 and cm > -10):
+            if(cm < -7 and cm > -10):
                 value=5 
             if(cm < -10 and cm > - self.cmMax):
                 value=6     
-        return value
+        return int(value)
     
     '''
         Serializes gain-factors

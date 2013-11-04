@@ -83,7 +83,7 @@ class PidTuner():
         self.wallChecker=WallsChecker(self.pid.getMinMaxSetpoint(),self.left,self.right,self.front)
         
         'turnThread'
-        self.turnThread=TurnThread(self.dual_motors,self.left,self.right)
+        self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
         
         'load gainfactors'
         gainfactors=self.pid.getGainFactors()
@@ -153,31 +153,35 @@ class PidTuner():
             self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
             self.dual_motors.setPosition(32767, 32767)
             
-            self.pid.doPid(sample)
             
             
             walls=self.wallChecker.checkWalls(sample)  
-            debounce=self.wallChecker.compareSides()   
-                
-            choice=self.makeChoice(walls, debounce)
+            debounce=self.wallChecker.compare()   
+            if(walls==[1,1,1]):                
+                self.pid.doPid(sample)
 
-            thread = Thread(target=self.turnThread.checkForTurn, args=[choice])
-            thread.start()
-            thread.join
+            choice=self.makeChoice(walls, debounce)
+            
+            if(self.turnThread.checkForTurn(choice)):
+                self.pid.reset()
+
      
         except IOError:
             pass
 
     def makeChoice(self,walls,debounce):
-        return 1
-#         
-#         if(debounce):
-#             if(walls[self.left]==0):
-#                 return 4
-#             elif(walls[self.right]==0):
-#                 return 2
-#         else:
-#             return 0
+         
+        if(debounce):
+            print(str(walls))
+            if(walls[self.right]==0):
+                return 4
+            elif(walls[self.left]==0):
+                return 2
+            elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
+                self.pid.reset()
+                return 3
+        else:
+            return 0
         
         
     def stop(self):
