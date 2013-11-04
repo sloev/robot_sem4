@@ -74,6 +74,10 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
+        try:
+            raw_input("press enter to start turn seq")       
+        finally:
+            pass
         print("turning 90 NOW")
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
