@@ -193,7 +193,9 @@ class Pid():
         value=pe+de+ie
         self.logger.info(strwheel+"/controlValueCm/"+str(value))
         value=self.convertCmToVelocity(value)
+        
         self.logger.info(strwheel+"/controlValueVelocity/"+str(value))
+        
         return value
         
     '''
@@ -216,10 +218,10 @@ class Pid():
         #cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
-        if(cm < -0.5):
-            if(cm < -0.5 and cm > -4):
+        if(cm < -0.3):
+            if(cm < -0.3 and cm > -3):
                 value=3
-            if(cm < -4 and cm > -8):
+            if(cm < -3 and cm > -8):
                 value=4  
             if(cm < -8 and cm > -12):
                 value=5 
