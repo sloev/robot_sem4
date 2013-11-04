@@ -166,18 +166,17 @@ class PidTuner():
             pass
 
     def makeChoice(self,sample,walls,debounce):
-        if(True):
-            print(str(walls))
-            if(walls==[1,1,1]):
-                self.dual_motors.setPosition(32767, 32767)
-                self.pid.doPid(sample)
-            elif(walls[self.right]==0):
-                return 4
-            elif(walls[self.left]==0):
-                return 2
-            elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
-                self.pid.reset()
-                return 3
+        print(str(walls))
+        if(walls==[1,1,1] and debounce):
+            self.dual_motors.setPosition(32767, 32767)
+            self.pid.doPid(sample)
+        elif(walls[self.right]==0):
+            return 4
+        elif(walls[self.left]==0):
+            return 2
+        elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
+            self.pid.reset()
+            return 3
         else:
             return 0
         
