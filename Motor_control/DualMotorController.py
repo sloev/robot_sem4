@@ -98,7 +98,7 @@ class DualMotorController:
     def getOfflinePosition(self):
         return [self.positionLeft,self.positionRight]
     
-    def isBusy(self,fullStatus2Matrix):
+    def isBusy(self):
         fullstatus2=self.getFullStatus2()
         
         actLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
