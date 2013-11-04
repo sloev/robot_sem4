@@ -104,8 +104,8 @@ class DualMotorController:
         actLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
         actRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
         
-        tarLeft=fullstatus2[0][2]<<8 | fullstatus2[0][3]<<0
-        tarRight=fullstatus2[1][2]<<8 | fullstatus2[1][3]<<0
+        tarLeft=fullstatus2[0][3]<<8 | fullstatus2[0][4]<<0
+        tarRight=fullstatus2[1][3]<<8 | fullstatus2[1][4]<<0
 
         value=(actLeft==tarLeft) and (actRight==tarRight)
         
