@@ -41,7 +41,7 @@ class Pid():
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=16
+        self.setPoint=15.1
         self.cmMax=28
         self.cmMin=5
         
@@ -227,7 +227,7 @@ class Pid():
                 value=5 
             if(cm < -12 and cm > - self.cmMax):
                 value=6     
-        return value
+        return int(value)
     
     '''
         Serializes gain-factors
