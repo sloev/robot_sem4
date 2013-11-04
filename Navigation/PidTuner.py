@@ -153,6 +153,7 @@ class PidTuner():
             walls=self.wallChecker.checkWalls(sample)  
             debounce=self.wallChecker.compare()         
             'end of sampling section'
+            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
             
             choice=self.makeChoice(sample,walls, debounce)
             
