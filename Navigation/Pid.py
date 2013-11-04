@@ -218,16 +218,16 @@ class Pid():
         #print("raw cm ="+str(cm))
         #cm=self.constrain(cm)
         #print("soft cm="+str(cm))
-        value=2
+        value=1
         if(cm < -0.6):
             if(cm < -0.6 and cm > -3):
-                value=3
+                value=2
             if(cm < -3 and cm > -7):
-                value=4  
+                value=3  
             if(cm < -7 and cm > -10):
-                value=5 
+                value=4 
             if(cm < -10 and cm > - self.cmMax):
-                value=6     
+                value=5     
         return int(value)
     
     '''

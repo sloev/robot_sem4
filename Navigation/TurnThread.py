@@ -42,17 +42,17 @@ class TurnThread():
             
     def turnLeft(self):
         self.logger.info("left")
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.turn90(0)
     
     def turnRight(self):
         self.logger.info("right")
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.turn90(1)
     
     def turn180(self):
         print("turning180")
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
         self.logger.info("180")
         self.dual_motors.softStop()
@@ -65,15 +65,15 @@ class TurnThread():
     
     def goStraight(self):
         self.logger.info("straight")
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
         print("straight")
         
     def turn90(self,direction):
         print("turning 90 NOW")
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
-        self.dual_motors.setPosition(2800, 2800)
+        self.dual_motors.setPosition(2900, 2900)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
@@ -91,8 +91,8 @@ class TurnThread():
             raw_input("press enter straighten up")       
         finally:
             pass
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-        self.dual_motors.setPosition(2800, 2800)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.dual_motors.setPosition(2900, 2900)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
