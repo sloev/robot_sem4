@@ -66,7 +66,9 @@ class TurnThread():
         
     def turn90(self,direction):
         print("turning 90 NOW")
-        self.dual_motors.setPosition(2850, 2850)
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+
+        self.dual_motors.setPosition(2500, 2500)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
