@@ -165,7 +165,7 @@ class PidTuner():
             pass
 
     def makeChoice(self,sample,walls,debounce):
-        if(debounce):
+        if(True):
             print(str(walls))
             if(walls==[1,1,1]):
                 self.dual_motors.setPosition(32767, 32767)
