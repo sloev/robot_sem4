@@ -30,10 +30,15 @@ class TurnThread():
         pass
     
     def checkForTurn(self,choice):
+        value=0
         try:
+            if(choice>1):
+                value=1
             self.funcDict[choice]()
         except KeyError:
             pass
+        return value
+
             
     def turnLeft(self):
         self.logger.info("left")

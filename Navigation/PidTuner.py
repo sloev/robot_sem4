@@ -162,7 +162,8 @@ class PidTuner():
 
             choice=self.makeChoice(walls, debounce)
             
-            self.turnThread.checkForTurn(choice)
+            if(self.turnThread.checkForTurn(choice)):
+                self.pid.reset()
 
      
         except IOError:
@@ -177,6 +178,7 @@ class PidTuner():
             elif(walls[self.left]==0):
                 return 2
             elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
+                self.pid.reset()
                 return 3
         else:
             return 0

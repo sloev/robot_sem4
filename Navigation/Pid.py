@@ -41,7 +41,7 @@ class Pid():
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=15.1
+        self.setPoint=14.9
         self.cmMax=28
         self.cmMin=5
         
@@ -72,6 +72,7 @@ class Pid():
     def reset(self):
         self.logger.info("/resetting ierrors")
         self.iError=[0,0]
+        self.lastError=[0,0]
         
     '''
         PID controller:
@@ -218,14 +219,14 @@ class Pid():
         #cm=self.constrain(cm)
         #print("soft cm="+str(cm))
         value=2
-        if(cm < -0.3):
-            if(cm < -0.3 and cm > -3):
+        if(cm < -0.6):
+            if(cm < -0.6 and cm > -3):
                 value=3
-            if(cm < -3 and cm > -8):
+            if(cm < -3 and cm > -7):
                 value=4  
-            if(cm < -8 and cm > -12):
+            if(cm < -7 and cm > -10):
                 value=5 
-            if(cm < -12 and cm > - self.cmMax):
+            if(cm < -10 and cm > - self.cmMax):
                 value=6     
         return int(value)
     
