@@ -70,8 +70,10 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
-        lol=input("fuuck")       
-
+        try:
+            input("fuuck")       
+        finally:
+            pass
     
     def oldTurn(self,direction):
         #print("turning wheel="+str(direction))
