@@ -41,7 +41,7 @@ class Pid():
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=15.5
+        self.setPoint=16
         self.cmMax=28
         self.cmMin=5
         
@@ -217,13 +217,13 @@ class Pid():
         #print("soft cm="+str(cm))
         value=2
         if(cm < -0.5):
-            if(cm < -0.5 and cm > -2):
+            if(cm < -0.5 and cm > -4):
                 value=3
-            if(cm < -2 and cm > -4):
+            if(cm < -4 and cm > -8):
                 value=4  
-            if(cm < -4 and cm > -10):
+            if(cm < -8 and cm > -12):
                 value=5 
-            if(cm < -10 and cm > - self.cmMax):
+            if(cm < -12 and cm > - self.cmMax):
                 value=6     
         return value
     
