@@ -169,6 +169,7 @@ class PidTuner():
         if(debounce):
             print(str(walls))
             if(walls==[1,1,1]):
+                self.dual_motors.setPosition(32767, 32767)
                 self.pid.doPid(sample)
                 return 1
             elif(walls[self.right]==0):

@@ -63,7 +63,6 @@ class TurnThread():
     def goStraight(self):
         self.logger.info("straight")
         print("straight")
-        self.dual_motors.setPosition(32767, 32767)
         
     def turn90(self,direction):
         self.dual_motors.setPosition(2500, 2500)
