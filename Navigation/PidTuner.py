@@ -43,7 +43,7 @@ class PidTuner():
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
-        direction=0
+        direction=1
         self.left=not direction
         self.right=direction
         self.front=2
@@ -167,7 +167,7 @@ class PidTuner():
 
     def makeChoice(self,sample,walls,debounce):
         print(str(walls))
-        if(walls==[1,1,1] and debounce):
+        if(walls==[1,1,1]):
             self.dual_motors.setPosition(32767, 32767)
             self.pid.doPid(sample)
         elif(walls[self.right]==0):
@@ -200,7 +200,7 @@ def main():
         ")
     try:
         while True:
-            time.sleep(0.2)
+            time.sleep(0.1)
     
             # get keyboard input, returns -1 if none available
             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
