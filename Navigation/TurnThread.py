@@ -73,16 +73,31 @@ class TurnThread():
         print("turning 90 NOW")
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
 
-        self.dual_motors.setPosition(2500, 2500)
+        self.dual_motors.setPosition(2600, 2600)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
         try:
-            raw_input("press enter")       
+            raw_input("press enter to turn")       
         finally:
             pass
-    
+        
+        self.dual_motors.turn90(direction,2)
+        while(self.dual_motors.isBusy()):
+            self.logger.info("turning")
+            time.sleep(0.1)
+        try:
+            raw_input("press enter straighten up")       
+        finally:
+            pass
+        
+        self.dual_motors.setPosition(2600, 2600)
+        
+        while(self.dual_motors.isBusy()):
+            self.logger.info("turning")
+            time.sleep(0.1)
+        
     def oldTurn(self,direction):
         #print("turning wheel="+str(direction))
         sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
