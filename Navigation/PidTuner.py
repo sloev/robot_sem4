@@ -165,12 +165,12 @@ class PidTuner():
             pass
 
     def makeChoice(self,sample,walls,debounce):
-         
         if(debounce):
             print(str(walls))
             if(walls==[1,1,1]):
                 self.dual_motors.setPosition(32767, 32767)
                 self.pid.doPid(sample)
+                return 1
             elif(walls[self.right]==0):
                 return 4
             elif(walls[self.left]==0):
@@ -180,7 +180,6 @@ class PidTuner():
                 return 3
         else:
             return 0
-        
         
     def stop(self):
         self.dual_motors.softStop()
