@@ -156,7 +156,7 @@ class PidTuner():
             debounce=self.wallChecker.compare()         
             'end of sampling section'
 #            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
-            
+
             choice=self.makeChoice(sample,walls, debounce)
             
             if(self.turnThread.checkForTurn(choice)):
@@ -167,7 +167,7 @@ class PidTuner():
 
     def makeChoice(self,sample,walls,debounce):
         print(str(walls))
-        if(walls==[1,1,1]):
+        if(walls==[1,1,1] and debounce):
             self.dual_motors.setPosition(32767, 32767)
             self.pid.doPid(sample)
         elif(walls[self.right]==0):
@@ -200,7 +200,7 @@ def main():
         ")
     try:
         while True:
-            time.sleep(0.1)
+            time.sleep(0.3)
     
             # get keyboard input, returns -1 if none available
             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
