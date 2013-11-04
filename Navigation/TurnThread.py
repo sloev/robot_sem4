@@ -42,13 +42,11 @@ class TurnThread():
             
     def turnLeft(self):
         self.logger.info("left")
-        self.oldTurn(0)
-        pass
+        self.turn90(0)
     
     def turnRight(self):
         self.logger.info("right")
-        self.oldTurn(1)
-        pass
+        self.turn90(1)
     
     def turn180(self):
         print("turning180")
@@ -64,7 +62,17 @@ class TurnThread():
     
     def goStraight(self):
         self.logger.info("straight")
-        pass
+        self.dual_motors.setPosition(32767, 32767)
+        
+    def turn90(self,direction):
+        self.dual_motors.setPosition(2500, 2500)
+        
+        while(self.dual_motors.isBusy()):
+            self.logger.info("turning")
+            time.sleep(0.1)
+        input("Press Enter to continue...")
+        
+
     
     def oldTurn(self,direction):
         #print("turning wheel="+str(direction))

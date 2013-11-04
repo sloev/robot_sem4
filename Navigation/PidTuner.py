@@ -148,19 +148,13 @@ class PidTuner():
     def doPid(self):
         try:
             self.printGains()
+            'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
-            
-            self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-            self.dual_motors.setPosition(32767, 32767)
-            
-            
-            
             walls=self.wallChecker.checkWalls(sample)  
-            debounce=self.wallChecker.compare()   
-            if(walls==[1,1,1]):                
-                self.pid.doPid(sample)
-
-            choice=self.makeChoice(walls, debounce)
+            debounce=self.wallChecker.compare()         
+            'end of sampling section'
+            
+            choice=self.makeChoice(sample,walls, debounce)
             
             if(self.turnThread.checkForTurn(choice)):
                 self.pid.reset()
@@ -169,11 +163,14 @@ class PidTuner():
         except IOError:
             pass
 
-    def makeChoice(self,walls,debounce):
+    def makeChoice(self,sample,walls,debounce):
          
         if(debounce):
             print(str(walls))
-            if(walls[self.right]==0):
+            if(walls==[1,1,1]):
+                self.pid.doPid(sample)
+                return 1
+            elif(walls[self.right]==0):
                 return 4
             elif(walls[self.left]==0):
                 return 2

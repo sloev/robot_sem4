@@ -99,12 +99,17 @@ class DualMotorController:
         return [self.positionLeft,self.positionRight]
     
     def isBusy(self,fullStatus2Matrix):
-        leftstatus=fullStatus2Matrix[0][:]
-        rightstatus=fullStatus2Matrix[1][:]
-        leftstatus=(leftstatus[1] == leftstatus[3]) & (leftstatus[2] == leftstatus[4])
-        rightstatus=(rightstatus[1] == rightstatus[3]) & (rightstatus[2] == rightstatus[4])
-        value=(leftstatus & rightstatus)==1
-       
+        fullstatus2=self.getFullStatus2()
+        
+        actLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
+        actRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
+        
+        tarLeft=fullstatus2[0][2]<<8 | fullstatus2[0][3]<<0
+        tarRight=fullstatus2[1][2]<<8 | fullstatus2[1][3]<<0
+
+        value=(actLeft==tarLeft) and (actRight==tarRight)
+        
+        value = not value
         self.logger.info("isBusy="+str(value))
         return value
         
