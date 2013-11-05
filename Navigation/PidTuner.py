@@ -238,7 +238,7 @@ class PidTuner():
                         self.SWFLock.release() # release lock, no matter what
             except IOError:
                 pass
-            self.pidEvent.wait(0.1)            
+            self.pidEvent.wait(0.01)            
         print("resetting pid")
         self.pid.reset()
         print("exiting pid thread")
