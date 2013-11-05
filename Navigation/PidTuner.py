@@ -195,6 +195,7 @@ class PidTuner():
                     self.doPidEvent.wait(0.1)
                 print("turn detected")
                 if(self.SWFLock.acquire()):
+                    print("lock acquired in doPid")
                     try: 
                         choice=self.makeChoice(self.walls)
                         self.turnThread.checkForTurn(choice)
