@@ -125,10 +125,10 @@ class PidTuner():
         self.samplingEvent.set()
 
         print("joining threads")
-        self.doPidThread.join()
-        if(self.pidThread.is_alive()):
-            self.pidThread.join()
-        self.samplingThread.join()
+#         self.doPidThread.join()
+#         if(self.pidThread.is_alive()):
+#             self.pidThread.join()
+#         self.samplingThread.join()
 
         self.logger.info("stopped threads")
                
