@@ -113,7 +113,7 @@ class PidTuner():
     def startThreads(self):
         self.logger.info("starting threads")
         self.samplingThread.start()
-        self.pidthread.start()
+        self.pidThread.start()
         self.doPid().start()
         self.logger.info("starting threads - Finnished")
 
