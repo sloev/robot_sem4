@@ -230,6 +230,7 @@ class PidTuner():
             finally:
                 self.SWFLock.release() # release lock, no matter what
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+            self.dual_motors.setPosition(32767,32767)
             self.pid.doPid(sample)
             self.pidEvent.wait(0.2)
             
