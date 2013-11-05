@@ -131,6 +131,7 @@ class PidTuner():
         del self.doPidThread
         del self.pidThread 
         del self.samplingThread
+        self.logger.info("stopped threads")
                
     def lpgadd(self):
         self.pGain=[self.pGain[self.left]+self.tuneFactor,self.pGain[self.right]]
