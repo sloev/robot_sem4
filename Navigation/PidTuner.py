@@ -194,9 +194,9 @@ class PidTuner():
                 while(not self.pidEvent.is_set()):
                     self.doPidEvent.wait(0.1)
                 print("turn detected")
-                if(self.SWFLock.acquire(False)):
+                if(self.SWFLock.acquire()):
                     try: 
-                        choice=self.makeChoice()
+                        choice=self.makeChoice(self.walls)
                         self.turnThread.checkForTurn(choice)
                     finally:
                         self.SWFLock.release() # release lock, no matter what
@@ -251,13 +251,13 @@ class PidTuner():
         self.pidEvent.set()
                  
 
-    def makeChoice(self):
-        print(str(self.walls))
-        if(self.walls[self.right]==0):
+    def makeChoice(self,walls):
+        print(str(walls))
+        if(walls[self.right]==0):
             return 4
-        elif(self.walls[self.left]==0):
+        elif(walls[self.left]==0):
             return 2
-        elif(self.walls[self.left]==1 and self.walls[self.right]==1 and self.walls[self.front]==0):
+        elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
             self.pid.reset()
             return 0
         else:
