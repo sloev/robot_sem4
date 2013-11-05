@@ -194,15 +194,15 @@ class PidTuner():
                 while(self.pidThread.is_alive()):
                     self.doPidEvent.wait(0.01)
                 print("turn detected")
-                self.SWFLock.acquire()
-                try: 
-                    choice=self.makeChoice()
-                    self.turnThread.checkForTurn(choice)
-                finally:
-                    self.SWFLock.release() # release lock, no matter what
-                    self.pidEvent.clear()
-                    self.pidThread = threading.Thread(target=self.runSampling)
-                    self.pidThread.start()
+                if(self.SWFLock.acquire(False)):
+                    try: 
+                        choice=self.makeChoice()
+                        self.turnThread.checkForTurn(choice)
+                    finally:
+                        self.SWFLock.release() # release lock, no matter what
+                        self.pidEvent.clear()
+                        self.pidThread = threading.Thread(target=self.runSampling)
+                        self.pidThread.start()
             except Exception:
                 pass
 
@@ -225,17 +225,17 @@ class PidTuner():
     
     def runPid(self):
         while(not self.pidEvent.is_set()):
-            self.SWFLock.acquire()
-            try: 
-                sample=self.sample
-                self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                self.dual_motors.setPosition(32767,32767)
-                self.pid.doPid(sample)
-                print("just did pid")
-                self.pidEvent.wait(0.2)
-            finally:
-                self.SWFLock.release() # release lock, no matter what
-                
+            if(self.SWFLock.acquire(False)):
+                try: 
+                    sample=self.sample
+                    self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+                    self.dual_motors.setPosition(32767,32767)
+                    self.pid.doPid(sample)
+                    print("just did pid")
+                    self.pidEvent.wait(0.2)
+                finally:
+                    self.SWFLock.release() # release lock, no matter what
+                    
 
             
         print("resetting pid")
