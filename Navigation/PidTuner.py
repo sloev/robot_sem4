@@ -209,7 +209,7 @@ class PidTuner():
 #                         self.turnThread.checkForTurn(choice)
                     finally:
                         self.SWFLock.release() # release lock, no matter what
-                self.doPidEvent.wait(0.01)            
+                self.doPidEvent.wait(0.1)            
             except Exception:
                 pass
 
@@ -228,7 +228,7 @@ class PidTuner():
                         self.samplingEvent.set()
                 finally:
                     self.SWFLock.release() # release lock, no matter what
-            self.samplingEvent.wait(0.001)
+            self.samplingEvent.wait(0.01)
         print("exiting sampling thread")
     
     def runPid(self):
@@ -245,7 +245,7 @@ class PidTuner():
                         self.SWFLock.release() # release lock, no matter what
             except IOError:
                 pass
-            self.pidEvent.wait(0.001)            
+            self.pidEvent.wait(0.01)            
         print("resetting pid")
         self.pid.reset()
         print("exiting pid thread")
