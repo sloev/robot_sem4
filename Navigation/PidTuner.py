@@ -105,6 +105,8 @@ class PidTuner():
         self.samplingThread = Thread(target=self.runPid)
         self.pidThread = Thread(target=self.runSampling)
         self.doPidThread=Thread(target=self.doPid())
+        self.logger.info("making the threads - finnished")
+
 
     def startThreads(self):
         self.logger.info("starting threads")
