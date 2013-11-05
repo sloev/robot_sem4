@@ -9,7 +9,7 @@ from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
 from WallsChecker import WallsChecker
 from TurnThread import TurnThread
-from threading import *
+import threading
 import time
 import sys
 import select
@@ -94,17 +94,17 @@ class PidTuner():
         
         self.logger.info("making thread stuff")
         'thread stuff'
-        self.samplingEvent=Event()
-        self.pidEvent=Event()
-        self.doPidEvent=Event()
-        self.SWFLock=Lock() #sample walls and pif flag lock
+        self.samplingEvent=threading.Event()
+        self.pidEvent=threading.Event()
+        self.doPidEvent=threading.Event()
+        self.SWFLock=threading.Lock() #sample walls and pif flag lock
         self.sample=[1,1,1]
         self.walls=[1,1,1]
         
         self.logger.info("making the threads")
-        self.samplingThread = Thread(target=self.runPid)
-        self.pidThread = Thread(target=self.runSampling)
-        self.doPidThread=Thread(target=self.doPid())
+        self.samplingThread = threading.Thread(target=self.runPid)
+        self.pidThread = threading.Thread(target=self.runSampling)
+        self.doPidThread=threading.Thread(target=self.doPid())
         self.logger.info("making the threads - finnished")
 
 
