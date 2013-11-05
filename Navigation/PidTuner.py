@@ -191,7 +191,6 @@ class PidTuner():
 #             print("lol")
 #             self.doPidEvent.wait(2)  
             try:
-                self.pidEvent.set()
                 while(self.pidThread.is_alive()):
                     self.doPidEvent.wait(0.01)
                               
@@ -202,6 +201,7 @@ class PidTuner():
                 finally:
                     self.SWFLock.release() # release lock, no matter what
                     self.pidEvent.clear()
+                    self.pidThread = threading.Thread(target=self.runSampling)
                     self.pidThread.start()
             except Exception:
                 pass
