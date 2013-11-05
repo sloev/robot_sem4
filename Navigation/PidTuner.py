@@ -192,13 +192,15 @@ class PidTuner():
 #             self.doPidEvent.wait(2)  
             try:
                 while(not self.pidEvent.is_set()):
-                    self.doPidEvent.wait(0.1)
+                    self.doPidEvent.wait(0.01)
                 print("turn detected")
                 if(self.SWFLock.acquire()):
                     print("lock acquired in doPid")
                     try: 
-                        choice=self.makeChoice(self.walls)
-                        self.turnThread.checkForTurn(choice)
+                        self.dual_motors.softStop()
+                        raw_input("lol press enter")
+#                         choice=self.makeChoice(self.walls)
+#                         self.turnThread.checkForTurn(choice)
                     finally:
                         self.SWFLock.release() # release lock, no matter what
                         self.pidEvent.clear()
