@@ -128,7 +128,10 @@ class PidTuner():
         self.doPidThread.join()
         self.pidThread.join()
         self.samplingThread.join()
-        
+        del self.doPidThread
+        del self.pidThread 
+        del self.samplingThread
+               
     def lpgadd(self):
         self.pGain=[self.pGain[self.left]+self.tuneFactor,self.pGain[self.right]]
         self.pid.pTune(self.pGain)
