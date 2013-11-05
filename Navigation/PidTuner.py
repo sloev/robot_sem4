@@ -227,12 +227,15 @@ class PidTuner():
             self.SWFLock.acquire()
             try: 
                 sample=self.sample
+                self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+                self.dual_motors.setPosition(32767,32767)
+                self.pid.doPid(sample)
+                print("just did pid")
+                self.pidEvent.wait(0.2)
             finally:
                 self.SWFLock.release() # release lock, no matter what
-            self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-            self.dual_motors.setPosition(32767,32767)
-            self.pid.doPid(sample)
-            self.pidEvent.wait(0.2)
+                
+
             
         print("resetting pid")
         self.pid.reset()
