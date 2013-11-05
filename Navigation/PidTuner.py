@@ -9,11 +9,12 @@ from Motor_control.DualMotorController import DualMotorController
 from Pid import Pid
 from WallsChecker import WallsChecker
 from TurnThread import TurnThread
-from threading import Thread
+from threading import *
 import time
 import sys
 import select
 import os
+from Carbon.Aliases import false
 
 Vin1                                =   0x08
 Vin2                                =   0x09
@@ -91,6 +92,35 @@ class PidTuner():
         self.dGain=gainfactors[1]
         self.iGain=gainfactors[2]
         
+        
+        'thread stuff'
+        self.samplingEvent=Event()
+        self.pidEvent=Event()
+        self.doPidEvent=Event()
+        self.SWFLock=Lock() #sample walls and pif flag lock
+        self.sample=[1,1,1]
+        self.walls=[1,1,1]
+        
+        self.samplingThread = Thread(target=self.runPid)
+        self.pidThread = Thread(target=self.runSampling)
+        self.doPidThread=Thread(target=self.doPid())
+
+    def startThreads(self):
+        self.samplingThread.start()
+        self.pidthread.start()
+        self.doPid().start()
+    
+    def stopThreads(self):
+        print("stopping threads")
+        self.doPidEvent.set()
+        self.pidEvent.set
+        self.samplingEvent.set()
+
+        print("joining threads")
+        self.doPidThread.join()
+        self.pidThread.join()
+        self.samplingThread.join()
+        
     def lpgadd(self):
         self.pGain=[self.pGain[self.left]+self.tuneFactor,self.pGain[self.right]]
         self.pid.pTune(self.pGain)
@@ -146,35 +176,68 @@ class PidTuner():
         return self.pid.pickleGainFactors()
         
     def doPid(self):
-        try:
-            self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        while(not self.doPidEvent.is_set()):       
+            try:
+                self.pidThread.join()
+                            
+                self.SWFLock.acquire()
+                try: 
+                    choice=self.makeChoice()
+                    self.turnThread.checkForTurn(choice)
+                finally:
+                    self.SWFLock.release() # release lock, no matter what
+                    self.pidEvent.clear()
+                    self.pidThread.start()
+            except Exception:
+                pass
 
-            self.printGains()
-            'start sampling section'
-            sample=self.ir_sensors.multiChannelReadCm(sensorChannels,3)
-            walls=self.wallChecker.checkWalls(sample)  
-            debounce=self.wallChecker.compare()         
-            'end of sampling section'
-#            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
 
-            choice=self.makeChoice(sample,walls, debounce)
-            
-            if(self.turnThread.checkForTurn(choice)):
-                self.pid.reset()
+    def runSampling(self):
+        while(not self.samplingEvent.is_set()):
+            self.SWFLock.acquire()
+            try:
+                sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
+                walls=self.wallChecker.checkWalls(sample)  
+                self.sample=sample
+                self.walls=walls
+                
+                if(walls != [1,1,1]):
+                    self.pidEvent.set()
+            finally:
+                self.SWFLock.release() # release lock, no matter what
+            self.samplingEvent.wait(0.01)
 
-        except IOError:
-            pass
-
-    def makeChoice(self,sample,walls,debounce):
-        print(str(walls))
-        if(walls==[1,1,1] and debounce):
-            self.dual_motors.setPosition(32767, 32767)
+        print("exiting sampling thread")
+    
+    def runPid(self):
+        while(not self.pidEvent.is_set()):
+            self.SWFLock.acquire()
+            try: 
+                sample=self.sample
+            finally:
+                self.SWFLock.release() # release lock, no matter what
             self.pid.doPid(sample)
-        elif(walls[self.right]==0):
+            self.pidEvent.wait(0.01)
+            
+        print("resetting pid")
+        self.pid.reset()
+        print("exiting pid thread")
+        
+      
+    def stopSampling(self):
+        self.samplingEvent.set()
+        
+    def stopPid(self):
+        self.pidEvent.set()
+                 
+
+    def makeChoice(self):
+        print(str(self.walls))
+        if(self.walls[self.right]==0):
             return 4
-        elif(walls[self.left]==0):
+        elif(self.walls[self.left]==0):
             return 2
-        elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
+        elif(self.walls[self.left]==1 and self.walls[self.right]==1 and self.walls[self.front]==0):
             self.pid.reset()
             return 0
         else:
@@ -182,11 +245,13 @@ class PidTuner():
         
     def stop(self):
         self.dual_motors.softStop()
+        self.stopThreads()
    
 def main():
 
     pidtuner=PidTuner()
-
+    pidtuner.startThreads()
+ 
     print("\
         used to tune the pid gain factors using keyboard input\
         \    npress q to save\
@@ -225,7 +290,6 @@ def main():
                     print("saved="+str(bool(pidtuner.save()))) 
                 else: # an empty line means stdin has been closed
                     print('eof')
-            pidtuner.doPid()
     except KeyboardInterrupt:
         print("saving")
         if(pidtuner.save()):
