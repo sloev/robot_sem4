@@ -14,7 +14,6 @@ import time
 import sys
 import select
 import os
-from Carbon.Aliases import false
 
 Vin1                                =   0x08
 Vin2                                =   0x09
