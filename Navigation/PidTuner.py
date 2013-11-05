@@ -215,7 +215,7 @@ class PidTuner():
                 self.sample=sample
                 self.walls=walls
                 
-                if(walls != [1,1,1]):
+                if(walls[self.left]!=1 or walls[self.right]!=1):
                     self.pidEvent.set()
             finally:
                 self.SWFLock.release() # release lock, no matter what
