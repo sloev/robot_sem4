@@ -193,7 +193,7 @@ class PidTuner():
             try:
                 while(self.pidThread.is_alive()):
                     self.doPidEvent.wait(0.01)
-                              
+                print("turn detected")
                 self.SWFLock.acquire()
                 try: 
                     choice=self.makeChoice()
