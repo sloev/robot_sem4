@@ -191,7 +191,7 @@ class PidTuner():
 #             print("lol")
 #             self.doPidEvent.wait(2)  
             try:
-                while(self.pidThread.is_alive()):
+                while(not self.pidEvent.is_set()):
                     self.doPidEvent.wait(0.1)
                 print("turn detected")
                 if(self.SWFLock.acquire(False)):
