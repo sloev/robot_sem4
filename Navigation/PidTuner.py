@@ -97,13 +97,15 @@ class PidTuner():
         self.samplingEvent=threading.Event()
         self.pidEvent=threading.Event()
         self.doPidEvent=threading.Event()
-        self.SWFLock=threading.Lock() #sample walls and pif flag lock
+        self.SWFLock=threading.Lock() 
         self.sample=[1,1,1]
         self.walls=[1,1,1]
         
-        self.logger.info("making the threads")
+        self.logger.info("making the samplethread")
         self.samplingThread = threading.Thread(target=self.runPid)
+        self.logger.info("making the samplingthread")
         self.pidThread = threading.Thread(target=self.runSampling)
+        self.logger.info("making the dopidThread")
         self.doPidThread=threading.Thread(target=self.doPid())
         self.logger.info("making the threads - finnished")
 
