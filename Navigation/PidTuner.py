@@ -192,7 +192,7 @@ class PidTuner():
 #             self.doPidEvent.wait(2)  
             try:
                 while(self.pidThread.is_alive()):
-                    self.doPidEvent.wait(0.01)
+                    self.doPidEvent.wait(0.1)
                 print("turn detected")
                 if(self.SWFLock.acquire(False)):
                     try: 
@@ -203,7 +203,7 @@ class PidTuner():
                         self.pidEvent.clear()
                         self.pidThread = threading.Thread(target=self.runSampling)
                         self.pidThread.start()
-                self.doPidEvent.wait(0.01)            
+                self.doPidEvent.wait(0.1)            
             except Exception:
                 pass
 
@@ -221,7 +221,7 @@ class PidTuner():
                         self.pidEvent.set()
                 finally:
                     self.SWFLock.release() # release lock, no matter what
-            self.samplingEvent.wait(0.01)
+            self.samplingEvent.wait(0.1)
         print("exiting sampling thread")
     
     def runPid(self):
@@ -235,7 +235,7 @@ class PidTuner():
                     print("just did pid")
                 finally:
                     self.SWFLock.release() # release lock, no matter what
-            self.pidEvent.wait(0.01)            
+            self.pidEvent.wait(0.1)            
         print("resetting pid")
         self.pid.reset()
         print("exiting pid thread")
