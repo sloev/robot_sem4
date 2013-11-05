@@ -203,7 +203,7 @@ class PidTuner():
                         self.pidEvent.clear()
                         self.pidThread = threading.Thread(target=self.runSampling)
                         self.pidThread.start()
-                self.doPidEvent.wait(0.008)            
+                self.doPidEvent.wait(0.01)            
             except Exception:
                 pass
 
@@ -214,7 +214,7 @@ class PidTuner():
                     sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                     walls=self.wallChecker.checkWalls(sample)  
                     self.sample=sample
-                    print("sample="+str(sample))
+                    #print("sample="+str(sample))
                     self.walls=walls
                     
                     if(walls[self.left]!=1 or walls[self.right]!=1):
@@ -235,7 +235,7 @@ class PidTuner():
                     print("just did pid")
                 finally:
                     self.SWFLock.release() # release lock, no matter what
-            self.pidEvent.wait(0.007)            
+            self.pidEvent.wait(0.01)            
         print("resetting pid")
         self.pid.reset()
         print("exiting pid thread")
