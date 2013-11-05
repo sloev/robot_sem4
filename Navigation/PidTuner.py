@@ -188,8 +188,6 @@ class PidTuner():
         
     def doPid(self):
         while(not self.doPidEvent.is_set()):     
-#             print("lol")
-#             self.doPidEvent.wait(2)  
             try:
                 while(not self.pidEvent.is_set()):
                     self.doPidEvent.wait(0.01)
@@ -211,7 +209,7 @@ class PidTuner():
 #                         self.turnThread.checkForTurn(choice)
                     finally:
                         self.SWFLock.release() # release lock, no matter what
-                self.doPidEvent.wait(0.1)            
+                self.doPidEvent.wait(0.01)            
             except Exception:
                 pass
 
@@ -230,7 +228,7 @@ class PidTuner():
                         self.samplingEvent.set()
                 finally:
                     self.SWFLock.release() # release lock, no matter what
-            self.samplingEvent.wait(0.01)
+            self.samplingEvent.wait(0.001)
         print("exiting sampling thread")
     
     def runPid(self):
@@ -247,7 +245,7 @@ class PidTuner():
                         self.SWFLock.release() # release lock, no matter what
             except IOError:
                 pass
-            self.pidEvent.wait(0.01)            
+            self.pidEvent.wait(0.001)            
         print("resetting pid")
         self.pid.reset()
         print("exiting pid thread")
@@ -294,7 +292,7 @@ def main():
         ")
     try:
         while True:
-            time.sleep(0.3)
+            time.sleep(1)
             pidtuner.printGains()
     
             # get keyboard input, returns -1 if none available
