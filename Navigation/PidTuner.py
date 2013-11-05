@@ -106,7 +106,7 @@ class PidTuner():
         self.logger.info("making the samplingthread")
         self.pidThread = threading.Thread(target=self.runSampling)
         self.logger.info("making the dopidThread")
-        self.doPidThread=threading.Thread(target=self.doPid())
+        self.doPidThread=threading.Thread(target=self.doPid)
         self.logger.info("making the threads - finnished")
 
 
@@ -185,21 +185,21 @@ class PidTuner():
         
     def doPid(self):
         while(not self.doPidEvent.is_set()):     
-            print("lol")
-            self.doPidEvent.wait(2)  
-#             try:
-#                 self.pidThread.join()
-#                             
-#                 self.SWFLock.acquire()
-#                 try: 
-#                     choice=self.makeChoice()
-#                     self.turnThread.checkForTurn(choice)
-#                 finally:
-#                     self.SWFLock.release() # release lock, no matter what
-#                     self.pidEvent.clear()
-#                     self.pidThread.start()
-#             except Exception:
-#                 pass
+#             print("lol")
+#             self.doPidEvent.wait(2)  
+            try:
+                self.pidThread.join()
+                             
+                self.SWFLock.acquire()
+                try: 
+                    choice=self.makeChoice()
+                    self.turnThread.checkForTurn(choice)
+                finally:
+                    self.SWFLock.release() # release lock, no matter what
+                    self.pidEvent.clear()
+                    self.pidThread.start()
+            except Exception:
+                pass
 
     def runSampling(self):
         while(not self.samplingEvent.is_set()):
