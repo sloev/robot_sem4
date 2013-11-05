@@ -213,6 +213,7 @@ class PidTuner():
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
                 self.sample=sample
+                print("sample="+str(sample))
                 self.walls=walls
                 
                 if(walls[self.left]!=1 or walls[self.right]!=1):
