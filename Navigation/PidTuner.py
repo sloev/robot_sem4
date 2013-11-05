@@ -126,11 +126,10 @@ class PidTuner():
 
         print("joining threads")
         self.doPidThread.join()
-        self.pidThread.join()
+        if(self.pidThread.is_alive()):
+            self.pidThread.join()
         self.samplingThread.join()
-        del self.doPidThread
-        del self.pidThread 
-        del self.samplingThread
+
         self.logger.info("stopped threads")
                
     def lpgadd(self):
@@ -219,7 +218,6 @@ class PidTuner():
             finally:
                 self.SWFLock.release() # release lock, no matter what
             self.samplingEvent.wait(0.01)
-
         print("exiting sampling thread")
     
     def runPid(self):
