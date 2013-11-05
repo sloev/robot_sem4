@@ -121,7 +121,7 @@ class PidTuner():
     def stopThreads(self):
         print("stopping threads")
         self.doPidEvent.set()
-        self.pidEvent.set
+        self.pidEvent.set()
         self.samplingEvent.set()
 
         print("joining threads")
