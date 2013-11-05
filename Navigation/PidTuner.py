@@ -199,10 +199,7 @@ class PidTuner():
                     try: 
                         self.dual_motors.softStop()
                         raw_input("lol press enter")
-#                         choice=self.makeChoice(self.walls)
-#                         self.turnThread.checkForTurn(choice)
-                    finally:
-                        self.SWFLock.release() # release lock, no matter what
+                        
                         self.pidEvent.clear()
                         self.samplingEvent.clear()
                         self.pidThread = threading.Thread(target=self.runPid)
@@ -210,6 +207,10 @@ class PidTuner():
                         self.samplingThread = threading.Thread(target=self.runSampling)
                         self.samplingThread.start()
                         self.pidThread.start()
+#                         choice=self.makeChoice(self.walls)
+#                         self.turnThread.checkForTurn(choice)
+                    finally:
+                        self.SWFLock.release() # release lock, no matter what
                 self.doPidEvent.wait(0.1)            
             except Exception:
                 pass
