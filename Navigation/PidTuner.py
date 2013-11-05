@@ -203,24 +203,25 @@ class PidTuner():
                         self.pidEvent.clear()
                         self.pidThread = threading.Thread(target=self.runSampling)
                         self.pidThread.start()
+                self.doPidEvent.wait(0.008)            
             except Exception:
                 pass
 
     def runSampling(self):
         while(not self.samplingEvent.is_set()):
-            self.SWFLock.acquire()
-            try:
-                sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
-                walls=self.wallChecker.checkWalls(sample)  
-                self.sample=sample
-                print("sample="+str(sample))
-                self.walls=walls
-                
-                if(walls[self.left]!=1 or walls[self.right]!=1):
-                    self.pidEvent.set()
-            finally:
-                self.SWFLock.release() # release lock, no matter what
-            self.samplingEvent.wait(0.2)
+            if(self.SWFLock.acquire(False)):
+                try:
+                    sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
+                    walls=self.wallChecker.checkWalls(sample)  
+                    self.sample=sample
+                    print("sample="+str(sample))
+                    self.walls=walls
+                    
+                    if(walls[self.left]!=1 or walls[self.right]!=1):
+                        self.pidEvent.set()
+                finally:
+                    self.SWFLock.release() # release lock, no matter what
+            self.samplingEvent.wait(0.01)
         print("exiting sampling thread")
     
     def runPid(self):
@@ -232,12 +233,9 @@ class PidTuner():
                     self.dual_motors.setPosition(32767,32767)
                     self.pid.doPid(sample)
                     print("just did pid")
-                    self.pidEvent.wait(0.2)
                 finally:
                     self.SWFLock.release() # release lock, no matter what
-                    
-
-            
+            self.pidEvent.wait(0.007)            
         print("resetting pid")
         self.pid.reset()
         print("exiting pid thread")
