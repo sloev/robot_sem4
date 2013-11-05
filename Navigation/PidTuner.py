@@ -202,7 +202,11 @@ class PidTuner():
                     finally:
                         self.SWFLock.release() # release lock, no matter what
                         self.pidEvent.clear()
-                        self.pidThread = threading.Thread(target=self.runSampling)
+                        self.samplingEvent.clear()
+                        self.pidThread = threading.Thread(target=self.runPid)
+                        
+                        self.samplingThread = threading.Thread(target=self.runSampling)
+                        self.samplingThread.start()
                         self.pidThread.start()
                 self.doPidEvent.wait(0.1)            
             except Exception:
@@ -220,6 +224,7 @@ class PidTuner():
                     
                     if(walls[self.left]!=1 or walls[self.right]!=1):
                         self.pidEvent.set()
+                        self.samplingEvent.set()
                 finally:
                     self.SWFLock.release() # release lock, no matter what
             self.samplingEvent.wait(0.01)
