@@ -221,7 +221,7 @@ class PidTuner():
                         self.pidEvent.set()
                 finally:
                     self.SWFLock.release() # release lock, no matter what
-            self.samplingEvent.wait(0.1)
+            self.samplingEvent.wait(0.01)
         print("exiting sampling thread")
     
     def runPid(self):
