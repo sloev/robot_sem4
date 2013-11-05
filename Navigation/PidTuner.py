@@ -53,15 +53,15 @@ class PidTuner():
             os.remove("/home/pi/robot_sem4/robot.log")
         except OSError:
             pass
-        logger = logging.getLogger('robot')
-        logger.setLevel(logging.INFO)
+        self.logger = logging.getLogger('robot')
+        self.logger.setLevel(logging.INFO)
         
         fh = logging.FileHandler('robot.log')
         fh.setLevel(logging.INFO)
 
         formatter = logging.Formatter('%(asctime)s/%(name)s/%(message)s')
         fh.setFormatter(formatter)
-        logger.addHandler(fh)
+        self.logger.addHandler(fh)
         
         'sensors'
         self.ir_sensors = IR_Sensors_Controller(0x20)
@@ -85,13 +85,14 @@ class PidTuner():
         'turnThread'
         self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
         
+        self.logger.info("making gainFactors")
         'load gainfactors'
         gainfactors=self.pid.getGainFactors()
         self.pGain=gainfactors[0]
         self.dGain=gainfactors[1]
         self.iGain=gainfactors[2]
         
-        
+        self.logger.info("making thread stuff")
         'thread stuff'
         self.samplingEvent=Event()
         self.pidEvent=Event()
@@ -100,14 +101,18 @@ class PidTuner():
         self.sample=[1,1,1]
         self.walls=[1,1,1]
         
+        self.logger.info("making the threads")
         self.samplingThread = Thread(target=self.runPid)
         self.pidThread = Thread(target=self.runSampling)
         self.doPidThread=Thread(target=self.doPid())
 
     def startThreads(self):
+        self.logger.info("starting threads")
         self.samplingThread.start()
         self.pidthread.start()
         self.doPid().start()
+        self.logger.info("starting threads - Finnished")
+
     
     def stopThreads(self):
         print("stopping threads")
