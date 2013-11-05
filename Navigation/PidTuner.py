@@ -217,7 +217,7 @@ class PidTuner():
                     self.pidEvent.set()
             finally:
                 self.SWFLock.release() # release lock, no matter what
-            self.samplingEvent.wait(0.01)
+            self.samplingEvent.wait(0.2)
         print("exiting sampling thread")
     
     def runPid(self):
@@ -229,7 +229,7 @@ class PidTuner():
                 self.SWFLock.release() # release lock, no matter what
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
             self.pid.doPid(sample)
-            self.pidEvent.wait(0.01)
+            self.pidEvent.wait(0.2)
             
         print("resetting pid")
         self.pid.reset()
