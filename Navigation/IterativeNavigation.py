@@ -94,8 +94,10 @@ class IterativeNavigator():
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 10)
             walls=self.wallChecker.checkWalls(sample)
             choice=self.makeChoice(walls)
+            print("choice=%d"%choice)
             print("exiting makechoice")
-            self.turnThread.checkForTurn(choice)
+            val=self.turnThread.checkForTurn(choice)
+            print("turn success=%d"%val)
             print("exiting checkforturn")
             
             steps=self.currentAngle(sample)
