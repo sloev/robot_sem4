@@ -32,8 +32,10 @@ class IterativeNavigator():
         self.left=not direction
         self.right=direction
         self.front=2
-        
         self.maxWidth=34
+
+        self.minMaxSetpoint=[5,self.maxWidth,16]
+        
         self.distanceInBetweenSensors=4
         self.cmPrHalfCell=30
         
@@ -66,9 +68,9 @@ class IterativeNavigator():
         
         
         'wallchecker'
-        self.wallChecker=WallsChecker(self.pid.getMinMaxSetpoint(),self.left,self.right,self.front)
+        self.wallChecker=WallsChecker(self.minMaxSetpoint,self.left,self.right,self.front)
         'turn thread'
-        self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
+        self.turnThread=TurnThread(self.dual_motors,self.left,self.right)
 
         self.lastAngle=0
         self.navigatorStopEvent=threading.Event()
