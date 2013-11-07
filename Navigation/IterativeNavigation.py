@@ -97,7 +97,7 @@ class IterativeNavigator():
             self.turnThread.checkForTurn(choice)
             
             steps=self.currentAngle(sample)
-            self.drive(steps)
+            self.driveStraight(steps)
 
     def makeChoice(self,walls):
         print(str(walls))
@@ -111,10 +111,13 @@ class IterativeNavigator():
             return 0
         
     def drive(self,steps):
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(steps, steps)
         while(self.dual_motors.isBusy()):
             self.navigatorStopEvent.wait(0.1)
+            
+    def driveStraight(self,steps):
+        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.drive(steps)
  
     def currentAngle(self,sample):
         'alt er i cm'
@@ -140,6 +143,7 @@ class IterativeNavigator():
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
             angleF=math.acos( lengthC / lengthB )
             currentAngle=angleF+angleV
+        
 
         self.dual_motors.setMotorParams(direction, direction, 1, 1)
         steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
