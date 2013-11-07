@@ -36,7 +36,7 @@ class IterativeNavigator():
 
         self.minMaxSetpoint=[5,self.maxWidth+15,15]
         
-        self.distanceInBetweenSensors=4
+        self.distanceInBetweenSensors=3
         self.cmPrHalfCell=30
         
         self.tuneFactor=0.1
@@ -91,7 +91,7 @@ class IterativeNavigator():
         
     def navigator(self):
         while not self.navigatorStopEvent.is_set():
-            sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 10)
+            sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 1)
             walls=self.wallChecker.checkWalls(sample)
             choice=self.makeChoice(walls)
             print("choice=%d"%choice)
