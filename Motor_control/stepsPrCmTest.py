@@ -14,10 +14,10 @@ def main():
     motors.setOtpParam()
    # tmp=motors.getFullStatus2()
     motors.setMotorParams(0,1, 2, 2)
-    steps=5000
+    steps=15000
     motors.runInit()
     time.sleep(3)
-    string="press enter to drive %d steps",steps
+    string="press enter to drive %d steps" % steps
     while True:
         try:
             raw_input(string)
