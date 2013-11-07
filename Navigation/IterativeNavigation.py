@@ -94,10 +94,13 @@ class IterativeNavigator():
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 10)
             walls=self.wallChecker.checkWalls(sample)
             choice=self.makeChoice(walls)
+            print("exiting makechoice")
             self.turnThread.checkForTurn(choice)
+            print("exiting checkforturn")
             
             steps=self.currentAngle(sample)
             self.driveStraight(steps)
+            print("driving straight")
 
     def makeChoice(self,walls):
         print(str(walls))
@@ -143,14 +146,26 @@ class IterativeNavigator():
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
             angleF=math.acos( lengthC / lengthB )
             currentAngle=angleF+angleV
-        
-
+      
         self.dual_motors.setMotorParams(direction, direction, 1, 1)
         steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
         self.drive(steps)
         self.lastAngle=currentAngle
         
-        return self.dual_motors.stepsData.cmToSteps(lengthB)
+        returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
+        
+        string = "\nd: \t%s\n" % str(lengthD) 
+        string += "e:    \t%s\n" % str(lengthE)
+        string += "c:    \t%s\n" % str(lengthC)
+        string += "b:          \t%s\n" % str(lengthB)
+        string += "f:        \t%s\n" % str(angleF)
+        string += "v:        \t%s\n" % str(angleV)
+        string += "totalangle:        \t%s\n" % str(currentAngle)
+        string += "steps:        \t%s\n" % str(steps)
+        string += "return steps:        \t%s\n" % str(returnSteps)
+        
+        print string  
+        return returnSteps
 
         
 def main():
