@@ -32,8 +32,8 @@ class TurnThread():
         value=0
         try:
             if(choice>1):
+                self.funcDict[choice]()
                 value=1
-            self.funcDict[choice]()
         except KeyError:
             pass
         return value
@@ -69,6 +69,7 @@ class TurnThread():
         print("straight")
         
     def turn90(self,direction):
+        print("turning 90")
         #self.dual_motors.softStop()
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
