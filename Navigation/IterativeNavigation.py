@@ -96,7 +96,7 @@ class IterativeNavigator():
             choice=self.makeChoice(walls)
             print("choice=%d"%choice)
             print("exiting makechoice")
-            val=self.turnThread.checkForTurn(choice)
+            #val=self.turnThread.checkForTurn(choice)
             print("turn success=%d"%val)
             print("exiting checkforturn")
             
