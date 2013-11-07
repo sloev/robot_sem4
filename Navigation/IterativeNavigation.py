@@ -22,7 +22,7 @@ Vin3                                =   0x0A
 
 sensorChannels=[Vin1,Vin2,Vin3]
 
-class IterativeNavigation():
+class IterativeNavigator():
     def __init__(self):
         '''
         direction:
@@ -71,15 +71,25 @@ class IterativeNavigation():
         self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
 
         self.lastAngle=0
+        self.navigatorStopEvent=threading.Event()
+        
+    def runNavigator(self):
+        self.navigatorStopEvent.clear()
+        self.navigatorThread=threading.Thread(target=self.navigator)
+        
+    def stopNavigator(self):
+        self.navigatorStopEvent.set()
+        self.navigatorThread.join()
         
     def navigator(self):
-        sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 10)
-        walls=self.wallChecker.checkWalls(sample)
-        choice=self.makeChoice(walls)
-        self.turnThread.checkForTurn(choice)
-        
-        steps=self.currentAngle(sample)
-        self.driveStraight(steps)
+        while not self.navigatorStopEvent.is_set():
+            sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 10)
+            walls=self.wallChecker.checkWalls(sample)
+            choice=self.makeChoice(walls)
+            self.turnThread.checkForTurn(choice)
+            
+            steps=self.currentAngle(sample)
+            self.drive(steps)
 
     def makeChoice(self,walls):
         print(str(walls))
@@ -93,7 +103,7 @@ class IterativeNavigation():
         else:
             return 0
         
-    def driveStraight(self,steps):
+    def drive(self,steps):
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(steps, steps)
         while(self.dual_motors.isBusy()):
@@ -126,14 +136,18 @@ class IterativeNavigation():
 
         self.dual_motors.setMotorParams(direction, direction, 1, 1)
         steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
+        self.drive(steps)
         self.lastAngle=currentAngle
         
-        return steps
+        return self.dual_motors.stepsData.cmToSteps(lengthB)
 
         
     def turn(self):
         pass
 def main():
+    navigator = IterativeNavigator()
+    navigator.
+    
     pass
 if __name__ == '__main__':
     pass
