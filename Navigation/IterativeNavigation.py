@@ -76,12 +76,18 @@ class IterativeNavigator():
         self.navigatorStopEvent=threading.Event()
         
     def runNavigator(self):
+        print("making and starting nav thread")
         self.navigatorStopEvent.clear()
         self.navigatorThread=threading.Thread(target=self.navigator)
+        self.navigatorThread.start()
+        print ("made nav thread and started it ")
+        
         
     def stopNavigator(self):
+        print("stopping nav thread")
         self.navigatorStopEvent.set()
         self.navigatorThread.join()
+        print("stopped and joined nav thread")
         
     def navigator(self):
         while not self.navigatorStopEvent.is_set():
@@ -144,13 +150,15 @@ class IterativeNavigator():
         return self.dual_motors.stepsData.cmToSteps(lengthB)
 
         
-    def turn(self):
-        pass
 def main():
     navigator = IterativeNavigator()
+    print("init'ed navigator")
     navigator.runNavigator()
+    print("running navigator")
     time.sleep(20)
+    print("stopping navigator")
     navigator.stopNavigator()
+    print("navigator stopped")
     pass
 if __name__ == '__main__':
     main()
