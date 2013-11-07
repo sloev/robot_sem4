@@ -92,19 +92,26 @@ class DualMotorController:
         self.setPosition(self.turn180Steps, self.turn180Steps)
         
     def setPosition(self,incLeftPos,incRightPos):
-        self.logger.info("setPosition"+str(incLeftPos)+","+str(incRightPos))
-        fullstatus2=self.getFullStatus2()
-        
-        positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
-        positionRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
-        
-        #print(str(positionLeft)+"\t"+str(positionRight))
-        
-        positionLeft+=incLeftPos
-        positionRight+=incRightPos
-        
-        self.motorLeft.setPosition(positionLeft)
-        self.motorRight.setPosition(positionRight)
+        test=False
+        while not test:
+            try:
+                self.logger.info("setPosition"+str(incLeftPos)+","+str(incRightPos))
+                fullstatus2=self.getFullStatus2()
+                
+                positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
+                positionRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
+                
+                #print(str(positionLeft)+"\t"+str(positionRight))
+                
+                positionLeft+=incLeftPos
+                positionRight+=incRightPos
+                
+                self.motorLeft.setPosition(positionLeft)
+                self.motorRight.setPosition(positionRight)
+                test=True
+                break
+            except IOError:
+                pass
 
         
     def getOfflinePosition(self):
