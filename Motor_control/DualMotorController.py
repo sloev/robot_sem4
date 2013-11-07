@@ -123,7 +123,7 @@ class DualMotorController:
         value=(actLeft==tarLeft) and (actRight==tarRight)
         
         value = not value
-        print("isbusy="+str(value))
+        #print("isbusy="+str(value))
         self.logger.info("isBusy="+str(value))
 
         return value
