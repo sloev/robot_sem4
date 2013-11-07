@@ -23,8 +23,8 @@ class StepsData():
         '1/8 stepmode'
         self.stepsPrCm[2]=177
         self.stepsPrRadians[2]=808.5071
-        self.stepsPr90[2]=int(self.stepsPrRadians*(math.pi/2))
-        self.stepsPr180[2]=int(self.stepsPrRadians*math.pi)
+        self.stepsPr90[2]=int(self.stepsPrRadians[2]*(math.pi/2))
+        self.stepsPr180[2]=int(self.stepsPrRadians[2]*math.pi)
         
         
     def radiansToSteps(self,radians):
