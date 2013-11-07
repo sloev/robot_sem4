@@ -28,7 +28,7 @@ class IterativeNavigator():
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
-        direction=1
+        direction=0
         self.left=not direction
         self.right=direction
         self.front=2
