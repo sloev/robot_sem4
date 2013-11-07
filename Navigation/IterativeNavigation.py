@@ -99,10 +99,10 @@ class IterativeNavigator():
             val=self.turnThread.checkForTurn(choice)
             print("turn success=%d"%val)
             print("exiting checkforturn")
-            
-            steps=self.currentAngle(sample)
-            self.driveStraight(steps)
-            print("driving straight")
+            if(choice<1):
+                steps=self.currentAngle(sample)
+                self.driveStraight(steps)
+                print("driving straight")
 
     def makeChoice(self,walls):
         print(str(walls))
