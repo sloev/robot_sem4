@@ -156,8 +156,11 @@ class IterativeNavigator():
             self.drive(steps)
             
             returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
+            
             string = "\nwasLeft:     \t%s\n" % str(lastWasLeft) 
             string += "d:             \t%s\n" % str(lengthD) 
+            string += "left:             \t%s\n" % str(left) 
+            string += "right:             \t%s\n" % str(right) 
             string += "e:            \t%s\n" % str(lengthE)
             string += "c:            \t%s\n" % str(lengthC)
             string += "b:            \t%s\n" % str(lengthB)
