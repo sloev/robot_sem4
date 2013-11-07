@@ -130,7 +130,7 @@ class IterativeNavigator():
         right=sample[self.right]+(self.distanceInBetweenSensors/2)
         
         angleV=math.cos(self.maxWidth/(left+right))
-        if lastWasLeft:
+        if not lastWasLeft:
             direction=self.right
             lengthE=math.cos(angleV)*right
             lengthD=self.maxWidth-lengthE
