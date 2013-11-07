@@ -125,12 +125,12 @@ class IterativeNavigator():
     def currentAngle(self,sample):
         'alt er i cm'
         lastWasLeft=self.lastAngle>0
-        
+        returnSteps=self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
         left=sample[self.left]+(self.distanceInBetweenSensors/2)
         right=sample[self.right]+(self.distanceInBetweenSensors/2)
         
         angleV=math.cos(self.maxWidth/(left+right))
-        if self.lastAngle > 0:
+        if lastWasLeft:
             direction=self.right
             lengthE=math.cos(angleV)*right
             lengthD=self.maxWidth-lengthE
@@ -138,7 +138,7 @@ class IterativeNavigator():
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
             angleF=(math.pi/2)-math.acos( lengthC/lengthB )#!!! rigtigt?
             currentAngle=angleF+angleV
-        elif self.lastAngle < 0:
+        else:
             direction=self.left
             lengthD=math.cos(angleV)*left
             lengthE=self.maxWidth-lengthD
@@ -150,7 +150,6 @@ class IterativeNavigator():
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
             steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
             self.drive(steps)
-            self.lastAngle=currentAngle
             
             returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
             string = "\nwasLeft:     \t%s\n" % str(lastWasLeft) 
@@ -165,8 +164,9 @@ class IterativeNavigator():
             string += "return steps: \t%s\n" % str(returnSteps)
             
             print string  
-            return returnSteps
-        return self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
+        self.lastAngle=currentAngle
+        return returnSteps
+        
         
 def main():
     
