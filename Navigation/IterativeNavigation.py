@@ -128,8 +128,10 @@ class IterativeNavigator():
         'alt er i cm'
         lastWasLeft=self.lastAngle<0
         returnSteps=self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
+        
         left=sample[self.left]+(self.distanceInBetweenSensors/2)
         right=sample[self.right]+(self.distanceInBetweenSensors/2)
+        
         tmp=self.maxWidth/(left+right)
         if tmp>1:
             tmp=1
