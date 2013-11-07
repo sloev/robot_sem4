@@ -139,7 +139,7 @@ class IterativeNavigator():
             lengthD=self.maxWidth-lengthE
             lengthC=lengthD-(self.maxWidth/2)
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
-            angleF=(math.pi/2)-math.cos( lengthC/lengthB )#!!! rigtigt?
+            angleF=(math.pi/2)-math.acos( lengthC/lengthB )#!!! rigtigt?
             currentAngle=angleF+angleV
         else:
             direction=self.left
@@ -147,9 +147,9 @@ class IterativeNavigator():
             lengthE=self.maxWidth-lengthD
             lengthC=lengthE-(self.maxWidth/2)
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
-            angleF=math.cos( lengthC / lengthB )
-            currentAngle=-(angleF+angleV)
-        currentAngle=math.acos(currentAngle)
+            angleF=math.acos( lengthC / lengthB )
+            currentAngle=(angleF+angleV)
+
         if self.lastAngle!=0:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
             steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
