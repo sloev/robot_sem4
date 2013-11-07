@@ -130,8 +130,9 @@ class IterativeNavigator():
         returnSteps=self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
         left=sample[self.right]+(self.distanceInBetweenSensors/2)
         right=sample[self.left]+(self.distanceInBetweenSensors/2)
-        
-        angleV=math.acos(self.maxWidth/(left+right))
+        tmp=self.maxWidth/(left+right)
+        print("tmp="+str(tmp))
+        angleV=math.acos(tmp)
         
         if not lastWasLeft:
             direction=self.right
