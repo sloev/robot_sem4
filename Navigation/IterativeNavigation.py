@@ -146,8 +146,9 @@ class IterativeNavigator():
         pass
 def main():
     navigator = IterativeNavigator()
-    navigator.
-    
+    navigator.runNavigator()
+    time.sleep(20)
+    navigator.stopNavigator()
     pass
 if __name__ == '__main__':
-    pass
+    main()
