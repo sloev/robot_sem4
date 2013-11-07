@@ -130,7 +130,7 @@ class IterativeNavigator():
         right=sample[self.right]+(self.distanceInBetweenSensors/2)
         
         angleV=math.cos(self.maxWidth/(left+right))
-        if lastWasLeft:
+        if self.lastAngle > 0:
             direction=self.right
             lengthE=math.cos(angleV)*right
             lengthD=self.maxWidth-lengthE
@@ -138,7 +138,7 @@ class IterativeNavigator():
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
             angleF=(math.pi/2)-math.acos( lengthC/lengthB )#!!! rigtigt?
             currentAngle=angleF+angleV
-        else:
+        elif self.lastAngle < 0:
             direction=self.left
             lengthD=math.cos(angleV)*left
             lengthE=self.maxWidth-lengthD
@@ -146,27 +146,27 @@ class IterativeNavigator():
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
             angleF=math.acos( lengthC / lengthB )
             currentAngle=angleF+angleV
-      
-        self.dual_motors.setMotorParams(direction, direction, 1, 1)
-        steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
-        self.drive(steps)
-        self.lastAngle=currentAngle
-        
-        returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
-        
-        string = "\nd: \t%s\n" % str(lengthD) 
-        string += "e:    \t%s\n" % str(lengthE)
-        string += "c:    \t%s\n" % str(lengthC)
-        string += "b:          \t%s\n" % str(lengthB)
-        string += "f:        \t%s\n" % str(angleF)
-        string += "v:        \t%s\n" % str(angleV)
-        string += "totalangle:        \t%s\n" % str(currentAngle)
-        string += "steps:        \t%s\n" % str(steps)
-        string += "return steps:        \t%s\n" % str(returnSteps)
-        
-        print string  
-        return returnSteps
-
+        if self.lastAngle!=0:
+            self.dual_motors.setMotorParams(direction, direction, 1, 1)
+            steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
+            self.drive(steps)
+            self.lastAngle=currentAngle
+            
+            returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
+            string = "\nwasLeft:     \t%s\n" % str(lastWasLeft) 
+            string = "d:             \t%s\n" % str(lengthD) 
+            string += "e:            \t%s\n" % str(lengthE)
+            string += "c:            \t%s\n" % str(lengthC)
+            string += "b:            \t%s\n" % str(lengthB)
+            string += "f:            \t%s\n" % str(angleF)
+            string += "v:            \t%s\n" % str(angleV)
+            string += "totalangle:   \t%s\n" % str(currentAngle)
+            string += "steps:        \t%s\n" % str(steps)
+            string += "return steps: \t%s\n" % str(returnSteps)
+            
+            print string  
+            return returnSteps
+        return self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
         
 def main():
     
