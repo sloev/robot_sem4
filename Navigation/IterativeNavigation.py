@@ -131,6 +131,10 @@ class IterativeNavigator():
         left=sample[self.right]+(self.distanceInBetweenSensors/2)
         right=sample[self.left]+(self.distanceInBetweenSensors/2)
         tmp=self.maxWidth/(left+right)
+        if tmp>1:
+            tmp=1
+        elif tmp<0:
+            tmp=0
         print("tmp="+str(tmp))
         angleV=math.acos(tmp)
         
