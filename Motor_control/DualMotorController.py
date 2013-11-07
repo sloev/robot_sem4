@@ -46,11 +46,16 @@ class DualMotorController:
         self.motorRight.runInit()
     
     def setMotorParams(self,leftDir,rightDir,leftMaxVel,rightMaxVel):
-        self.logger.info("setMotorParams")
-
-        self.motorLeft.setMotorParam(leftDir, leftMaxVel)
-        self.motorRight.setMotorParam(rightDir, rightMaxVel)
-    
+        test=False
+        while not test:
+            try:
+                self.logger.info("setMotorParams")
+        
+                self.motorLeft.setMotorParam(leftDir, leftMaxVel)
+                self.motorRight.setMotorParam(rightDir, rightMaxVel)
+                test=1
+            except IOError:
+                pass
     def getFullStatus1(self):
         self.logger.info("getFullStatus1")
 
