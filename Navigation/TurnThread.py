@@ -13,10 +13,9 @@ Vin3                                =   0x0A
 sensorChannels=[Vin1,Vin2,Vin3]
 
 class TurnThread():
-    def __init__(self,irSensors,wallchecker,dual_motors,left,right):
+    def __init__(self,dual_motors,left,right):
         self.dual_motors=dual_motors
-        self.irsensors=irSensors
-        self.wallchecker=wallchecker
+
         self.left=left
         self.right=right
         self.funcDict={

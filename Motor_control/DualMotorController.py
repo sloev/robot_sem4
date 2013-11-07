@@ -8,6 +8,7 @@ Created on Oct 2, 2013
 
 from Decorators.TMC222Status import TMC222Status
 from Motor_I2C import Motor_I2C
+from StepsData import StepsData
 import time as time
 import logging
 import sys
@@ -18,9 +19,10 @@ class DualMotorController:
     
     def __init__(self, add1, add2):
         self.logger = logging.getLogger('robot.dualMotors')
-
-        self.turn90Steps=1270
-        self.turn180Steps=2540
+        self.stepsData=StepsData(2)#for 1/8
+        
+        self.turn90Steps=self.stepsData.getStepsPr90()
+        self.turn180Steps=self.stepsData.getStepsPr180()
         
         self.logger.info("Initializing DualMotorController")
         self.motorLeft = Motor_I2C(add1)
