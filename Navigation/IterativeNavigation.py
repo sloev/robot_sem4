@@ -121,7 +121,7 @@ class IterativeNavigator():
             self.navigatorStopEvent.wait(0.1)
             
     def driveStraight(self,steps):
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.drive(steps)
  
     def currentAngle(self,sample):
