@@ -16,11 +16,14 @@ def main():
     motors.setMotorParams(0,1, 2, 2)
     steps=5000
     motors.runInit()
+    time.sleep(3)
     string="press enter to drive %d steps",steps
     while True:
         try:
             raw_input(string)
             motors.setPosition(steps, steps)
+            while motors.isBusy():
+                time.sleep(0.1)
         except KeyboardInterrupt:
             break
 if __name__ == '__main__':
