@@ -97,7 +97,7 @@ class IterativeNavigator():
             print("choice=%d"%choice)
             print("exiting makechoice")
             #val=self.turnThread.checkForTurn(choice)
-            print("turn success=%d"%val)
+            #print("turn success=%d"%val)
             print("exiting checkforturn")
             
             steps=self.currentAngle(sample)
