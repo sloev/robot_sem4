@@ -163,7 +163,8 @@ class IterativeNavigator():
             string += "b:            \t%s\n" % str(lengthB)
             string += "f:            \t%s\n" % str(angleF)
             string += "v:            \t%s\n" % str(angleV)
-            string += "totalangle:   \t%s\n" % str(currentAngle)
+            string += "currentangle:   \t%s\n" % str(currentAngle)
+            string += "lastangle:   \t%s\n" % str(self.lastAngle)
             string += "steps:        \t%s\n" % str(steps)
             string += "return steps: \t%s\n" % str(returnSteps)
             
