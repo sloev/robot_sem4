@@ -140,15 +140,17 @@ class IterativeNavigator():
             lengthD=self.maxWidth-lengthE
             lengthC=lengthE-(self.maxWidth/2)
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
-            angleF=math.acos( lengthC/lengthB )#!!! rigtigt?
+            angleB=math.acos( lengthC / lengthB )
+            angleF=(math.pi/2)-angleB
             currentAngle=-(angleF+angleV)
         else:
             direction=self.left
             lengthD=math.cos(angleV)*left
             lengthE=self.maxWidth-lengthD
             lengthC=lengthD-(self.maxWidth/2)
-            lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
-            angleF=math.acos( lengthC / lengthB )
+            lengthB=math.sqrt( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) )
+            angleB=math.acos( lengthC / lengthB )
+            angleF=(math.pi/2)-angleB
             currentAngle=(angleF+angleV)
 
         if self.lastAngle!=0:
