@@ -169,14 +169,14 @@ class IterativeNavigator():
 
         
 def main():
+    
     navigator = IterativeNavigator()
     print("init'ed navigator")
     navigator.runNavigator()
-    print("running navigator")
-    time.sleep(20)
-    print("stopping navigator")
-    navigator.stopNavigator()
-    print("navigator stopped")
-    pass
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        navigator.stopNavigator()
 if __name__ == '__main__':
     main()
