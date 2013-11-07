@@ -26,5 +26,7 @@ def main():
                 time.sleep(0.1)
         except KeyboardInterrupt:
             break
+        except IOError:
+            pass
 if __name__ == '__main__':
     main()
