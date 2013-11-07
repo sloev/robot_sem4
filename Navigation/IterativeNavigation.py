@@ -114,7 +114,7 @@ class IterativeNavigator():
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         self.dual_motors.setPosition(steps, steps)
         while(self.dual_motors.isBusy()):
-            time.sleep(0.1)
+            self.navigatorStopEvent.wait(0.1)
  
     def currentAngle(self,sample):
         'alt er i cm'
