@@ -99,21 +99,27 @@ class DualMotorController:
         return [self.positionLeft,self.positionRight]
     
     def isBusy(self):
-        fullstatus2=self.getFullStatus2()
+        fullstatus2=None
+        value=True
+        while fullstatus2==None:
+            try:
+                fullstatus2=self.getFullStatus2()
+                
+                actLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
+                actRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
+                
+                tarLeft=fullstatus2[0][3]<<8 | fullstatus2[0][4]<<0
+                tarRight=fullstatus2[1][3]<<8 | fullstatus2[1][4]<<0
         
-        actLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
-        actRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
-        
-        tarLeft=fullstatus2[0][3]<<8 | fullstatus2[0][4]<<0
-        tarRight=fullstatus2[1][3]<<8 | fullstatus2[1][4]<<0
-
-        value=(actLeft==tarLeft) and (actRight==tarRight)
-        
-        value = not value
-        print("isbusy="+str(value))
-        self.logger.info("isBusy="+str(value))
+                value=(actLeft==tarLeft) and (actRight==tarRight)
+                
+                value = not value
+                print("isbusy="+str(value))
+                self.logger.info("isBusy="+str(value))
+            except IOError:
+                pass
         return value
-        
+
     def hardStop(self):
         self.logger.info("hardStop")
 
