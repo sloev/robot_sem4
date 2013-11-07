@@ -134,7 +134,7 @@ class IterativeNavigator():
         print("tmp="+str(tmp))
         angleV=math.acos(tmp)
         
-        if not lastWasLeft:
+        if lastWasLeft:
             direction=self.right
             lengthE=math.cos(angleV)*right
             lengthD=self.maxWidth-lengthE
