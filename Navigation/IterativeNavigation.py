@@ -145,7 +145,7 @@ class IterativeNavigator():
  
     def currentAngle(self,sample):
         'alt er i cm'
-        lastWasLeft=self.lastAngle>0
+        lastWasLeft=self.lastAngle<0
         returnSteps=self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
         
         left=sample[self.left]+(self.distanceInBetweenSensors/2)
