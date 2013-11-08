@@ -44,7 +44,7 @@ class IterativeNavigator():
         self.minMaxSetpoint=[5,self.maxWidth,15]
         
         self.distanceInBetweenSensors=3
-        self.cmPrHalfCell=17
+        self.lengthI=17
         
         self.tuneFactor=0.1
         try:
@@ -146,7 +146,7 @@ class IterativeNavigator():
     def currentAngle(self,sample):
         'alt er i cm'
         lastWasLeft=self.lastAngle>0
-        returnSteps=self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
+        returnSteps=self.dual_motors.stepsData.cmToSteps(self.lengthI)
         
         left=sample[self.left]+(self.distanceInBetweenSensors/2)
         right=sample[self.right]+(self.distanceInBetweenSensors/2)
@@ -160,22 +160,23 @@ class IterativeNavigator():
         angleV=math.acos(tmp)
         
         if lastWasLeft:
-            direction=self.left
-            lengthE=math.cos(angleV)*left
-            lengthD=self.maxWidth-lengthE
-            lengthC=lengthE-(self.maxWidth/2)
-            lengthB=math.sqrt( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) )
-            angleB=math.acos( lengthC / lengthB )
-            angleF=(math.pi/2)-angleB # - + 
-            currentAngle=-(angleF+angleV)
-        else:
             direction=self.right
-            lengthD=math.cos(angleV)*right
+            lengthD=math.cos(angleV)*left
             lengthE=self.maxWidth-lengthD
-            lengthC=lengthD-(self.maxWidth/2)
-            lengthB=math.sqrt( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) )
-            angleB=math.acos( lengthC / lengthB )
-            angleF=(math.pi/2)-angleB # + -
+            lengthC=(self.maxWidth/2)-lengthD
+            lengthH=math.sqrt( math.pow(lengthC,2) +math.pow(self.lengthI,2) )
+            
+            angleI=math.acos( lengthC / lengthH )
+            angleF=-(math.pi/2)+angleI # - + 
+            currentAngle=(angleF+angleV)
+        else:
+            direction=self.left
+            lengthE=math.cos(angleV)*right
+            lengthD=self.maxWidth-lengthE
+            lengthC=(self.maxWidth/2)-lengthE
+            lengthH=math.sqrt( math.pow(lengthC,2) +math.pow(self.lengthI,2) )
+            angleI=math.acos( lengthC / lengthH )
+            angleF=(math.pi/2)-angleI # + -
             currentAngle=(angleF+angleV)
             
         currentAngleInDeg=currentAngle*(180/math.pi)
@@ -187,7 +188,7 @@ class IterativeNavigator():
             '''turning / retter op'''
             self.drive(steps)
             
-            returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
+            returnSteps=self.dual_motors.stepsData.cmToSteps(lengthH)
             fd=angleF*(180/math.pi)
             vd=angleV*(180/math.pi)
             cd=currentAngle*(180/math.pi)
@@ -198,7 +199,7 @@ class IterativeNavigator():
             string += "right:            \t%s\n" % str(right) 
             string += "e:                \t%s\n" % str(lengthE)
             string += "c:                \t%s\n" % str(lengthC)
-            string += "b:                \t%s\n" % str(lengthB)
+            string += "H:                \t%s\n" % str(lengthH)
             string += "f:                \t%s\n" % str(angleF)
             string += "v:                \t%s\n" % str(angleV)
             string += "currentangle:     \t%s\n" % str(currentAngle)
