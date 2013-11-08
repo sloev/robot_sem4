@@ -18,7 +18,6 @@ import math
 
 Vin1                                =   0x08
 Vin2                                =   0x09
-Vin3                                =   0x0A
 
 sensorChannels=[Vin1,Vin2]
 
@@ -31,7 +30,6 @@ class IterativeNavigator():
         direction=1
         self.left=not direction
         self.right=direction
-        self.front=2
         self.maxWidth=32
         cmMax=23
 
@@ -69,7 +67,7 @@ class IterativeNavigator():
         
         
         'wallchecker'
-        self.wallChecker=WallsChecker(self.minMaxSetpoint,self.left,self.right,self.front)
+        self.wallChecker=WallsChecker(self.minMaxSetpoint,self.left,self.right)
         'turn thread'
         self.turnThread=TurnThread(self.dual_motors,self.left,self.right)
 
@@ -115,8 +113,6 @@ class IterativeNavigator():
             return 4
         elif(walls[self.left]==0):
             return 2
-        elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
-            return 0
         else:
             return 0
         

@@ -12,8 +12,7 @@ class WallsChecker():
         self.setpoint=minMaxSetpoint[2]
         self.left=left
         self.right=right
-        self.front=front
-        self.walls=[1,1,1]
+        self.walls=[1,1]
         self.lastWalls=self.walls
         self.lastLastWalls=self.lastWalls
         
@@ -21,13 +20,11 @@ class WallsChecker():
         self.lastLastWalls=self.lastWalls
         self.lastWalls=self.walls
         
-        self.walls=[1,1,1]
+        self.walls=[1,1]
         if(sample[self.left]>self.max):
             self.walls[self.left]=0
         if(sample[self.right]>self.max):
             self.walls[self.right]=0
-        if(sample[self.front]<self.setpoint):
-            self.walls[self.front]=0
         self.logger.info("checkWalls/"+str(self.walls))
         return self.walls
     
@@ -41,10 +38,6 @@ class WallsChecker():
         self.logger.info("compareSides/"+str(foo))
         return foo
     
-    def compareFront(self):
-        foo= self.walls[self.front]==self.lastWalls[self.front]
-        self.logger.info("compareFront/"+str(foo))
-        return foo
 
 if __name__ == '__main__':
     pass
