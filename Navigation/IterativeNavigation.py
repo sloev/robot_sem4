@@ -16,8 +16,8 @@ import select
 import os
 import math
 
-Vin1                                =   0x08
-Vin2                                =   0x09
+Vin1                                =   0x09
+Vin2                                =   0x08
 Vin3                                =   0x0A
 
 sensorChannels=[Vin1,Vin2,Vin3]
@@ -28,7 +28,7 @@ class IterativeNavigator():
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
-        direction=0
+        direction=1
         self.left=not direction
         self.right=direction
         self.front=2
@@ -59,7 +59,7 @@ class IterativeNavigator():
         self.ir_sensors.setConfigurationRegister(0x00,0x7F)
 
         'motors'
-        self.dual_motors=DualMotorController(0x60,0x61)
+        self.dual_motors=DualMotorController(0x61,0x60)
         self.dual_motors.hardStop()
         self.dual_motors.getFullStatus1()
         self.dual_motors.setOtpParam()
@@ -139,11 +139,11 @@ class IterativeNavigator():
  
     def currentAngle(self,sample):
         'alt er i cm'
-        lastWasLeft=self.lastAngle<0
+        lastWasLeft=self.lastAngle>0
         returnSteps=self.dual_motors.stepsData.cmToSteps(self.cmPrHalfCell)
         
-        left=sample[self.left]+(self.distanceInBetweenSensors/2)
-        right=sample[self.right]+(self.distanceInBetweenSensors/2)
+        left=sample[self.right]+(self.distanceInBetweenSensors/2)
+        right=sample[self.left]+(self.distanceInBetweenSensors/2)
         
         tmp=self.maxWidth/(left+right)
         if tmp>1:
@@ -155,13 +155,13 @@ class IterativeNavigator():
         
         if lastWasLeft:
             direction=self.right
-            lengthE=math.cos(angleV)*left
+            lengthE=math.cos(angleV)*right
             lengthD=self.maxWidth-lengthE
             lengthC=lengthE-(self.maxWidth/2)
             lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
             angleB=math.acos( lengthC / lengthB )
-            angleF=(math.pi/2)-angleB
-            currentAngle=-(angleF+angleV)
+            angleF=-(math.pi/2)+angleB # - + 
+            currentAngle=(angleF+angleV)
         else:
             direction=self.left
             lengthD=math.cos(angleV)*right
@@ -169,8 +169,8 @@ class IterativeNavigator():
             lengthC=lengthD-(self.maxWidth/2)
             lengthB=math.sqrt( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) )
             angleB=math.acos( lengthC / lengthB )
-            angleF=(math.pi/2)-angleB
-            currentAngle=(angleF+angleV)
+            angleF=(math.pi/2)-angleB # + -
+            currentAngle=-(angleF+angleV)
 
         if self.lastAngle!=0:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
@@ -178,6 +178,9 @@ class IterativeNavigator():
             self.drive(steps)
             
             returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
+            fd=angleF*(180/math.pi)
+            vd=angleV*(180/math.pi)
+            cd=currentAngle*(180/math.pi)
             
             string = "\nwasLeft:     \t%s\n" % str(lastWasLeft) 
             string += "d:             \t%s\n" % str(lengthD) 
@@ -189,9 +192,13 @@ class IterativeNavigator():
             string += "f:            \t%s\n" % str(angleF)
             string += "v:            \t%s\n" % str(angleV)
             string += "currentangle:   \t%s\n" % str(currentAngle)
+            string += "f deg:            \t%s\n" % str(fd)
+            string += "v deg :            \t%s\n" % str(vd)
+            string += "currentangle deg:   \t%s\n" % str(cd)
             string += "lastangle:   \t%s\n" % str(self.lastAngle)
             string += "steps:        \t%s\n" % str(steps)
             string += "return steps: \t%s\n" % str(returnSteps)
+            
             
             print string  
         self.lastAngle=currentAngle
