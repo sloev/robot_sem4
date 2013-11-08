@@ -180,7 +180,7 @@ class IterativeNavigator():
         currentAngleInDeg=currentAngle*(180/math.pi)
         print(str(currentAngleInDeg))
         
-        if currentAngleInDeg>2:
+        if abs(currentAngleInDeg)>3:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
             steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
             '''turning / retter op'''
