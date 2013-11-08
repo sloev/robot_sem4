@@ -131,6 +131,7 @@ class IterativeNavigator():
         while(self.dual_motors.isBusy()):
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 1)
             walls=self.wallChecker.checkWalls(sample)
+            print str(walls)
             if(walls[self.left]!=1 or walls[self.right]!=1):#lavet i dag todo
                 self.dual_motors.softStop()
                 print("walls missing, stopping")
