@@ -16,8 +16,8 @@ import select
 import os
 import math
 
-Vin1                                =   0x09
-Vin2                                =   0x08
+Vin1                                =   0x08
+Vin2                                =   0x09
 Vin3                                =   0x0A
 
 sensorChannels=[Vin1,Vin2,Vin3]
@@ -34,7 +34,7 @@ class IterativeNavigator():
         self.front=2
         self.maxWidth=34
 
-        self.minMaxSetpoint=[5,self.maxWidth,15]
+        self.minMaxSetpoint=[5,self.maxWidth-10,15]
         
         self.distanceInBetweenSensors=3
         self.cmPrHalfCell=15
