@@ -175,7 +175,7 @@ def main():
     sensorChannels=[Vin4,Vin1]
 
     while(1):
-        print IR_sensor.multiChannelReadCm(sensorChannels,5)
+        print IR_sensor.multiChannelReadCm(sensorChannels,1)
         time.sleep(0.2)
         
             
