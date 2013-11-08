@@ -137,8 +137,8 @@ class IterativeNavigator():
             walls=self.wallChecker.checkWalls(sample)
             print str(walls)
             if(walls[self.left]!=1 or walls[self.right]!=1):#lavet i dag todo
-                self.dual_motors.softStop()
-                print("walls missing, stopping")
+                #self.dual_motors.softStop()
+                print("walls missing, turning")
                 break
             self.navigatorStopEvent.wait(0.1)
         return walls
