@@ -175,9 +175,9 @@ def main():
     sensorChannels=[Vin1,Vin4]
 
     while(1):
-        print IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin1, ConversionResultReg))  
+        print IR_sensor.lookupCm(IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin1, ConversionResultReg)))
         time.sleep(0.2)
-        print IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin4, ConversionResultReg))  
+        print IR_sensor.lookupCm(IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin4, ConversionResultReg)))  
         time.sleep(0.2)
         
             
