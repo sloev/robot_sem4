@@ -154,8 +154,8 @@ class IterativeNavigator():
         tmp=self.maxWidth/(left+right)
         if tmp>1:
             tmp=1
-        elif tmp<0:
-            tmp=0
+        elif tmp<-1:
+            tmp=-1
         print("tmp="+str(tmp))
         angleV=math.acos(tmp)
         
