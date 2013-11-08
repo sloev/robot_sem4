@@ -33,8 +33,9 @@ class IterativeNavigator():
         self.right=direction
         self.front=2
         self.maxWidth=32
+        cmMax=23
 
-        self.minMaxSetpoint=[5,self.maxWidth,15]
+        self.minMaxSetpoint=[5,cmMax,15]
         
         self.distanceInBetweenSensors=3
         self.cmPrHalfCell=10
