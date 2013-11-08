@@ -154,8 +154,8 @@ class IterativeNavigator():
         tmp=self.maxWidth/(left+right)
         if tmp>1:
             tmp=1
-        elif tmp<-1:
-            tmp=-1
+        elif tmp<0:
+            tmp=0
         print("tmp="+str(tmp))
         angleV=math.acos(tmp)
         
@@ -176,7 +176,8 @@ class IterativeNavigator():
             lengthB=math.sqrt( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) )
             angleB=math.acos( lengthC / lengthB )
             angleF=(math.pi/2)-angleB # + -
-            currentAngle=-(angleF+angleV)
+            currentAngle=(angleF+angleV)
+            
         currentAngleInDeg=currentAngle*(180/math.pi)
         print(str(currentAngleInDeg))
         
