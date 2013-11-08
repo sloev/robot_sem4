@@ -34,7 +34,7 @@ class IterativeNavigator():
         self.front=2
         self.maxWidth=32
 
-        self.minMaxSetpoint=[5,self.maxWidth-10,15]
+        self.minMaxSetpoint=[5,self.maxWidth-5,16]
         
         self.distanceInBetweenSensors=3
         self.cmPrHalfCell=15
@@ -178,7 +178,7 @@ class IterativeNavigator():
             angleF=(math.pi/2)-angleB # + -
             currentAngle=-(angleF+angleV)
         currentAngleInDeg=currentAngle*(180/math.pi)
-        if self.lastAngle!=0 and currentAngleInDeg>3:
+        if self.lastAngle!=0 and currentAngleInDeg>2:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
             steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
             self.drive(steps)
