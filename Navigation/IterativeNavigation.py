@@ -16,10 +16,18 @@ import select
 import os
 import math
 
+#Channels                           "ByteCode" 4 MSB's
+NotSelected                         =   0x00
 Vin1                                =   0x08
 Vin2                                =   0x09
+Vin3                                =   0x0A
+Vin4                                =   0x0B
+Vin5                                =   0x0C
+Vin6                                =   0x0D
+Vin7                                =   0x0E
+Vin8                                =   0x0F
 
-sensorChannels=[Vin1,Vin2]
+sensorChannels=[Vin1,Vin4]
 
 class IterativeNavigator():
     def __init__(self):
