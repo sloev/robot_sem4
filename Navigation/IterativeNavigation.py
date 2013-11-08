@@ -179,7 +179,7 @@ class IterativeNavigator():
             currentAngle=-(angleF+angleV)
         currentAngleInDeg=currentAngle*(180/math.pi)
         
-        if self.lastAngle!=0 and currentAngleInDeg>5:
+        if currentAngleInDeg>5:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
             steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
             self.drive(steps)
@@ -209,7 +209,7 @@ class IterativeNavigator():
             self.lastAngle=currentAngle
 
             print string  
-        elif self.lastAngle==0:
+        if(self.lastAngle==0):
             self.lastAngle=currentAngle
         return returnSteps
         
