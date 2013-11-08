@@ -38,7 +38,7 @@ class IterativeNavigator():
         direction=1
         self.left=not direction
         self.right=direction
-        self.maxWidth=32
+        self.maxWidth=34
         cmMax=23
 
         self.minMaxSetpoint=[5,self.maxWidth,15]
