@@ -161,16 +161,16 @@ class IterativeNavigator():
         
         if lastWasLeft:
             direction=self.left
-            lengthE=math.cos(angleV)*right
+            lengthE=math.cos(angleV)*left
             lengthD=self.maxWidth-lengthE
             lengthC=lengthE-(self.maxWidth/2)
-            lengthB=math.sqrt( ( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) ) )
+            lengthB=math.sqrt( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) )
             angleB=math.acos( lengthC / lengthB )
-            angleF=-(math.pi/2)+angleB # - + 
+            angleF=(math.pi/2)-angleB # - + 
             currentAngle=-(angleF+angleV)
         else:
             direction=self.right
-            lengthD=math.cos(angleV)*left
+            lengthD=math.cos(angleV)*right
             lengthE=self.maxWidth-lengthD
             lengthC=lengthD-(self.maxWidth/2)
             lengthB=math.sqrt( math.pow(lengthC,2) +math.pow(self.cmPrHalfCell,2) )
