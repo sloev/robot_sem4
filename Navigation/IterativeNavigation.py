@@ -177,7 +177,7 @@ class IterativeNavigator():
             angleB=math.acos( lengthC / lengthB )
             angleF=(math.pi/2)-angleB # + -
             currentAngle=-(angleF+angleV)
-            currentAngleInDeg=currentAngle*(180/math.pi)
+        currentAngleInDeg=currentAngle*(180/math.pi)
         if self.lastAngle!=0 and currentAngleInDeg>3:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
             steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
