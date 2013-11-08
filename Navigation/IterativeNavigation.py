@@ -206,9 +206,11 @@ class IterativeNavigator():
             string += "steps:        \t%s\n" % str(steps)
             string += "return steps: \t%s\n" % str(returnSteps)
             
-            
+            self.lastAngle=currentAngle
+
             print string  
-        self.lastAngle=currentAngle
+        elif self.lastAngle==0:
+            self.lastAngle=currentAngle
         return returnSteps
         
         
