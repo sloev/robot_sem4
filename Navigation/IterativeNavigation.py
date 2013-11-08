@@ -38,7 +38,7 @@ class IterativeNavigator():
         self.minMaxSetpoint=[5,cmMax,15]
         
         self.distanceInBetweenSensors=3
-        self.cmPrHalfCell=10
+        self.cmPrHalfCell=17
         
         self.tuneFactor=0.1
         try:
@@ -123,11 +123,6 @@ class IterativeNavigator():
     def drive(self,steps):
         self.dual_motors.setPosition(steps, steps)
         while(self.dual_motors.isBusy()):
-            sample=self.ir_sensors.multiChannelReadCm(sensorChannels, 1)
-            walls=self.wallChecker.checkWalls(sample)
-            if(walls[self.left]!=1 or walls[self.right]!=1):#lavet i dag todo
-                self.dual_motors.softStop()
-                break
             self.navigatorStopEvent.wait(0.1)
             
     def driveStraight(self,steps):
