@@ -139,8 +139,9 @@ class IterativeNavigator():
             if(walls[self.left]!=1 or walls[self.right]!=1):#lavet i dag todo
                 self.dual_motors.softStop()
                 print("walls missing, stopping")
-                return walls
+                break
             self.navigatorStopEvent.wait(0.1)
+        return walls
  
     def currentAngle(self,sample):
         'alt er i cm'
