@@ -41,7 +41,7 @@ class IterativeNavigator():
         self.maxWidth=32
         cmMax=23
 
-        self.minMaxSetpoint=[5,cmMax,15]
+        self.minMaxSetpoint=[5,self.maxWidth,15]
         
         self.distanceInBetweenSensors=3
         self.cmPrHalfCell=17
@@ -182,6 +182,7 @@ class IterativeNavigator():
         if currentAngleInDeg>2:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
             steps=self.dual_motors.stepsData.radiansToSteps(currentAngle)
+            '''turning / retter op'''
             self.drive(steps)
             
             returnSteps=self.dual_motors.stepsData.cmToSteps(lengthB)
@@ -189,22 +190,22 @@ class IterativeNavigator():
             vd=angleV*(180/math.pi)
             cd=currentAngle*(180/math.pi)
             
-            string = "\nwasLeft:     \t%s\n" % str(lastWasLeft) 
-            string += "d:             \t%s\n" % str(lengthD) 
+            string = "\nwasLeft:         \t%s\n" % str(lastWasLeft) 
+            string += "d:                \t%s\n" % str(lengthD) 
             string += "left:             \t%s\n" % str(left) 
-            string += "right:             \t%s\n" % str(right) 
-            string += "e:            \t%s\n" % str(lengthE)
-            string += "c:            \t%s\n" % str(lengthC)
-            string += "b:            \t%s\n" % str(lengthB)
-            string += "f:            \t%s\n" % str(angleF)
-            string += "v:            \t%s\n" % str(angleV)
-            string += "currentangle:   \t%s\n" % str(currentAngle)
+            string += "right:            \t%s\n" % str(right) 
+            string += "e:                \t%s\n" % str(lengthE)
+            string += "c:                \t%s\n" % str(lengthC)
+            string += "b:                \t%s\n" % str(lengthB)
+            string += "f:                \t%s\n" % str(angleF)
+            string += "v:                \t%s\n" % str(angleV)
+            string += "currentangle:     \t%s\n" % str(currentAngle)
             string += "f deg:            \t%s\n" % str(fd)
-            string += "v deg :            \t%s\n" % str(vd)
-            string += "currentangle deg:   \t%s\n" % str(cd)
-            string += "lastangle:   \t%s\n" % str(self.lastAngle)
-            string += "steps:        \t%s\n" % str(steps)
-            string += "return steps: \t%s\n" % str(returnSteps)
+            string += "v deg :           \t%s\n" % str(vd)
+            string += "currentangle deg: \t%s\n" % str(cd)
+            string += "lastangle:        \t%s\n" % str(self.lastAngle)
+            string += "steps:            \t%s\n" % str(steps)
+            string += "return steps:     \t%s\n" % str(returnSteps)
             
             self.lastAngle=currentAngle
 
