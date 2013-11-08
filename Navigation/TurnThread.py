@@ -77,7 +77,7 @@ class TurnThread():
 
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
-        #self.dual_motors.setPosition(1000, 1000)
+        self.dual_motors.setPosition(3500, 3500)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
