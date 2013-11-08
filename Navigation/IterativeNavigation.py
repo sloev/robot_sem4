@@ -101,8 +101,12 @@ class IterativeNavigator():
             print("exiting checkforturn")
             if(choice<1):
                 steps=self.currentAngle(sample)
-                self.driveStraight(steps)
                 print("driving straight")
+                walls=self.driveStraight(steps)
+                choice=self.makeChoice(walls)
+                print("choice=%d"%choice)
+                print("exiting makechoice")
+                val=self.turnThread.checkForTurn(choice)
 
     def makeChoice(self,walls):
         print(str(walls))
@@ -135,7 +139,7 @@ class IterativeNavigator():
             if(walls[self.left]!=1 or walls[self.right]!=1):#lavet i dag todo
                 self.dual_motors.softStop()
                 print("walls missing, stopping")
-                break
+                return walls
             self.navigatorStopEvent.wait(0.1)
  
     def currentAngle(self,sample):
