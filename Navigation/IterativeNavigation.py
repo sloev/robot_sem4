@@ -178,6 +178,7 @@ class IterativeNavigator():
             angleF=(math.pi/2)-angleB # + -
             currentAngle=-(angleF+angleV)
         currentAngleInDeg=currentAngle*(180/math.pi)
+        print(str(currentAngleInDeg))
         
         if currentAngleInDeg>2:
             self.dual_motors.setMotorParams(direction, direction, 1, 1)
