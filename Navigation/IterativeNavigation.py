@@ -37,7 +37,7 @@ class IterativeNavigator():
         self.minMaxSetpoint=[5,self.maxWidth+15,15]
         
         self.distanceInBetweenSensors=3
-        self.cmPrHalfCell=30
+        self.cmPrHalfCell=15
         
         self.tuneFactor=0.1
         try:
