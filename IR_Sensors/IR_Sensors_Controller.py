@@ -172,10 +172,12 @@ class IR_Sensors_Controller():
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
     IR_sensor.setConfigurationRegister(0x00,0x7F)
-    sensorChannels=[Vin4,Vin1]
+    sensorChannels=[Vin1,Vin4]
 
     while(1):
-        print IR_sensor.multiChannelReadCm(sensorChannels,1)
+        print IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin1, ConversionResultReg))  
+        time.sleep(0.2)
+        print IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin4, ConversionResultReg))  
         time.sleep(0.2)
         
             
