@@ -172,7 +172,7 @@ class IR_Sensors_Controller():
 def main():
     IR_sensor = IR_Sensors_Controller(0x20)
     IR_sensor.setConfigurationRegister(0x00,0x7F)
-    sensorChannels=[Vin1,Vin2,Vin3]
+    sensorChannels=[Vin1,Vin2]
 
     while(1):
         print IR_sensor.multiChannelReadCm(sensorChannels,5)
