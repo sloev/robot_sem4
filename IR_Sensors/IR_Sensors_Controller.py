@@ -175,9 +175,9 @@ def main():
     sensorChannels=[Vin1,Vin4]
 
     while(1):
-        s1= IR_sensor.lookupCm(IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin1, ConversionResultReg)))
+        s1= str(IR_sensor.lookupCm(IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin1, ConversionResultReg))))
         time.sleep(0.2)
-        s2= IR_sensor.lookupCm(IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin4, ConversionResultReg)))  
+        s2= str(IR_sensor.lookupCm(IR_sensor.extractRawDistance(IR_sensor.readSensorBlock(Vin4, ConversionResultReg)))  )
         time.sleep(0.2)
         print s1+"\t"+s2
         
