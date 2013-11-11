@@ -42,10 +42,13 @@ class ChaosTest(object):
         Check if the robot is placed in the correct angle
     '''
     def checkAngles(self, angles):
-        if(60 < angles[0] < 70):
-            if(25 < angles[1] < 30):
+        if(60 < angles[0] < 65):
+            if(25 < angles[1] < 27):
                 print "Facing the right way"
                 return 1
+        elif(65 > angles[0]):
+            print "Facing the right way, slightly more left"
+            return 1
         else:
             print "We are off course!"
             return 0
