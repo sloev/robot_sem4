@@ -70,14 +70,11 @@ class TurnThread():
         print("straight")
         
     def turn90(self,direction):
-        self.dual_motors.softStop()
+        #self.dual_motors.softStop()
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
-        try:
-            raw_input("press enter to start turn seq")       
-        finally:
-            pass
+   
         print("turning 90 NOW")
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
@@ -86,29 +83,20 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
-        try:
-            raw_input("press enter to turn")       
-        finally:
-            pass
+  
         
         self.dual_motors.turn90(direction,2)
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
-        try:
-            raw_input("press enter straighten up")       
-        finally:
-            pass
+    
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setPosition(3000, 3000)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
-        try:
-            raw_input("press enter to continnue")       
-        finally:
-            pass
+       
         
 
 
