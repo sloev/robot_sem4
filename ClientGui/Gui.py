@@ -51,9 +51,10 @@ def main():
     
     app = QtGui.QApplication(sys.argv)
     ex = Gui()
+    ex.waitForService()
+
     sys.exit(app.exec_())
 
-    ex.waitForService()
      
 if __name__ == '__main__':
     main()
