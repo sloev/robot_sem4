@@ -28,7 +28,7 @@ class zeroconfTcpServer():
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever)
         self.tcpServerThread.start()
 
-        self.registerThread=Bonjour(self.name,self.regtype,self.port)
+        self.registerThread=Bonjour(self.name,self.regType,self.port)
         self.registerThread.runBrowser()
 
     def close(self):
