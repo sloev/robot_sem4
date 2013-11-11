@@ -207,7 +207,7 @@ class Bonjour():
             return self.clients.get(self.clients.keys()[0])
         return None
 
-def printEvent(args,args2):
+def printEvent(args=None,args2=None):
     print("args="+str(args)+"\n"+str(args2))
     
 def main():
