@@ -60,20 +60,20 @@ class MainGui(QtGui.QMainWindow):
             self.closeTcpClient()
             print("r-pi removed and clientSocket closed with ip="+str(ip)+" port="+str(port))
         else:
-            print("r-pi catched with ip="+str(ip)+" port="+str(port))
+            print("r-pi catched with address"+str((ip,port)))
             
         reply = QtGui.QMessageBox.question(self, 'question',"rpi detected\nwanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
-            print("old ip and port="+str(self.ip)+" "+str(self.port))
-            self.initTcpClient(ip,port)
-            print("new ip and port="+str(self.ip)+" "+str(self.port))
+            print("old ip and port="+str(self.address))
+            self.initTcpClient()
+            print("new ip and port="+str(self.address))
         else:
             pass
         
-    def initClient(self, address):
+    def initClient(self):
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.clientSocket.connect(address)
+        self.clientSocket.connect(self.address)
     
     def closeTcpClient(self):
         self.clientSocket.close()
