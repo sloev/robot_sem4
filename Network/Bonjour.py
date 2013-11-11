@@ -211,16 +211,16 @@ def printEvent(args=None,args2=None):
     print("args="+str(args)+"\n"+str(args2))
     
 def main():
-    name="oscTestServer"
     port=9027
-    regtype='_osc._udp'
+    name="robotMaze"
+    regtype='_maze._tcp'
     
     a=Bonjour(name,regtype,port)
-    b=Bonjour(name,regtype,port)
-    b.addClientEventHandler(printEvent)
+    #b=Bonjour(name,regtype,port)
+    #b.addClientEventHandler(printEvent)
     
-    b.runBrowser()
-    time.sleep(3)
+    #b.runBrowser()
+    #time.sleep(3)
     print("starting bonjour register")
     a.runRegister()
     try :
@@ -229,7 +229,7 @@ def main():
     except KeyboardInterrupt :
         a.stopRegister()
         print("exiting")
-        b.stopBrowser()        
+        #b.stopBrowser()        
 
     
 if __name__ == '__main__':
