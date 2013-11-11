@@ -15,6 +15,18 @@ class Gui(QtGui.QWidget):
         self.initUI()
         
     def initUI(self):
+        name="robotMaze"
+        regtype='_maze._tcp'
+        
+
+
+        self.ip=None
+        self.port=None
+        
+        self.b=Bonjour(name,regtype)
+        self.b.runBrowser()
+        self.b.addClientEventHandler(self.updateServerList)
+        
         self.resize(250, 150)
         self.move(300, 300)
         self.setWindowTitle('Simple')
@@ -45,34 +57,20 @@ class Gui(QtGui.QWidget):
             return False
     
 
-
-        
-class ClientApp():
-    def __init__(self):
-        name="robotMaze"
-        regtype='_maze._tcp'
-        
-        app = QtGui.QApplication(sys.argv)
-        self.gui = Gui()
-        sys.exit(app.exec_())
-
-        self.ip=None
-        self.port=None
-        
-        self.b=Bonjour(name,regtype)
-        self.b.runBrowser()
-        self.b.addClientEventHandler(self.updateServerList)
-        
     def updateServerList(self,args=None,args2=None):
+        print("event fired from bonjour browser")
         if len(args)>0:
             args=args.get(args.keys()[0])
+            print("ip="+str(args.ip)+" port="+args.port)
             if args.ip!=self.ip or args.port!=self.port:
-                if self.gui.dialog():
-                    self.ip=args.ip
-                    self.port=args.port
+                self.ip=args.ip
+                self.port=args.port
+
+            
 def main():
-    app=ClientApp()
-    
+    app = QtGui.QApplication(sys.argv)
+    gui = Gui()
+    sys.exit(app.exec_()) 
 
      
 if __name__ == '__main__':
