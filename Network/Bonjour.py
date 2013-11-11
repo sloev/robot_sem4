@@ -9,6 +9,7 @@ import pybonjour
 import socket
 import time
 import threading
+from EventHelpers import EventHook
 
 class Client():
     def __init__(self):
@@ -46,6 +47,14 @@ class Bonjour():
         
         self.clients = dict()
         self.currentClient=Client()
+        
+        self.clientEventHandler=EventHook()
+        
+    def addClientEventHandler(self,fnc):
+        self.clientEventHandler += fnc
+    
+    def removeClientEventHandler(self,fnc):
+        self.clientEventHandler -= fnc
     
     def runRegister(self):
         self.registerStopEvent.clear()
@@ -140,6 +149,7 @@ class Bonjour():
                     if self.clients.has_key(serviceName):
                         print("client exists to be removed= "+str(serviceName))
                         self.clients.pop(serviceName)
+                        self.clientEventHandler.fire(self.clients)
                 #print 'Service removed'
                 return
             #print 'Service added; resolving'
@@ -164,10 +174,11 @@ class Bonjour():
                     with self.browserLock:
                         
                         if not self.clients.has_key(serviceName) and self.currentClient.resolved:
-                            #print("ading client="+str(serviceName))
+                            print("ading client="+str(serviceName))
                             self.currentClient.regType=regtype
                             #print(self.currentClient)
                             self.clients[serviceName] = self.currentClient
+                            self.clientEventHandler.fire(self.clients)
                     self.browserResolved.pop()
                     
             finally:
@@ -196,6 +207,9 @@ class Bonjour():
             return self.clients.get(self.clients.keys()[0])
         return None
 
+def printEvent(args,args2):
+    print("args="+str(args)+"\n"+str(args2))
+    
 def main():
     name="oscTestServer"
     port=9027
@@ -203,25 +217,20 @@ def main():
     
     a=Bonjour(name,regtype,port)
     b=Bonjour(name,regtype,port)
+    b.addClientEventHandler(printEvent)
     
     b.runBrowser()
-    time.sleep(2)
+    time.sleep(3)
+    print("starting bonjour register")
     a.runRegister()
-    index=0
-    while index < 10:
-        time.sleep(1)
-        index=index+1
-        print("\n*_*\n")
-    a.stopRegister()
-    index=0
-    while index < 7:
-        time.sleep(1)
-        index=index+1
-        print("\n*_*\n")
-    print("stopping browser")
-    a.stopRegister()
-    print("exiting")
-    b.stopBrowser()
+    try :
+        while 1 :
+            time.sleep(2)
+    except KeyboardInterrupt :
+        a.stopRegister()
+        print("exiting")
+        b.stopBrowser()        
+
     
 if __name__ == '__main__':
     main()

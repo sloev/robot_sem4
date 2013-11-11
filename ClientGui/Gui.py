@@ -46,13 +46,13 @@ class Gui(QtGui.QWidget):
         print("got first service")
         while 1:
             time.sleep(4)
-        
+
+
+            
 def main():
     
     app = QtGui.QApplication(sys.argv)
     ex = Gui()
-    ex.waitForService()
-
     sys.exit(app.exec_())
 
      
