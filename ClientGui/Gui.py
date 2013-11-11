@@ -27,7 +27,7 @@ class MainGui(QtGui.QMainWindow):
         self.browser.runBrowser()
         
         self.mitSignal = pyqtSignal(str, int, name='mitSignal')
-        self.mitSignal.connect(self.updateServerList(str,int))
+        self.mitSignal.connect(self.updateServerList)
         ###
         ###
         
