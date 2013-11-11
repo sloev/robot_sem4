@@ -73,14 +73,14 @@ class MainGui(QtGui.QMainWindow):
         if reply == QtGui.QMessageBox.Yes:
             print("old ip and port="+str(self.address))
             self.address=(str(ip),port)
-            self.initTcpClient()
+            self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.clientSocket.connect((str(ip),port))            
             print("new ip and port="+str(self.address))
         else:
             pass
         
     def initTcpClient(self):
-        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.clientSocket.connect(self.address)
+
     
     def closeTcpClient(self):
         self.clientSocket.close()
