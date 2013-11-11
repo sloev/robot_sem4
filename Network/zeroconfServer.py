@@ -55,6 +55,7 @@ class zeroconfTcpServer():
             # self.request is the client connection
             data = self.request.recv(1024)  # clip input at 1Kb
             string=self.server.eventHandler.fire(str(data))
+            print(string)
             #reply = pipe_command(my_unix_command, data)
             self.request.send("lol"+str(data))
             self.request.close()
