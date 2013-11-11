@@ -71,7 +71,7 @@ class MainGui(QtGui.QMainWindow):
         else:
             pass
         
-    def initClient(self):
+    def initTcpClient(self):
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.clientSocket.connect(self.address)
     
