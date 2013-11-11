@@ -70,7 +70,7 @@ class MainGui(QtGui.QMainWindow):
             print("received ip="+str(ip)+" port="+str(port))
         finally:
             pass
-        reply = QtGui.QMessageBox.question(self, 'question',"wanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+        reply = QtGui.QMessageBox.question(self, 'question',"rpi detected\nwanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
             print("old ip and port="+str(self.ip)+" "+str(self.port))
