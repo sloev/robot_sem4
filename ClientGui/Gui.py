@@ -4,7 +4,9 @@ Created on Nov 11, 2013
 @author: johannes
 '''
 import sys
-from PyQt4 import QtGui,pyqtSignal,QtCore
+from PyQt4 import QtGui,QtCore
+from PyQt4,QtCore import pyqtsignal
+
 import time
 from Network.Bonjour import Bonjour
 
