@@ -70,7 +70,7 @@ class TurnThread():
         print("straight")
         
     def turn90(self,direction):
-        #self.dual_motors.softStop()
+        self.dual_motors.softStop()
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
