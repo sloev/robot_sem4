@@ -79,8 +79,6 @@ class MainGui(QtGui.QMainWindow):
         else:
             pass
         
-    def initTcpClient(self):
-
     
     def closeTcpClient(self):
         self.clientSocket.close()
