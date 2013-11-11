@@ -22,6 +22,8 @@ class Gui(QtGui.QWidget):
         
         name="robotMaze"
         regtype='_maze._tcp'
+        self.ip=None
+        self.port=None
         
         self.b=Bonjour(name,regtype)
         self.b.runBrowser()
