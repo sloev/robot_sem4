@@ -49,7 +49,7 @@ class zeroconfTcpServer():
                 time.sleep(0.1)
         print ("got port "+str(self.port))
     
-    class SingleTCPHandler(SocketServer.StreamRequestHandler):
+    class SingleTCPHandler(SocketServer.BaseRequestHandler):
 
         def handle(self):
             # self.request is the client connection
