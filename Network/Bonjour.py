@@ -9,7 +9,7 @@ import pybonjour
 import socket
 import time
 import threading
-from EventHelpers import EventHook
+from Network.EventHelpers import EventHook
 
 class Client():
     def __init__(self):
