@@ -64,6 +64,7 @@ class zeroconfTcpServer():
         allow_reuse_address = True
             
         def __init__(self, server_address, RequestHandlerClass,eventHandler):
+            self.eventHandler=eventHandler
             SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass)
     
 
