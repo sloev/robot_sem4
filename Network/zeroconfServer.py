@@ -41,7 +41,7 @@ class zeroconfTcpServer():
                 time.sleep(0.1)
         print ("got port "+str(self.port))
     
-    class SingleTCPHandler(self,SocketServer.BaseRequestHandler):
+    class SingleTCPHandler(SocketServer.BaseRequestHandler):
         def handle(self):
             # self.request is the client connection
             data = self.request.recv(1024)  # clip input at 1Kb
@@ -49,7 +49,7 @@ class zeroconfTcpServer():
             self.request.send("lol")
             self.request.close()
 
-    class SimpleServer(self,SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+    class SimpleServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
         # Ctrl-C will cleanly kill all spawned threads
         daemon_threads = True
         # much faster rebinding
