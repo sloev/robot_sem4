@@ -4,8 +4,7 @@ Created on Nov 11, 2013
 @author: johannes
 '''
 import sys
-from PyQt4 import QtGui
-from PyQt4 import QtCore
+from PyQt4 import QtGui,pyqtSignal,QtCore
 import time
 from Network.Bonjour import Bonjour
 
@@ -26,7 +25,9 @@ class MainGui(QtGui.QMainWindow):
         self.browser.runBrowser()
         self.browser.addClientEventHandler(self.lol)
         self.connect(self, QtCore.SIGNAL('update(str,int)'), self.updateServerList())
-            
+        
+        self.mitSignal = pyqtSignal(str, int, name='mitSignal')
+        self.mitSignal.connect(self.updateServerList(str,int))
         ###
         ###
         
@@ -48,7 +49,7 @@ class MainGui(QtGui.QMainWindow):
             args=args.get(args.keys()[0])
             print("ip="+str(args.ip)+" port="+str(args.port))
             if args.ip!=self.ip or args.port!=self.port:
-                self.emit(QtCore.SIGNAL('update(str,int)'), args.ip, args.port)
+                self.mitSignal.emit(args.ip, args.port)
 
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message',
@@ -61,10 +62,9 @@ class MainGui(QtGui.QMainWindow):
         else:
             event.ignore()    
     
-    def updateServerList(self,event):
-        print(str(event))
+    def updateServerList(self,ip,port):
         try:
-            print(str(event.ip))
+            print(str(ip)+" lol "+str(port))
         finally:
             pass
         reply = QtGui.QMessageBox.question(self, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
