@@ -7,56 +7,49 @@ import sys
 from PyQt4 import QtGui
 import time
 from Network.Bonjour import Bonjour
-    
-class Gui(QtGui.QWidget):
-    
+
+class MainGui(QtGui.QMainWindow):
     def __init__(self):
-        super(Gui, self).__init__()
+        super(MainGui, self).__init__()
         self.initUI()
-        
+
     def initUI(self):
         name="robotMaze"
         regtype='_maze._tcp'
         
-
-
         self.ip=None
         self.port=None
         
-        self.b=Bonjour(name,regtype)
-        self.b.runBrowser()
-        self.b.addClientEventHandler(self.updateServerList)
+        self.browser=Bonjour(name,regtype)
+        self.browser.runBrowser()
+        self.browser.addClientEventHandler(self.updateServerList)
+        ###
+        ###
         
-        self.resize(250, 150)
-        self.move(300, 300)
-        self.setWindowTitle('Simple')
+        closeAction = QtGui.QAction('Close', self)
+        closeAction.setShortcut('Ctrl+Q')
+        closeAction.setStatusTip('Close Notepad')
+        closeAction.triggered.connect(self.closeEvent)
+    
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(closeAction)
+    
+        self.setGeometry(300,300,300,300) 
+        self.setWindowTitle('LUL') 
         self.show()
         
-
-        
-    def closeEvent(self, event):
-        
+    def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message',
             "Are you sure to quit?", QtGui.QMessageBox.Yes | 
             QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
-            self.b.stopBrowser()
+            self.browser.stopBrowser()
             event.accept()
         else:
-            event.ignore()        
-            
-    def dialog(self):
-        reply = QtGui.QMessageBox.question(self, 'question',
-                    "update ip/port?", QtGui.QMessageBox.Yes | 
-                    QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        
-        if reply == QtGui.QMessageBox.Yes:
-            return True
-        else:
-            return False
+            event.ignore()    
     
-
     def updateServerList(self,args=None,args2=None):
         print("event fired from bonjour browser")
         if len(args)>0:
@@ -66,13 +59,14 @@ class Gui(QtGui.QWidget):
                 self.ip=args.ip
                 self.port=args.port
 
-            
+                self.QMessageBox.about(self, "")
+                
 def main():
+    
     app = QtGui.QApplication(sys.argv)
-    gui = Gui()
-    sys.exit(app.exec_()) 
+    gui = MainGui()
+    sys.exit(app.exec_())
 
-     
 if __name__ == '__main__':
     main()
-        
+
