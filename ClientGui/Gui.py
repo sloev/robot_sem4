@@ -11,6 +11,8 @@ import time
 from Network.Bonjour import Bonjour
 
 class MainGui(QtGui.QMainWindow):
+    mitSignal = pyqtSignal(str, int, name='mitSignal')
+
     def __init__(self):
         super(MainGui, self).__init__()
         self.initUI()
@@ -26,7 +28,6 @@ class MainGui(QtGui.QMainWindow):
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
         
-        self.mitSignal = pyqtSignal(str, int, name='mitSignal')
         self.mitSignal.connect(self.updateServerList)
         ###
         ###
