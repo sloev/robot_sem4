@@ -42,7 +42,7 @@ class Gui(QtGui.QWidget):
 
     def updateServerList(self,args=None,args2=None):
         if len(args)>0:
-            args=args.get(self.clients.keys()[0])
+            args=args.get(args.keys()[0])
             if args.ip!=self.ip or args.port!=self.port:
                 reply = QtGui.QMessageBox.question(self, 'question',
                     "update ip/port?", QtGui.QMessageBox.Yes | 
