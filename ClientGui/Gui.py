@@ -24,8 +24,6 @@ class MainGui(QtGui.QMainWindow):
         
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
-        self.browser.addClientEventHandler(self.lol)
-        self.connect(self, QtCore.SIGNAL('update(str,int)'), self.updateServerList())
         
         self.mitSignal = QtCore.SIGNAL(str, int, name='mitSignal')
         self.mitSignal.connect(self.updateServerList(str,int))
@@ -44,6 +42,8 @@ class MainGui(QtGui.QMainWindow):
         self.setGeometry(300,300,300,300) 
         self.setWindowTitle('LUL') 
         self.show()
+        self.browser.addClientEventHandler(self.lol)
+
         
     def lol(self,args=None,args2=None):
         if len(args)>0:
