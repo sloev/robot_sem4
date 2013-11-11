@@ -74,14 +74,14 @@ def printLol():
     
 def main():
     server=zeroconfTcpServer()
+    server.startThreads()
     #server.addHandler("lol", printLol)
     try:
         print("running tcp and zeroconf")
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        pass
-    server.close()
+        server.close()
     
 if __name__ == '__main__':
     main()
