@@ -61,7 +61,7 @@ class Gui(QtGui.QWidget):
         print("event fired from bonjour browser")
         if len(args)>0:
             args=args.get(args.keys()[0])
-            print("ip="+str(args.ip)+" port="+args.port)
+            print("ip="+str(args.ip)+" port="+str(args.port))
             if args.ip!=self.ip or args.port!=self.port:
                 self.ip=args.ip
                 self.port=args.port
