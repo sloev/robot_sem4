@@ -28,7 +28,7 @@ class MainGui(QtGui.QMainWindow):
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
         
-        self.mitSignal.connect(self.updateServerList)
+        self.mitSignal.connect(self.updateIp)
         ###
         ###
         
@@ -44,7 +44,7 @@ class MainGui(QtGui.QMainWindow):
         self.setGeometry(300,300,300,300) 
         self.setWindowTitle('LUL') 
         self.show()
-        self.browser.addClientEventHandler(self.lol)
+        self.browser.addClientEventHandler(self.mitSignal.emit)
 
         
     def lol(self,args=None,args2=None):
@@ -65,7 +65,7 @@ class MainGui(QtGui.QMainWindow):
         else:
             event.ignore()    
     
-    def updateServerList(self,ip,port):
+    def updateIp(self,ip,port):
         try:
             print("received ip="+str(ip)+" port="+str(port))
         finally:

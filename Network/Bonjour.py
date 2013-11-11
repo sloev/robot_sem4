@@ -149,7 +149,7 @@ class Bonjour():
                     if self.clients.has_key(serviceName):
                         print("client exists to be removed= "+str(serviceName))
                         self.clients.pop(serviceName)
-                        self.clientEventHandler.fire(self.clients)
+                        #self.clientEventHandler.fire(self.clients)
                 #print 'Service removed'
                 return
             #print 'Service added; resolving'
@@ -178,7 +178,7 @@ class Bonjour():
                             self.currentClient.regType=regtype
                             #print(self.currentClient)
                             self.clients[serviceName] = self.currentClient
-                            self.clientEventHandler.fire(self.clients)
+                            self.clientEventHandler.fire(self.currentClient.ip,self.currentClient.port)
                     self.browserResolved.pop()
                     
             finally:
