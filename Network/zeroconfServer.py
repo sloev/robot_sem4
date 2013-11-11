@@ -41,18 +41,18 @@ class zeroconfTcpServer():
         while True:
             try:
                 self.port=9000+random.randint(0,900)
-                self.tcpServer = self.SimpleServer((self.host, self.port), self.SingleTCPHandler)
+                self.tcpServer = self.SimpleServer((self.host, self.port), self.SingleTCPHandler,self.eventHandler)
                 break
             finally:
                 time.sleep(0.1)
         print ("got port "+str(self.port))
     
-    class SingleTCPHandler(SocketServer.BaseRequestHandler):
+    class SingleTCPHandler(SocketServer.StreamRequestHandler):
 
         def handle(self):
             # self.request is the client connection
             data = self.request.recv(1024)  # clip input at 1Kb
-            
+            string=self.server.eventHandler.get(str(data))
             #reply = pipe_command(my_unix_command, data)
             self.request.send("lol"+str(data))
             self.request.close()
@@ -62,8 +62,8 @@ class zeroconfTcpServer():
         daemon_threads = True
         # much faster rebinding
         allow_reuse_address = True
-    
-        def __init__(self, server_address, RequestHandlerClass):
+            
+        def __init__(self, server_address, RequestHandlerClass,eventHandler):
             SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass)
     
 
