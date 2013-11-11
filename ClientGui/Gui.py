@@ -66,8 +66,8 @@ class MainGui(QtGui.QMainWindow):
 
         if reply == QtGui.QMessageBox.Yes:
             print("old ip and port="+str(self.address))
-            self.address=(ip,port)
-            #self.initTcpClient()
+            self.address=(str(ip),port)
+            self.initTcpClient()
             print("new ip and port="+str(self.address))
         else:
             pass
