@@ -26,6 +26,7 @@ class zeroconfTcpServer():
         self.tcpThread=threading.Thread(target=self.tcpServer.serve_forever)
         self.tcpThread.start()
         self.bonjour.runRegister()
+        print("lol started everything")
         
         
     def stop(self):
