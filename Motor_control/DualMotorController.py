@@ -79,6 +79,11 @@ class DualMotorController:
         
         self.setPosition(self.turn180Steps, self.turn180Steps)
         
+    def setTurnPosition(self,left,right):
+        self.motorLeft.setPosition(left)
+        self.motorRight.setPosition(right)
+        
+             
     def setPosition(self,incLeftPos,incRightPos):
         self.logger.info("setPosition"+str(incLeftPos)+","+str(incRightPos))
         fullstatus2=self.getFullStatus2()
