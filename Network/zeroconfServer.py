@@ -20,6 +20,8 @@ class zeroconfTcpServer():
         self.regType='_maze._tcp'
         self.eventHandler=EventHookKeyValue()
 
+
+    def initThreads(self):
         self.initTcp()    
         self.bonjour=Bonjour(self.name,self.regType,self.port)
         
@@ -76,6 +78,7 @@ def printLol():
 def main():
     server=zeroconfTcpServer()
     server.addHandler("lol", printLol)
+    server.initThreads()
     server.start()
     #server.addHandler("lol", printLol)
     try:
