@@ -23,7 +23,8 @@ class MainGui(QtGui.QMainWindow):
     def initUI(self):
         name="robotMaze"
         regtype='_maze._tcp'
-                
+        
+        self.address=None
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
         
@@ -55,8 +56,7 @@ class MainGui(QtGui.QMainWindow):
             event.ignore()    
     
     def updateIp(self,ip,port):
-        (oldIp,oldPort)=self.clientSocket.getsockname()
-        if oldIp==ip and oldPort==port:
+        if self.address!=(ip,port):
             self.closeTcpClient()
             print("r-pi removed and clientSocket closed with ip="+str(ip)+" port="+str(port))
         else:
