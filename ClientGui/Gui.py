@@ -41,8 +41,14 @@ class MainGui(QtGui.QMainWindow):
     
         self.setGeometry(300,300,300,300) 
         self.setWindowTitle('LUL') 
-        self.show()
         self.browser.addClientEventHandler(self.mitSignal.emit)
+        
+        qbtn = QtGui.QPushButton('send', self)
+        qbtn.clicked.connect(self.clientSend)
+        qbtn.resize(qbtn.sizeHint())
+        qbtn.move(50, 50)    
+        self.show()
+
 
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message',
@@ -79,13 +85,15 @@ class MainGui(QtGui.QMainWindow):
     def closeTcpClient(self):
         self.clientSocket.close()
     
-    def clientSend(self,string):
+    def clientSend(self):
+        string="lol"
         self.clientSocket.send(string)
 
 def main():
     app = QtGui.QApplication(sys.argv)
     gui = MainGui()
     sys.exit(app.exec_())
+        
 
 if __name__ == '__main__':
     main()
