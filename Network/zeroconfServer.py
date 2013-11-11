@@ -52,9 +52,9 @@ class zeroconfTcpServer():
             self.data = self.rfile.readline().strip()
             print "{} wrote:".format(self.client_address[0])
             print self.data
-            string=self.eventHandler.fire(self.data)
-            if(string!=None):
-                self.wfile.write(self.data.upper())
+            #string=self.eventHandler.fire(self.data)
+            #if(string!=None):
+             #   self.wfile.write(self.data.upper())
     
     def initTcpServer(self):
         while True:

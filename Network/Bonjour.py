@@ -218,7 +218,7 @@ def main():
     
     a=Bonjour(name,regtype,port)
     #b=Bonjour(name,regtype,port)
-    #b.addClientEventHandler(printEvent)
+    #.addClientEventHandler(printEvent)
     
     #b.runBrowser()
     time.sleep(5)
