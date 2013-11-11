@@ -8,7 +8,7 @@ from PyQt4 import QtGui
 from PyQt4.QtCore import QObject, pyqtSignal
 from PyQt4 import QtCore
 import time
-from Network import Bonjour
+from Network.Bonjour import Bonjour
 import socket
 
 
