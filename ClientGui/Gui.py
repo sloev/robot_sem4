@@ -19,10 +19,12 @@ class MainGui(QtGui.QMainWindow):
         
         self.ip=None
         self.port=None
+        self.newIpPort=[None,None]
         
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
-        self.browser.addClientEventHandler(self.updateServerList)
+        self.browser.addClientEventHandler(self.lol)
+        self.updateDialog.connect(self.updateServerList)       
         ###
         ###
         
@@ -39,6 +41,14 @@ class MainGui(QtGui.QMainWindow):
         self.setWindowTitle('LUL') 
         self.show()
         
+    def lol(self,args,args2):
+        if len(args)>0:
+            args=args.get(args.keys()[0])
+            print("ip="+str(args.ip)+" port="+str(args.port))
+            if args.ip!=self.ip or args.port!=self.port:
+                self.newIpPort=[args.ip,args.port]
+                self.updateDialog.emit()
+        
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message',
             "Are you sure to quit?", QtGui.QMessageBox.Yes | 
@@ -51,18 +61,13 @@ class MainGui(QtGui.QMainWindow):
             event.ignore()    
     
     def updateServerList(self,args=None,args2=None):
-        print("event fired from bonjour browser")
-        if len(args)>0:
-            args=args.get(args.keys()[0])
-            print("ip="+str(args.ip)+" port="+str(args.port))
-            if args.ip!=self.ip or args.port!=self.port:
-                reply = QtGui.QMessageBox.question(None, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+        reply = QtGui.QMessageBox.question(self, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
-                if reply == QtGui.QMessageBox.Yes:
-                    self.ip=args.ip
-                    self.port=args.port                
-                else:
-                    pass
+        if reply == QtGui.QMessageBox.Yes:
+            self.ip=self.newIpPort[0]
+            self.port=self.newIpPort[1]           
+        else:
+            pass
 def main():
     
     app = QtGui.QApplication(sys.argv)
