@@ -82,6 +82,7 @@ class DualMotorController:
     def setTurnPosition(self,left,right):
         self.motorLeft.setPosition(left)
         self.motorRight.setPosition(right)
+
         
              
     def setPosition(self,incLeftPos,incRightPos):
@@ -115,7 +116,9 @@ class DualMotorController:
         value=(actLeft==tarLeft) and (actRight==tarRight)
         
         value = not value
-        print("isbusy="+str(value))
+        #print("isbusy="+str(value))
+        print str(actLeft)
+        print str(tarLeft)
         self.logger.info("isBusy="+str(value))
         return value
         
