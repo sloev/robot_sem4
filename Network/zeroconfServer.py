@@ -18,7 +18,7 @@ class zeroconfTcpServer():
         self.name="robotMaze"
         self.regType='_maze._tcp'
         #self.address=address
-        self.host= "127.0.0.1"
+        self.host= "0.0.0.0"
         self.initTcpServer()
 
         self.eventHandler=EventHookKeyValue()
@@ -27,9 +27,10 @@ class zeroconfTcpServer():
     def startThreads(self):
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever)
         self.tcpServerThread.start()
-
+        print("created tcp server")
         self.registerThread=Bonjour(self.name,self.regType,self.port)
         self.registerThread.runBrowser()
+        print("created zeroconf")
 
     def close(self):
         self.tcpServer.shutdown()
