@@ -67,13 +67,16 @@ class MainGui(QtGui.QMainWindow):
     
     def updateServerList(self,ip,port):
         try:
-            print(str(ip)+" lol "+str(port))
+            print("received ip="+str(ip)+" port="+str(port))
         finally:
             pass
         reply = QtGui.QMessageBox.question(self, 'question',"wanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
-            pass         
+            print("old ip and port="+str(self.ip)+" "+str(self.port))
+            self.ip=ip
+            self.port=port   
+            print("new ip and port="+str(self.ip)+" "+str(self.port))
         else:
             pass
 def main():

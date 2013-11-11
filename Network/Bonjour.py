@@ -220,7 +220,7 @@ def main():
     #b.addClientEventHandler(printEvent)
     
     #b.runBrowser()
-    #time.sleep(3)
+    time.sleep(5)
     print("starting bonjour register")
     a.runRegister()
     try :
