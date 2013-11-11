@@ -52,9 +52,9 @@ class zeroconfTcpServer():
         def handle(self):
             # self.request is the client connection
             data = self.request.recv(1024)  # clip input at 1Kb
-            string=self.eventHandler.get(str(data))()
+            
             #reply = pipe_command(my_unix_command, data)
-            self.request.send("lol"+string)
+            self.request.send("lol"+str(data))
             self.request.close()
 
     class SimpleServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
