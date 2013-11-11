@@ -15,7 +15,7 @@ from Network.EventHelpers import EventHookKeyValue
 
 class zeroconfTcpServer():
     def __init__(self):
-        host="127.0.0.1"
+        self.host="127.0.0.1"
         self.name="robotMaze"
         self.regType='_maze._tcp'
         self.initTcp()    
