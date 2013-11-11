@@ -25,6 +25,7 @@ class Gui(QtGui.QWidget):
         
         self.b=Bonjour(name,regtype)
         self.b.runBrowser()
+        self.b.addClientEventHandler(self.updateServerList)
         
     def closeEvent(self, event):
         
@@ -37,16 +38,21 @@ class Gui(QtGui.QWidget):
             event.accept()
         else:
             event.ignore()        
-            
-    def waitForService(self): 
-        c=None
-        while(c==None):
-            c=self.b.getFirstClient()            
-            time.sleep(1)    
-        print("got first service")
-        while 1:
-            time.sleep(4)
+    
 
+    def updateServerList(self,args=None,args2=None):
+        if len(args)>0:
+            if args.ip!=self.ip or args.port!=self.port:
+                reply = QtGui.QMessageBox.question(self, 'question',
+                    "update ip/port?", QtGui.QMessageBox.Yes | 
+                    QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+        
+                if reply == QtGui.QMessageBox.Yes:
+                    self.ip=args.ip
+                    self.port=args.port
+                else:
+                    pass
+        
 
             
 def main():
