@@ -20,14 +20,7 @@ class Gui(QtGui.QWidget):
         self.setWindowTitle('Simple')
         self.show()
         
-        name="robotMaze"
-        regtype='_maze._tcp'
-        self.ip=None
-        self.port=None
-        
-        self.b=Bonjour(name,regtype)
-        self.b.runBrowser()
-        self.b.addClientEventHandler(self.updateServerList)
+
         
     def closeEvent(self, event):
         
@@ -40,29 +33,46 @@ class Gui(QtGui.QWidget):
             event.accept()
         else:
             event.ignore()        
+            
+    def dialog(self):
+        reply = QtGui.QMessageBox.question(self, 'question',
+                    "update ip/port?", QtGui.QMessageBox.Yes | 
+                    QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+        
+        if reply == QtGui.QMessageBox.Yes:
+            return True
+        else:
+            return False
     
 
+
+        
+class ClientApp():
+    def __init__(self):
+        name="robotMaze"
+        regtype='_maze._tcp'
+        
+        app = QtGui.QApplication(sys.argv)
+        self.gui = Gui()
+        sys.exit(app.exec_())
+
+        self.ip=None
+        self.port=None
+        
+        self.b=Bonjour(name,regtype)
+        self.b.runBrowser()
+        self.b.addClientEventHandler(self.updateServerList)
+        
     def updateServerList(self,args=None,args2=None):
         if len(args)>0:
             args=args.get(args.keys()[0])
             if args.ip!=self.ip or args.port!=self.port:
-                reply = QtGui.QMessageBox.question(self, 'question',
-                    "update ip/port?", QtGui.QMessageBox.Yes | 
-                    QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        
-                if reply == QtGui.QMessageBox.Yes:
+                if self.gui.dialog():
                     self.ip=args.ip
                     self.port=args.port
-                else:
-                    pass
-        
-
-            
 def main():
+    app=ClientApp()
     
-    app = QtGui.QApplication(sys.argv)
-    ex = Gui()
-    sys.exit(app.exec_())
 
      
 if __name__ == '__main__':
