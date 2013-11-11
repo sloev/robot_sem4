@@ -20,6 +20,7 @@ class zeroconfTcpServer():
         self.regType='_maze._tcp'
         self.initTcp()    
         self.bonjour=Bonjour(self.name,self.regType,self.port)
+        self.eventHandler=EventHookKeyValue()
         
     def start(self):
         self.tcpThread=threading.Thread(target=self.tcpServer.serve_forever)
@@ -30,6 +31,9 @@ class zeroconfTcpServer():
     def stop(self):
         self.tcpServer.shutdown()
         self.bonjour.stopRegister()
+    
+    def addHandler(self,string,handler):
+        self.eventHandler.add(string, handler)
         
     def initTcp(self):
         while True:
@@ -45,8 +49,9 @@ class zeroconfTcpServer():
         def handle(self):
             # self.request is the client connection
             data = self.request.recv(1024)  # clip input at 1Kb
+            string=self.eventHandler.get(str(data))()
             #reply = pipe_command(my_unix_command, data)
-            self.request.send("lol")
+            self.request.send("lol"+string)
             self.request.close()
 
     class SimpleServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
@@ -66,6 +71,7 @@ def printLol():
     
 def main():
     server=zeroconfTcpServer()
+    server.addHandler("lol", printLol)
     server.start()
     #server.addHandler("lol", printLol)
     try:
