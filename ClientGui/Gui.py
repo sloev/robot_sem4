@@ -41,7 +41,7 @@ class MainGui(QtGui.QMainWindow):
         self.setWindowTitle('LUL') 
         self.show()
         
-    def lol(self,args,args2):
+    def lol(self,args=None,args2=None):
         if len(args)>0:
             args=args.get(args.keys()[0])
             print("ip="+str(args.ip)+" port="+str(args.port))
@@ -60,7 +60,7 @@ class MainGui(QtGui.QMainWindow):
         else:
             event.ignore()    
     
-    def updateServerList(self,args=None,args2=None):
+    def updateServerList(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
