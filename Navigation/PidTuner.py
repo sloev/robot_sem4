@@ -48,7 +48,7 @@ class PidTuner():
         self.right=direction
         self.front=2
         
-        self.tuneFactor=0.01
+        self.tuneFactor=0.1
         try:
             os.remove("/home/pi/robot_sem4/robot.log")
         except OSError:
@@ -147,42 +147,39 @@ class PidTuner():
         
     def doPid(self):
         try:
-            self.printGains()
-            sample=self.ir_sensors.multiChannelReadCm(sensorChannels,5)
-            
-            self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-            self.dual_motors.setPosition(32767, 32767)
-            
-            
-            
-            walls=self.wallChecker.checkWalls(sample)  
-            debounce=self.wallChecker.compare()   
-            if(walls==[1,1,1]):                
-                self.pid.doPid(sample)
+            self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
-            choice=self.makeChoice(walls, debounce)
+            #self.printGains()
+            'start sampling section'
+            sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
+            print sample
+            walls=self.wallChecker.checkWalls(sample)  
+            debounce=self.wallChecker.compare()         
+            'end of sampling section'
+#            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
+
+            choice=self.makeChoice(sample,walls, debounce)
             
             if(self.turnThread.checkForTurn(choice)):
                 self.pid.reset()
 
-     
         except IOError:
             pass
 
-    def makeChoice(self,walls,debounce):
-         
-        if(debounce):
-            print(str(walls))
-            if(walls[self.right]==0):
-                return 4
-            elif(walls[self.left]==0):
-                return 2
-            elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
-                self.pid.reset()
-                return 3
+    def makeChoice(self,sample,walls,debounce):
+        print(str(walls))
+        if(walls==[1,1,1] and debounce):
+            self.dual_motors.setPosition(32767, 32767)
+            self.pid.doPid(sample)
+        elif(walls[self.right]==0):
+            return 4
+        elif(walls[self.left]==0):
+            return 2
+        elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
+            self.pid.reset()
+            return 0
         else:
             return 0
-        
         
     def stop(self):
         self.dual_motors.softStop()
@@ -204,7 +201,7 @@ def main():
         ")
     try:
         while True:
-            time.sleep(0.3)
+            time.sleep(0.025)
     
             # get keyboard input, returns -1 if none available
             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:

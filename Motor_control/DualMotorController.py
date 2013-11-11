@@ -79,6 +79,12 @@ class DualMotorController:
         
         self.setPosition(self.turn180Steps, self.turn180Steps)
         
+    def setTurnPosition(self,left,right):
+        self.motorLeft.setPosition(left)
+        self.motorRight.setPosition(right)
+
+        
+             
     def setPosition(self,incLeftPos,incRightPos):
         self.logger.info("setPosition"+str(incLeftPos)+","+str(incRightPos))
         fullstatus2=self.getFullStatus2()
@@ -98,13 +104,21 @@ class DualMotorController:
     def getOfflinePosition(self):
         return [self.positionLeft,self.positionRight]
     
-    def isBusy(self,fullStatus2Matrix):
-        leftstatus=fullStatus2Matrix[0][:]
-        rightstatus=fullStatus2Matrix[1][:]
-        leftstatus=(leftstatus[1] == leftstatus[3]) & (leftstatus[2] == leftstatus[4])
-        rightstatus=(rightstatus[1] == rightstatus[3]) & (rightstatus[2] == rightstatus[4])
-        value=(leftstatus & rightstatus)==1
-       
+    def isBusy(self):
+        fullstatus2=self.getFullStatus2()
+        
+        actLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
+        actRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
+        
+        tarLeft=fullstatus2[0][3]<<8 | fullstatus2[0][4]<<0
+        tarRight=fullstatus2[1][3]<<8 | fullstatus2[1][4]<<0
+
+        value=(actLeft==tarLeft) and (actRight==tarRight)
+        
+        value = not value
+        #print("isbusy="+str(value))
+        print str(actLeft)
+        print str(tarLeft)
         self.logger.info("isBusy="+str(value))
         return value
         
