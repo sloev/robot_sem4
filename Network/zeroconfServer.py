@@ -18,7 +18,7 @@ class zeroconfTcpServer():
         self.name="robotMaze"
         self.regType='_maze._tcp'
         #self.address=address
-        self.host='127.0.0.1'
+        self.host= "127.0.0.1"
         self.initTcpServer()
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
         self.initBonjourServer()
@@ -66,7 +66,8 @@ class zeroconfTcpServer():
                 print '  name    =', name
                 print '  regtype =', regType
                 print '  domain  =', domain
-        print"registering zeroconf"
+            else:
+                print"error in zeroconf"
 
 
 
@@ -86,7 +87,7 @@ def printLol():
     
 def main():
     server=zeroconfTcpServer()
-    server.addHandler("lol", printLol)
+    #server.addHandler("lol", printLol)
     try:
         print("running tcp and zeroconf")
         while True:
