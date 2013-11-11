@@ -5,6 +5,7 @@ Created on Nov 11, 2013
 '''
 import sys
 from PyQt4 import QtGui
+from PyQt4 import QtCore
 import time
 from Network.Bonjour import Bonjour
 
@@ -24,7 +25,9 @@ class MainGui(QtGui.QMainWindow):
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
         self.browser.addClientEventHandler(self.lol)
-        self.updateDialog.connect(self.updateServerList)       
+        self.updateDialog.connect(self.updateServerList)     
+        self.connect(self, QtCore.SIGNAL('update(str,int)'), self.updateServerList())
+            
         ###
         ###
         
@@ -46,9 +49,8 @@ class MainGui(QtGui.QMainWindow):
             args=args.get(args.keys()[0])
             print("ip="+str(args.ip)+" port="+str(args.port))
             if args.ip!=self.ip or args.port!=self.port:
-                self.newIpPort=[args.ip,args.port]
-                self.updateDialog.emit()
-        
+                self.emit(QtCore.SIGNAL('update(str,int)'), args.ip, args.port)
+
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message',
             "Are you sure to quit?", QtGui.QMessageBox.Yes | 
@@ -61,11 +63,15 @@ class MainGui(QtGui.QMainWindow):
             event.ignore()    
     
     def updateServerList(self,event):
+        print(str(event))
+        try:
+            print(str(event.ip))
+        finally:
+            pass
         reply = QtGui.QMessageBox.question(self, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
-            self.ip=self.newIpPort[0]
-            self.port=self.newIpPort[1]           
+            pass         
         else:
             pass
 def main():
