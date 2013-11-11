@@ -62,6 +62,8 @@ class zeroconfTcpServer():
                 print '  domain  =', domain
         print"registering zeroconf"
 
+
+
         self.sdRef = pybonjour.DNSServiceRegister(name = self.name,
                                                   regtype = self.regType,
                                                   port = self.port,
@@ -85,6 +87,7 @@ def client(string,address):
     return reply
 
 def main():
+    tcp=TcpSocket()
     server=zeroconfTcpServer()
     try:
         print("running tcp and zeroconf")

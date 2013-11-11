@@ -20,6 +20,10 @@ class Client():
         self.fullName=None
         self.regType=None
         self.resolved = False
+        
+        self.host='127.0.0.1'
+        self.initTcpServer()
+        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
 
     def __str__(self):
         string = "\nservice name: \t%s\n" % self.serviceName
