@@ -40,13 +40,16 @@ class zeroconfTcpServer():
         while True:
             try:
                 self.port=9000+random.randint(0,900)
-                self.tcpServer = self.SimpleServer((self.host, self.port), self.SingleTCPHandler)
+                lol=self.SingleTCPHandler.addHandler(self.eventHandler)
+                self.tcpServer = self.SimpleServer((self.host, self.port), lol)
                 break
             finally:
                 time.sleep(0.1)
         print ("got port "+str(self.port))
     
     class SingleTCPHandler(SocketServer.BaseRequestHandler):
+        def addHandler(self,eventHandler):
+            self.eventHandler=eventHandler
         def handle(self):
             # self.request is the client connection
             data = self.request.recv(1024)  # clip input at 1Kb
