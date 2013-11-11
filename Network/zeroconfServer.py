@@ -15,58 +15,49 @@ from Network.EventHelpers import EventHookKeyValue
 
 class zeroconfTcpServer():
     def __init__(self):
+        host="127.0.0.1"
         self.name="robotMaze"
         self.regType='_maze._tcp'
-        #self.address=address
-        self.host= "0.0.0.0"
-        self.initTcpServer()
-
-        self.eventHandler=EventHookKeyValue()
-      
-
-    def startThreads(self):
-        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever)
-        self.tcpServerThread.start()
-        print("created tcp server")
-        self.registerThread=Bonjour(self.name,self.regType,self.port)
-        self.registerThread.runBrowser()
-        print("created zeroconf")
-
-    def close(self):
+        self.initTcp()    
+        self.bonjour=Bonjour(self.name,self.regType,self.port)
+        
+    def start(self):
+        self.tcpThread=threading.Thread(target=self.tcpServer.serve_forever)
+        self.tcpThread.start()
+        self.bonjour.runRegister()
+        
+        
+    def stop(self):
         self.tcpServer.shutdown()
-        self.registerThread.stopRegister()
-        print("closed tcpserver and zeroconf succesfully")
-    
-    def addHandler(self,string,handler):
-        self.eventHandler.add(string, handler)
-    
-    class SimpleServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
-        daemon_threads = True
-        allow_reuse_address = True
-
-        def __init__(self, server_address, RequestHandlerClass):
-            SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass)
-
-    class MyTCPHandler(SocketServer.StreamRequestHandler):
-        def handle(self):
-            self.data = self.rfile.readline().strip()
-            print "{} wrote:".format(self.client_address[0])
-            print self.data
-            #string=self.eventHandler.fire(self.data)
-            #if(string!=None):
-             #   self.wfile.write(self.data.upper())
-    
-    def initTcpServer(self):
+        self.bonjour.stopRegister()
+        
+    def initTcp(self):
         while True:
             try:
-                self.port = 9000 + random.randint(0,999)
-                self.tcpServer=self.SimpleServer((self.host, self.port), self.MyTCPHandler)
-                print "%s: got port %s" % (self.name, self.port)
+                self.port=9000+random.randint(0,900)
+                self.tcpServer = self.SimpleServer((self.host, self.port), self.SingleTCPHandler)
                 break
-            except IOError:
-                print "%s: didn't get port %s" % (self.name, self.port)
-        print "finnished init"
-                
+            finally:
+                time.sleep(0.1)
+        print ("got port "+str(self.port))
+    
+    class SingleTCPHandler(self,SocketServer.BaseRequestHandler):
+        def handle(self):
+            # self.request is the client connection
+            data = self.request.recv(1024)  # clip input at 1Kb
+            #reply = pipe_command(my_unix_command, data)
+            self.request.send("lol")
+            self.request.close()
+
+    class SimpleServer(self,SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+        # Ctrl-C will cleanly kill all spawned threads
+        daemon_threads = True
+        # much faster rebinding
+        allow_reuse_address = True
+    
+        def __init__(self, server_address, RequestHandlerClass):
+            SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass)
+    
 
 def printLol():
     rint=random.randint(0,999)
@@ -75,14 +66,14 @@ def printLol():
     
 def main():
     server=zeroconfTcpServer()
-    server.startThreads()
+    server.start()
     #server.addHandler("lol", printLol)
     try:
         print("running tcp and zeroconf")
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
-        server.close()
+        server.stop()
     
 if __name__ == '__main__':
     main()
