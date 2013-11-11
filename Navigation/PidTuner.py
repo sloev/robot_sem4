@@ -149,7 +149,7 @@ class PidTuner():
         try:
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
-            self.printGains()
+            #self.printGains()
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
             walls=self.wallChecker.checkWalls(sample)  
