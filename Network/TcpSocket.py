@@ -12,6 +12,7 @@ import threading
 class TcpSocket():
     def __init__(self,host='127.0.0.1'):
         self.host=host
+        self.initTcpServer()
 
     def initTcpServer(self):
         while True:
@@ -23,8 +24,6 @@ class TcpSocket():
             except IOError:
                 print "%s: didn't get port %s" % (self.name, self.port)
         print "finnished init"
-        return self.port
-
         
     def startServer(self):
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever)

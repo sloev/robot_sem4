@@ -25,3 +25,20 @@ class EventHook(object):
         for theHandler in self.__handlers:
             if theHandler.im_self == inObject:
                 self -= theHandler
+
+class EventHookKeyValue(object):
+
+    def __init__(self):
+        self.clients = dict()
+
+    def add(self,string, handler):
+        self.clients[string] = handler
+        return self
+
+    def sub(self, string):
+        self.clients.pop(string)
+        return self
+
+    def fire(self, string):
+        self.clients.get(string)()
+        

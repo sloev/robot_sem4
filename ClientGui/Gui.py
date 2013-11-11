@@ -9,6 +9,8 @@ from PyQt4.QtCore import QObject, pyqtSignal
 from PyQt4 import QtCore
 import time
 from Network.Bonjour import Bonjour
+import socket
+
 
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
@@ -20,18 +22,12 @@ class MainGui(QtGui.QMainWindow):
     def initUI(self):
         name="robotMaze"
         regtype='_maze._tcp'
-        
-        self.ip=None
-        self.port=None
-        self.newIpPort=[None,None]
-        
+                
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
         
         self.mitSignal.connect(self.updateIp)
-        ###
-        ###
-        
+
         closeAction = QtGui.QAction('Close', self)
         closeAction.setShortcut('Ctrl+Q')
         closeAction.setStatusTip('Close Notepad')
@@ -46,14 +42,6 @@ class MainGui(QtGui.QMainWindow):
         self.show()
         self.browser.addClientEventHandler(self.mitSignal.emit)
 
-        
-    def lol(self,args=None,args2=None):
-        if len(args)>0:
-            args=args.get(args.keys()[0])
-            print("ip="+str(args.ip)+" port="+str(args.port))
-            if args.ip!=self.ip or args.port!=self.port:
-                self.mitSignal.emit(args.ip, args.port)
-
     def closeEvent(self,event):
         reply = QtGui.QMessageBox.question(self, 'Message',
             "Are you sure to quit?", QtGui.QMessageBox.Yes | 
@@ -66,19 +54,32 @@ class MainGui(QtGui.QMainWindow):
             event.ignore()    
     
     def updateIp(self,ip,port):
-        try:
-            print("received ip="+str(ip)+" port="+str(port))
-        finally:
-            pass
+        (oldIp,oldPort)=self.clientSocket.getsockname()
+        if oldIp==ip and oldPort==port:
+            self.closeTcpClient()
+            print("r-pi removed and clientSocket closed with ip="+str(ip)+" port="+str(port))
+        else:
+            print("r-pi catched with ip="+str(ip)+" port="+str(port))
+            
         reply = QtGui.QMessageBox.question(self, 'question',"rpi detected\nwanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
             print("old ip and port="+str(self.ip)+" "+str(self.port))
-            self.ip=ip
-            self.port=port   
+            self.initTcpClient(ip,port)
             print("new ip and port="+str(self.ip)+" "+str(self.port))
         else:
             pass
+        
+    def initClient(self, address):
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientSocket.connect(address)
+    
+    def closeTcpClient(self):
+        self.clientSocket.close()
+    
+    def clientSend(self,string):
+        self.clientSocket.send(string)
+
 def main():
     
     app = QtGui.QApplication(sys.argv)

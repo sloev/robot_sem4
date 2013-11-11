@@ -10,21 +10,27 @@ import time
 import SocketServer
 import socket
 import threading
+from Network.EventHelpers import EventHookKeyValue
+
 
 class zeroconfTcpServer():
     def __init__(self):
-        self.name="r-pi_robot_maze_socket"
-        self.regType= '_maze._tcp'
+        self.name="robotMaze"
+        self.regtype='_maze._tcp'
         #self.address=address
         self.host='127.0.0.1'
         self.initTcpServer()
         self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
         self.initBonjourServer()
-            
+        self.eventHandler=EventHookKeyValue()
+
     def close(self):
         self.tcpServer.shutdown()
         self.sdRef.close()
         print("closed tcpserver and zeroconf succesfully")
+    
+    def addHandler(self,string,handler):
+        self.eventHandler.add(string, handler)
     
     class SimpleServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
         daemon_threads = True
@@ -33,14 +39,14 @@ class zeroconfTcpServer():
         def __init__(self, server_address, RequestHandlerClass):
             SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass)
 
-        
     class MyTCPHandler(SocketServer.StreamRequestHandler):
         def handle(self):
             self.data = self.rfile.readline().strip()
             print "{} wrote:".format(self.client_address[0])
             print self.data
-
-            self.wfile.write(self.data.upper())
+            string=self.eventHandler.fire(self.data)
+            if(string!=None):
+                self.wfile.write(self.data.upper())
     
     def initTcpServer(self):
         while True:
@@ -72,28 +78,18 @@ class zeroconfTcpServer():
         if self.sdRef in ready[0]:
             print("first victim")
             pybonjour.DNSServiceProcessResult(self.sdRef)
-            
-    def getAddress(self):
-        return (self.host,self.port)
-    
-def client(string,address):
-    # SOCK_STREAM == a TCP socket
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #sock.setblocking(0)  # optional non-blocking
-    sock.connect(address)
-    sock.send(string)
-    reply = sock.recv(16384)  # limit reply to 16K
-    sock.close()
-    return reply
 
+def printLol():
+    rint=random.randint(0,999)
+    print("received lol sending %d" % rint)
+    return str(rint)
+    
 def main():
-    tcp=TcpSocket()
     server=zeroconfTcpServer()
+    server.addHandler("lol", printLol)
     try:
         print("running tcp and zeroconf")
         while True:
-            
-            print(client("lol\n",server.getAddress()))
             time.sleep(1)
     except KeyboardInterrupt:
         pass

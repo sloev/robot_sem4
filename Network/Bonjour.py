@@ -21,9 +21,6 @@ class Client():
         self.regType=None
         self.resolved = False
         
-        self.host='127.0.0.1'
-        self.initTcpServer()
-        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
 
     def __str__(self):
         string = "\nservice name: \t%s\n" % self.serviceName
@@ -153,7 +150,7 @@ class Bonjour():
                     if self.clients.has_key(serviceName):
                         print("client exists to be removed= "+str(serviceName))
                         self.clients.pop(serviceName)
-                        #self.clientEventHandler.fire(self.clients)
+                        self.clientEventHandler.fire(self.clients)
                 #print 'Service removed'
                 return
             #print 'Service added; resolving'
