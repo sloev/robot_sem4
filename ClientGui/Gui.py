@@ -8,7 +8,7 @@ from PyQt4 import QtGui
 from PyQt4.QtCore import QObject, pyqtSignal
 from PyQt4 import QtCore
 import time
-from Network.Bonjour import Bonjour
+from Network import Bonjour
 import socket
 
 
@@ -16,6 +16,7 @@ class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
 
     def __init__(self):
+        
         super(MainGui, self).__init__()
         self.initUI()
 
@@ -81,7 +82,6 @@ class MainGui(QtGui.QMainWindow):
         self.clientSocket.send(string)
 
 def main():
-    
     app = QtGui.QApplication(sys.argv)
     gui = MainGui()
     sys.exit(app.exec_())
