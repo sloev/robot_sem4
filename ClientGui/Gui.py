@@ -56,7 +56,7 @@ class MainGui(QtGui.QMainWindow):
             event.ignore()    
     
     def updateIp(self,ip,port):
-        if self.address!=(ip,port):
+        if self.address!=(ip,port) and self.address!=None:
             self.closeTcpClient()
             print("r-pi removed and clientSocket closed with ip="+str(ip)+" port="+str(port))
         else:
