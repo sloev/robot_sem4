@@ -4,12 +4,12 @@ Created on Nov 11, 2013
 @author: johannes
 '''
 import sys
-from PyQt4 import *
-
+from PyQt4 import QtGui
+from PyQt4 import QtCore
 import time
 from Network.Bonjour import Bonjour
 
-class MainGui(QMainWindow):
+class MainGui(QtGui.QMainWindow):
     def __init__(self):
         super(MainGui, self).__init__()
         self.initUI()
@@ -25,13 +25,14 @@ class MainGui(QMainWindow):
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
         self.browser.addClientEventHandler(self.lol)
+        self.connect(self, QtCore.SIGNAL('update(str,int)'), self.updateServerList())
         
-        self.mitSignal = pyqtSignal(str, int, name='mitSignal')
+        self.mitSignal = QtCore.SIGNAL(str, int, name='mitSignal')
         self.mitSignal.connect(self.updateServerList(str,int))
         ###
         ###
         
-        closeAction = QAction('Close', self)
+        closeAction = QtGui.QAction('Close', self)
         closeAction.setShortcut('Ctrl+Q')
         closeAction.setStatusTip('Close Notepad')
         closeAction.triggered.connect(self.closeEvent)
@@ -52,11 +53,11 @@ class MainGui(QMainWindow):
                 self.mitSignal.emit(args.ip, args.port)
 
     def closeEvent(self,event):
-        reply = QMessageBox.question(self, 'Message',
+        reply = QtGui.QMessageBox.question(self, 'Message',
             "Are you sure to quit?", QtGui.QMessageBox.Yes | 
-            QMessageBox.No, QMessageBox.No)
+            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
-        if reply == QMessageBox.Yes:
+        if reply == QtGui.QMessageBox.Yes:
             self.browser.stopBrowser()
             event.accept()
         else:
@@ -67,15 +68,15 @@ class MainGui(QMainWindow):
             print(str(ip)+" lol "+str(port))
         finally:
             pass
-        reply = QMessageBox.question(self, 'Message',"Are you sure to quit?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        reply = QtGui.QMessageBox.question(self, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
-        if reply == QMessageBox.Yes:
+        if reply == QtGui.QMessageBox.Yes:
             pass         
         else:
             pass
 def main():
     
-    app = QApplication(sys.argv)
+    app = QtGui.QApplication(sys.argv)
     gui = MainGui()
     sys.exit(app.exec_())
 
