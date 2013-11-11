@@ -56,7 +56,7 @@ class MainGui(QtGui.QMainWindow):
             args=args.get(args.keys()[0])
             print("ip="+str(args.ip)+" port="+str(args.port))
             if args.ip!=self.ip or args.port!=self.port:
-                reply = QtGui.QMessageBox.question(self, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+                reply = QtGui.QMessageBox.question(None, 'Message',"Are you sure to quit?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
                 if reply == QtGui.QMessageBox.Yes:
                     self.ip=args.ip
