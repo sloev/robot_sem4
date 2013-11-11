@@ -25,7 +25,6 @@ class MainGui(QtGui.QMainWindow):
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
         self.browser.addClientEventHandler(self.lol)
-        self.updateDialog.connect(self.updateServerList)     
         self.connect(self, QtCore.SIGNAL('update(str,int)'), self.updateServerList())
             
         ###
