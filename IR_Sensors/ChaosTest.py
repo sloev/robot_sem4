@@ -46,7 +46,7 @@ class ChaosTest(object):
             if(25 < angles[1] < 27):
                 print "Facing the right way"
                 return 1
-        elif(65 > angles[0]):
+        elif(65 < angles[0]):
             print "Facing the right way, slightly more left"
             return 1
         else:
