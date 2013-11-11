@@ -26,7 +26,7 @@ class EventHook(object):
             if theHandler.im_self == inObject:
                 self -= theHandler
 
-class EventHookKeyValue(object):
+class EventHookKeyValue():
 
     def __init__(self):
         self.clients = dict()
