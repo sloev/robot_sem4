@@ -3,13 +3,13 @@ Created on Nov 1, 2013
 
 @author: johannes
 '''
-import pybonjour
 import select
 import random
 import time
 import SocketServer
 import socket
 import threading
+from Network.Bonjour import Bonjour
 from Network.EventHelpers import EventHookKeyValue
 
 
@@ -20,13 +20,20 @@ class zeroconfTcpServer():
         #self.address=address
         self.host= "127.0.0.1"
         self.initTcpServer()
-        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever).start()
-        self.initBonjourServer()
+
         self.eventHandler=EventHookKeyValue()
+      
+
+    def startThreads(self):
+        self.tcpServerThread = threading.Thread(target=self.tcpServer.serve_forever)
+        self.tcpServerThread.start()
+
+        self.registerThread=Bonjour(self.name,self.regtype,self.port)
+        self.registerThread.runBrowser()
 
     def close(self):
         self.tcpServer.shutdown()
-        self.sdRef.close()
+        self.registerThread.stopRegister()
         print("closed tcpserver and zeroconf succesfully")
     
     def addHandler(self,string,handler):
@@ -59,26 +66,6 @@ class zeroconfTcpServer():
                 print "%s: didn't get port %s" % (self.name, self.port)
         print "finnished init"
                 
-    def initBonjourServer(self):
-        def register_callback(sdRef, flags, errorCode, name, regType, domain):
-            if errorCode == pybonjour.kDNSServiceErr_NoError:
-                print 'Registered service:'
-                print '  name    =', name
-                print '  regtype =', regType
-                print '  domain  =', domain
-            else:
-                print"error in zeroconf"
-
-
-
-        self.sdRef = pybonjour.DNSServiceRegister(name = self.name,
-                                                  regtype = self.regType,
-                                                  port = self.port,
-                                                  callBack = register_callback)    
-        ready = select.select([self.sdRef], [], [])
-        if self.sdRef in ready[0]:
-            print("first victim")
-            pybonjour.DNSServiceProcessResult(self.sdRef)
 
 def printLol():
     rint=random.randint(0,999)
