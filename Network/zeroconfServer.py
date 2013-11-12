@@ -66,21 +66,21 @@ class zeroconfTcpServer():
         class DebugMETCPHandler(SocketServer.StreamRequestHandler):
             def handle(self):
                 # self.server is an instance of the DebugTCPServer
-                while True:
                     #data=self.request.recv(1024)
-                    try:
+                try:
+                    while True:
                         self.data = self.rfile.readline().strip()
                         if self.data!=0:
                             try:
                                 string=self.server.eventHandlers.get(self.data)()
                                 self.wfile.write(string)
-                            except Exception:
+                            except TypeError:
                                 self.wfile.write("error: not in funcDict")
                         else:
                             break 
-                    except IOError as e:
-                        if e.errno == errno.EPIPE:
-                            print("got pipe error")
+                except IOError as e:
+                    if e.errno == errno.EPIPE:
+                        print("got pipe error")
         while True:
             try:
                 self.port=9000+random.randint(0,900)

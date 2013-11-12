@@ -74,9 +74,7 @@ class MainGui(QtGui.QMainWindow):
             print("old ip and port="+str(self.address))
             self.address=(str(ip),port)
             print("new ip and port="+str(self.address)+"\n")
-            
-            self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.clientSocket.connect(self.address)        
+               
         else:
             pass
         
@@ -86,9 +84,11 @@ class MainGui(QtGui.QMainWindow):
     
     def clientSend(self):
         string="lol"
-        self.clientSocket.sendall(string + "\n")
         received="nothing received"
         try:
+            self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.clientSocket.connect(self.address)     
+            self.clientSocket.sendall(string + "\n")
             received = self.clientSocket.recv(1024)
         finally:
             print received
