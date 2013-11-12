@@ -116,9 +116,9 @@ class DualMotorController:
         value=(actLeft==tarLeft) and (actRight==tarRight)
         
         value = not value
-        #print("isbusy="+str(value))
-        print 'ActPos = ' + str(actLeft)
-        print 'TarPos = ' + str(tarLeft)
+        print("isbusy="+str(value))
+        #print 'ActPos = ' + str(actLeft)
+        #print 'TarPos = ' + str(tarLeft)
         self.logger.info("isBusy="+str(value))
         return value
         
