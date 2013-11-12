@@ -4,7 +4,7 @@ Created on 11/11/2013
 @author: Daniel Machon
 '''
 
-from IR_Sensors import IR_Sensors_Controller
+from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
 import math
 
 class ChaosTest():
