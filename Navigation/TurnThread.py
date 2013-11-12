@@ -82,8 +82,7 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
-            
-  
+
         print "Turning 90 NOW"
         self.dual_motors.turn90(direction,2)
         while(self.dual_motors.isBusy()):

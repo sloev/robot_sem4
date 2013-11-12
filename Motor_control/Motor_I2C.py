@@ -35,11 +35,13 @@ class Motor_I2C:
             
         '''Status of circuit and stepper motor'''
     def getFullStatus1(self):
-        return self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
+        return response
 
         '''Status of the position of the stepper motor'''
     def getFullStatus2(self):
-        return self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,9)
+        response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,9)
+        return response
 
         '''Read OTP *One-Time Programmable) memory''' 
     def getOTPParam(self):
