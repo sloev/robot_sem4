@@ -169,6 +169,7 @@ class Bonjour():
                     ready = select.select([resolve_sdRef], [], [], self.timeout)
                     if resolve_sdRef not in ready[0]:
                         print 'Resolve timed out'
+                    else:
                         break
                     pybonjour.DNSServiceProcessResult(resolve_sdRef)
                 else:
