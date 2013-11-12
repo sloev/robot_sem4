@@ -45,22 +45,38 @@ class zeroconfTcpServer():
                 self.eventHandlers=eventHandlers
                 SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass, bind_and_activate=True)
         
-        class DebugMETCPHandler(SocketServer.BaseRequestHandler):
+#         class DebugMETCPHandler(SocketServer.BaseRequestHandler):
+#             def handle(self):
+#                 # self.server is an instance of the DebugTCPServer
+#                 while True:
+#                     #data=self.request.recv(1024)
+#                     data = self.rfile.readline().strip()
+#                     if data!=0:
+#                         data = data.strip()
+#                         string=self.server.eventHandlers.get(data)()
+#                     #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
+#                         if string!=None:
+#                             self.request.send(string)
+#                         else:
+#                             self.request.send("error: not in funcDict")
+#                     else:
+#                         break 
+                    
+        class DebugMETCPHandler(SocketServer.StreamRequestHandler):
             def handle(self):
                 # self.server is an instance of the DebugTCPServer
                 while True:
-                    data=self.request.recv(1024)
+                    #data=self.request.recv(1024)
+                    data = self.rfile.readline().strip()
                     if data!=0:
-                        data = data.strip()
                         string=self.server.eventHandlers.get(data)()
-                    #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
+        # print "{} wrote:".format(self.client_address[0])
                         if string!=None:
-                            self.request.send(string)
+                            self.wfile.write(string)
                         else:
-                            self.request.send("error: not in funcDict")
+                            self.wfile.write("error: not in funcDict")
                     else:
-                        break
-                    
+                        break 
         while True:
             try:
                 self.port=9000+random.randint(0,900)
@@ -72,7 +88,6 @@ class zeroconfTcpServer():
 
 def printNumber():
     rint=random.randint(0,999)
-    print("received lol sending %d" % rint)
     return str(rint)
 
 def printMaze():

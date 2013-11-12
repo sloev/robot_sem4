@@ -86,6 +86,8 @@ class MainGui(QtGui.QMainWindow):
     
     def clientSend(self):
         string="lol"
+        self.clientSocket.sendall(string + "\n")
+        received = self.clientSocket.recv(1024)
         self.clientSocket.send(string)
 
 def main():
