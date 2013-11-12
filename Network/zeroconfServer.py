@@ -9,6 +9,7 @@ import time
 import SocketServer
 import socket
 import threading
+import sys, errno
 from Network.Bonjour import Bonjour
 from Network.EventHelpers import EventHookKeyValue
 
@@ -67,15 +68,19 @@ class zeroconfTcpServer():
                 # self.server is an instance of the DebugTCPServer
                 while True:
                     #data=self.request.recv(1024)
-                    self.data = self.rfile.readline().strip()
-                    if self.data!=0:
-                        try:
-                            string=self.server.eventHandlers.get(self.data)()
-                            self.wfile.write(string)
-                        except Exception:
-                            self.wfile.write("error: not in funcDict")
-                    else:
-                        break 
+                    try:
+                        self.data = self.rfile.readline().strip()
+                        if self.data!=0:
+                            try:
+                                string=self.server.eventHandlers.get(self.data)()
+                                self.wfile.write(string)
+                            except Exception:
+                                self.wfile.write("error: not in funcDict")
+                        else:
+                            break 
+                    except IOError as e:
+                        if e.errno == errno.EPIPE:
+                            print("got pipe error")
         while True:
             try:
                 self.port=9000+random.randint(0,900)
