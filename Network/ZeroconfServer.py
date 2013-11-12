@@ -82,7 +82,7 @@ def printMaze():
     d=defaultdict(dict)
     for i in range(10):
         for j in range(10):
-            d[i][j]=(i*10+j,random.randint(1,200))
+            d[i][j]=(random.randint(1,7))
     print(str(d))
     print"finnished"
     return json.dumps(d)
