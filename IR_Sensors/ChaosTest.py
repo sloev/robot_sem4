@@ -18,9 +18,9 @@ class ChaosTest():
     '''
         Do cool stuff
     '''
-    def __call__(self, testSample):
+    def __call__(self):
         sample = self.sensor.multiChannelReadCm([0x08, 0x09, 0x0A], 1)
-        sample = testSample
+        sample = sample
         angles = self.calcAngles(sample)
         print angles
         self.checkAngles(angles)
