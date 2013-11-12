@@ -154,30 +154,30 @@ class PidTuner():
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,3)
             print sample
             walls=self.wallChecker.checkWalls(sample)  
-            debounce=self.wallChecker.compare()         
+            #debounce=self.wallChecker.compare()         
             'end of sampling section'
 #            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
 
-            choice=self.makeChoice(sample,walls, debounce)
-            
-            if(self.turnThread.checkForTurn(choice)):
+            choice=self.makeChoice(walls)
+            if choice==0:
+                self.dual_motors.setPosition(32767, 32767)
+                self.pid.doPid(sample)
+            else:
+                self.turnThread.checkForTurn(choice)
                 self.pid.reset()
-
         except IOError:
-            pass
+            print("error in doPid")
 
-    def makeChoice(self,sample,walls,debounce):
+    def makeChoice(self,walls):
         print(str(walls))
-        if(walls==[1,1,1] and debounce):
-            self.dual_motors.setPosition(32767, 32767)
-            self.pid.doPid(sample)
+        if(walls==[1,1,1]):
+            return 0
         elif(walls[self.right]==0):
             return 4
         elif(walls[self.left]==0):
             return 2
         elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
-            self.pid.reset()
-            return 0
+            return 3
         else:
             return 0
         
