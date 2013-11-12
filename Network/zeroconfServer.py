@@ -59,8 +59,8 @@ class zeroconfTcpServer():
                             if func!=None:
                                 response=func()
                                 self.request.sendall(response)
-                except Exception, e:
-                    print "Exception wile receiving message: ", e
+                except Exception:
+                    print "Exception wile receiving message"
                     
 #                         data = self.rfile.readline().strip()
 #                         if data!=0:

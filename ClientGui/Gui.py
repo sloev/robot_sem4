@@ -91,7 +91,11 @@ class MainGui(QtGui.QMainWindow):
             s.send(json.dumps(data))
             received = json.loads(s.recv(1024))
         finally:
-            print received
+            tmp=received.get("number")
+            if tmp!=None:
+                print tmp
+            else:
+                print received
 
 def main():
     app = QtGui.QApplication(sys.argv)
