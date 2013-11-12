@@ -52,7 +52,7 @@ class zeroconfTcpServer():
                     data=self.request.recv(1024)
                     if data!=0:
                         data = data.strip()
-                        string=self.server.eventHandlers.get(self.data)()
+                        string=self.server.eventHandlers.get(data)()
                     #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
                         if string!=None:
                             self.request.send(string)
