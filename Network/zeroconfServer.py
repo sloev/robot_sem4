@@ -48,13 +48,18 @@ class zeroconfTcpServer():
         class DebugMETCPHandler(SocketServer.BaseRequestHandler):
             def handle(self):
                 # self.server is an instance of the DebugTCPServer
-                self.data = self.request.recv(1024).strip()
-                string=self.server.eventHandlers.get(self.data)()
-                #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
-                if string!=None:
-                    self.request.send(string)
-                else:
-                    self.request.send("error: not in funcDict")
+                while True:
+                    data=self.request.recv(1024)
+                    if data!=0:
+                        data = data.strip()
+                        string=self.server.eventHandlers.get(self.data)()
+                    #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
+                        if string!=None:
+                            self.request.send(string)
+                        else:
+                            self.request.send("error: not in funcDict")
+                    else:
+                        break
                     
         while True:
             try:
