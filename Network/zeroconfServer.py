@@ -55,7 +55,7 @@ class zeroconfTcpServer():
                 print(string)
                 print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
 
-                self.request.send("lol")
+                self.request.send("lols from the world")
                     
         while True:
             try:
