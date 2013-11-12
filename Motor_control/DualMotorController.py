@@ -117,8 +117,8 @@ class DualMotorController:
         
         value = not value
         #print("isbusy="+str(value))
-        print str(actLeft)
-        print str(tarLeft)
+        print 'ActPos = ' + str(actLeft)
+        print 'TarPos = ' + str(tarLeft)
         self.logger.info("isBusy="+str(value))
         return value
         
