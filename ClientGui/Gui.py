@@ -26,6 +26,8 @@ class MainGui(QtGui.QMainWindow):
         self.address=None
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
         
         self.mitSignal.connect(self.updateIp)
 
@@ -92,21 +94,18 @@ class MainGui(QtGui.QMainWindow):
     def clientSendMaze(self):
         data = {'message':"maze"}
         print"maze called"
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect(self.address)
-        s.send(json.dumps(data))
-        data = s.recv(16384)  # limit reply to 16K
-#         string = ""
-#         while len(data):
-#             string = string + data
-#             data = s.recv(1024)
-        s.close()
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientSocket.connect(self.address)
+        self.clientSocket.send(json.dumps(data))
+        data = self.clientSocket.recv(16384)  # limit reply to 16K
+        
+        self.clientSocket.close()
         print("closed socket")
         received = json.loads(data)
         string=""
         for i in range(10):
             for j in range(10):
-                string=string+"\t"+str(received[str(i)][str(j)])+"   "
+                string=string+"\t"+str(received[str(i)][str(j)])+""
             string=string+"\n"
         print string
         
@@ -114,10 +113,10 @@ class MainGui(QtGui.QMainWindow):
         received="nothing received"
         data = {'message':string, 'test':123.4}
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(self.address)
-            s.send(json.dumps(data))
-            received = json.loads(s.recv(1024))
+            self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.clientSocket.connect(self.address)
+            self.clientSocket.send(json.dumps(data))
+            received = json.loads(self.clientSocket.recv(1024))
         finally:
             tmp=received.get(string)
             if tmp!=None:
