@@ -67,9 +67,9 @@ class zeroconfTcpServer():
                 # self.server is an instance of the DebugTCPServer
                 while True:
                     #data=self.request.recv(1024)
-                    data = self.rfile.readline().strip()
-                    if data!=0:
-                        string=self.server.eventHandlers.get(data)()
+                    self.data = self.rfile.readline().strip()
+                    if self.data!=0:
+                        string=self.server.eventHandlers.get(self.data)()
         # print "{} wrote:".format(self.client_address[0])
                         if string!=None:
                             self.wfile.write(string)
