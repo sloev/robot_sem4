@@ -43,33 +43,26 @@ class zeroconfTcpServer():
         while True:
             try:
                 self.port=9000+random.randint(0,900)
-                self.tcpServer = self.SimpleServer((self.host, self.port), self.SingleTCPHandler,self.eventHandler)
+                self.tcpServer = DebugTCPServer((self.host, self.port), DebugMETCPHandler, debug=True)
                 break
             finally:
                 time.sleep(0.1)
         print ("got port "+str(self.port))
-    
-    class SingleTCPHandler(SocketServer.BaseRequestHandler):
-
-        def handle(self):
-            # self.request is the client connection
-            data = self.request.recv(1024)  # clip input at 1Kb
-            #string=self.server.eventHandler.fire(str(data))
-            #print(string)
-            #reply = pipe_command(my_unix_command, data)
-            self.request.send("Lol"+str(data))
-            self.request.close()
-
-    class SimpleServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
-        # Ctrl-C will cleanly kill all spawned threads
-        daemon_threads = True
-        # much faster rebinding
-        allow_reuse_address = True
-            
-        def __init__(self, server_address, RequestHandlerClass,eventHandler):
-            self.eventHandler=eventHandler
-            SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass)
-    
+                
+        class DebugTCPServer(SocketServer.TCPServer):
+            def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, debug=True):
+                self.debug = debug
+                SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass, bind_and_activate=True)
+        
+        class DebugMETCPHandler(SocketServer.BaseRequestHandler):
+            def handle(self):
+                # self.server is an instance of the DebugTCPServer
+                DEBUG = self.server.debug
+                self.data = self.request.recv(1024).strip()
+                if DEBUG:
+                    print "{} wrote:".format(self.client_address[0])
+                else:
+                    self.request.send("lol")
 
 def printLol():
     rint=random.randint(0,999)
