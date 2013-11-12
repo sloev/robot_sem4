@@ -11,7 +11,7 @@ class ChaosTest(object):
     
      
     def __init__(self):
-        self.sensor = IR_Sensors_Controller()
+        self.sensor = IR_Sensors_Controller(0x20)
         
     
     
