@@ -10,7 +10,7 @@ from PyQt4 import QtCore
 import time
 from Network.Bonjour import Bonjour
 import socket
-
+import json
 
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
@@ -85,11 +85,12 @@ class MainGui(QtGui.QMainWindow):
     def clientSend(self):
         string="lol"
         received="nothing received"
+        data = {'message':'lol', 'test':123.4}
         try:
-            self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.clientSocket.connect(self.address)     
-            self.clientSocket.sendall(string + "\n")
-            received = self.clientSocket.recv(1024)
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(self.address)
+            s.send(json.dumps(data))
+            received = json.loads(s.recv(1024))
         finally:
             print received
 

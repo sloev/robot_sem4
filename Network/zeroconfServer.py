@@ -8,6 +8,7 @@ import random
 import time
 import SocketServer
 import socket
+import json
 import threading
 import sys, errno
 from Network.Bonjour import Bonjour
@@ -46,41 +47,62 @@ class zeroconfTcpServer():
                 self.eventHandlers=eventHandlers
                 SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass, bind_and_activate=True)
         
-#         class DebugMETCPHandler(SocketServer.BaseRequestHandler):
-#             def handle(self):
-#                 # self.server is an instance of the DebugTCPServer
-#                 while True:
-#                     #data=self.request.recv(1024)
-#                     data = self.rfile.readline().strip()
-#                     if data!=0:
-#                         data = data.strip()
-#                         string=self.server.eventHandlers.get(data)()
-#                     #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
-#                         if string!=None:
-#                             self.request.send(string)
-#                         else:
-#                             self.request.send("error: not in funcDict")
-#                     else:
-#                         break 
-                    
-        class DebugMETCPHandler(SocketServer.StreamRequestHandler):
+        class DebugMETCPHandler(SocketServer.BaseRequestHandler):
             def handle(self):
                 # self.server is an instance of the DebugTCPServer
-                    #data=self.request.recv(1024)
                 try:
                     while True:
-                        self.data = self.rfile.readline().strip()
-                        if self.data!=0:
-                            func=self.server.eventHandlers.get(self.data)
-                            if func != None:
-                                string=func()
-                                self.wfile.write(string)
-                            else:
-                                self.wfile.write("error: not in funcDict")
-                        else:
-                            break 
-                except IOError:
-                    print("got pipe error")
+                        #data=self.request.recv(1024)      try:
+                        data = json.loads(self.request.recv(1024).strip())
+                        if data!=0:
+                            func=self.server.eventHandlers.get(data.get("message"))
+                            if func!=None:
+                                response=func()
+                                self.request.sendall(response)
+                except Exception, e:
+                    print "Exception wile receiving message: ", e
+                    
+#                         data = self.rfile.readline().strip()
+#                         if data!=0:
+#                             data = data.strip()
+#                             string=self.server.eventHandlers.get(data)()
+#                         #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
+#                             if string!=None:
+#                                 self.request.send(string)
+#                             else:
+#                                 self.request.send("error: not in funcDict")
+#                         else:
+#                             break 
+#                 except Exception:
+#                     print "got exception"
+                    
+#         class DebugMETCPHandler(SocketServer.StreamRequestHandler):
+#             def handle(self):
+#                  self.server is an instance of the DebugTCPServer
+#                     data=self.request.recv(1024)
+#             try:
+#                 while True
+#                 data = json.loads(self.request.recv(1024).strip())
+#              process the data, i.e. print it:
+#                 print data
+#              send some 'ok' back
+#                 self.request.sendall(json.dumps({'return':'ok'}))
+#         except Exception, e:
+#             print "Exception wile receiving message: ", e
+#                 try:
+#                     while True:
+#                         self.data = self.rfile.readline().strip()
+#                         if self.data!=0:
+#                             func=self.server.eventHandlers.get(self.data)
+#                             if func != None:
+#                                 string=func()
+#                                 self.wfile.write(string)
+#                             else:
+#                                 self.wfile.write("error: not in funcDict")
+#                         else:
+#                             break 
+#                 except IOError:
+#                     print("got pipe error")
         while True:
             try:
                 self.port=9000+random.randint(0,900)
@@ -92,11 +114,12 @@ class zeroconfTcpServer():
 
 def printNumber():
     rint=random.randint(0,999)
-    return "lol heres a number = "+str(rint)
+    return json.dumps({'number':rint})
+
 
 def printMaze():
     string="here is a-maze-ing"
-    return string
+    return json.dumps({'maze':string})
     
 def main():
     server=zeroconfTcpServer()
