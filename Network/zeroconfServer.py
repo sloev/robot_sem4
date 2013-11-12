@@ -59,7 +59,7 @@ class zeroconfTcpServer():
         while True:
             try:
                 self.port=9000+random.randint(0,900)
-                self.tcpServer = DebugTCPServer((self.host, self.port), DebugMETCPHandler, debug=True)
+                self.tcpServer = DebugTCPServer((self.host, self.port), DebugMETCPHandler, self.eventHandler)
                 break
             finally:
                 time.sleep(0.1)
