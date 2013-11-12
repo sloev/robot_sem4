@@ -41,7 +41,7 @@ class zeroconfTcpServer():
         
     def initTcp(self):
         class DebugTCPServer(SocketServer.TCPServer):
-            def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, eventHandler):#debug=True):
+            def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, eventHandler=None):
                 #self.debug = debug
                 self.eventHandler=eventHandler
                 SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass, bind_and_activate=True)
