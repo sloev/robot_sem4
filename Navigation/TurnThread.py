@@ -36,7 +36,7 @@ class TurnThread():
                 value=1
             self.funcDict[choice]()
         except KeyError:
-            pass
+            "KeyError"
         return value
 
             

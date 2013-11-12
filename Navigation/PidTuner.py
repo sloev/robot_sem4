@@ -160,8 +160,8 @@ class PidTuner():
 
             choice=self.makeChoice(sample,walls, debounce)
             
-            if(self.turnThread.checkForTurn(choice)):
-                self.pid.reset()
+            self.turnThread.checkForTurn(choice)
+                #self.pid.reset()
                 #Lol mayn
         except IOError:
             "ERROR"
