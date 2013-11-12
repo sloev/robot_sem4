@@ -76,7 +76,7 @@ class MainGui(QtGui.QMainWindow):
             print("new ip and port="+str(self.address)+"\n")
             
             self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.clientSocket.connect(('10.211.55.7',9314))        
+            self.clientSocket.connect(self.address)        
         else:
             pass
         
