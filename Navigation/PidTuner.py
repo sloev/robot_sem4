@@ -204,28 +204,28 @@ def main():
             time.sleep(0.025)
     
             # get keyboard input, returns -1 if none available
-#             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
-#                 c = sys.stdin.readline()
-#                 c=c[0:1]
-#                 print("c is =|"+c+"|")
-#                 if(c=='a'): 
-#                     pidtuner.lpgadd()
-#                     print("left pgain inc")
-#                 elif(c=='z'): pidtuner.lpgsub()
-#                 elif(c=='s'): pidtuner.rpgadd()
-#                 elif(c=='x'): pidtuner.rpgsub()
-#                 elif(c=='d'): pidtuner.ligadd()
-#                 elif(c=='c'): pidtuner.ligsub()
-#                 elif(c=='f'): pidtuner.rigadd()
-#                 elif(c=='v'): pidtuner.rigsub()
-#                 elif(c=='g'): pidtuner.ldgadd()
-#                 elif(c=='b'): pidtuner.ldgsub()
-#                 elif(c=='h'): pidtuner.rdgadd()
-#                 elif(c=='n'): pidtuner.rdgsub()
-#                 elif(c=='q'): 
-#                     print("saved="+str(bool(pidtuner.save()))) 
-#                 else: # an empty line means stdin has been closed
-#                     print('eof')
+            while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:
+                c = sys.stdin.readline()
+                c=c[0:1]
+                print("c is =|"+c+"|")
+                if(c=='a'): 
+                    pidtuner.lpgadd()
+                    print("left pgain inc")
+                elif(c=='z'): pidtuner.lpgsub()
+                elif(c=='s'): pidtuner.rpgadd()
+                elif(c=='x'): pidtuner.rpgsub()
+                elif(c=='d'): pidtuner.ligadd()
+                elif(c=='c'): pidtuner.ligsub()
+                elif(c=='f'): pidtuner.rigadd()
+                elif(c=='v'): pidtuner.rigsub()
+                elif(c=='g'): pidtuner.ldgadd()
+                elif(c=='b'): pidtuner.ldgsub()
+                elif(c=='h'): pidtuner.rdgadd()
+                elif(c=='n'): pidtuner.rdgsub()
+                elif(c=='q'): 
+                    print("saved="+str(bool(pidtuner.save()))) 
+                else: # an empty line means stdin has been closed
+                    print('eof')
             pidtuner.doPid()
     except KeyboardInterrupt:
         print("saving")
