@@ -29,7 +29,7 @@ class EventHook(object):
 class EventHookKeyValue():
 
     def __init__(self):
-        self.clients = dict()
+        self.clients = {}
 
     def add(self,string, handler):
         self.clients[string] = handler

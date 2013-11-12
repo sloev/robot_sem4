@@ -18,7 +18,7 @@ class zeroconfTcpServer():
         self.host="127.0.0.1"
         self.name="robotMaze"
         self.regType='_maze._tcp'
-        self.eventHandler=EventHookKeyValue()
+        self.eventHandlers={}
 
 
     def initThreads(self):
@@ -37,13 +37,13 @@ class zeroconfTcpServer():
         self.bonjour.stopRegister()
     
     def addHandler(self,string,handler):
-        self.eventHandler.add(string, handler)
+        self.eventHandlers[string]=handler
         
     def initTcp(self):
         class DebugTCPServer(SocketServer.TCPServer):
-            def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, eventHandler=None):
+            def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, eventHandlers=None):
                 #self.debug = debug
-                self.eventHandler=eventHandler
+                self.eventHandlers=eventHandlers
                 SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass, bind_and_activate=True)
         
         class DebugMETCPHandler(SocketServer.BaseRequestHandler):
@@ -52,14 +52,14 @@ class zeroconfTcpServer():
                 self.data = self.request.recv(1024).strip()
                 print("trying eventhandler")
                 #string=self.server.eventHandler.fire(self.data)
-                print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandler.__class__.__name__))
+                print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
 
                 self.request.send("lol")
                     
         while True:
             try:
                 self.port=9000+random.randint(0,900)
-                self.tcpServer = DebugTCPServer((self.host, self.port), DebugMETCPHandler, self.eventHandler)
+                self.tcpServer = DebugTCPServer((self.host, self.port), DebugMETCPHandler, eventHandlers=self.eventHandlers)
                 break
             finally:
                 time.sleep(0.1)
