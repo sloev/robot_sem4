@@ -43,7 +43,7 @@ class MainGui(QtGui.QMainWindow):
         self.setWindowTitle('LUL') 
         self.browser.addClientEventHandler(self.mitSignal.emit)
         
-        qbtn = QtGui.QPushButton('send', self)
+        qbtn = QtGui.QPushButton('getNumber', self)
         qbtn.clicked.connect(self.clientSend)
         qbtn.resize(qbtn.sizeHint())
         qbtn.move(50, 50)    
