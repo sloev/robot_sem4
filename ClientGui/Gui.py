@@ -6,7 +6,6 @@ Created on Nov 11, 2013
 import sys
 from PyQt4 import QtGui
 from PyQt4.QtCore import QObject, pyqtSignal
-from PyQt4 import QtCore
 import time
 from Network.Bonjour import Bonjour
 import socket
