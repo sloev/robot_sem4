@@ -10,18 +10,16 @@ import math
 class ChaosTest(object):
     
      
-
-
     def __init__(self):
-        #self.sensor = IR_Sensors_Controller()
-        pass
+        self.sensor = IR_Sensors_Controller()
+        
     
     
     '''
         Do cool stuff
     '''
     def __call__(self, testSample):
-        #sample = self.sensor.multiChannelReadCm([0x08, 0x09, 0x0A], 1)
+        sample = self.sensor.multiChannelReadCm([0x08, 0x09, 0x0A], 1)
         sample = testSample
         angles = self.calcAngles(sample)
         print angles
@@ -29,7 +27,8 @@ class ChaosTest(object):
         
        
     '''
-        Calculate angle A and B in the triangle created by left and front sensor
+        Calculate angle A and B in the triangle created by the robot + 
+        left- and front sensor point of reflection
     '''
     def calcAngles(self, sample):
         c = math.sqrt(math.pow(sample[0], 2) + math.pow(sample[2], 2))
@@ -43,7 +42,7 @@ class ChaosTest(object):
     '''
     def checkAngles(self, angles):
         if(60 < angles[0] < 65):
-            if(25 < angles[1] < 27):
+            if(25 < angles[1] < 28):
                 print "Facing the right way"
                 return 1
         elif(65 < angles[0]):
@@ -57,6 +56,8 @@ class ChaosTest(object):
 def main():
     test = ChaosTest()
     test([15,0,30])
+    test([15.5,0,29.5])
+    test([17,0,28])
     test([19,0,29])
     test([10,0,30])
     test([15,0,15])
@@ -66,6 +67,4 @@ if __name__ == '__main__':
     main() 
         
         
-        
-        
-        
+           
