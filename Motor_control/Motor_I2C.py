@@ -40,10 +40,16 @@ class Motor_I2C:
                 response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus1, 9)
                 return response
             except IOError:
-                pass
+                print "GF1Error"
         '''Status of the position of the stepper motor'''
     def getFullStatus2(self):
-        return self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,9)
+        while True:
+            try:
+                response = self.bus.read_i2c_block_data(self.devAddress, cmdGetFullStatus2,9)
+                return response
+            except IOError:
+                print "GF2Error"
+
 
         '''Read OTP *One-Time Programmable) memory''' 
     def getOTPParam(self):
