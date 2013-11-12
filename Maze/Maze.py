@@ -26,7 +26,7 @@ class Maze():
         string=""
         for x in range(len(self.table)):
             for y in range(len(self.table[0])):
-                string+=str(self.table[x][y])+"\t"
+                string+=str(self.table[x][y])+"      \t"
             string+="\n"
         return string
         
