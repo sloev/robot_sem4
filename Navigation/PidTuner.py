@@ -177,7 +177,7 @@ class PidTuner():
             return 2
         elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
             self.pid.reset()
-            return 0
+            return 3
         else:
             return 0
         
