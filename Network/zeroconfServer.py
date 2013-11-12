@@ -51,7 +51,7 @@ class zeroconfTcpServer():
                 # self.server is an instance of the DebugTCPServer
                 self.data = self.request.recv(1024).strip()
                 print("trying eventhandler")
-                string=self.server.eventHandler.fire(self.data)
+                string=self.server.eventHandlers.get(self.data)()
                 print(string)
                 print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
 
