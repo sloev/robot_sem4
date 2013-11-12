@@ -71,10 +71,11 @@ class zeroconfTcpServer():
                     while True:
                         self.data = self.rfile.readline().strip()
                         if self.data!=0:
-                            try:
-                                string=self.server.eventHandlers.get(self.data)()
+                            func=self.server.eventHandlers.get(self.data)
+                            if func != None:
+                                string=func()
                                 self.wfile.write(string)
-                            except TypeError:
+                            else:
                                 self.wfile.write("error: not in funcDict")
                         else:
                             break 
