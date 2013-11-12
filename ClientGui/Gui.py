@@ -10,7 +10,7 @@ import time
 from Network.Bonjour import Bonjour
 import socket
 import json
-
+import cPickle
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
 
@@ -101,11 +101,12 @@ class MainGui(QtGui.QMainWindow):
         
         self.clientSocket.close()
         print("closed socket")
-        received = json.loads(data)
+        received = cPickle.loads(data)
+        #received = json.loads(data)
         string=""
         for i in range(10):
             for j in range(10):
-                string=string+"\t"+str(received[str(i)][str(j)])+""
+                string=string+"\t"+str(received[i][j])+""
             string=string+"\n"
         print string
         
