@@ -60,49 +60,8 @@ class zeroconfTcpServer():
                                 response=func()
                                 self.request.sendall(response)
                 except Exception:
-                   # print "Exception wile receiving message"
-                    
-#                         data = self.rfile.readline().strip()
-#                         if data!=0:
-#                             data = data.strip()
-#                             string=self.server.eventHandlers.get(data)()
-#                         #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
-#                             if string!=None:
-#                                 self.request.send(string)
-#                             else:
-#                                 self.request.send("error: not in funcDict")
-#                         else:
-#                             break 
-#                 except Exception:
-#                     print "got exception"
-                    
-#         class DebugMETCPHandler(SocketServer.StreamRequestHandler):
-#             def handle(self):
-#                  self.server is an instance of the DebugTCPServer
-#                     data=self.request.recv(1024)
-#             try:
-#                 while True
-#                 data = json.loads(self.request.recv(1024).strip())
-#              process the data, i.e. print it:
-#                 print data
-#              send some 'ok' back
-#                 self.request.sendall(json.dumps({'return':'ok'}))
-#         except Exception, e:
-#             print "Exception wile receiving message: ", e
-#                 try:
-#                     while True:
-#                         self.data = self.rfile.readline().strip()
-#                         if self.data!=0:
-#                             func=self.server.eventHandlers.get(self.data)
-#                             if func != None:
-#                                 string=func()
-#                                 self.wfile.write(string)
-#                             else:
-#                                 self.wfile.write("error: not in funcDict")
-#                         else:
-#                             break 
-#                 except IOError:
-#                     print("got pipe error")
+                    pass
+
         while True:
             try:
                 self.port=9000+random.randint(0,900)
