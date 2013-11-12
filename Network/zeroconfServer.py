@@ -8,14 +8,16 @@ import random
 import time
 import SocketServer
 import socket
+import json
 import threading
+import sys, errno
 from Network.Bonjour import Bonjour
 from Network.EventHelpers import EventHookKeyValue
 
 
 class zeroconfTcpServer():
     def __init__(self):
-        self.host="127.0.0.1"
+        self.host="0.0.0.0"
         self.name="robotMaze"
         self.regType='_maze._tcp'
         self.eventHandlers={}
@@ -48,14 +50,18 @@ class zeroconfTcpServer():
         class DebugMETCPHandler(SocketServer.BaseRequestHandler):
             def handle(self):
                 # self.server is an instance of the DebugTCPServer
-                self.data = self.request.recv(1024).strip()
-                string=self.server.eventHandlers.get(self.data)()
-                #print ("{} wrote:".format(self.client_address[0])+" event="+str(self.server.eventHandlers.__class__.__name__))
-                if string!=None:
-                    self.request.send(string)
-                else:
-                    self.request.send("error: not in funcDict")
-                    
+                try:
+                    while True:
+                        #data=self.request.recv(1024)      try:
+                        data = json.loads(self.request.recv(1024).strip())
+                        if data!=0:
+                            func=self.server.eventHandlers.get(data.get("message"))
+                            if func!=None:
+                                response=func()
+                                self.request.sendall(response)
+                except Exception:
+                    pass
+
         while True:
             try:
                 self.port=9000+random.randint(0,900)
@@ -67,16 +73,16 @@ class zeroconfTcpServer():
 
 def printNumber():
     rint=random.randint(0,999)
-    print("received lol sending %d" % rint)
-    return str(rint)
+    return json.dumps({'number':rint})
+
 
 def printMaze():
     string="here is a-maze-ing"
-    return string
+    return json.dumps({'maze':string})
     
 def main():
     server=zeroconfTcpServer()
-    server.addHandler("lol", printNumber)
+    server.addHandler("number", printNumber)
     server.addHandler("maze", printMaze)
     
     server.initThreads()

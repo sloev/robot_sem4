@@ -6,11 +6,10 @@ Created on Nov 11, 2013
 import sys
 from PyQt4 import QtGui
 from PyQt4.QtCore import QObject, pyqtSignal
-from PyQt4 import QtCore
 import time
 from Network.Bonjour import Bonjour
 import socket
-
+import json
 
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
@@ -43,10 +42,15 @@ class MainGui(QtGui.QMainWindow):
         self.setWindowTitle('LUL') 
         self.browser.addClientEventHandler(self.mitSignal.emit)
         
-        qbtn = QtGui.QPushButton('send', self)
-        qbtn.clicked.connect(self.clientSend)
-        qbtn.resize(qbtn.sizeHint())
-        qbtn.move(50, 50)    
+        numberButton = QtGui.QPushButton('getNumber', self)
+        numberButton.clicked.connect(self.clientSendNumber)
+        numberButton.resize(numberButton.sizeHint())
+        numberButton.move(50, 50)    
+        
+        getMaze = QtGui.QPushButton('getMaze', self)
+        getMaze.clicked.connect(self.clientSendMaze)
+        getMaze.resize(getMaze.sizeHint())
+        getMaze.move(150, 50)    
         self.show()
 
 
@@ -74,19 +78,35 @@ class MainGui(QtGui.QMainWindow):
             print("old ip and port="+str(self.address))
             self.address=(str(ip),port)
             print("new ip and port="+str(self.address)+"\n")
-            
-            self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.clientSocket.connect(('10.211.55.7',9314))        
+               
         else:
             pass
         
     
     def closeTcpClient(self):
         self.clientSocket.close()
+        
+    def clientSendNumber(self):
+        self.clientSend("number")
     
-    def clientSend(self):
-        string="lol"
-        self.clientSocket.send(string)
+    def clientSendMaze(self):
+        self.clientSend("maze")
+        
+    def clientSend(self,string):
+        received="nothing received"
+        data = {'message':string, 'test':123.4}
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect(self.address)
+            s.send(json.dumps(data))
+            received = json.loads(s.recv(1024))
+        finally:
+            tmp=received.get(string)
+            if tmp!=None:
+                print tmp
+            else:
+                print received
+        
 
 def main():
     app = QtGui.QApplication(sys.argv)
