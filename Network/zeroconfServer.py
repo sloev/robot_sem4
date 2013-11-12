@@ -69,11 +69,10 @@ class zeroconfTcpServer():
                     #data=self.request.recv(1024)
                     self.data = self.rfile.readline().strip()
                     if self.data!=0:
-                        string=self.server.eventHandlers.get(self.data)()
-        # print "{} wrote:".format(self.client_address[0])
-                        if string!=None:
+                        try:
+                            string=self.server.eventHandlers.get(self.data)()
                             self.wfile.write(string)
-                        else:
+                        except Exception:
                             self.wfile.write("error: not in funcDict")
                     else:
                         break 
