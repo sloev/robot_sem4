@@ -87,7 +87,7 @@ class zeroconfTcpServer():
 
 def printNumber():
     rint=random.randint(0,999)
-    return str(rint)
+    return "lol heres a number = "+str(rint)
 
 def printMaze():
     string="here is a-maze-ing"
