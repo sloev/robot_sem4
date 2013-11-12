@@ -24,7 +24,7 @@ cmdSetPosition        = 0x8B       # Programmers a target and secure position
 cmdSoftStop           = 0x8F       # Motor stopping with deceleration phase 
 
 minVelocity           = 2
-stepModeByte          = 8
+stepModeByte          = 12
 currentByte           = 0x92
 
 class Motor_I2C:

@@ -42,53 +42,71 @@ class TurnThread():
             
     def turnLeft(self):
         self.logger.info("left")
-        self.oldTurn(0)
-        pass
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.turn90(0)
     
     def turnRight(self):
         self.logger.info("right")
-        self.oldTurn(1)
-        pass
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.turn90(1)
     
     def turn180(self):
         print("turning180")
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+
         self.logger.info("180")
         self.dual_motors.softStop()
         time.sleep(0.3)
         self.dual_motors.turn180(2)
         time.sleep(1.6)
     
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
         time.sleep(0.5)
         pass
     
     def goStraight(self):
         self.logger.info("straight")
-        pass
-    
-    def oldTurn(self,direction):
-        #print("turning wheel="+str(direction))
-        sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
-        walls=self.wallchecker.checkWalls(sample)  
-        debounce=self.wallchecker.compare()
-        
-        self.dual_motors.softStop()
-        self.dual_motors.turn90(direction, 2)
-        time.sleep(0.8)
-        
-        sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
-        walls=self.wallchecker.checkWalls(sample)  
-        debounce=self.wallchecker.compare()
-        
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-        self.dual_motors.setPosition(32767, 32767)
-        time.sleep(0.3)
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
 
-        while(not debounce):
-            sample=self.irsensors.multiChannelReadCm(sensorChannels,5)
-            walls=self.wallchecker.checkWalls(sample)  
-            debounce=self.wallchecker.compare()
-            time.sleep(0.3)
+        print("straight")
+        
+    def turn90(self,direction):
+        self.dual_motors.softStop()
+        while(self.dual_motors.isBusy()):
+            self.logger.info("turning")
+            time.sleep(0.1)
+   
+        print("turning 90 NOW")
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.dual_motors.setPosition(3600, 3600)
+        
+        while(self.dual_motors.isBusy()):
+            self.logger.info("turning")
+            time.sleep(0.1)
+            
+        sample = self.irsensors.multiChannelReadCm([Vin1, Vin2, Vin3], 1)
+        if(sample[2]>15):
+            error = sample[2]-15
+            self.dual_motors.setPosition(1,1)
+        if(sample[2]<15):
+            error = 15-sample[2]
+            self.dual_motors.setMotorParams(self.left, self.right, 0, 0)
+            self.dual_motors.setPosition(1,1)
+  
+        
+        self.dual_motors.turn90(direction,2)
+        while(self.dual_motors.isBusy()):
+            self.logger.info("turning")
+            time.sleep(0.1)
+    
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.dual_motors.setPosition(3600, 3600)
+        
+        while(self.dual_motors.isBusy()):
+            self.logger.info("turning")
+            time.sleep(0.1)
+       
+        
+
 
         
 def main():
