@@ -123,7 +123,7 @@ def printMaze():
     
 def main():
     server=zeroconfTcpServer()
-    server.addHandler("lol", printNumber)
+    server.addHandler("number", printNumber)
     server.addHandler("maze", printMaze)
     
     server.initThreads()

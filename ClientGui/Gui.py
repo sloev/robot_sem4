@@ -43,7 +43,7 @@ class MainGui(QtGui.QMainWindow):
         self.browser.addClientEventHandler(self.mitSignal.emit)
         
         numberButton = QtGui.QPushButton('getNumber', self)
-        numberButton.clicked.connect(self.clientSendLol)
+        numberButton.clicked.connect(self.clientSendNumber)
         numberButton.resize(numberButton.sizeHint())
         numberButton.move(50, 50)    
         
@@ -87,7 +87,7 @@ class MainGui(QtGui.QMainWindow):
         self.clientSocket.close()
         
     def clientSendLol(self):
-        self.clientSend("lol")
+        self.clientSend("number")
     
     def clientSendMaze(self):
         self.clientSend("maze")
@@ -101,7 +101,7 @@ class MainGui(QtGui.QMainWindow):
             s.send(json.dumps(data))
             received = json.loads(s.recv(1024))
         finally:
-            tmp=received.get("number")
+            tmp=received.get(string)
             if tmp!=None:
                 print tmp
             else:
