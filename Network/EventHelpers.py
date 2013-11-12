@@ -29,10 +29,10 @@ class EventHook(object):
 class EventHookKeyValue():
 
     def __init__(self):
-        self.clients = {}
+        self.eventHandlers={}
 
     def add(self,string, handler):
-        self.clients[string] = handler
+        self.eventHandlers[string]=handler
 
     def sub(self, string):
         self.clients.pop(string)
