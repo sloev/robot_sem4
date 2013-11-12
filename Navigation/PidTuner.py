@@ -164,7 +164,7 @@ class PidTuner():
                 self.pid.reset()
                 #Lol mayn
         except IOError:
-            pass
+            "ERROR"
 
     def makeChoice(self,sample,walls,debounce):
         print(str(walls))
