@@ -77,10 +77,11 @@ def printNumber():
 
 def printMaze():
     from collections import defaultdict
-    d=defaultdict(defaultdict)
+    d=defaultdict(dict)
     for i in range(10):
         for j in range(10):
             d[i][j]=(i*10+j,random.randint(1,200))
+    print(str(d))
     return json.dumps(d)
     
 def main():

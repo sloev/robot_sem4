@@ -166,9 +166,10 @@ class Bonjour():
        
             try:
                 while not self.browserResolved:
-                    ready = select.select([resolve_sdRef], [], [], self.timeout)
+                    ready = select.select([resolve_sdRef], [], [], self.timeout*2)
                     if resolve_sdRef not in ready[0]:
                         print 'Resolve timed out'
+                        break
                     pybonjour.DNSServiceProcessResult(resolve_sdRef)
                 else:
                     with self.browserLock:

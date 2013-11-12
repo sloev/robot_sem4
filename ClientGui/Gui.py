@@ -95,8 +95,9 @@ class MainGui(QtGui.QMainWindow):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(self.address)
             s.send(json.dumps(data))
-            received = json.loads(s.recv(2048))
+            received = json.loads(s.recv(1024))
         finally:
+            print(str(received))
             string=""
             for i in range(10):
                 for j in range(10):
