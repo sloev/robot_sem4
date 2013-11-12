@@ -7,7 +7,7 @@ Created on 11/11/2013
 from IR_Sensors import IR_Sensors_Controller
 import math
 
-class ChaosTest(object):
+class ChaosTest():
     
      
     def __init__(self):
