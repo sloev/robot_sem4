@@ -83,14 +83,6 @@ class TurnThread():
             self.logger.info("turning")
             time.sleep(0.1)
             
-        sample = self.irsensors.multiChannelReadCm([Vin1, Vin2, Vin3], 1)
-        if(sample[2]>15):
-            error = sample[2]-15
-            self.dual_motors.setPosition(1,1)
-        if(sample[2]<15):
-            error = 15-sample[2]
-            self.dual_motors.setMotorParams(self.left, self.right, 0, 0)
-            self.dual_motors.setPosition(1,1)
   
         
         self.dual_motors.turn90(direction,2)
