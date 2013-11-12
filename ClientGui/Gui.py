@@ -42,10 +42,15 @@ class MainGui(QtGui.QMainWindow):
         self.setWindowTitle('LUL') 
         self.browser.addClientEventHandler(self.mitSignal.emit)
         
-        qbtn = QtGui.QPushButton('getNumber', self)
-        qbtn.clicked.connect(self.clientSend)
-        qbtn.resize(qbtn.sizeHint())
-        qbtn.move(50, 50)    
+        numberButton = QtGui.QPushButton('getNumber', self)
+        numberButton.clicked.connect(self.clientSendLol)
+        numberButton.resize(numberButton.sizeHint())
+        numberButton.move(50, 50)    
+        
+        getMaze = QtGui.QPushButton('getMaze', self)
+        getMaze.clicked.connect(self.clientSendMaze)
+        getMaze.resize(getMaze.sizeHint())
+        getMaze.move(150, 50)    
         self.show()
 
 
@@ -80,11 +85,16 @@ class MainGui(QtGui.QMainWindow):
     
     def closeTcpClient(self):
         self.clientSocket.close()
+        
+    def clientSendLol(self):
+        self.clientSend("lol")
     
-    def clientSend(self):
-        string="lol"
+    def clientSendMaze(self):
+        self.clientSend("maze")
+        
+    def clientSend(self,string):
         received="nothing received"
-        data = {'message':'lol', 'test':123.4}
+        data = {'message':string, 'test':123.4}
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(self.address)
@@ -96,6 +106,7 @@ class MainGui(QtGui.QMainWindow):
                 print tmp
             else:
                 print received
+        
 
 def main():
     app = QtGui.QApplication(sys.argv)
