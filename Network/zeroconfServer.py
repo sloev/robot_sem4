@@ -79,9 +79,8 @@ class zeroconfTcpServer():
                                 self.wfile.write("error: not in funcDict")
                         else:
                             break 
-                except IOError as e:
-                    if e.errno == errno.EPIPE:
-                        print("got pipe error")
+                except IOError:
+                    print("got pipe error")
         while True:
             try:
                 self.port=9000+random.randint(0,900)
