@@ -4,21 +4,18 @@ Created on Nov 12, 2013
 @author: johannes
 '''
 from collections import defaultdict
+from PyQt4 import QtGui
+
 class Maze():
     '''
     classdocs
     '''
-
-
     def __init__(self):
-        '''
-        Constructor
-        '''
         self.table=defaultdict(dict)
-    
+
     def set(self,x,y,value):
         self.table[x][y]=value
-        
+
     def get(self,x,y):
         return self.table[x][y]
     
@@ -29,5 +26,6 @@ class Maze():
                 string+=str(self.table[x][y])+"      \t"
             string+="\n"
         return string
+    
         
     

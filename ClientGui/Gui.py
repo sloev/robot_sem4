@@ -109,6 +109,8 @@ class MainGui(QtGui.QMainWindow):
                 maze.set(i, j, received[str(i)][str(j)])
         print maze
         
+
+        
     def clientSend(self,string):
         received="nothing received"
         data = {'message':string, 'test':123.4}
