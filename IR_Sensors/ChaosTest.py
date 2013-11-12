@@ -55,12 +55,7 @@ class ChaosTest():
        
 def main():
     test = ChaosTest()
-    test([15,0,30])
-    test([15.5,0,29.5])
-    test([17,0,28])
-    test([19,0,29])
-    test([10,0,30])
-    test([15,0,15])
+    test()
     
 
 if __name__ == '__main__':
