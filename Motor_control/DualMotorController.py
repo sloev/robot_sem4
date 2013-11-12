@@ -45,19 +45,34 @@ class DualMotorController:
     
     def setMotorParams(self,leftDir,rightDir,leftMaxVel,rightMaxVel):
         self.logger.info("setMotorParams")
-
-        self.motorLeft.setMotorParam(leftDir, leftMaxVel)
-        self.motorRight.setMotorParam(rightDir, rightMaxVel)
+        while True:
+            try:
+                self.motorLeft.setMotorParam(leftDir, leftMaxVel)
+                self.motorRight.setMotorParam(rightDir, rightMaxVel)
+                break
+            except IOError:
+                pass
+        
     
     def getFullStatus1(self):
         self.logger.info("getFullStatus1")
-
-        return [self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
+        while True:
+            try:
+                var=[self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
+                break
+            except IOError:
+                pass
+        return var
     
     def getFullStatus2(self):
         self.logger.info("getFullStatus2")
-        left=self.motorLeft.getFullStatus2()
-        right=self.motorRight.getFullStatus2()
+        while True:
+            try:
+                left=self.motorLeft.getFullStatus2()
+                right=self.motorRight.getFullStatus2()
+                break
+            except IOError:
+                print "GF2Error"
         var=[left,right]
         self.logger.info("/left/fullstatus2/"+str(left))
         self.logger.info("/right/fullstatus2/"+str(right))
@@ -96,9 +111,14 @@ class DualMotorController:
         
         positionLeft+=incLeftPos
         positionRight+=incRightPos
+        while True:
+            try:
+                self.motorLeft.setPosition(positionLeft)
+                self.motorRight.setPosition(positionRight)
+                break
+            except IOError:
+                pass
         
-        self.motorLeft.setPosition(positionLeft)
-        self.motorRight.setPosition(positionRight)
 
         
     def getOfflinePosition(self):
@@ -130,10 +150,13 @@ class DualMotorController:
         
     def softStop(self):
         self.logger.info("softStop")
-
-        self.motorLeft.softStop()
-        self.motorRight.softStop()
-        
+        while True:
+            try:
+                self.motorLeft.softStop()
+                self.motorRight.softStop()
+                break
+            except IOError:
+                pass
 def main():
 
     motors=DualMotorController(0x60,0x61)
