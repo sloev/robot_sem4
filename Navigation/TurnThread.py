@@ -71,6 +71,7 @@ class TurnThread():
         
     def turn90(self,direction):
         self.dual_motors.hardStop()
+        self.dual_motors.getFullStatus1()
 #         self.dual_motors.softStop()
 #         while(self.dual_motors.isBusy()):
 #             self.logger.info("turning")
