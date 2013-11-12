@@ -40,15 +40,6 @@ class zeroconfTcpServer():
         self.eventHandler.add(string, handler)
         
     def initTcp(self):
-        while True:
-            try:
-                self.port=9000+random.randint(0,900)
-                self.tcpServer = DebugTCPServer((self.host, self.port), DebugMETCPHandler, debug=True)
-                break
-            finally:
-                time.sleep(0.1)
-        print ("got port "+str(self.port))
-                
         class DebugTCPServer(SocketServer.TCPServer):
             def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, debug=True):
                 self.debug = debug
@@ -63,6 +54,17 @@ class zeroconfTcpServer():
                     print "{} wrote:".format(self.client_address[0])
                 else:
                     self.request.send("lol")
+                    
+        while True:
+            try:
+                self.port=9000+random.randint(0,900)
+                self.tcpServer = DebugTCPServer((self.host, self.port), DebugMETCPHandler, debug=True)
+                break
+            finally:
+                time.sleep(0.1)
+        print ("got port "+str(self.port))
+                
+        
 
 def printLol():
     rint=random.randint(0,999)
