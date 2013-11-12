@@ -57,7 +57,9 @@ class ZeroconfTcpServer():
                             func=self.server.eventHandlers.get(data.get("message"))
                             if func!=None:
                                 response=func()
+                                print("sending")
                                 self.request.sendall(response)
+                                print"delivered"
                 except Exception:
                     pass
 
@@ -82,6 +84,7 @@ def printMaze():
         for j in range(10):
             d[i][j]=(i*10+j,random.randint(1,200))
     print(str(d))
+    print"finnished"
     return json.dumps(d)
     
 def main():

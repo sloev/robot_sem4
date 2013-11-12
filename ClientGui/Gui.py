@@ -91,19 +91,25 @@ class MainGui(QtGui.QMainWindow):
     
     def clientSendMaze(self):
         data = {'message':"maze"}
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(self.address)
-            s.send(json.dumps(data))
-            received = json.loads(s.recv(1024))
-        finally:
-            print(str(received))
-            string=""
-            for i in range(10):
-                for j in range(10):
-                    string=string+"\t"+str(received[i][j])
-                string=string+"\n"
-            print string
+        print"maze called"
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(self.address)
+        s.send(json.dumps(data))
+        data = s.recv(1024)
+        string = ""
+        while len(data):
+            string = string + data
+            data = s.recv(1024)
+        s.close()
+        received = json.loads(string)
+        
+        print(str(received))
+        string=""
+#         for i in range(10):
+#             for j in range(10):
+#                 string=string+"\t"+str(received[i][j])
+#             string=string+"\n"
+#         print string
         
     def clientSend(self,string):
         received="nothing received"
