@@ -162,7 +162,7 @@ class PidTuner():
             
             if(self.turnThread.checkForTurn(choice)):
                 self.pid.reset()
-
+                #Lol mayn
         except IOError:
             pass
 
