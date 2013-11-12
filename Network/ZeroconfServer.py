@@ -12,10 +12,9 @@ import json
 import threading
 import sys, errno
 from Network.Bonjour import Bonjour
-from Network.EventHelpers import EventHookKeyValue
 
 
-class zeroconfTcpServer():
+class ZeroconfTcpServer():
     def __init__(self):
         self.host="0.0.0.0"
         self.name="robotMaze"
@@ -77,11 +76,15 @@ def printNumber():
 
 
 def printMaze():
-    string="here is a-maze-ing"
-    return json.dumps({'maze':string})
+    from collections import defaultdict
+    d=defaultdict(defaultdict)
+    for i in range(10):
+        for j in range(10):
+            d[i][j]=(i*10+j,random.randint(1,200))
+    return json.dumps(d)
     
 def main():
-    server=zeroconfTcpServer()
+    server=ZeroconfTcpServer()
     server.addHandler("number", printNumber)
     server.addHandler("maze", printMaze)
     
