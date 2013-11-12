@@ -86,7 +86,7 @@ class MainGui(QtGui.QMainWindow):
     def closeTcpClient(self):
         self.clientSocket.close()
         
-    def clientSendLol(self):
+    def clientSendNumber(self):
         self.clientSend("number")
     
     def clientSendMaze(self):
