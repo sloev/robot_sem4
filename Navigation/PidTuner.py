@@ -165,8 +165,9 @@ class PidTuner():
             else:
                 self.turnThread.checkForTurn(choice)
                 self.pid.reset()
-        except IOError:
-            print("error in doPid")
+        except IOError as e:
+            
+            print("error in doPid: "+str(e))
 
     def makeChoice(self,walls):
         print(str(walls))
