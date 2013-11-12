@@ -41,19 +41,20 @@ class zeroconfTcpServer():
         
     def initTcp(self):
         class DebugTCPServer(SocketServer.TCPServer):
-            def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, debug=True):
-                self.debug = debug
+            def __init__(self, server_address, RequestHandlerClass, bind_and_activate=True, eventHandler):#debug=True):
+                #self.debug = debug
+                self.eventHandler=eventHandler
                 SocketServer.TCPServer.__init__(self, server_address, RequestHandlerClass, bind_and_activate=True)
         
         class DebugMETCPHandler(SocketServer.BaseRequestHandler):
             def handle(self):
                 # self.server is an instance of the DebugTCPServer
-                DEBUG = self.server.debug
                 self.data = self.request.recv(1024).strip()
-                if DEBUG:
-                    print "{} wrote:".format(self.client_address[0])
-                else:
-                    self.request.send("lol")
+                print("trying eventhandler")
+                string=self.server.eventHandler.fire(self.data)
+                print ("{} wrote:".format(self.client_address[0])+" event="+string)
+
+                self.request.send("lol")
                     
         while True:
             try:
