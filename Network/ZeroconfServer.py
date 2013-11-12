@@ -11,7 +11,6 @@ import socket
 import json
 import threading
 import sys, errno
-import cPickle
 from Network.Bonjour import Bonjour
 
 
@@ -59,8 +58,7 @@ class ZeroconfTcpServer():
                             if func!=None:
                                 response=func()
                                 print("sending")
-                                self.request.sendall(response+"\n")
-                                print"delivered"
+                                self.request.sendall(response)
                 except Exception:
                     pass
 
@@ -83,10 +81,9 @@ def printMaze():
     d=defaultdict(dict)
     for i in range(10):
         for j in range(10):
-            d[i][j]=(random.randint(1,7))
+            d[i][j]=(i*10+j,random.randint(1,200))
     print(str(d))
     print"finnished"
-    d = cPickle.dumps(d, cPickle.HIGHEST_PROTOCOL)
     return json.dumps(d)
     
 def main():

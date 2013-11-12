@@ -10,7 +10,8 @@ import time
 from Network.Bonjour import Bonjour
 import socket
 import json
-import cPickle
+from Maze.Maze import Maze
+
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
 
@@ -101,14 +102,12 @@ class MainGui(QtGui.QMainWindow):
         
         self.clientSocket.close()
         print("closed socket")
-        received = cPickle.loads(data)
-        #received = json.loads(data)
-        string=""
+        received = json.loads(data)
+        maze=Maze()
         for i in range(10):
             for j in range(10):
-                string=string+"\t"+str(received[i][j])+""
-            string=string+"\n"
-        print string
+                maze.set(i, j, received[str(i)][str(j)])
+        print maze
         
     def clientSend(self,string):
         received="nothing received"
