@@ -149,8 +149,8 @@ class Bonjour():
                 with self.browserLock:
                     if self.clients.has_key(serviceName):
                         print("client exists to be removed= "+str(serviceName))
-                        #self.clients.pop(serviceName)
-                        #self.clientEventHandler.fire(self.clients)
+                        self.clientEventHandler.fire(self.clients)
+                        self.clients.pop(serviceName)
                 #print 'Service removed'
                 return
             #print 'Service added; resolving'
@@ -166,9 +166,10 @@ class Bonjour():
        
             try:
                 while not self.browserResolved:
-                    ready = select.select([resolve_sdRef], [], [], self.timeout)
+                    ready = select.select([resolve_sdRef], [], [], self.timeout*2)
                     if resolve_sdRef not in ready[0]:
                         print 'Resolve timed out'
+                        break
                     pybonjour.DNSServiceProcessResult(resolve_sdRef)
                 else:
                     with self.browserLock:

@@ -10,6 +10,7 @@ import time
 from Network.Bonjour import Bonjour
 import socket
 import json
+from Maze.Maze import Maze
 
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
@@ -26,6 +27,8 @@ class MainGui(QtGui.QMainWindow):
         self.address=None
         self.browser=Bonjour(name,regtype)
         self.browser.runBrowser()
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
         
         self.mitSignal.connect(self.updateIp)
 
@@ -90,16 +93,32 @@ class MainGui(QtGui.QMainWindow):
         self.clientSend("number")
     
     def clientSendMaze(self):
-        self.clientSend("maze")
+        data = {'message':"maze"}
+        print"maze called"
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientSocket.connect(self.address)
+        self.clientSocket.send(json.dumps(data))
+        data = self.clientSocket.recv(16384)  # limit reply to 16K
+        
+        self.clientSocket.close()
+        print("closed socket")
+        received = json.loads(data)
+        maze=Maze()
+        for i in range(10):
+            for j in range(10):
+                maze.set(i, j, received[str(i)][str(j)])
+        print maze
+        
+
         
     def clientSend(self,string):
         received="nothing received"
         data = {'message':string, 'test':123.4}
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect(self.address)
-            s.send(json.dumps(data))
-            received = json.loads(s.recv(1024))
+            self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.clientSocket.connect(self.address)
+            self.clientSocket.send(json.dumps(data))
+            received = json.loads(self.clientSocket.recv(1024))
         finally:
             tmp=received.get(string)
             if tmp!=None:
