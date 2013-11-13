@@ -10,10 +10,10 @@ from Maze.Maze import Maze
 class MazeView(QtGui.QWidget):
     def __init__(self,maze=None):
         if(maze!=None):
-            self.maze=maze
+            self.mazeModel=maze
             QtGui.QWidget.__init__(self)
-            self.modelWidth = self.maze.getWidth()
-            self.modelHeight = self.maze.getHeight()
+            self.modelWidth = self.mazeModel.getWidth()
+            self.modelHeight = self.mazeModel.getHeight()
             self.boxsize = 30
             self.setFixedSize(self.modelWidth * self.boxsize + 10, self.modelHeight * self.boxsize + 10)
         
@@ -28,7 +28,7 @@ class MazeView(QtGui.QWidget):
 
         for y in range(0, self.modelHeight):
             for x in range(0, self.modelWidth):
-                cell=self.maze.get(x,y)
+                cell=self.mazeModel.get(x,y)
                 if(cell and 0b1000) >>3:
                     qp.drawLine(x*b, y*b, (x+1)*b, y*b)
                 if cell and 0b0001:

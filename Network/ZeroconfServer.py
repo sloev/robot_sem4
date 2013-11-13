@@ -80,7 +80,7 @@ def printMaze():
     print "maze called"
     maze=Maze()
     for y in range(10):
-        for x in range(11):
+        for x in range(5):
             print("before random stuff")
             north=random.randint(0,100)>90
             east=random.randint(0,100)>90
