@@ -85,7 +85,8 @@ def printMaze():
             east=random.randint(0.100)>90
             south=random.randint(0.100)>90
             west=random.randint(0.100)>90     
-            value=(((north<<3) or (east <<2)) or (south <<1)) or west       
+            value=(((north<<3) or (east <<2)) or (south <<1)) or west   
+            print str(value)    
             maze.set(x, y, [value])
     print(maze)
     print"finnished"
