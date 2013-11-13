@@ -21,7 +21,13 @@ class Maze():
                     
     def set(self,x,y,value):
         self.table[x][y]=value
-
+        
+    def getWidth(self):
+        return len(self.table)
+    
+    def getHeight(self):
+        return len(self.table[0])
+    
     def get(self,x,y):
         return self.table[x][y]
     

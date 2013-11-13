@@ -11,6 +11,7 @@ from Network.Bonjour import Bonjour
 import socket
 import json
 from Maze.Maze import Maze
+from MazeView import MazeView
 
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
@@ -21,6 +22,7 @@ class MainGui(QtGui.QMainWindow):
         self.initUI()
 
     def initUI(self):
+        self.mazeView=MazeView()
         name="robotMaze"
         regtype='_maze._tcp'
         
@@ -35,7 +37,7 @@ class MainGui(QtGui.QMainWindow):
         closeAction = QtGui.QAction('Close', self)
         closeAction.setShortcut('Ctrl+Q')
         closeAction.setStatusTip('Close Notepad')
-        closeAction.triggered.connect(self.closeEvent)
+        closeAction.triggered.connect(self.close)
     
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&File')
@@ -56,17 +58,9 @@ class MainGui(QtGui.QMainWindow):
         getMaze.move(150, 50)    
         self.show()
 
-
     def closeEvent(self,event):
-        reply = QtGui.QMessageBox.question(self, 'Message',
-            "Are you sure to quit?", QtGui.QMessageBox.Yes | 
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-
-        if reply == QtGui.QMessageBox.Yes:
-            self.browser.stopBrowser()
-            event.accept()
-        else:
-            event.ignore()    
+        self.browser.stopBrowser()
+        event.accept() 
     
     def updateIp(self,ip,port):
         if self.address==(ip,port):
@@ -108,6 +102,9 @@ class MainGui(QtGui.QMainWindow):
         print("closed socket")
         received = json.loads(data)
         maze=Maze(received)
+        self.mazeView.__init__(maze)
+        self.mazeView.repaint()
+        self.mazeView.show()
         print maze
         
 
@@ -126,7 +123,6 @@ class MainGui(QtGui.QMainWindow):
                 print tmp
             else:
                 print received
-        
 
 def main():
     app = QtGui.QApplication(sys.argv)
