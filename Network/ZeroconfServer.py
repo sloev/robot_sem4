@@ -89,7 +89,7 @@ def printMaze():
             print("making value")
             value=int((((north<<3) or (east <<2)) or (south <<1)) or west)
             print str(value)    
-            maze.set(x, y, [value])
+            maze.set(x, y, value)
     print(maze)
     print"finnished"
     return json.dumps(maze.getDict())
