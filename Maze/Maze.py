@@ -12,9 +12,9 @@ class Maze():
     '''
     def __init__(self,table=None):
         self.table=defaultdict(dict)
-        xRange=len(table)
-        yRange=len(table[0])
         if table!=None:
+            xRange=len(table)
+            yRange=len(table[0])
             for y in range(yRange):
                 for x in range(xRange):
                     self.table.set(x, y, table[str(x)][str(y)])
