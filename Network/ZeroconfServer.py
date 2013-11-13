@@ -84,7 +84,7 @@ def printMaze():
             Maze.set(x, y, (y*10+x,random.randint(1,200)))
     print(maze)
     print"finnished"
-    return json.dumps(maze.getDict)
+    return json.dumps(maze.getDict())
     
 def main():
     server=ZeroconfTcpServer()
