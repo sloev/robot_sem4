@@ -98,9 +98,6 @@ class TurnThread():
             time.sleep(0.1)
        
         
-
-
-        
 def main():
     pass
 

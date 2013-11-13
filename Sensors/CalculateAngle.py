@@ -30,7 +30,6 @@ class Calculations:
         mus1=self.lookupTable.getAngLen(delta[0][0], delta[0][1])
         mus2=self.lookupTable.getAngLen(delta[1][0], delta[1][1])
 
-        #if isinstance(mus1, Mouse) and isinstance(mus2, Mouse):
         try:
             print("both mice are mice") 
             my = math.fabs(mus1.getAngle() - mus2.getAngle() )
