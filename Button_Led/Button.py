@@ -11,5 +11,5 @@ GPIO.setup(15,GPIO.IN)
 print "Press button"
 
 while True:
-  if (GPIO.input(15)):
+    if (GPIO.input(15)):
     os.system("sudo python /home/pi/robot_sem4/Button_Led/led.py") # path for file to open
