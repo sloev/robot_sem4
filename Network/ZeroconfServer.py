@@ -81,7 +81,7 @@ def printMaze():
     maze=Maze()
     for y in range(10):
         for x in range(11):
-            Maze.set(x, y, (y*10+x,random.randint(1,200)))
+            maze.set(x, y, (y*10+x,random.randint(1,200)))
     print(maze)
     print"finnished"
     return json.dumps(maze.getDict())
