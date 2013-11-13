@@ -12,7 +12,7 @@ import json
 import threading
 import sys, errno
 from Network.Bonjour import Bonjour
-
+from Maze.Maze import Maze
 
 class ZeroconfTcpServer():
     def __init__(self):
@@ -78,13 +78,13 @@ def printNumber():
 
 def printMaze():
     from collections import defaultdict
-    d=defaultdict(dict)
-    for i in range(10):
-        for j in range(10):
-            d[i][j]=(i*10+j,random.randint(1,200))
-    print(str(d))
+    maze=Maze()
+    for y in range(10):
+        for x in range(11):
+            Maze.set(x, y, (y*10+x,random.randint(1,200)))
+    print(maze)
     print"finnished"
-    return json.dumps(d)
+    return json.dumps(maze.getDict)
     
 def main():
     server=ZeroconfTcpServer()

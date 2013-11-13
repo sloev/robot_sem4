@@ -103,10 +103,7 @@ class MainGui(QtGui.QMainWindow):
         self.clientSocket.close()
         print("closed socket")
         received = json.loads(data)
-        maze=Maze()
-        for i in range(10):
-            for j in range(10):
-                maze.set(i, j, received[str(i)][str(j)])
+        maze=Maze(received)
         print maze
         
 
