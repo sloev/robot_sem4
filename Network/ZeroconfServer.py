@@ -86,7 +86,7 @@ def printMaze():
             south=random.randint(0.100)>90
             west=random.randint(0.100)>90     
             value=north<<3 or east <<2 or south <<1 or west       
-            maze.set(x, y, value)
+            maze.set(x, y, [value])
     print(maze)
     print"finnished"
     return json.dumps(maze.getDict())
