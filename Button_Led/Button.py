@@ -12,4 +12,4 @@ print "Press button"
 
 while True:
   if (GPIO.input(15)):
-    os.system("sudo python /home/pi/robot_sem4/Button_Led/led.py")
+    os.system("sudo python /home/pi/robot_sem4/Button_Led/led.py") # path for file to open

@@ -9,10 +9,10 @@ import time
 GPIO.setup(12, GPIO.OUT)
 
 def Blink(numTimes):
-    for i in range(0,numTimes): ## Run loop numTimes
-        GPIO.output(12, True) ## Turn on 
+    for i in range(0,numTimes):
+        GPIO.output(12, True) ## Turn on LED 
         time.sleep(0.15)
-        GPIO.output(12, False) ## Turn off
+        GPIO.output(12, False) ## Turn off LED
         time.sleep(0.15)
     print "MAAAAAAAAAAXXXX LOL"
 
