@@ -11,6 +11,7 @@ from Network.Bonjour import Bonjour
 import socket
 import json
 from Maze.Maze import Maze
+from MazeView import MazeView
 
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
@@ -21,6 +22,7 @@ class MainGui(QtGui.QMainWindow):
         self.initUI()
 
     def initUI(self):
+        self.mazeView=MazeView()
         name="robotMaze"
         regtype='_maze._tcp'
         
@@ -35,7 +37,7 @@ class MainGui(QtGui.QMainWindow):
         closeAction = QtGui.QAction('Close', self)
         closeAction.setShortcut('Ctrl+Q')
         closeAction.setStatusTip('Close Notepad')
-        closeAction.triggered.connect(self.closeEvent)
+        closeAction.triggered.connect(self.close)
     
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&File')
@@ -56,38 +58,34 @@ class MainGui(QtGui.QMainWindow):
         getMaze.move(150, 50)    
         self.show()
 
-
     def closeEvent(self,event):
-        reply = QtGui.QMessageBox.question(self, 'Message',
-            "Are you sure to quit?", QtGui.QMessageBox.Yes | 
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-
-        if reply == QtGui.QMessageBox.Yes:
-            self.browser.stopBrowser()
-            event.accept()
-        else:
-            event.ignore()    
+        self.browser.stopBrowser()
+        event.accept() 
     
     def updateIp(self,ip,port):
-        if self.address!=(ip,port) and self.address!=None:
+        if self.address==(ip,port):
             self.closeTcpClient()
+            self.address=None
             print("r-pi removed and clientSocket closed with ip="+str(ip)+" port="+str(port))
         else:
             print("r-pi catched with address"+str((ip,port)))
             
-        reply = QtGui.QMessageBox.question(self, 'question',"rpi detected\nwanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+            reply = QtGui.QMessageBox.question(self, 'question',"rpi detected\nwanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
-        if reply == QtGui.QMessageBox.Yes:
-            print("old ip and port="+str(self.address))
-            self.address=(str(ip),port)
-            print("new ip and port="+str(self.address)+"\n")
-               
-        else:
-            pass
+            if reply == QtGui.QMessageBox.Yes:
+                print("old ip and port="+str(self.address))
+                self.address=(str(ip),port)
+                print("new ip and port="+str(self.address)+"\n")
+            else:
+                pass
         
     
     def closeTcpClient(self):
-        self.clientSocket.close()
+        try:
+            self.clientSocket.close()
+            print("closed client")
+        finally:
+            pass
         
     def clientSendNumber(self):
         self.clientSend("number")
@@ -103,10 +101,10 @@ class MainGui(QtGui.QMainWindow):
         self.clientSocket.close()
         print("closed socket")
         received = json.loads(data)
-        maze=Maze()
-        for i in range(10):
-            for j in range(10):
-                maze.set(i, j, received[str(i)][str(j)])
+        maze=Maze(received)
+        self.mazeView.__init__(maze)
+        self.mazeView.repaint()
+        self.mazeView.show()
         print maze
         
 
@@ -125,7 +123,6 @@ class MainGui(QtGui.QMainWindow):
                 print tmp
             else:
                 print received
-        
 
 def main():
     app = QtGui.QApplication(sys.argv)

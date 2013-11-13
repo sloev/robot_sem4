@@ -149,11 +149,10 @@ class Bonjour():
                 with self.browserLock:
                     if self.clients.has_key(serviceName):
                         print("client exists to be removed= "+str(serviceName))
-                        self.clientEventHandler.fire(self.clients)
+                        client=self.clients.get(serviceName)
+                        self.clientEventHandler.fire(client.ip, client.port)
                         self.clients.pop(serviceName)
-                #print 'Service removed'
                 return
-            #print 'Service added; resolving'
             with self.browserLock:
                 self.currentClient=Client()
                 self.currentClient.serviceName=serviceName
