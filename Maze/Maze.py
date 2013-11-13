@@ -14,10 +14,10 @@ class Maze():
         self.table=defaultdict(dict)
         if table!=None:
             xRange=len(table)
-            yRange=len(table[0])
+            yRange=len(table[str(0)])
             for y in range(yRange):
                 for x in range(xRange):
-                    self.table.set(x, y, table[str(x)][str(y)])
+                    self.set(x, y, table[str(x)][str(y)])
                     
     def set(self,x,y,value):
         self.table[x][y]=value

@@ -69,25 +69,29 @@ class MainGui(QtGui.QMainWindow):
             event.ignore()    
     
     def updateIp(self,ip,port):
-        if self.address!=(ip,port) and self.address!=None:
+        if self.address==(ip,port):
             self.closeTcpClient()
+            self.address=None
             print("r-pi removed and clientSocket closed with ip="+str(ip)+" port="+str(port))
         else:
             print("r-pi catched with address"+str((ip,port)))
             
-        reply = QtGui.QMessageBox.question(self, 'question',"rpi detected\nwanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+            reply = QtGui.QMessageBox.question(self, 'question',"rpi detected\nwanna update ip/port?", QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
 
-        if reply == QtGui.QMessageBox.Yes:
-            print("old ip and port="+str(self.address))
-            self.address=(str(ip),port)
-            print("new ip and port="+str(self.address)+"\n")
-               
-        else:
-            pass
+            if reply == QtGui.QMessageBox.Yes:
+                print("old ip and port="+str(self.address))
+                self.address=(str(ip),port)
+                print("new ip and port="+str(self.address)+"\n")
+            else:
+                pass
         
     
     def closeTcpClient(self):
-        self.clientSocket.close()
+        try:
+            self.clientSocket.close()
+            print("closed client")
+        finally:
+            pass
         
     def clientSendNumber(self):
         self.clientSend("number")
