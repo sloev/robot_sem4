@@ -77,7 +77,7 @@ def printNumber():
 
 
 def printMaze():
-    from collections import defaultdict
+    print "maze called"
     maze=Maze()
     for y in range(10):
         for x in range(11):
