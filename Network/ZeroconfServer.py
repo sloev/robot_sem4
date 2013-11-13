@@ -81,10 +81,12 @@ def printMaze():
     maze=Maze()
     for y in range(10):
         for x in range(11):
+            print("before random stuff")
             north=random.randint(0.100)>90
             east=random.randint(0.100)>90
             south=random.randint(0.100)>90
             west=random.randint(0.100)>90     
+            print("making value")
             value=(((north<<3) or (east <<2)) or (south <<1)) or west   
             print str(value)    
             maze.set(x, y, [value])
