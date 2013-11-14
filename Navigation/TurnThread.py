@@ -5,6 +5,7 @@ Created on Oct 30, 2013
 '''
 import logging
 import time
+import Calibrate
 
 Vin1                                =   0x08
 Vin2                                =   0x09
@@ -17,6 +18,7 @@ class TurnThread():
         self.dual_motors=dual_motors
         self.irsensors=irSensors
         self.wallchecker=wallchecker
+        self.calibrater = Calibrate()
         self.left=left
         self.right=right
         self.funcDict={
@@ -29,7 +31,8 @@ class TurnThread():
         self.logger.info("TurnThread initialised")
         pass
     
-    def checkForTurn(self,choice):
+    def checkForTurn(self,choice, walls):
+        self.walls = walls
         value=0
         try:
             if(choice>1):
