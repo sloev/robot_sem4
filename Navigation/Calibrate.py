@@ -73,15 +73,15 @@ class Calibrate():
             
     
     def initializeTurn(self, channels):
-        lastSample = [65, 65]
+        lastSample = [15.8, 27.3]
         sample = self.sensors.multiChannelReadCm(channels, 3)
         print sample
         
         while(self.checkSample(sample, lastSample)):
-            self.motors.setMotorParams(0, 0, 1, 1)
+            self.motors.setMotorParams(1, 1, 1, 1)
             self.motors.setPosition(32768, 32768)
             lastSample = sample
-            sample = self.sensors.multiChannelReadCm(channels, 3)
+            sample = self.sensors.multiChannelReadCm(channels, 10)
             print sample
             time.sleep(0.05)
             
@@ -91,9 +91,9 @@ class Calibrate():
             
         
     def checkSample(self, sample, lastSample):
-        print "lastSample = " + str(lastSample)
-        print "newSample = " + str(sample)
-        if(sample[0] < lastSample[0] and sample[1] < lastSample[1]):
+        print "lastSample = " + str(lastSample[1])
+        print "newSample = " + str(sample[1])
+        if(sample[1] < lastSample[1]):
             print 'New sample was smaller'
             return 1
         else:
