@@ -95,7 +95,12 @@ class IR_Sensors_Controller():
     '''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
+        try:
+            sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
+            break
+        except IOError:
+            print 'Error in ReadSensorBlock'
+            
         return sensorInput
     
         
