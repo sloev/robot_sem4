@@ -48,6 +48,10 @@ class Calibrate():
     def __init__(self):
         self.sensors = IR_Sensors_Controller(0x20)
         self.motors = DualMotorController(0x60, 0x61)
+        self.motors.hardStop()
+        self.motors.getFullStatus1()
+        self.motors.setOtpParam()
+        self.motors.setMotorParams(self.left, self.right, 2, 2)
     
     def __call__(self, walls):
         channels = self.checkTurnConditions(walls)
