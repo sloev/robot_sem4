@@ -26,14 +26,13 @@ class MazeView(QtGui.QWidget):
         qp.setPen(QtGui.QColor(255, 0, 0))
         qp.drawRect(0,0,self.modelWidth * b,self.modelHeight * b)
 
-        for y in range(0, self.modelHeight):
-            for x in range(0, self.modelWidth):
+        for y in range(self.modelHeight):
+            for x in range(self.modelWidth):
                 cell=self.mazeModel.get(x,y)
-                if(cell and 0b1000) >>3:
+                if(cell & 0b1000) >>3:
                     qp.drawLine(x*b, y*b, (x+1)*b, y*b)
-                if cell and 0b0001:
+                if cell & 0b0001:
                     qp.drawLine(x*b, y*b, x*b, (y+1)*b)
-                    
         qp.end()
 
         
