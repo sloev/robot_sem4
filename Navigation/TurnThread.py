@@ -31,8 +31,7 @@ class TurnThread():
         self.logger.info("TurnThread initialised")
         pass
     
-    def checkForTurn(self,choice, walls):
-        self.walls = walls
+    def checkForTurn(self,choice):
         value=0
         try:
             if(choice>1):
