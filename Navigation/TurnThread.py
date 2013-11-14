@@ -95,7 +95,7 @@ class TurnThread():
             time.sleep(0.1)
             
     def initialize90Turn(self):
-        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.dual_motors.setMotorParams(self.right, self.left, 1, 1)
         self.dual_motors.setPosition(32768, 32768)
         while(self.irsensors.multiChannelReadCm([0x0A], 0x20) > 9):
             time.sleep(0.1)
