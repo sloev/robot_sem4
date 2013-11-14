@@ -155,6 +155,7 @@ class IR_Sensors_Controller():
     def multiChannelReadCm(self,channels, amount):
         
         distances = [0 for i in range(len(channels))]
+        global lastSamples
         for i in range(amount):
             for j in range(len(distances)):
                 reading = self.readSensorBlock(channels[j], ConversionResultReg)
