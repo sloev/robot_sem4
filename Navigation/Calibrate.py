@@ -73,16 +73,18 @@ class Calibrate():
             
     
     def initializeTurn(self, channels):
+        doLoop = 1
         lastSample = [0, 0]
         sample = self.sensors.multiChannelReadCm(channels, 3)
         print sample
         
-        while(self.checkSample(sample, lastSample)):
+        while(doLoop):
             self.motors.setMotorParams(0, 0, 1, 1)
             self.motors.setPosition(32768, 32768)
             lastSample = sample
             sample = self.sensors.multiChannelReadCm(channels, 3)
             print sample
+            doLoop = self.checkSample(sample, lastSample)
             time.sleep(0.05)
             
         
