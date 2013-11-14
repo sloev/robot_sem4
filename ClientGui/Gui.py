@@ -12,7 +12,6 @@ import socket
 import json
 from Maze.Maze import Maze
 from MazeView import MazeView
-from Maze.Astar import Astar
 
 class MainGui(QtGui.QMainWindow):
     mitSignal = pyqtSignal(str, int, name='mitSignal')
@@ -109,16 +108,6 @@ class MainGui(QtGui.QMainWindow):
         self.mazeView.show()
         
         print maze
-
-        astar=Astar(maze)
-        path=astar.search(0,0, 3,3)
-        print"made astar"
-        if path==None:
-            print "no path"
-        else:
-            for a in path:
-                print a
-
         
     def clientSend(self,string):
         received="nothing received"

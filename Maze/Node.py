@@ -19,17 +19,18 @@ class Node():
         self.y=y
         
         self.g = 0
+        self.origCost=0
         self.h = 0
         self.parent = None
         
-    def move_cost(self, otherNode):
-        corner = abs(self.x - otherNode.x) != 0 or abs(self.y - otherNode.y) != 0
+    def moveCost(self, otherNode,currentParrent):
         cost=self.straightCost
-        if corner:
+        if (currentParrent!=None) and (abs(currentParrent.x - otherNode.x) != 0 and abs(currentParrent.y - otherNode.y) != 0):
             cost+=self.cornerExtraCost
         return cost
     
     def __str__(self):
-        return "[%d,%d]"%(self.x,self.y)
+        string="["+str(self.x)+","+str(self.y)+"]"
+        return string
         
             

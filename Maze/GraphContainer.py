@@ -31,4 +31,3 @@ class GraphContainer():
                 self.graph[self.nodes[x][y]].append(self.nodes[x][y+1])
             if not (walls & 0b0001):#west
                 self.graph[self.nodes[x][y]].append(self.nodes[x-1][y])
-                
