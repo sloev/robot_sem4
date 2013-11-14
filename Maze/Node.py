@@ -8,13 +8,12 @@ class Node():
     '''
     classdocs
     '''
-    cornerExtraCost=0.5
-    straightCost=2
-    
-    def __init__(self,x,y,walls):
+    def __init__(self,x,y,walls,cornerExtraCost=0.5,straightCost=2):
         '''
         Constructor
         '''
+        self.cornerExtraCost=cornerExtraCost
+        self.straightCost=straightCost
         self.walls=walls
         self.x=x
         self.y=y
@@ -25,9 +24,12 @@ class Node():
         
     def move_cost(self, otherNode):
         corner = abs(self.x - otherNode.x) != 0 or abs(self.y - otherNode.y) != 0
-        cost=0
-        cost+=self.straightCost
+        cost=self.straightCost
         if corner:
-            cost+=self.cornerCost
+            cost+=self.cornerExtraCost
+        return cost
+    
+    def __str__(self):
+        return "[%d,%d]"%(self.x,self.y)
         
             

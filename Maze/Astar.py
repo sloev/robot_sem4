@@ -3,21 +3,35 @@ Created on Nov 14, 2013
 
 @author: johannes
 '''
-
-class MyClass():
+from GraphContainer import GraphContainer
+class Astar():
     '''
     classdocs
     '''
 
 
-    def __init__(self):
+    def __init__(self,mazeModel):
         '''
         Constructor
         '''
-    def heuristic(self, currentNode, endNode):
+        cornerExtraCost=0.5
+        straightCost=2
+        graphContainer=GraphContainer(mazeModel,cornerExtraCost,straightCost)
+        self.nodes=graphContainer.nodes
+        self.graph=graphContainer.graph
+        print "made maze"
         
-    
-    def search(self, start, end):
+    def heuristic(self, currentNode, endNode):
+        #manhattan heuristic
+        #corner = abs(self.x - otherNode.x) != 0 or abs(self.y - otherNode.y) != 0
+        hx=abs(currentNode.x-endNode.x)
+        hy=abs(currentNode.y-endNode.y)
+        return hx+hy
+
+    def search(self, startx,starty, endx,endy):
+        start=self.nodes[startx][starty]
+        end=self.nodes[endx][endy]
+        
         openset = set()
         closedset = set()
         current = start
@@ -30,7 +44,7 @@ class MyClass():
                     path.append(current)
                     current = current.parent
                 path.append(current)
-                return path[::-1]#bagl¾ns
+                return path[::-1]#baglaens
             openset.remove(current)
             closedset.add(current)
             for node in self.graph[current]:
@@ -48,10 +62,3 @@ class MyClass():
                     openset.add(node)
         return None
  
-class AStarNode(object):
-def __init__(self):
-self.g = 0
-self.h = 0
-self.parent = None
-def move_cost(self, other):
-raise NotImplementedError

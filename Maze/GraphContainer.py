@@ -5,19 +5,20 @@ Created on Nov 14, 2013
 '''
 from itertools import product
 from Node import Node
-class Graph():
+class GraphContainer():
     '''
     classdocs
     '''
-    def __init__(self,mazeModel):
+    def __init__(self,mazeModel,cornerExtraCost,straightCost):
         '''
         Constructor
         '''
-        self.mazeModel=mazeModel()
-        self.nodes=[[Node(x,y,mazeModel.get(x,y)) for y in range(mazeModel.getHeight())] for x in range(mazeModel.getWidth())]                                                                                      
-        self.graph = {}
+        self.mazeModel=mazeModel
+        self.nodes=[[Node(x,y,mazeModel.get(x,y),cornerExtraCost,straightCost) for y in range(mazeModel.getHeight())] for x in range(mazeModel.getWidth())]                                                                                      
+        self.make()
         
     def make(self):
+        self.graph = {}
         for x, y in product(range(self.mazeModel.width), range(self.mazeModel.height)):        
             node = self.nodes[x][y]
             walls=node.walls
