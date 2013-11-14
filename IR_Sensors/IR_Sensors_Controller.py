@@ -4,6 +4,7 @@ Created on Oct 8, 2013
 @author: Daniel Machon, 
         Johannes
 '''
+from Tkconstants import LAST
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''
 This class handles converted input from the Sharp IR ' 
@@ -189,7 +190,8 @@ class IR_Sensors_Controller():
                 if(amount-i==1):
                     distances[j]=(distances[j]/amount)
                     
-        self.logger.info("sampleAverage/"+str(distances))   
+        self.logger.info("sampleAverage/"+str(distances))  
+        lastSamples = [0, 0, 0, 0] 
         return distances
     
     
