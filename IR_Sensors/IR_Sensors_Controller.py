@@ -47,6 +47,8 @@ multiChannels                       =   0x07
 
 class IR_Sensors_Controller():
     
+    lastSample = 14.9 
+ 
     
     '''
         Constructor
@@ -95,11 +97,15 @@ class IR_Sensors_Controller():
     '''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
+        global lastSample
+        print lastSample
         try:
             sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
+            if(sensorInput > lastSample+4):
+                return 14.9
         except IOError:
             print 'Error in ReadSensorBlock'
-            
+        lastSample = sensorInput
         return sensorInput
     
         
