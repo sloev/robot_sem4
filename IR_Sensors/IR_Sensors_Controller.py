@@ -167,6 +167,7 @@ class IR_Sensors_Controller():
                         lastSamples[j] = reading
                         reading = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg)))
                     distances[j] += reading
+                    lastSamples[j] = reading
                     
                 else:
                     reading = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg)))
