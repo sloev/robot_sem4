@@ -47,8 +47,6 @@ multiChannels                       =   0x07
 
 class IR_Sensors_Controller():
     
-    lastSample = 14.9 
- 
     
     '''
         Constructor
@@ -97,15 +95,11 @@ class IR_Sensors_Controller():
     '''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        self.lastSample = 14.9
-        print self.lastSample
         try:
             sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
-            if(sensorInput > self.lastSample+4):
-                return 14.9
         except IOError:
             print 'Error in ReadSensorBlock'
-        self.lastSample = sensorInput
+            
         return sensorInput
     
         
@@ -157,10 +151,19 @@ class IR_Sensors_Controller():
         Returns a list with sensor distances in cm
     '''
     def multiChannelReadCm(self,channels, amount):
+        self.lastSamples = [14.9, 14.9, 0]
         distances = [0 for i in range(len(channels))]
         for i in range(amount):
             for j in range(len(distances)):
-                distances[j] += self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))  
+                reading = self.readSensorBlock(channels[j], ConversionResultReg)
+
+                if((j == 0 or 1) and reading > self.lastSamples[j]+4):
+                    reading = 14.9
+                distances[j] += self.extractRawDistance(reading)
+                self.lastSamples = reading
+                print 'lastSample = ' + str(self.lastSamples)
+                print 'newSample = ' + str(reading)
+                      
                 if(amount-i==1):
                     distances[j]=self.lookupCm(int(distances[j]/amount))
         self.logger.info("sampleAverage/"+str(distances))   
