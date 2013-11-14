@@ -162,9 +162,9 @@ class IR_Sensors_Controller():
         lastSamples[1] = self.extractRawDistance(self.readSensorBlock(channels[1], ConversionResultReg))
         
         if(lastSamples[0] > 40):
-            return distances[14.9, 14.9, 1, 1]
+            return [14.9, 14.9, 1, 1]
         elif(lastSamples[1] > 40):
-            return distances[14.9, 14.9, 1, 2]
+            return [14.9, 14.9, 1, 2]
         
         else:
         
