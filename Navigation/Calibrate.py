@@ -80,7 +80,7 @@ class Calibrate():
         
         while(doLoop):
             self.motors.setMotorParams(0, 0, 1, 1)
-            self.motors.setPosition(32768, 32768)
+            self.motors.setPosition(10, 10)
             lastSample = sample
             sample = self.sensors.multiChannelReadCm(channels, 3)
             print sample
