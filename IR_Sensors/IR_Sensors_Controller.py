@@ -157,7 +157,7 @@ class IR_Sensors_Controller():
         distances = [0 for i in range(len(channels)+1)]
         global lastSamples
         for i in range(amount):
-            for j in range(len(distances)):
+            for j in range(len(distances)-1):
                 reading = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))
                 value = self.lookupCm(reading)
                 
