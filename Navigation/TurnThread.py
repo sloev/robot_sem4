@@ -100,7 +100,7 @@ class TurnThread():
         while(self.irsensors.multiChannelReadCm([0x0A], 0x20) > 9):
             print self.irsensors.multiChannelReadCm([0x0A], 0x20)
             time.sleep(0.1)
-        self.dual_motors.softStop()
+        self.dual_motors.hardStop()
         
         
        
