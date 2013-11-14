@@ -159,12 +159,13 @@ class IR_Sensors_Controller():
         for i in range(amount):
             for j in range(len(distances)):
                 reading = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))
-                if(j == 0 or 1):
+                if(j == 0 or j == 1):
                     if(reading > lastSamples[j]+4):
                         reading = 700
                         distances[j] += reading
                         lastSamples[j] = reading
                     else:
+                        print 'In ELSE'
                         distances[j] += reading
                         lastSamples[j] = reading
                 else:
