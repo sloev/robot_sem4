@@ -83,7 +83,7 @@ class Calibrate():
             lastSample = sample
             sample = self.sensors.multiChannelReadCm(channels, 10)
             print sample
-            time.sleep(0.001)
+            time.sleep(0.25)
             
         
         self.motors.hardStop()
