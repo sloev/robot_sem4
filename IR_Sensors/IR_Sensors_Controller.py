@@ -44,6 +44,8 @@ Vin7                                =   0x0E
 Vin8                                =   0x0F
 multiChannels                       =   0x07
 
+lastSamples = [14.9, 14.9, 0]
+
 
 class IR_Sensors_Controller():
     
@@ -151,20 +153,20 @@ class IR_Sensors_Controller():
         Returns a list with sensor distances in cm
     '''
     def multiChannelReadCm(self,channels, amount):
-        self.lastSamples = [14.9, 14.9, 0]
+        
         distances = [0 for i in range(len(channels))]
         for i in range(amount):
             for j in range(len(distances)):
                 reading = self.readSensorBlock(channels[j], ConversionResultReg)
 
-                if((j == 0 or 1) and reading > self.lastSamples[j]+4):
+                if((j == 0 or 1) and reading > lastSamples[j]+4):
                     reading = 14.9
                     distances[j] += reading
                 else:
                     distances[j] += self.extractRawDistance(reading)
                     
-                self.lastSamples = reading
-                print 'lastSample = ' + str(self.lastSamples)
+                lastSamples = reading
+                print 'lastSample = ' + str(lastSamples)
                 print 'newSample = ' + str(reading)
                       
                 if(amount-i==1):
