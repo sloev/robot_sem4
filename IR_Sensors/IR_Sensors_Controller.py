@@ -154,7 +154,7 @@ class IR_Sensors_Controller():
     '''
     def multiChannelReadCm(self,channels, amount):
         
-        distances = [0 for i in range(len(channels))]
+        distances = [0 for i in range(len(channels)+1)]
         global lastSamples
         for i in range(amount):
             for j in range(len(distances)):
