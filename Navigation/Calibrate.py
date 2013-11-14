@@ -70,6 +70,7 @@ class Calibrate():
     def initializeTurn(self, channels):
         lastSample = [65, 65]
         sample = self.sensors.multiChannelReadCm(channels, 3)
+        print sample
         self.motors.setMotorParams(1, 1, 1, 1)
         self.motors.setPosition(32768, 32768)
         
@@ -78,6 +79,7 @@ class Calibrate():
             self.motors.setMotorParams(1, 1, 1, 1)
             self.motors.setPosition(32768, 32768)
             sample = self.sensors.multiChannelReadCm(channels, 3)
+            print sample
             lastSample = sample
         
         self.motors.hardStop()
