@@ -36,9 +36,9 @@ class Maze():
     
     def __str__(self): 
         string=""
-        for x in range(len(self.table)):
-            for y in range(len(self.table[0])):
-                string+=str(self.table[x][y])+"      \t"
+        for y in range(self.getHeight()):
+            for x in range(self.getWidth()):
+                string+=str(self.get(x, y))+"      \t"
             string+="\n"
         return string
     

@@ -60,6 +60,7 @@ class MainGui(QtGui.QMainWindow):
 
     def closeEvent(self,event):
         self.browser.stopBrowser()
+        self.mazeView.close()
         event.accept() 
     
     def updateIp(self,ip,port):
@@ -102,7 +103,7 @@ class MainGui(QtGui.QMainWindow):
         print("closed socket")
         received = json.loads(data)
         maze=Maze(received)
-        self.mazeView.__init__(maze)
+        self.mazeView=MazeView(maze)
         self.mazeView.repaint()
         self.mazeView.show()
         print maze
