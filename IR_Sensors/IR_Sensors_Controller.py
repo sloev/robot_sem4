@@ -152,35 +152,29 @@ class IR_Sensors_Controller():
         Read input from channels described in the channels list
         Returns a list with sensor distances in cm
     '''
+    
     def multiChannelReadCm(self,channels, amount):
-        
         distances = [0 for i in range(len(channels))]
-        global lastSamples
         for i in range(amount):
             for j in range(len(distances)):
-                reading = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))
-                value = self.lookupCm(reading)
+                'Read from sensor'
+                reading = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))) 
                 
-                if(j == 0 or j == 1):
-                    if(value > lastSamples[j]+4):
-                        print 'GAP'
-                        value = 14.9
-                        distances[j] += value
-                        lastSamples[j] = value
-                    else:
-                        print 'OK'
-                        distances[j] += value
-                        lastSamples[j] = value
-                else:
-                    print 'Front sensor'
-                    distances[j] += value
+                'Sensor is a side sensor'
+                if(j == 0 or 1):
+                    'Gap detected wait until sensor input settles'
+                    while(reading > lastSamples[j]+4):
+                        lastSamples[j] = reading
+                        reading = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg)))
+                    distances[j] += reading
                     
-                        
-                print 'lastSample = ' + str(lastSamples)
-                print 'newSample = ' + str(value)
-                      
+                else:
+                    reading = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg)))
+                    distances[j] += reading
+                
+                'Done reading n readings from channel'    
                 if(amount-i==1):
-                    distances[j]=(int(distances[j]/amount))
+                    distances[j]=(distances[j]/amount)
         self.logger.info("sampleAverage/"+str(distances))   
         return distances
     
