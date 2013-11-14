@@ -83,7 +83,7 @@ def main():
     LUT = RangeTable.unpickleTable()
     if(LUT==0):
         LUT=RangeTable()
-    print(LUT.lookUpDistance(900))
+    print(LUT.lookUpDistance(700))
     
 if __name__== '__main__':
     main()
