@@ -168,9 +168,9 @@ class IR_Sensors_Controller():
                         distances[j] += value
                         
                         if(j == 0):
-                            distances[len(channels)+1] = 1
+                            distances[3] = 1
                         if(j == 1):
-                            distances[len(channels)+1] = 2 
+                            distances[3] = 2 
                         
                         lastSamples[j] = value
                     
