@@ -155,7 +155,7 @@ class IR_Sensors_Controller():
     def multiChannelReadCm(self,channels, amount):
         
         distances = [0 for i in range(len(channels)+1)]
-        distances = float(distances)
+
         global lastSamples
         for i in range(amount):
             for j in range(len(distances)-1):
@@ -187,7 +187,7 @@ class IR_Sensors_Controller():
 
                       
                 if(amount-i==1):
-                    distances[j]=(int(distances[j]/amount))
+                    distances[j]=(distances[j]/amount)
                     print distances
         self.logger.info("sampleAverage/"+str(distances))   
         return distances
