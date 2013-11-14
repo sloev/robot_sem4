@@ -89,6 +89,8 @@ class Calibrate():
             
         
     def checkSample(self, sample, lastSample):
+        print "lastSample = " + str(lastSample)
+        print "newSample = " + str(sample)
         if(sample[0] < lastSample[0] or sample[1] < lastSample[1]):
             print 'New sample was smaller'
             return 1
