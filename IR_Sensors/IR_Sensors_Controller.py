@@ -188,7 +188,7 @@ class IR_Sensors_Controller():
                       
                 if(amount-i==1):
                     distances[j]=(distances[j]/amount)
-                    print distances
+                    
         self.logger.info("sampleAverage/"+str(distances))   
         return distances
     
