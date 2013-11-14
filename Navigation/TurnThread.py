@@ -18,7 +18,7 @@ class TurnThread():
         self.dual_motors=dual_motors
         self.irsensors=irSensors
         self.wallchecker=wallchecker
-        self.calibrater = Calibrate()
+        #self.calibrater = Calibrate()
         self.left=left
         self.right=right
         self.funcDict={
