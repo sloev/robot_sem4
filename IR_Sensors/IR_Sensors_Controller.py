@@ -97,15 +97,15 @@ class IR_Sensors_Controller():
     '''
     def readSensorBlock(self, channel, register):
         chosenRegister = register | channel << 4
-        global lastSample
-        print lastSample
+        self.lastSample = 14.9
+        print self.lastSample
         try:
             sensorInput=self.bus.read_i2c_block_data(self.slaveAddress,chosenRegister, 2)
-            if(sensorInput > lastSample+4):
+            if(sensorInput > self.lastSample+4):
                 return 14.9
         except IOError:
             print 'Error in ReadSensorBlock'
-        lastSample = sensorInput
+        self.lastSample = sensorInput
         return sensorInput
     
         
