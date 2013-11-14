@@ -164,7 +164,7 @@ class IR_Sensors_Controller():
                 
                 
                 if(j == 0 or j == 1):
-                    if(value > lastSamples[j]+3):
+                    if(value > lastSamples[j]+5):
                         print 'GAP'
                         value = 14.9
                         distances[j] += value
