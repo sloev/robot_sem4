@@ -39,6 +39,7 @@ Imports
 
 from Motor_control.DualMotorController import DualMotorController
 from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller 
+import time
 
 
 class Calibrate():
@@ -80,8 +81,10 @@ class Calibrate():
             self.motors.setMotorParams(0, 0, 1, 1)
             self.motors.setPosition(32768, 32768)
             lastSample = sample
-            sample = self.sensors.multiChannelReadCm(channels, 15)
+            sample = self.sensors.multiChannelReadCm(channels, 3)
             print sample
+            time.sleep(0.3)
+            
         
         self.motors.hardStop()
         print 'Done calibrating start of turn'
