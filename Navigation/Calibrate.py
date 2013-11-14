@@ -74,7 +74,7 @@ class Calibrate():
         self.motors.setMotorParams(1, 1, 1, 1)
         self.motors.setPosition(32768, 32768)
         
-        while(self.checkSample(sample, lastSample)):
+        while(1):
             lastSample = sample
             self.motors.setMotorParams(1, 1, 1, 1)
             self.motors.setPosition(32768, 32768)
