@@ -73,7 +73,7 @@ class Calibrate():
             
     
     def initializeTurn(self, channels):
-        lastSample = [65, 65]
+        lastSample = [0, 0]
         sample = self.sensors.multiChannelReadCm(channels, 3)
         print sample
         
