@@ -160,6 +160,7 @@ class IR_Sensors_Controller():
         global lastSamples
         lastSamples[0] = self.extractRawDistance(self.readSensorBlock(channels[0], ConversionResultReg))
         lastSamples[1] = self.extractRawDistance(self.readSensorBlock(channels[1], ConversionResultReg))
+        print lastSamples
         
         if(lastSamples[0] > 40):
             return [14.9, 14.9, 1, 1]
@@ -201,7 +202,7 @@ class IR_Sensors_Controller():
                         distances[j]=(distances[j]/amount)
                     
                         self.logger.info("sampleAverage/"+str(distances))  
-                        lastSamples = [14.9, 14.9, 0, 0] 
+                         
                         return distances
     
     
