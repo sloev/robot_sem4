@@ -173,7 +173,7 @@ class PidTuner():
 
     def makeChoice(self,walls):
         print(str(walls))
-        if(walls==[1,1,1]):
+        if(walls[0]==1 & walls[1]==1 & walls[2]==1):
             return 0
         elif(walls[self.right]==0):
             return 4

@@ -21,10 +21,10 @@ class WallsChecker():
         self.lastLastWalls=self.lastWalls
         self.lastWalls=self.walls
         
-        self.walls=[1,1,1]
-        if(sample[self.left]>self.max):
+        self.walls=[1,1,1, sample[3]]
+        if(sample[3]==1):
             self.walls[self.left]=0
-        if(sample[self.right]>self.max):
+        if(sample[3]==2):
             self.walls[self.right]=0
         if(sample[self.front]<self.setpoint):
             self.walls[self.front]=0

@@ -44,7 +44,7 @@ Vin7                                =   0x0E
 Vin8                                =   0x0F
 multiChannels                       =   0x07
 
-lastSamples = [14.9, 14.9, 0]
+lastSamples = [14.9, 14.9, 0, 0]
 
 
 class IR_Sensors_Controller():
@@ -166,21 +166,27 @@ class IR_Sensors_Controller():
                         print 'GAP'
                         value = 14.9
                         distances[j] += value
+                        
+                        if(j == 0):
+                            distances[len(channels)+1] = 1
+                        if(j == 1):
+                            distances[len(channels)+1] = 2 
+                        
                         lastSamples[j] = value
+                    
                     else:
                         print 'OK'
                         distances[j] += value
                         lastSamples[j] = value
                 else:
-                    print 'Front sensor'
+            
                     distances[j] += value
-                    
-                        
-                print 'lastSample = ' + str(lastSamples)
-                print 'newSample = ' + str(value)
+                    lastSamples[j] = value
+
                       
                 if(amount-i==1):
                     distances[j]=(int(distances[j]/amount))
+                    print distances
         self.logger.info("sampleAverage/"+str(distances))   
         return distances
     
