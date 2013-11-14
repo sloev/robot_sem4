@@ -162,7 +162,7 @@ class IR_Sensors_Controller():
                 value = self.lookupCm(reading)
                 
                 if(j == 0 or j == 1):
-                    if(value > lastSamples[j]+4):
+                    if(value > lastSamples[j]+3):
                         print 'GAP'
                         value = 14.9
                         distances[j] += value
