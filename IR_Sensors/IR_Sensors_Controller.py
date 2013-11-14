@@ -161,7 +161,7 @@ class IR_Sensors_Controller():
             for j in range(len(distances)-1):
                 reading = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))
                 value = self.lookupCm(reading)
-                print value
+                
                 
                 if(j == 0 or j == 1):
                     if(value > lastSamples[j]+3):
