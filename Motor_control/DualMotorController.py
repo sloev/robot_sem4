@@ -51,7 +51,7 @@ class DualMotorController:
                 self.motorRight.setMotorParam(rightDir, rightMaxVel)
                 break
             except IOError:
-                pass
+                print 'Error in setMotorParams'
         
     
     def getFullStatus1(self):
@@ -61,7 +61,7 @@ class DualMotorController:
                 var=[self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
                 break
             except IOError:
-                pass
+                print 'Error in GFS1'
         return var
     
     def getFullStatus2(self):
@@ -117,7 +117,7 @@ class DualMotorController:
                 self.motorRight.setPosition(positionRight)
                 break
             except IOError:
-                pass
+                print 'Error in setPosition'
         
 
         
