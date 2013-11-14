@@ -79,12 +79,7 @@ class TurnThread():
             time.sleep(0.1)
    
         print("Driving out to turn")
-        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-        self.dual_motors.setPosition(3600, 3600)
-        
-        while(self.dual_motors.isBusy()):
-            self.logger.info("turning")
-            time.sleep(0.1)
+        self.initialize90Turn()
 
         print "Turning 90 NOW"
         self.dual_motors.turn90(direction,2)
@@ -99,6 +94,14 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
             time.sleep(0.1)
+            
+    def initialize90Turn(self):
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.dual_motors.setPosition(32768, 32768)
+        while(self.irsensors.multiChannelReadCm(0x0A, 0x20) > 9):
+            time.sleep(0.1)
+        
+        
        
         
 def main():
