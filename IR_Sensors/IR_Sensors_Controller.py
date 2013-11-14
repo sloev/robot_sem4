@@ -158,41 +158,51 @@ class IR_Sensors_Controller():
         distances = [0 for i in range(len(channels)+1)]
 
         global lastSamples
-        for i in range(amount):
-            for j in range(len(distances)-1):
-                reading = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))
-                value = self.lookupCm(reading)
+        lastSamples[0] = self.extractRawDistance(self.readSensorBlock(channels[0], ConversionResultReg))
+        lastSamples[1] = self.extractRawDistance(self.readSensorBlock(channels[1], ConversionResultReg))
+        
+        if(lastSamples[0] > 40):
+            return lastSamples[14.9, 14.9, 1, 1]
+        elif(lastSamples[1] > 40):
+            return lastSamples[14.9, 14.9, 1, 2]
+        
+        else:
+        
+            for i in range(amount):
+                for j in range(len(distances)-1):
+                    reading = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))
+                    value = self.lookupCm(reading)
                 
                 
-                if(j == 0 or j == 1):
-                    if(value > lastSamples[j]+5):
-                        print 'GAP'
-                        value = 14.9
-                        distances[j] += value
+                    if(j == 0 or j == 1):
+                        if(value > lastSamples[j]+5):
+                            print 'GAP'
+                            value = 14.9
+                            distances[j] += value
                         
-                        if(j == 0):
-                            distances[3] = 1
-                        if(j == 1):
-                            distances[3] = 2 
+                            if(j == 0):
+                                distances[3] = 1
+                            if(j == 1):
+                                distances[3] = 2 
                         
-                        lastSamples[j] = value
+                                lastSamples[j] = value
                     
+                        else:
+                            print 'OK'
+                            distances[j] += value
+                            lastSamples[j] = value
                     else:
-                        print 'OK'
+            
                         distances[j] += value
                         lastSamples[j] = value
-                else:
-            
-                    distances[j] += value
-                    lastSamples[j] = value
 
                       
-                if(amount-i==1):
-                    distances[j]=(distances[j]/amount)
+                    if(amount-i==1):
+                        distances[j]=(distances[j]/amount)
                     
-        self.logger.info("sampleAverage/"+str(distances))  
-        lastSamples = [14.9, 14.9, 0, 0] 
-        return distances
+                        self.logger.info("sampleAverage/"+str(distances))  
+                        lastSamples = [14.9, 14.9, 0, 0] 
+                        return distances
     
     
     '''
