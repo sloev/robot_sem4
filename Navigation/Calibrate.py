@@ -80,7 +80,7 @@ class Calibrate():
             self.motors.setMotorParams(0, 0, 1, 1)
             self.motors.setPosition(32768, 32768)
             lastSample = sample
-            sample = self.sensors.multiChannelReadCm(channels, 5)
+            sample = self.sensors.multiChannelReadCm(channels, 15)
             print sample
         
         self.motors.hardStop()
