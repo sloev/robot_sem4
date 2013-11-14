@@ -191,7 +191,7 @@ class IR_Sensors_Controller():
                     distances[j]=(distances[j]/amount)
                     
         self.logger.info("sampleAverage/"+str(distances))  
-        lastSamples = [0, 0, 0, 0] 
+        lastSamples = [14.9, 14.9, 0, 0] 
         return distances
     
     
