@@ -77,12 +77,11 @@ class Calibrate():
         print sample
         
         while(self.checkSample(sample, lastSample)):
-            lastSample = sample
             self.motors.setMotorParams(0, 0, 1, 1)
             self.motors.setPosition(32768, 32768)
+            lastSample = sample
             sample = self.sensors.multiChannelReadCm(channels, 5)
             print sample
-            lastSample = sample
         
         self.motors.hardStop()
         print 'Done calibrating start of turn'
