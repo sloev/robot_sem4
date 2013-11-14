@@ -159,7 +159,7 @@ class IR_Sensors_Controller():
         for i in range(amount):
             for j in range(len(distances)):
                 reading = self.readSensorBlock(channels[j], ConversionResultReg)
-
+                print reading
                 if((j == 0 or 1) and (reading > lastSamples[j]+4)):
                     reading = 14.9
                     distances[j] += reading
