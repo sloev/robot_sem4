@@ -159,24 +159,28 @@ class IR_Sensors_Controller():
         for i in range(amount):
             for j in range(len(distances)):
                 reading = self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg))
+                value = self.lookupCm(reading)
+                
                 if(j == 0 or j == 1):
-                    if(reading > lastSamples[j]+4):
-                        reading = 700
-                        distances[j] += reading
-                        lastSamples[j] = reading
+                    if(value > lastSamples[j]+4):
+                        print 'GAP'
+                        value = 14.9
+                        distances[j] += value
+                        lastSamples[j] = value
                     else:
-                        print 'In ELSE'
-                        distances[j] += reading
-                        lastSamples[j] = reading
+                        print 'OK'
+                        distances[j] += value
+                        lastSamples[j] = value
                 else:
-                    distances[j] += reading
+                    print 'Front sensor'
+                    distances[j] += value
                     
                         
                 print 'lastSample = ' + str(lastSamples)
-                print 'newSample = ' + str(reading)
+                print 'newSample = ' + str(value)
                       
                 if(amount-i==1):
-                    distances[j]=self.lookupCm(int(distances[j]/amount))
+                    distances[j]=(int(distances[j]/amount))
         self.logger.info("sampleAverage/"+str(distances))   
         return distances
     
