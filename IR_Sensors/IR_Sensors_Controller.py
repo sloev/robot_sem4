@@ -159,7 +159,10 @@ class IR_Sensors_Controller():
 
                 if((j == 0 or 1) and reading > self.lastSamples[j]+4):
                     reading = 14.9
-                distances[j] += self.extractRawDistance(reading)
+                    distances[j] += reading
+                else:
+                    distances[j] += self.extractRawDistance(reading)
+                    
                 self.lastSamples = reading
                 print 'lastSample = ' + str(self.lastSamples)
                 print 'newSample = ' + str(reading)
