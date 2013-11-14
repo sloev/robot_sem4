@@ -158,8 +158,8 @@ class IR_Sensors_Controller():
         distances = [0 for i in range(len(channels)+1)]
 
         global lastSamples
-        lastSamples[0] = self.extractRawDistance(self.readSensorBlock(channels[0], ConversionResultReg))
-        lastSamples[1] = self.extractRawDistance(self.readSensorBlock(channels[1], ConversionResultReg))
+        lastSamples[0] = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[0], ConversionResultReg)))
+        lastSamples[1] = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[1], ConversionResultReg)))
         print lastSamples
         
         if(lastSamples[0] > 40):
