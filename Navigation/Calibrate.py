@@ -51,7 +51,7 @@ class Calibrate():
         self.motors.hardStop()
         self.motors.getFullStatus1()
         self.motors.setOtpParam()
-        self.motors.setMotorParams(self.left, self.right, 2, 2)
+        self.motors.setMotorParams(0, 1, 1, 1)
     
     def __call__(self, walls):
         channels = self.checkTurnConditions(walls)
