@@ -4,6 +4,20 @@ Created on 14/11/2013
 @author: Daniel Machon
 '''
 
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+This module is used to calibrate the robot while making a turn.       '
+It's a two step calibration: one when initializing a turn, and one    '     
+when a 90 turn around its own axis has been made.                     '
+                                                                      '
+        A successfull calibration will result in the robot facing     '
+        parallel with the side wall it wants to move along when       '
+        entering a turn.                                              '
+        If no side walls are available when ending a turn, a          '    
+        succesfull turn is when the robot is creating a 90 degree     ' 
+        angle between its center point and the back wall.             '
+                                                                      '
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 
 '''
 Definitions
