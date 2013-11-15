@@ -52,6 +52,16 @@ class DualMotorController:
                 break
             except IOError:
                 print 'Error in setMotorParams'
+                
+                
+    def setAccelerations(self, leftDir, rightDir, acc):
+        while True:
+            try:
+                self.motorLeft.setAcceleration(leftDir, acc)
+                self.motorRight.setAcceleration(rightDir, acc)
+                break
+            except IOError:
+                print 'Error in setAcceleration'
         
     
     def getFullStatus1(self):
