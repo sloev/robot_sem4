@@ -9,7 +9,7 @@ class Mapping():
     '''
     classdocs
     '''
-    stepsPrCell=5800
+    stepsPrCell=6018
 
     def __init__(self):
         '''
