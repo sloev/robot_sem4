@@ -25,16 +25,10 @@ class MazeView(QtGui.QWidget):
             self.height=self.modelHeight * self.boxsize + 40
             self.setFixedSize(self.width, self.height)
             
-            pathButton = QtGui.QPushButton('findPath', self)
-            pathButton.clicked.connect(self.findPath)
-            pathButton.resize(pathButton.sizeHint())
-            pathButton.move(0, 0)    
-            
-            self.modeButton = QtGui.QPushButton('sel.Source', self)
+            self.modeButton = QtGui.QPushButton('select and make path', self)
             self.modeButton.clicked.connect(self.modeChange)
             self.modeButton.resize(self.modeButton.sizeHint())
-            self.modeButton.move(80, 0)    
-            
+            self.modeButton.move(0, 0)    
         
     def paintEvent(self, event):
         qp = QtGui.QPainter()
@@ -72,15 +66,14 @@ class MazeView(QtGui.QWidget):
         
     def mouseReleaseEvent(self, event):
         if self.mode==1:
+            self.path=None
             self.source=self.cordToCord([event.x(),event.y()])
-            self.modeButton.setText("sel.Target")
-            self.modeButton.resize(self.modeButton.sizeHint())
             self.mode=2
         elif self.mode==2:
             self.target=self.cordToCord([event.x(),event.y()])
-            self.modeButton.setText("sel.Source")
-            self.modeButton.resize(self.modeButton.sizeHint())
+            self.modeButton.setEnabled(True)
             self.mode=0
+            self.findPath()
         print("source="+str(self.source)+"target="+str(self.target))   
         self.repaint()
           
@@ -102,9 +95,10 @@ class MazeView(QtGui.QWidget):
         return value
     
     def modeChange(self):
+        self.modeButton.setEnabled(False)
         self.mode=1
         
-    def findPath(self,event):
+    def findPath(self):
         astar=Astar(self.mazeModel)
         path=astar.search(self.source,self.target)
         path.reverse()

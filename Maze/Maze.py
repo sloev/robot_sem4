@@ -33,7 +33,8 @@ class Maze():
         return len(self.table[0])
     
     def get(self,x,y):
-        return self.table[x][y]
+        value=self.table.get(x,None).get(y,None)
+        return value
     
     def getDict(self):
         return self.table
