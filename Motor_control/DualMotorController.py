@@ -133,8 +133,15 @@ class DualMotorController:
                 print 'Error in setPosition'
                 
         return [positionLeft, positionRight]
-        
-
+    
+    def resetPosition(self):
+        while True:
+            try:
+                self.motorLeft.resetPosition()
+                self.motorRight.resetPosition()
+                break
+            except IOError:
+                print 'Error in resetPosition'
         
     def getOfflinePosition(self):
         return [self.positionLeft,self.positionRight]

@@ -74,6 +74,7 @@ class PidTuner():
         self.dual_motors.getFullStatus1()
         self.dual_motors.setOtpParam()
         self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+        self.dual_motors.resetPosition()
         #self.dual_motors.runInit()
         time.sleep(2)
         
