@@ -27,7 +27,7 @@ class Navigator():
         self.stepsRight = 0
         
     def _average(self, stepsLeft, stepsRight):
-        return stepsLeft / stepsRight
+        return (stepsLeft + stepsRight) / 2
         
         
     def getSteps(self):
