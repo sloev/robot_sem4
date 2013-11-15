@@ -10,6 +10,7 @@ from Pid import Pid
 from WallsChecker import WallsChecker
 from TurnThread import TurnThread
 from threading import Thread
+import Navigator
 import time
 import sys
 import select
@@ -84,6 +85,9 @@ class PidTuner():
         
         'turnThread'
         self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
+        
+        'Navigator'
+        self.navigator=Navigator()
         
         'load gainfactors'
         gainfactors=self.pid.getGainFactors()
@@ -162,7 +166,7 @@ class PidTuner():
 
             choice=self.makeChoice(walls)
             if choice==0:
-                self.dual_motors.setPosition(32767, 32767)
+                self.navigator(self.dual_motors.setPosition(32767, 32767))
                 self.pid.doPid(sample)
             else:
                 self.turnThread.checkForTurn(choice)
