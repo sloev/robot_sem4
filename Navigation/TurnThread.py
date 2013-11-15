@@ -57,9 +57,9 @@ class TurnThread():
 
         self.logger.info("180")
         self.dual_motors.softStop()
-        time.sleep(0.3)
+        time.sleep(0.2)
         self.dual_motors.turn180(2)
-        time.sleep(0.5)
+        time.sleep(0.2)
         pass
     
     def goStraight(self):
@@ -77,7 +77,7 @@ class TurnThread():
         print("Driving out to turn")
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition(3500, 3600)
+        self.dual_motors.setPosition(3600, 3600)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
@@ -92,7 +92,7 @@ class TurnThread():
         print "Driving out of turn"   
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition(3550, 3650)
+        self.dual_motors.setPosition(3650, 3650)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
