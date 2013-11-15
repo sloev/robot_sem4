@@ -57,10 +57,9 @@ class TurnThread():
 
         self.logger.info("180")
         self.dual_motors.softStop()
-        time.sleep(0.2)
-        self.dual_motors.turn180(2)
-        time.sleep(0.2)
-        pass
+        self.dual_motors.turn180(2) 
+        while(self.dual_motors.isBusy()):
+            time.sleep(0.1)
     
     def goStraight(self):
         self.logger.info("straight")
