@@ -59,7 +59,7 @@ class TurnThread():
         self.dual_motors.softStop()
         time.sleep(0.3)
         self.dual_motors.turn180(2)
-        time.sleep(1.6)
+        time.sleep(0.5)
     
         time.sleep(0.5)
         pass
@@ -79,7 +79,7 @@ class TurnThread():
         print("Driving out to turn")
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition(3600, 3600)
+        self.dual_motors.setPosition(3600, 3580)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
@@ -94,7 +94,7 @@ class TurnThread():
         print "Driving out of turn"   
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition(3650, 3650)
+        self.dual_motors.setPosition(3650, 3630)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
