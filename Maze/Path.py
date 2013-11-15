@@ -10,27 +10,25 @@ class Path(object):
     '''
 
 
-    def __init__(self):
+    def __init__(self,path=[]):
         '''
         Constructor
         '''
-        self.path=[]
-        self.cost=0
+        self.path=path
+        self.path.reverse()
+        self.cost=self.calculateCost()
         
-    def append(self,node):
-        
-        self.cost+=node.g
-        self.path.append(node)
+    def calculateCost(self):       
+        lastNode=self.path[len(self.path)-1]
+        cost=lastNode.g
+        return cost
 
-    def reverse(self):
-        self.path=self.path[::-1]
-        
     def __str__(self):
         string="[\tpath\t]\n"
         string+="cost=%d" % self.cost+"\n"
-        cost=0
         for a in self.path:
-            string+=str(a)+"\tcost until now =\t"+str(a.g)+"\n"
+            string+=str(a)+"\tCcost until now =\t"+str(a.g)+"\t"
+            string+=str(a)+"\tHcost until now =\t"+str(a.h)+"\n"
         string+="overallcost =\t"+str(self.path[len(self.path)-1].g)
         string+="\n[\tpath\t]\n"
         return string

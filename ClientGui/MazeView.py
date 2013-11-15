@@ -101,13 +101,10 @@ class MazeView(QtGui.QWidget):
     def findPath(self):
         astar=Astar(self.mazeModel)
         path=astar.search(self.source,self.target)
-        path.reverse()
-        
         print"made astar"
-        if path==None:
+        if path ==None:
             print "no path"
         else:
             print path
             self.path=path
         self.repaint()
-   

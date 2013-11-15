@@ -11,10 +11,11 @@ class Mapping():
     '''
     stepsPrCell=6018
 
-    def __init__(self):
+    def __init__(self,path=None):
         '''
         Constructor
         '''
+
         self.maze=Maze()
         self.globalCompass=[0,1,2,3]#north/east/south/west
         self.direction=self.globalCompass[2]#south
@@ -25,7 +26,10 @@ class Mapping():
         self.currentPosition=[0,0]#x,y
         self.lastPosition=[0,0]
         self.funcDict={0:self.subY, 1:self.addX, 2:self.addY, 3:self.subX}
-        self.stack=[]
+        if path!=None:
+            self.stack=self.pathToStack()
+        else:
+            self.stack=[]
         '''
         table:
         0,0 -------------- x,0
@@ -37,7 +41,9 @@ class Mapping():
         |
         0,y
         '''
-        
+    def pathToStack(self):
+        pass
+    
     def stepsToCells(self,steps):
         return int(steps/self.stepsPrCell)
     

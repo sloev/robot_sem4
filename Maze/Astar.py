@@ -2,6 +2,8 @@
 Created on Nov 14, 2013
 
 @author: johannes
+http://www.python.org/doc/essays/graphs.html
+http://stackoverflow.com/questions/4159331/python-speed-up-an-a-star-pathfinding-algorithm
 '''
 from GraphContainer import GraphContainer
 from Path import Path
@@ -15,9 +17,9 @@ class Astar():
         '''
         Constructor
         '''
-        cornerExtraCost=0.5
-        straightCost=2
-        graphContainer=GraphContainer(mazeModel,cornerExtraCost,straightCost)
+        cornerExtraCost=1.5
+        self.straightCost=2
+        graphContainer=GraphContainer(mazeModel,cornerExtraCost,self.straightCost)
         self.nodes=graphContainer.nodes
         self.graph=graphContainer.graph
         print "made maze"
@@ -25,41 +27,42 @@ class Astar():
     def heuristic(self, currentNode, endNode):
         #manhattan heuristic
         #corner = abs(self.x - otherNode.x) != 0 or abs(self.y - otherNode.y) != 0
-        hx=abs(currentNode.x-endNode.x)
-        hy=abs(currentNode.y-endNode.y)
+        hx=abs(currentNode.x-endNode.x)*(self.straightCost*2)
+        hy=abs(currentNode.y-endNode.y)*(self.straightCost*2)
         return hx+hy
 
-    def search(self, sourceNode,targetNode):
+    def retracePath(self,c):
+        def parentgen(c):
+            while c:
+                yield c
+                c = c.parent
+        result = [element for element in parentgen(c)]
+        path=Path(result)
+        return path
+    
+    def search(self,sourceNode,targetNode):
         start=self.nodes[sourceNode[0]][sourceNode[1]]
         end=self.nodes[targetNode[0]][targetNode[1]]
-        
-        openset = set()
-        closedset = set()
-        current = start
-        openset.add(current)
-        while openset:
-            current = min(openset, key=lambda o:o.g + o.h)
+        start.h=self.heuristic(start, end)
+
+        openList = set()
+        closedList = set()
+        openList.add(start)
+        while openList:
+            current = sorted(openList, key=lambda inst:inst.g)[0]
             if current == end:
-                path = Path()
-                while current.parent:
-                    path.append(current)
-                    current = current.parent
-                path.append(current)
-                return path
-            openset.remove(current)
-            closedset.add(current)
+                return self.retracePath(current)
+            openList.remove(current)
+            closedList.add(current)
             for node in self.graph[current]:
-                if node in closedset:
-                    continue
-                if node in openset:
-                    new_g = current.g + current.moveCost(node,current.parent)
-                    if node.g > new_g:
-                        node.g = new_g
+                if node not in closedList:
+                    newG = current.g + current.moveCost(node,current.parent)
+                    if node in openList and newG >= node.g:
+                        continue
+                    if node not in openList or newG < node.g:             
+                        node.g=newG
+                        node.g = current.g + current.moveCost(node,current.parent)
+                        node.h = self.heuristic(node, end)#(abs(targetNode.x-tile.x)+abs(targetNode.y-tile.y))*10 
+                        openList.add(node)
                         node.parent = current
-                else:
-                    node.g = current.g + current.moveCost(node,current.parent)
-                    node.h = self.heuristic(node, end)
-                    node.parent = current
-                    openset.add(node)
-        return None
- 
+        return Path()
