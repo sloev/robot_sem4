@@ -118,12 +118,14 @@ class DualMotorController:
         positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
         positionRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
         
+        print positionLeft
+        print positionRight
+        
             
         
         positionLeft+=incLeftPos
         positionRight+=incRightPos
-        print positionLeft
-        print positionRight
+        
         while True:
             try:
                 self.motorLeft.setPosition(positionLeft)
