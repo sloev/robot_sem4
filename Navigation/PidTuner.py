@@ -148,6 +148,7 @@ class PidTuner():
     def doPid(self):
         try:
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+            self.dual_motors.setAccelerations(self.left, self.right, 5)
 
             #self.printGains()
             'start sampling section'
