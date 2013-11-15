@@ -6,11 +6,11 @@ Created on Oct 15, 2013
 import logging
 from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
 from Motor_control.DualMotorController import DualMotorController
+from Navigation.StepCounter import StepCounter
 from Pid import Pid
 from WallsChecker import WallsChecker
 from TurnThread import TurnThread
 from threading import Thread
-from Navigation.Navigator import Navigator
 import time
 import sys
 import select
@@ -87,8 +87,8 @@ class PidTuner():
         'turnThread'
         self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
         
-        'Navigator'
-        self.navigator=Navigator()
+        'StepCounter'
+        self.stepCounter = StepCounter()
         
         'load gainfactors'
         gainfactors=self.pid.getGainFactors()
@@ -167,7 +167,7 @@ class PidTuner():
 
             choice=self.makeChoice(walls)
             if choice==0:
-                self.navigator(self.dual_motors.setPosition(32767, 32767))
+                self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 self.pid.doPid(sample)
             else:
                 self.turnThread.checkForTurn(choice)
