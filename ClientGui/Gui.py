@@ -1,7 +1,7 @@
 '''
 Created on Nov 11, 2013
 
-@author: johannes
+@author: johannesbent
 '''
 import sys
 from PyQt4 import QtGui
