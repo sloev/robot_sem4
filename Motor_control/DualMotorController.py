@@ -55,6 +55,7 @@ class DualMotorController:
                 
                 
     def setAccelerations(self, leftDir, rightDir, acc):
+        self.logger.info("SetAcceleration")
         while True:
             try:
                 self.motorLeft.setAcceleration(leftDir, acc)
