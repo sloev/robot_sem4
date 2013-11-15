@@ -53,6 +53,7 @@ class TurnThread():
     def turn180(self):
         print("turning180")
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+        self.dual_motors.setAccelerations(self.left, self.right, 1)
 
         self.logger.info("180")
         self.dual_motors.softStop()
