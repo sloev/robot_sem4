@@ -70,7 +70,7 @@ class Motor_I2C:
            Byte 6: 7-0=Secure position of the stepper motor
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
-    def setMotorParam(self,direction,maxVelocity, acc):          
+    def setMotorParam(self,direction,maxVelocity):          
         byte4=maxVelocity << 4 | minVelocity<<0 
         byte5=0x85 | direction<<4
         #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
