@@ -94,6 +94,8 @@ class Mapping():
         posibilities=self.findPossibilities(self.currentPosition)
         if not posibilities:
             choice=self.stack.pop()
+            if not choice:
+                choice=0#stop robot
         else:
             choice=self.makeChoice(posibilities)
         self.lastPosition=self.currentPosition      
