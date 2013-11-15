@@ -14,7 +14,8 @@ class Navigator():
 
 
     def __init__(self):
-        self.steps = 0
+        self.stepsLeft = 0
+        self.stepsRight = 0
         
     
     def __call__(self, steps):
