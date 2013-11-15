@@ -4,7 +4,7 @@ Created on 15/11/2013
 @author: danielmachon
 '''
 
-class Navigator:
+class Navigator():
     '''
     classdocs
     '''

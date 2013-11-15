@@ -10,7 +10,7 @@ from Pid import Pid
 from WallsChecker import WallsChecker
 from TurnThread import TurnThread
 from threading import Thread
-import Navigator
+from Navigation.Navigator import Navigator
 import time
 import sys
 import select
