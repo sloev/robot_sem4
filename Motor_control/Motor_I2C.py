@@ -70,12 +70,18 @@ class Motor_I2C:
            Byte 6: 7-0=Secure position of the stepper motor
            Byte 7: 4=Acceleration shape, 3-2=Stepmode      
         '''          
-    def setMotorParam(self,direction,maxVelocity):          
+    def setMotorParam(self,direction,maxVelocity, acc):          
         byte4=maxVelocity << 4 | minVelocity<<0 
         byte5=0x85 | direction<<4
         #byteCode = [0xFF, 0xFF, 0x32, 0x32, 0x88, 0x00, 0x08]
         byteCode = [0xFF, 0xFF, currentByte, byte4, byte5, 0x00, stepModeByte]
         self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
+        
+    def setAcceleration(self, direction, acc):
+        byte5=((0x80 & 0xF0) | direction << 4 | acc )
+        byteCode = [0xFF, 0xFF, currentByte, 0x11, byte5, 0x00, stepModeByte]
+        self.bus.write_i2c_block_data(self.devAddress, cmdSetMotorParam, byteCode)
+        
     
         '''Zap the One-Time Programmable memory'''  
     def setOTPParam(self):
