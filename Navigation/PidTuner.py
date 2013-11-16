@@ -169,6 +169,7 @@ class PidTuner():
                 self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 self.pid.doPid(sample)
                 
+                #180 turn skal også gøres på choice fra mapping da den ellers ikke bliver tegnet korrekt
             else:
                 #choice = mapping.getChoice(walls, steps)
                 self.stepCounter.resetSteps()
