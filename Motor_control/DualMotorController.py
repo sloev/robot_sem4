@@ -115,16 +115,16 @@ class DualMotorController:
         self.logger.info("setPosition"+str(incLeftPos)+","+str(incRightPos))
         fullstatus2=self.getFullStatus2()
         
-        positionLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
-        positionRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
+        actPosLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
+        actPosRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
         
-        print positionLeft
-        print positionRight
+        print actPosLeft
+        print actPosRight
         
             
         
-        positionLeft+=incLeftPos
-        positionRight+=incRightPos
+        positionLeft = actPosLeft + incLeftPos
+        positionRight = actPosRight + incRightPos
         
         while True:
             try:
@@ -134,7 +134,7 @@ class DualMotorController:
             except IOError:
                 print 'Error in setPosition'
                 
-        return [positionLeft, positionRight]
+        return [actPosLeft, actPosRight]
     
     def resetPosition(self):
         while True:
