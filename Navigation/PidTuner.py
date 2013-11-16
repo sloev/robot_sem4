@@ -159,7 +159,7 @@ class PidTuner():
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
 
-            print sample
+            #print sample
             walls=self.wallChecker.checkWalls(sample)  
             #debounce=self.wallChecker.compare()         
             'end of sampling section'
@@ -172,13 +172,15 @@ class PidTuner():
             else:
                 self.turnThread.checkForTurn(choice)
                 self.pid.reset()
+                
+            print self.stepCounter.getSteps()
 
         except IOError as e:
             
             print("error in doPid: "+str(e))
 
     def makeChoice(self,walls):
-        print(str(walls))
+        #print(str(walls))
         if(walls==[1,1,1]):
             return 0
         elif(walls[self.right]==0):

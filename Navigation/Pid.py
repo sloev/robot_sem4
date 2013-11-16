@@ -194,7 +194,6 @@ class Pid():
         value=pe+de+ie
         self.logger.info(strwheel+"/controlValueCm/"+str(value))
         value=self.convertCmToVelocity(value)
-        print value
         
         self.logger.info(strwheel+"/controlValueVelocity/"+str(value))
         
