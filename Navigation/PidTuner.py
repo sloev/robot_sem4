@@ -165,12 +165,14 @@ class PidTuner():
             'end of sampling section'
 #            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
 
-            choice=self.makeChoice(walls)
-            if choice==0:
+            if(walls==[1, 1, 1]):
                 self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 self.pid.doPid(sample)
+                
             else:
-                self.turnThread.checkForTurn(choice)
+                #choice = mapping.getChoice(walls, steps)
+                self.stepCounter.resetSteps()
+                #self.turnThread.checkForTurn(self.doChoice(choice))
                 self.pid.reset()
                 
             print self.stepCounter.getSteps()
@@ -178,19 +180,15 @@ class PidTuner():
         except IOError as e:
             
             print("error in doPid: "+str(e))
-
-    def makeChoice(self,walls):
-        #print(str(walls))
-        if(walls==[1,1,1]):
-            return 0
-        elif(walls[self.right]==0):
+            
+    def doChoice(self, choice):
+        if(choice == 1):
+            return 1
+        elif(choice == 2):
             return 4
-        elif(walls[self.left]==0):
-            return 2
-        elif(walls[self.left]==1 and walls[self.right]==1 and walls[self.front]==0):
+        elif(choice == 3):
             return 3
-        else:
-            return 0
+
         
     def stop(self):
         self.dual_motors.softStop()
