@@ -169,6 +169,7 @@ class PidTuner():
             if choice==0:
                 self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 self.pid.doPid(sample)
+                print 'DID PID!'
             else:
                 self.turnThread.checkForTurn(choice)
                 self.pid.reset()
