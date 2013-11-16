@@ -25,8 +25,8 @@ class StepCounter():
         Callable
     '''
     def __call__(self, steps):
-        self.stepsLeft = self.stepsLeft + steps[left]
-        self.stepsRight = self.stepsRight + steps[right]
+        self.stepsLeft = steps[left]
+        self.stepsRight = steps[right]
     
    
     '''
