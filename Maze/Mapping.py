@@ -14,8 +14,11 @@ class Mapping():
     def __init__(self,path=None):
         '''
         Constructor
+        mode=0 er mapping
+        mode=1 er goToPath
         '''
-
+        
+        self.mode=0#mapping
         self.maze=Maze()
         self.globalCompass=[0,1,2,3]#north/east/south/west
         self.direction=self.globalCompass[2]#south
@@ -41,7 +44,8 @@ class Mapping():
         |
         0,y
         '''
-    def pathToStack(self):
+    def receiveStack(self,stack):
+        #important see path.pathToStack()
         pass
     
     def stepsToCells(self,steps):

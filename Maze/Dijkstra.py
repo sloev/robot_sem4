@@ -6,13 +6,15 @@ Created on Nov 18, 2013
 from collections import defaultdict
 from Path import Path
 class Node():
-    def __init__(self,x,y,d):
+    def __init__(self,x,y,walls,d,dillemma):
         self.x=x
         self.y=y
+        self.walls=walls
         self.d=d
         self.prev=None
         self.visited=False
         self.cost=100000
+        self.dillemma=dillemma
         
     def costTo(self,node):
         cost=1
@@ -22,8 +24,9 @@ class Node():
         if tmp!=self.d:
             cost=cost+1
         return cost
+    
     def __str__(self):
-        string="[%d,%d,%d]"%(self.x,self.y,self.d)
+        string="[%d,%d,%d,%d]"%(self.x,self.y,self.walls,self.d)
         return string
 
 class Graph():
@@ -50,30 +53,19 @@ class Graph():
                 string=string+"]\t"
             string=string+"\n"
         return string
-    
-    def getD(self,walls):
-        if not((walls & 0b1000) >>3):#north
-            return 1
-        elif not ((walls & 0b0100) >>2):#east
-            return 1
-        elif not ((walls & 0b0010) >>1):#south
-            return 1
-        elif not (walls & 0b0001):#west
-            return 1
-        else:
-            return 0
+
     def makeWAR(self):          
         for y in range(self.mazeModel.getHeight()):
             for x in range(self.mazeModel.getWidth()):  
-                walls=self.mazeModel.get(x,y)   
-#                string=""+ bin(walls)
+                walls=self.mazeModel.get(x,y)  
+                dillemma=True
+                if walls==10 or walls==5:
+                    dillemma=False
                 for d in range(4):
                     tmp=1
                     if not (walls &(1<<(3-d))):
                         tmp=0
-                   # string = string + ","+str(tmp)
-                    #print string
-                    self.nodes[x][y][d]=Node(x,y,tmp)
+                    self.nodes[x][y][d]=Node(x,y,tmp,d,dillemma)
                     self.graph[self.nodes[x][y][d]]=[]
                 for i in range(4):
                     for j in range(4):
@@ -89,12 +81,12 @@ class Graph():
             for x in range(self.mazeModel.getWidth()):
                 #east
                 if(self.nodes[x][y][1] and self.nodes[x+1][y][3]):
-                    if(self.nodes[x][y][1].d!=1 and self.nodes[x+1][y][3].d!=1):
+                    if(self.nodes[x][y][1].walls!=1 and self.nodes[x+1][y][3].walls!=1):
                         self.graph[self.nodes[x][y][1]].append((self.nodes[x+1][y][3],self.straightCost))
                         self.graph[self.nodes[x+1][y][3]].append((self.nodes[x][y][1],self.straightCost))
                     
                 if(self.nodes[x][y][2] and self.nodes[x][y+1][0]):
-                    if(self.nodes[x][y][2].d!=1 and self.nodes[x][y+1][0].d!=1):
+                    if(self.nodes[x][y][2].walls!=1 and self.nodes[x][y+1][0].walls!=1):
                         self.graph[self.nodes[x][y][2]].append((self.nodes[x][y+1][0],self.straightCost))
                         self.graph[self.nodes[x][y+1][0]].append((self.nodes[x][y][2],self.straightCost)) 
                     

@@ -126,6 +126,7 @@ class MazeView(QtGui.QWidget):
         else:
             print"all paths the same="
             print path
+            path.pathToStack()
             self.path=path
         self.visited=pathTuple[1]
         self.repaint()
