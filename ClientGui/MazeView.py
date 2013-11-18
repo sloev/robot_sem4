@@ -6,7 +6,7 @@ Created on Nov 13, 2013
 from PyQt4 import QtGui,QtCore
 
 from Maze.Maze import Maze
-from Maze.Astar import Astar
+from Maze.Dijkstra import Dijkstra
 
 class MazeView(QtGui.QWidget):
     def __init__(self,maze=None):
@@ -109,13 +109,26 @@ class MazeView(QtGui.QWidget):
         self.mode=1
         
     def findPath(self):
-        astar=Astar(self.mazeModel)
-        pathTuple=astar.search(self.source,self.target)
-        path=pathTuple[0]
+        dijkstra=Dijkstra(self.mazeModel)
+        paths=[]
+        path=None
+        lastPath=None
+        lol="all paths the same/false at "
+        for i in range(30):
+            pathTuple=dijkstra.search(self.source,self.target)
+            path=pathTuple[0]
+            print str(i)
+            print path
+            if lastPath!=None:
+                if lastPath.__str__()!=path.__str__():
+                    lol=lol+","+str(i)
+            lastPath=path
+            paths.append(path)
         print"made astar"
         if path ==None:
             print "no path"
         else:
+            print"all paths the same="+str(lol)
             print path
             self.path=path
             self.visited=pathTuple[1]
