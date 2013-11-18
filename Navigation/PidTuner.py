@@ -171,7 +171,7 @@ class PidTuner():
                 
                 #180 turn skal også gøres på choice fra mapping da den ellers ikke bliver tegnet korrekt
             else:
-                #choice = mapping.getChoice(walls, steps)
+                #choice = mapping.getChoice(walls, stepCounter.getSteps())
                 self.stepCounter.resetSteps()
                 #self.turnThread.checkForTurn(self.doChoice(choice))
                 self.pid.reset()
