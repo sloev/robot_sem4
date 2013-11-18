@@ -103,7 +103,7 @@ class Dijkstra():
 
         self.mazeModel=mazeModel
         self.graphObj=Graph(self.mazeModel)
-        print self.graphObj
+        #print self.graphObj
         self.graph=self.graphObj.graph
         self.nodes=self.graphObj.nodes
 

@@ -13,7 +13,7 @@ class MazeView(QtGui.QWidget):
         self.target=[0,0]
         self.source=self.target
         self.path=None
-        
+        self.visited=None
         self.mode=-1
         if(maze!=None):
             self.mazeModel=maze
@@ -47,18 +47,16 @@ class MazeView(QtGui.QWidget):
                 if cell & 0b0001:
                     qp.drawLine(x*b, y*b, x*b, (y+1)*b)
         #qp.setPen(QtGui.QColor(0, 255, 255))
-        if self.path!=None:
-            
+        if self.visited!=None:
             i=0
             for n in self.visited:
                 qp.setBrush(QtGui.QColor(255-(255/len(self.visited))*i,((255/len(self.visited))*i) ,0))
                 p1=QtCore.QPointF(n.x*b+(b/2), n.y*b+(b/2))
                 qp.drawEllipse(p1,self.boxsize/8,self.boxsize/8)
                 i+=1
-            lastN=None
-            
+        lastN=None
+        if self.path!=None:
             qp.setPen(QtGui.QColor(255, 255, 0))
-            
             for n in self.path.getPath():
                 if lastN!=None:
                     x=n.x
@@ -83,8 +81,8 @@ class MazeView(QtGui.QWidget):
             self.target=self.cordToCord([event.x(),event.y()])
             self.modeButton.setEnabled(True)
             self.mode=0
+            print("source="+str(self.source)+"target="+str(self.target))   
             self.findPath()
-        print("source="+str(self.source)+"target="+str(self.target))   
         self.repaint()
           
     def cordToCord(self,cord):
@@ -110,26 +108,24 @@ class MazeView(QtGui.QWidget):
         
     def findPath(self):
         dijkstra=Dijkstra(self.mazeModel)
-        paths=[]
-        path=None
-        lastPath=None
-        lol="all paths the same/false at "
-        for i in range(30):
-            pathTuple=dijkstra.search(self.source,self.target)
-            path=pathTuple[0]
-            print str(i)
-            print path
-            if lastPath!=None:
-                if lastPath.__str__()!=path.__str__():
-                    lol=lol+","+str(i)
-            lastPath=path
-            paths.append(path)
+        pathTuple=dijkstra.search(self.source,self.target)
+        path=pathTuple[0]
+
+#         lol="all paths the same/false at "
+#         for i in range(30):
+#             path=pathTuple[0]
+#             if lastPath!=None:
+#                 if lastPath.__str__()!=path.__str__():
+#                     lol=lol+","+str(i)
+#             lastPath=path
+#             paths.append(path)
+#         print lol
         print"made astar"
         if path ==None:
             print "no path"
         else:
-            print"all paths the same="+str(lol)
+            print"all paths the same="
             print path
             self.path=path
-            self.visited=pathTuple[1]
+        self.visited=pathTuple[1]
         self.repaint()

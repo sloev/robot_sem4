@@ -15,7 +15,7 @@ class Path(object):
         Constructor
         '''
         self.path=path
-        #self.path.reverse()
+        self.path.reverse()
         self.cost=self.calculateCost()
         
     def calculateCost(self):       
