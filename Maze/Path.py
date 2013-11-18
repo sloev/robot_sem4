@@ -27,11 +27,7 @@ class Path(object):
         string="[\tpath\t]\n"
         string+="cost=%d" % self.cost+"\n"
         for a in self.path:
-            string+=str(a)+"\tGcost =\t"+str(a.g)+"\t"
-            string+=str(a)+"\tHcost =\t"+str(a.h)+"\t"
-            string+=str(a)+"\tFcost =\t"+str(a.f)+"\t"
-            string+=str(a)+"\tdirection to me =\t"+str(a.directionToMe)+"\n"
-        string+="overallcost =\t"+str(self.path[len(self.path)-1].g)
+            string+=str(a)+"\tGcost =\t"+str(a.cost)+"\t"
         string+="\n[\tpath\t]\n"
         return string
     
