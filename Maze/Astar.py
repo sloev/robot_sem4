@@ -3,6 +3,7 @@ Created on Nov 14, 2013
 
 @author: johannes
 http://www.python.org/doc/essays/graphs.html
+http://forrst.com/posts/Dijkstras_algorithm_in_Python-B4U
 http://stackoverflow.com/questions/4159331/python-speed-up-an-a-star-pathfinding-algorithm
 '''
 from GraphContainer import GraphContainer
@@ -17,19 +18,25 @@ class Astar():
         '''
         Constructor
         '''
-        cornerExtraCost=1.5
+        self.cornerExtraCost=0
         self.straightCost=2
-        graphContainer=GraphContainer(mazeModel,cornerExtraCost,self.straightCost)
+        graphContainer=GraphContainer(mazeModel,self.cornerExtraCost,self.straightCost)
         self.nodes=graphContainer.nodes
         self.graph=graphContainer.graph
+        self.gain=1
         print "made maze"
         
     def heuristic(self, currentNode, endNode):
         #manhattan heuristic
         #corner = abs(self.x - otherNode.x) != 0 or abs(self.y - otherNode.y) != 0
-        hx=abs(currentNode.x-endNode.x)*(self.straightCost*2)
-        hy=abs(currentNode.y-endNode.y)*(self.straightCost*2)
-        return hx+hy
+        hx=abs(currentNode.x-endNode.x)
+        hy=abs(currentNode.y-endNode.y)
+        value=(self.gain*self.straightCost)*(hx+hy)
+        if hx>0:
+            value+=self.cornerExtraCost*2
+        if hy>0:            
+            value+=self.cornerExtraCost*2
+        return value
 
     def retracePath(self,c):
         def parentgen(c):
@@ -47,22 +54,35 @@ class Astar():
 
         openList = set()
         closedList = set()
+        start.g=0
+        start.f=start.g+self.heuristic(start, end)
+        end.f=-1
+        
         openList.add(start)
+        visited=[]
         while openList:
-            current = sorted(openList, key=lambda inst:inst.g)[0]
+            current = sorted(openList, key=lambda inst:inst.f)[0]
+            visited.append(current)
             if current == end:
-                return self.retracePath(current)
+                return [self.retracePath(current),visited]
             openList.remove(current)
             closedList.add(current)
-            for node in self.graph[current]:
-                if node not in closedList:
-                    newG = current.g + current.moveCost(node,current.parent)
-                    if node in openList and newG >= node.g:
-                        continue
-                    if node not in openList or newG < node.g:             
-                        node.g=newG
-                        node.g = current.g + current.moveCost(node,current.parent)
-                        node.h = self.heuristic(node, end)#(abs(targetNode.x-tile.x)+abs(targetNode.y-tile.y))*10 
+            
+            for nodePair in self.graph[current]:
+                node=nodePair[0]
+                nodeDir=nodePair[1]
+                g_score = current.g + current.moveCost(node,nodeDir)
+                h_score=self.heuristic(node, end)
+                f_score = g_score + h_score
+                if node in closedList and f_score >= node.f:
+                    continue
+                if node not in openList or f_score < node.f or nodeDir==current.directionToMe or current.directionToMe==None:
+                    node.parent = current
+                    node.directionToMe=nodeDir
+                    node.g=g_score
+                    node.f=f_score
+                    node.h=h_score
+                    if node not in openList:  
                         openList.add(node)
-                        node.parent = current
-        return Path()
+        return [None,visited]
+  

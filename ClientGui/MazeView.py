@@ -46,9 +46,19 @@ class MazeView(QtGui.QWidget):
                     qp.drawLine(x*b, y*b, (x+1)*b, y*b)
                 if cell & 0b0001:
                     qp.drawLine(x*b, y*b, x*b, (y+1)*b)
-        qp.setPen(QtGui.QColor(255, 255, 0))
+        #qp.setPen(QtGui.QColor(0, 255, 255))
         if self.path!=None:
+            
+            i=0
+            for n in self.visited:
+                qp.setBrush(QtGui.QColor(255-(255/len(self.visited))*i,((255/len(self.visited))*i) ,0))
+                p1=QtCore.QPointF(n.x*b+(b/2), n.y*b+(b/2))
+                qp.drawEllipse(p1,self.boxsize/8,self.boxsize/8)
+                i+=1
             lastN=None
+            
+            qp.setPen(QtGui.QColor(255, 255, 0))
+            
             for n in self.path.getPath():
                 if lastN!=None:
                     x=n.x
@@ -100,11 +110,13 @@ class MazeView(QtGui.QWidget):
         
     def findPath(self):
         astar=Astar(self.mazeModel)
-        path=astar.search(self.source,self.target)
+        pathTuple=astar.search(self.source,self.target)
+        path=pathTuple[0]
         print"made astar"
         if path ==None:
             print "no path"
         else:
             print path
             self.path=path
+            self.visited=pathTuple[1]
         self.repaint()
