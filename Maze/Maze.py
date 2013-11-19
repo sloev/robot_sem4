@@ -11,7 +11,7 @@ class Maze():
     classdocs
     '''
     def __init__(self,table=None):
-        self.table=defaultdict(dict)
+        self.table=defaultdict(lambda:defaultdict(int))
         if table!=None:
             xRange=len(table)
             yRange=len(table[str(0)])
@@ -33,8 +33,9 @@ class Maze():
         return len(self.table[0])
     
     def get(self,x,y):
-        value=self.table.get(x,None).get(y,None)
-        return value
+        if self.table[x][y]:
+            return self.table[x][y]
+        return 0
     
     def getDict(self):
         return self.table
