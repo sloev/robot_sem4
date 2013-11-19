@@ -288,7 +288,7 @@ def main():
     mapping.getChoice(steps, walls)#[2,2]
     
     steps=0
-    walls=[1,0,1]
+    walls=[1,1,1]
     mapping.getChoice(steps, walls)#[1,2]
         
     maze=mapping.getMaze()
