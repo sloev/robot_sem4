@@ -46,7 +46,8 @@ class Mapping():
         |
         |
         |
-        |
+        |to posibilities!!!!!
+        en til lolFUCK og en til table
         |
         0,y
         '''
@@ -95,25 +96,37 @@ class Mapping():
     def getChoice(self,steps,walls):
         cells=self.stepsToCells(steps)
         func=self.funcDict[self.direction]
-        globalWalls=self.wallsToInt(walls)
+        globalWalls=self.wallsToInt([1,1,0])            
         for i in range(cells):
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
             self.currentPosition=func(self.currentPosition)
-        posibilities=self.findPossibilities(self.currentPosition,globalWalls)
-
-        if not posibilities:
-            if self.stack:
-                choice=self.stack.pop()
-            else:
-                return 0#stop robot
-        else:
-            choice=self.makeChoice(posibilities)
+       
+        globalWalls=self.wallsToInt(walls)            
+        tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
+        if not tmp:
+            self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
             
-        self.direction=choice[0]
-        self.stack.append(choice)   
-        choice=choice[2]             
+        missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
+        unexploredCells=self.findUnexploredCells(self.currentPosition,missingWalls)
+        returnChoice=0
+        if not unexploredCells and not self.stack:
+            return 0
+        if len(missingWalls)>1 and unexploredCells:
+            choice=self.makeChoice(unexploredCells)
+            self.stack.append(choice)
+            returnChoice=choice[2]
+            self.direction=choice[0]
+        elif len(missingWalls)>1 and not unexploredCells:
+            choice=self.stack.pop()
+            returnChoice=choice[1]
+            self.direction=choice[0]
+        elif len(missingWalls)<2 and self.stack:
+            choice=self.makeChoice(missingWalls)
+            self.stack.append(choice)
+            returnChoice=3      
+            self.direction=choice[0]
 
         print (
                str(self.currentPosition)
@@ -121,58 +134,28 @@ class Mapping():
                +"\twalls="+str(walls)+
                "  \tglobalWalls="
                +str(globalWalls)
-               +"\tposibilities="+str(posibilities)
-               +"   \tchoice="+str(choice)
+               +"\tm-walls="+str(missingWalls)+"    "
+               +"\tchoice="+str(choice)
+               +"  \tR-Choice="+str(returnChoice)
                )
         self.lastPosition=self.currentPosition
-        return choice
-
+        return returnChoice
         
-#         x=self.lastPosition[0]
-#         y=self.lastPosition[1]
-#         
-#         func=self.funcDict[self.direction]
-#         dx=x
-#         dy=y
-#         for i in range(cells):
-#             tmp=func(dx,dy)
-#             dx=tmp[0]
-#             dy=tmp[1]
-#         self.currentPosition=[dx,dy]
-# 
-#         
-#         dX=abs(self.currentPosition[0]-self.lastPosition[0])
-#         dY=abs(self.currentPosition[1]-self.lastPosition[1])
-#         dI=dY if dY!=0 else dX
-#         
-# 
-#         walls=self.wallsToInt(walls)
-#         for i in range(dI):
-#             self.maze.set(x, y, walls)
-#             tmp=func(x,y)
-#             x=tmp[0]
-#             y=tmp[1]
-#         posibilities=self.findPossibilities(self.currentPosition)
-#         if not posibilities:
-#             choice=self.stack.pop()
-#             if not choice:
-#                 choice=0#stop robot
-#         else:
-#             choice=self.makeChoice(posibilities)
-#         self.lastPosition=self.currentPosition      
-#         self.direction=choice[0]
-#         self.stack.append(choice[1])
-#         return choice[2]
-        
-    def findPossibilities(self,pos,globalWalls):
+    def findMissingWalls(self,pos,globalWalls):
         posibilities=[]
         for d in range(4):
             if not globalWalls[d]:
-                xy=self.funcDict[d](pos)
-                if xy[0]>=0 and xy[1]>=0:
-                    tmp=self.maze.get(xy[0], xy[1])
-                    if not tmp:
-                        posibilities.append(d)
+                posibilities.append(d)
+        return posibilities
+    
+    def findUnexploredCells(self,pos,missingWalls):
+        posibilities=[]
+        for d in missingWalls:
+            xy=self.funcDict[d](pos)
+            if xy[0]>=0 and xy[1]>=0:
+                tmp=self.maze.get(xy[0], xy[1])
+                if not tmp:
+                    posibilities.append(d)
         return posibilities
         
     def makeChoice(self,posibilities):
@@ -185,16 +168,18 @@ class Mapping():
         
         back=self.direction-2
         if back < 0:
-            back2=3+back
-            print "direction="+str(self.direction)+"back before="+str(back)+" back after"+str(back2)
-            back=back2
+            back+=4
+            #print "direction="+str(self.direction)+"back before="+str(back)+" back after"+str(back2)
         if self.direction in posibilities:
             return [self.direction,1,1] # som i [til brug, til stack, til turnthread]
         elif right in posibilities:
             return [right,4,2]
         elif left in posibilities:
             return [left,2,4]
-        return [back,1,3]
+        lol=[back,1,3]
+        #self.stack.append(lol)
+        #self.stack.append(lol)
+        return lol
 
     def addX(self,xy):
         return [xy[0]+1,xy[1]]
@@ -224,27 +209,27 @@ def main():
     mapping.getChoice(steps, walls)#[0,1]
     steps=0
     
-    steps=cell
+    steps=cell*2
     walls=[0,1,1]
     mapping.getChoice(steps, walls)#[0,3]
     
-    steps=cell
+    steps=cell*2
     walls=[0,1,1]
     mapping.getChoice(steps, walls)#[2,3]
     
-    steps=0
+    steps=cell
     walls=[0,1,0]
     mapping.getChoice(steps, walls)#[2,2]
     
-    steps=0
+    steps=cell
     walls=[0,1,0]
     mapping.getChoice(steps, walls)#[2,1]
     
-    steps=0
+    steps=cell
     walls=[0,0,1]
     mapping.getChoice(steps, walls)#[2,0]
     
-    steps=0
+    steps=cell
     walls=[1,0,1]
     mapping.getChoice(steps, walls)#[3,0]
     
@@ -256,35 +241,35 @@ def main():
     walls=[0,1,1]
     mapping.getChoice(steps, walls)#[3,0]
     
-    steps=0
+    steps=cell
     walls=[0,1,0]
     mapping.getChoice(steps, walls)#[2,0]
     
-    steps=0
+    steps=cell
     walls=[1,1,1]
     mapping.getChoice(steps, walls)#[1,0]
     
-    steps=0
+    steps=cell
     walls=[1,0,0]
     mapping.getChoice(steps, walls)#[2,0]
     
-    steps=0
+    steps=cell
     walls=[1,0,0]
     mapping.getChoice(steps, walls)#[2,1]
 
-    steps=cell
+    steps=cell*3
     walls=[0,0,1]
     mapping.getChoice(steps, walls)#[0,1]
     
-    steps=cell
+    steps=cell*2
     walls=[0,0,1]
     mapping.getChoice(steps, walls)#[2,1]
     
-    steps=0
+    steps=cell
     walls=[1,0,0]
     mapping.getChoice(steps, walls)#[2,2]
     
-    steps=0
+    steps=cell
     walls=[1,0,1]
     mapping.getChoice(steps, walls)#[1,2]
         
