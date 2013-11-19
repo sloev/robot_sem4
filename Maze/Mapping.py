@@ -130,12 +130,14 @@ class Mapping():
             if unexploredCells:
                 choice=self.makeChoice(unexploredCells)
                 self.stack.append(choice)
+                returnChoice=choice[3]
                 self.direction=choice[1]
-            else:
+            elif self.stack:
                 choice=self.stack.pop()
+                returnChoice=choice[2]
                 self.direction=choice[0]
-
-
+            else:
+                pass
         print(
               str(self.currentPosition)
               +"\tdirection="+str(self.direction)
@@ -153,7 +155,8 @@ class Mapping():
 #                +"\tchoice="+str(choice)
 #                +"  \tR-Choice="+str(returnChoice)
 #                )
-        self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+        if returnChoice!=0:
+            self.currentPosition=self.funcDict[self.direction](self.currentPosition)
 
         self.lastPosition=self.currentPosition
 
@@ -290,7 +293,23 @@ def main():
     steps=0
     walls=[1,1,1]
     mapping.getChoice(steps, walls)#[1,2]
-        
+    
+    steps=0
+    walls=[1,1,1]
+    mapping.getChoice(steps, walls)#[1,2]
+
+    steps=0
+    walls=[0,0,1]
+    print mapping.getChoice(steps, walls)#[2,2]
+    
+    steps=0
+    walls=[1,0,1]
+    print mapping.getChoice(steps, walls)#[2,3]
+
+    steps=cell
+    walls=[1,0,1]
+    print mapping.getChoice(steps, walls)#[0,3]
+    
     maze=mapping.getMaze()
     print maze
 #     maze.set(0,0,13)
