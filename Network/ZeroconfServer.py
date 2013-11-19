@@ -79,17 +79,37 @@ def printNumber():
 def printMaze():
     print "maze called"
     maze=Maze()
-    for y in range(10):
-        for x in range(11):
-            print("before random stuff")
-            north=random.randint(0,100)>90
-            east=random.randint(0,100)>90
-            south=random.randint(0,100)>90
-            west=random.randint(0,100)>90     
-            print("making value")
-            value=int((((north<<3) or (east <<2)) or (south <<1)) or west)
-            print str(value)    
-            maze.set(x, y, value)
+    maze.set(0,0,13)
+    maze.set(1,0,11)
+    maze.set(2,0,8)
+    maze.set(3,0,12)
+    maze.set(0,1,1)
+    maze.set(1,1,10)
+    maze.set(2,1,4)
+    maze.set(3,1,5)
+    maze.set(0,2,5)
+    maze.set(1,2,11)
+    maze.set(2,2,4)
+    maze.set(3,2,5)
+    maze.set(0,3,3)
+    maze.set(1,3,10)
+    maze.set(2,3,6)
+    maze.set(3,3,7)
+
+
+
+
+#     for y in range(10):
+#         for x in range(5):
+#             print("before random stuff")
+#             north=random.randint(0,100)>90
+#             east=random.randint(0,100)>90
+#             south=random.randint(0,100)>90
+#             west=random.randint(0,100)>90     
+#             print("making value")
+#             value=int((((north<<3) or (east <<2)) or (south <<1)) or west)
+#             print str(value)    
+#             maze.set(x, y, value)
     print(maze)
     print"finnished"
     return json.dumps(maze.getDict())
