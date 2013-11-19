@@ -7,6 +7,7 @@ import logging
 from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
 from Motor_control.DualMotorController import DualMotorController
 from Navigation.StepCounter import StepCounter
+from Maze.Mapping import Mapping
 from Pid import Pid
 from WallsChecker import WallsChecker
 from TurnThread import TurnThread
@@ -90,6 +91,9 @@ class PidTuner():
         'StepCounter'
         self.stepCounter = StepCounter()
         
+        'Mapping'
+        self.mapping = Mapping()
+        
         'load gainfactors'
         gainfactors=self.pid.getGainFactors()
         self.pGain=gainfactors[0]
@@ -169,26 +173,15 @@ class PidTuner():
                 self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 self.pid.doPid(sample)
                 
-                #180 turn skal også gøres på choice fra mapping da den ellers ikke bliver tegnet korrekt
             else:
-                #choice = mapping.getChoice(walls, stepCounter.getSteps())
+                choice = self.mapping.getChoice(walls, self.stepCounter.getSteps())
                 self.stepCounter.resetSteps()
-                #self.turnThread.checkForTurn(self.doChoice(choice))
+                self.turnThread.checkForTurn(choice)
                 self.pid.reset()
                 
-            print self.stepCounter.getSteps()
 
-        except IOError as e:
-            
+        except IOError as e:         
             print("error in doPid: "+str(e))
-            
-    def doChoice(self, choice):
-        if(choice == 1):
-            return 1
-        elif(choice == 2):
-            return 4
-        elif(choice == 3):
-            return 3
 
         
     def stop(self):
