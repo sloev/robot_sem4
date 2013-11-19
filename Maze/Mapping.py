@@ -293,10 +293,6 @@ def main():
     steps=0
     walls=[1,1,1]
     mapping.getChoice(steps, walls)#[1,2]
-    
-    steps=0
-    walls=[1,1,1]
-    mapping.getChoice(steps, walls)#[1,2]
 
     steps=0
     walls=[0,0,1]
@@ -308,6 +304,10 @@ def main():
 
     steps=cell
     walls=[1,0,1]
+    print mapping.getChoice(steps, walls)#[0,3]
+    
+    steps=cell
+    walls=[1,0,0]
     print mapping.getChoice(steps, walls)#[0,3]
     
     maze=mapping.getMaze()
