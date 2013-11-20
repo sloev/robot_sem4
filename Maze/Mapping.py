@@ -384,7 +384,7 @@ def main():
     while(value!=[0,0]):
         value=mapping.getChoice(0,[1,1,1])
         
-    path=[2, 2, 3, 0, 0]
+    path=[2, 2, 3, 0, 0, 0]
     value=10
     mapping.receiveStack(path)
     while(value!=[0,0]):
