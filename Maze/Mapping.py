@@ -186,20 +186,24 @@ class Mapping():
         print missingWalls
 
         if len(missingWalls)==1:#180
+            print 'in missingwalls=1'
             if self.stack:#still unexplored nodes
                 self.stack.pop()
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
                 self.direction=choice[1]
             else:
+                print 'pass'
                 pass
         else:
             if unexploredCells:
+                print 'In unexplored'
                 choice=self.makeChoice(unexploredCells)
                 self.stack.append(choice)
                 returnChoice=choice[2]
                 self.direction=choice[1]
             elif self.stack:
+                print 'In self.stack'
                 choice=self.stack.pop()
                 returnChoice=choice[3]
                 self.direction=choice[0]
