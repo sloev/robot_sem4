@@ -172,7 +172,6 @@ class Mapping():
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
             self.currentPosition=func(self.currentPosition)
         
-        #self.currentPosition=func(self.currentPosition)
         globalWalls=self.wallsToInt(walls)            
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
         if not tmp:
@@ -180,6 +179,7 @@ class Mapping():
             
         missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
         unexploredCells=self.findUnexploredCells(self.currentPosition,missingWalls)
+        
         returnChoice=0
 
         if len(missingWalls)==1:#180
