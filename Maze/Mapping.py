@@ -219,8 +219,7 @@ class Mapping():
 #                +"\tchoice="+str(choice)
 #                +"  \tR-Choice="+str(returnChoice)
 #                )
-        if returnChoice!=0:
-            pass
+
         self.currentPosition=self.funcDict[self.direction](self.currentPosition)
 
         self.lastPosition=self.currentPosition
