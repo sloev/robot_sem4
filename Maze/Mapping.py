@@ -181,6 +181,8 @@ class Mapping():
         missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
         unexploredCells=self.findUnexploredCells(self.currentPosition,missingWalls)
         returnChoice=0
+        
+        print missingWalls
 
         if len(missingWalls)==1:#180
             if self.stack:#still unexplored nodes
