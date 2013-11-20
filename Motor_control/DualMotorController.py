@@ -11,6 +11,7 @@ from Motor_I2C import Motor_I2C
 import time as time
 import logging
 import sys
+
 class DualMotorController:
     '''
         for controlling two stepper motors through i2c
@@ -121,8 +122,7 @@ class DualMotorController:
         print actPosLeft
         print actPosRight
         
-            
-        
+             
         positionLeft = actPosLeft + incLeftPos
         positionRight = actPosRight + incRightPos
         

@@ -4,6 +4,13 @@ Created on 11/11/2013
 @author: Daniel Machon
 '''
 
+
+''''''''''''''''''''''''''''''''''''''
+'    Test code for turn calibration   '
+'    Did not work!                    '
+''''''''''''''''''''''''''''''''''''''
+
+
 from IR_Sensors.IR_Sensors_Controller import IR_Sensors_Controller
 import math
 
