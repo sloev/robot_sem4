@@ -119,10 +119,7 @@ class DualMotorController:
         actPosLeft=fullstatus2[0][1]<<8 | fullstatus2[0][2]<<0
         actPosRight=fullstatus2[1][1]<<8 | fullstatus2[1][2]<<0
         
-        print actPosLeft
-        print actPosRight
-        
-             
+                
         positionLeft = actPosLeft + incLeftPos
         positionRight = actPosRight + incRightPos
         

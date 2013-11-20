@@ -178,6 +178,7 @@ class PidTuner():
                     choice = self.mapping.getChoice(self.stepCounter.getSteps(),walls)
                     self.stepCounter.resetSteps()
                     self.turnThread.checkForTurn(choice)
+                    self.stepCounter.resetSteps()
                     self.pid.reset()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
