@@ -194,11 +194,11 @@ class Mapping():
             if unexploredCells:
                 choice=self.makeChoice(unexploredCells)
                 self.stack.append(choice)
-                returnChoice=choice[3]
+                returnChoice=choice[2]
                 self.direction=choice[1]
             elif self.stack:
                 choice=self.stack.pop()
-                returnChoice=choice[2]
+                returnChoice=choice[3]
                 self.direction=choice[0]
             else:
                 pass
