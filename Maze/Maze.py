@@ -4,7 +4,6 @@ Created on Nov 12, 2013
 @author: johannes
 '''
 from collections import defaultdict
-from PyQt4 import QtGui
 
 class Maze():
     '''
