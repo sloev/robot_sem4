@@ -12,13 +12,12 @@ class Mapping():
     stepsPrCell=6018
 
     def __init__(self):
-        self.mode=0#mapping mode
+        self.mode=1#mapping mode
         '''
         Constructor
         mode=0 er mapping
         mode=1 er goToPath
         '''
-        self.mode=0#mapping
         self.maze=Maze()
         self.globalCompass=[0,1,2,3]#north/east/south/west
         self.startDirection=self.globalCompass[2]
