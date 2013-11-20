@@ -27,6 +27,7 @@ class Path(object):
         stack=[]
         lastN=None
         #string=""
+        
         for n in self.path:
             if lastN != None:
                 if lastN.x==n.x and lastN.y==n.y:
@@ -34,9 +35,11 @@ class Path(object):
                     stack.append(n.d)
             else:                      
                 #string+="%d"%n.d
+                pass
                 stack.append(n.d)
             #string+="\n"
             lastN=n
+        stack.reverse()
         #print string
         return stack
             

@@ -13,6 +13,8 @@ Vin3                                =   0x0A
 sensorChannels=[Vin1,Vin2,Vin3]
 
 class TurnThread():
+    stepsPrCell=6018
+
     def __init__(self,irSensors,wallchecker,dual_motors,left,right):
         self.dual_motors=dual_motors
         self.irsensors=irSensors
@@ -30,14 +32,10 @@ class TurnThread():
         pass
     
     def checkForTurn(self,choice):
-        value=0
-        try:
-            if(choice>1):
-                value=1
+        if choice in self.funcDict:
             self.funcDict[choice]()
-        except KeyError:
-            pass
-        return value
+            return 1
+        return 0
 
             
     def turnLeft(self):
@@ -64,7 +62,10 @@ class TurnThread():
     def goStraight(self):
         self.logger.info("straight")
         self.dual_motors.setMotorParams(self.left, self.right, 1)
-
+        self.dual_motors.setPosition(self.stepsPrCell,self.stepsPrCell)
+        while(self.dual_motors.isBusy()):
+            self.logger.info("straight")
+            time.sleep(0.1)
         print("straight")
         
     def turn90(self,direction):

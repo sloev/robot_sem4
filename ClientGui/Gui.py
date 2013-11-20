@@ -101,10 +101,8 @@ class MainGui(QtGui.QMainWindow):
         print("closed socket")
         
         received = json.loads(data)
-        mazeDict=received["maze"]
         currentPos=received["currentpos"]
-        print currentPos
-        maze=Maze(mazeDict)
+        maze=Maze(received["maze"])
         self.mazeView=MazeView(maze,currentPos)
         self.mazeView.repaint()
         self.mazeView.show()
@@ -125,7 +123,14 @@ class MainGui(QtGui.QMainWindow):
                 print tmp
             else:
                 print received
-
+    
+    def closeTcpClient(self):
+        try:
+            self.clientSocket.close()
+            print("closed client")
+        finally:
+            pass   
+        
 def main():
     app = QtGui.QApplication(sys.argv)
     gui = MainGui()

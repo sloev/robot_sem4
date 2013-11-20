@@ -45,6 +45,7 @@ class PidTuner():
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
+        self.mode=0#mapping mode
         direction=1
         self.left=not direction
         self.right=direction
@@ -169,17 +170,24 @@ class PidTuner():
             'end of sampling section'
 #            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
 
-            if(walls==[1, 1, 1]):
-                self.stepCounter(self.dual_motors.setPosition(32767, 32767))
-                self.pid.doPid(sample)
-                
-            else:
-                choice = self.mapping.getChoice(walls, self.stepCounter.getSteps())
+            if self.mode:#mapping mode
+                if(walls==[1, 1, 1]):
+                    self.stepCounter(self.dual_motors.setPosition(32767, 32767))
+                    self.pid.doPid(sample)
+                else:
+                    choice = self.mapping.getChoice(walls, self.stepCounter.getSteps())
+                    self.stepCounter.resetSteps()
+                    self.turnThread.checkForTurn(choice)
+                    self.pid.reset()
+            elif self.mode==2:#goTo mode
+                choice=self.mapping.getChoice()
                 self.stepCounter.resetSteps()
-                self.turnThread.checkForTurn(choice)
-                self.pid.reset()
-                
-
+                if not self.turnThread.checkForTurn(choice[1]):
+                    self.stepCounter(self.dual_motors.setPosition(choice[0], choice[0]))
+                    self.pid.doPid(sample)
+                else:
+                    self.pid.reset()
+                    
         except IOError as e:         
             print("error in doPid: "+str(e))
 

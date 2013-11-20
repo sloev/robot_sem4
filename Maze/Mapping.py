@@ -11,13 +11,13 @@ class Mapping():
     '''
     stepsPrCell=6018
 
-    def __init__(self,path=None):
+    def __init__(self):
+        self.mode=0#mapping mode
         '''
         Constructor
         mode=0 er mapping
         mode=1 er goToPath
         '''
-        
         self.mode=0#mapping
         self.maze=Maze()
         self.globalCompass=[0,1,2,3]#north/east/south/west
@@ -27,16 +27,14 @@ class Mapping():
         self.startPosition =[0,0]
         self.currentPosition=self.startPosition#x,y
         self.lastWas180=False
-        self.lastPosition=[0,0]
+        self.lastPosition=self.currentPosition
         self.funcDict={
                        0:self.subY,
                        1:self.addX, 
                        2:self.addY, 
                        3:self.subX}
-        if path!=None:
-            self.stack=self.pathToStack()
-        else:
-            self.stack=[]
+
+        self.stack=[]
         '''
                         1 : self.goStraight,
                        2 : self.turnRight,
@@ -54,9 +52,39 @@ class Mapping():
         |
         0,y
         '''
-    def receiveStack(self,stack):
-        #important see path.pathToStack()
-        pass
+    def receiveStack(self,path):        
+        self.mode=1#path finding go to mode
+        self.stack=path#self.pathToStack()
+        lastS=self.direction
+            
+        for i in range(len(self.stack)):
+            j=len(self.stack)-i-1
+            item=self.stack[j]
+            self.stack[j]=[item,self.getLocalDirection(lastS,item)]
+            lastS=item
+        print self.stack
+        
+
+    def getLocalDirection(self,lastS,s):
+        print lastS
+        left=lastS-1
+        if left<0:
+            left=3
+        right=lastS+1
+        if right>3:
+            right=0
+        
+        direction180=lastS-2
+        if direction180 < 0:
+            direction180+=4        
+        
+        if left==s:
+            return 4
+        elif right==s:
+            return 2
+        elif direction180==s:
+            return 3
+        return 1
     
     def stepsToCells(self,steps):
         cells=int(steps/self.stepsPrCell)
@@ -96,12 +124,48 @@ class Mapping():
                 north=walls[1]
         return [north,east,south,west]
                 
-    def getChoice(self,steps,walls):
-        cells=self.stepsToCells(steps)
+    def getChoice(self,steps=None,walls=None):
+        if not self.mode:
+            return self.mappingChoice(steps, walls)
+        else:
+            return self.gotoChoice()
+        
+    def gotoChoice(self):
+        cells=1
+        returnChoice=[0,0]#steps,local direction
+        if self.stack:
+            choice=self.stack.pop()
+#            self.currentPosition=func(self.currentPosition)
+            lastChoice=choice[1]
+            while True:
+                if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1:
+                    returnChoice[0]+=self.stepsPrCell
+                    choice=self.stack.pop()
+                    cells+=1
+                else:
+                    choice[1]=lastChoice
+                    break
+            returnChoice[1]=choice[1]
+            self.direction=choice[0]
+            #self.currentPosition=func(self.currentPosition)
+        else:
+            pass
+
+        print(
+              "dir="+str(self.direction)
+              +"\tpos"+str(self.currentPosition)
+              +"\tchoice"+str(returnChoice)
+              )
+            
+        for i in range(cells):
+            self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+        return returnChoice
+
+    def mappingChoice(self,steps,walls):
         func=self.funcDict[self.direction]
         
         tmpWalls=self.wallsToInt([1,1,0])  
-                  
+        cells=self.stepsToCells(steps)
         for i in range(cells):
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:
@@ -156,7 +220,8 @@ class Mapping():
 #                +"  \tR-Choice="+str(returnChoice)
 #                )
         if returnChoice!=0:
-            self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+            pass
+        self.currentPosition=self.funcDict[self.direction](self.currentPosition)
 
         self.lastPosition=self.currentPosition
 
@@ -250,7 +315,7 @@ def main():
     walls=[0,0,1]
     mapping.getChoice(steps, walls)#[2,0]
     
-    steps=0
+    steps=2000
     walls=[1,0,1]
     mapping.getChoice(steps, walls)#[3,0]
     
@@ -262,15 +327,15 @@ def main():
     walls=[0,1,1]
     mapping.getChoice(steps, walls)#[3,0]
     
-    steps=0
+    steps=2000
     walls=[0,1,0]
     mapping.getChoice(steps, walls)#[2,0]
     
-    steps=0
+    steps=2000
     walls=[1,1,1]
     mapping.getChoice(steps, walls)#[1,0]
     
-    steps=0
+    steps=2000
     walls=[1,0,0]
     mapping.getChoice(steps, walls)#[2,0]
     
@@ -309,9 +374,16 @@ def main():
     steps=cell
     walls=[1,0,0]
     print mapping.getChoice(steps, walls)#[0,3]
-    
     maze=mapping.getMaze()
+
     print maze
+
+    path=[2, 2, 2, 1, 0, 1, 1, 2]
+    value=10
+    mapping.receiveStack(path)
+    while(value!=[0,0]):
+        value=mapping.getChoice(0,[1,1,1])
+        #print value
 #     maze.set(0,0,13)
 #     maze.set(1,0,11)
 #     maze.set(2,0,8)
