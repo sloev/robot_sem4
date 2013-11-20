@@ -21,13 +21,13 @@ class WallsChecker():
         self.lastLastWalls=self.lastWalls
         self.lastWalls=self.walls
         
-        self.walls=[1,1,1]
+        self.walls=[1,1,0]
         if(sample[self.left]>self.max):
             self.walls[self.left]=0
         if(sample[self.right]>self.max):
             self.walls[self.right]=0
         if(sample[self.front]<self.setpoint):
-            self.walls[self.front]=0
+            self.walls[self.front]=1
         self.logger.info("checkWalls/"+str(self.walls))
         return self.walls
     
