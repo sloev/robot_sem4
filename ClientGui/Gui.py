@@ -101,11 +101,11 @@ class MainGui(QtGui.QMainWindow):
         print("closed socket")
         
         received = json.loads(data)
-        maze=received["maze"]
+        mazeDict=received["maze"]
         currentPos=received["currentpos"]
         print currentPos
-        maze=Maze(maze)
-        self.mazeView=MazeView(maze)
+        maze=Maze(mazeDict)
+        self.mazeView=MazeView(maze,currentPos)
         self.mazeView.repaint()
         self.mazeView.show()
         

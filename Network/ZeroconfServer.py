@@ -113,7 +113,8 @@ def printMaze():
     print(maze)
     currentPos=[0,0]
     print"finnished"
-    returner={"currentpos":currentPos,"maze":maze.getDict()}
+    mazeDict=maze.getDict()
+    returner={"currentpos":currentPos,"maze":mazeDict}
     return json.dumps(returner)
     
 def main():

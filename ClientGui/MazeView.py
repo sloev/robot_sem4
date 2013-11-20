@@ -9,9 +9,9 @@ from Maze.Maze import Maze
 from Maze.Dijkstra import Dijkstra
 
 class MazeView(QtGui.QWidget):
-    def __init__(self,maze=None):
+    def __init__(self,currentPos=None,maze=None):
         self.target=[0,0]
-        self.source=self.target
+        self.source=currentPos
         self.path=None
         self.visited=None
         self.mode=-1
@@ -73,11 +73,11 @@ class MazeView(QtGui.QWidget):
         qp.end()
         
     def mouseReleaseEvent(self, event):
-        if self.mode==1:
+        if self.mode==9:
             self.path=None
             self.source=self.cordToCord([event.x(),event.y()])
             self.mode=2
-        elif self.mode==2:
+        elif self.mode==1:
             self.target=self.cordToCord([event.x(),event.y()])
             self.modeButton.setEnabled(True)
             self.mode=0
