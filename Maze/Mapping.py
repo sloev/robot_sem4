@@ -156,9 +156,9 @@ class Mapping():
               +"\tpos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
               )
-            
-        for i in range(cells):
-            self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+        if returnChoice!=[0,0]:
+            for i in range(cells):
+                self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         return returnChoice
 
     def mappingChoice(self,steps,walls):
@@ -379,6 +379,12 @@ def main():
     print maze
 
     path=[2, 2, 2, 1, 0, 1, 1, 2]
+    value=10
+    mapping.receiveStack(path)
+    while(value!=[0,0]):
+        value=mapping.getChoice(0,[1,1,1])
+        
+    path=[2, 2, 3, 0, 0]
     value=10
     mapping.receiveStack(path)
     while(value!=[0,0]):
