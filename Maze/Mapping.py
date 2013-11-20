@@ -126,8 +126,10 @@ class Mapping():
                 
     def getChoice(self,steps=None,walls=None):
         if self.mode:
+            print'in mappingChoice'
             return self.mappingChoice(steps, walls)
         else:
+            print 'in goToChoice'
             return self.gotoChoice()
         
     def gotoChoice(self):

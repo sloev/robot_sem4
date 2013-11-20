@@ -175,7 +175,9 @@ class PidTuner():
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     self.pid.doPid(sample)
                 else:
+                    print 'getting choice'
                     choice = self.mapping.getChoice(self.stepCounter.getSteps(),walls)
+                    print 'choice is:'
                     self.stepCounter.resetSteps()
                     self.turnThread.checkForTurn(choice)
                     self.stepCounter.resetSteps()
