@@ -91,7 +91,7 @@ class PidTuner():
         'StepCounter'
         self.stepCounter = StepCounter()
         
-        'Mapping'
+        'Mapper'
         self.mapping = Mapping()
         
         'load gainfactors'
@@ -158,16 +158,14 @@ class PidTuner():
         try:
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
             self.dual_motors.setAccelerations(self.left, self.right, 5)
+            
 
-            #self.printGains()
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
 
-            #print sample
-            walls=self.wallChecker.checkWalls(sample)  
-            #debounce=self.wallChecker.compare()         
+            walls=self.wallChecker.checkWalls(sample)        
             'end of sampling section'
-#            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
+
 
             if(walls==[1, 1, 1]):
                 self.stepCounter(self.dual_motors.setPosition(32767, 32767))
