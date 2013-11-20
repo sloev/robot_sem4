@@ -248,6 +248,7 @@ class Mapping():
                 tmp=self.maze.get(xy[0], xy[1])
                 if not tmp:
                     posibilities.append(d)
+        print posibilities
         return posibilities
         
     def makeChoice(self,posibilities):
