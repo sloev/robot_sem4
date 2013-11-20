@@ -29,7 +29,7 @@ class MazeView(QtGui.QWidget):
             self.modeButton.clicked.connect(self.modeChange)
             self.modeButton.resize(self.modeButton.sizeHint())
             self.modeButton.move(0, 0)    
-        
+                    
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
