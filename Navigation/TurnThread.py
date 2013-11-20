@@ -33,11 +33,11 @@ class TurnThread():
     
     def checkForTurn(self,choice):
         print choice
-        if choice in self.funcDict:
-            print choice
-            self.funcDict[choice]()
-            return 1
-        return 0
+        #if choice in self.funcDict:
+        print choice
+        self.funcDict[choice]()
+        #    return 1
+        #return 0
 
             
     def turnLeft(self):
