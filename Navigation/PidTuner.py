@@ -164,7 +164,7 @@ class PidTuner():
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
 
-            #print sample
+            print sample
             walls=self.wallChecker.checkWalls(sample)  
             #debounce=self.wallChecker.compare()         
             'end of sampling section'
