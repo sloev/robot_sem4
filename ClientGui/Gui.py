@@ -43,19 +43,20 @@ class MainGui(QtGui.QMainWindow):
         fileMenu = menubar.addMenu('&File')
         fileMenu.addAction(closeAction)
     
-        self.setGeometry(300,300,300,300) 
+        self.setGeometry(300,300,300,50) 
         self.setWindowTitle('LUL') 
-        self.browser.addClientEventHandler(self.mitSignal.emit)
+        self.browser.addClientEventHandler(self.mitSignal.emit)  
         
-        numberButton = QtGui.QPushButton('getNumber', self)
-        numberButton.clicked.connect(self.clientSendNumber)
-        numberButton.resize(numberButton.sizeHint())
-        numberButton.move(50, 50)    
+        self.rpiLabel = QtGui.QLabel("Not connected to r-pi",self)
+        self.rpiLabel.move(5,5)
+        self.rpiLabel.resize(self.rpiLabel.sizeHint())
+        self.rpiLabel.show()
         
-        getMaze = QtGui.QPushButton('getMaze', self)
-        getMaze.clicked.connect(self.clientSendMaze)
-        getMaze.resize(getMaze.sizeHint())
-        getMaze.move(150, 50)    
+        self.getMaze = QtGui.QPushButton('getMaze', self)
+        self.getMaze.clicked.connect(self.clientSendMaze)
+        self.getMaze.resize(self.getMaze.sizeHint())
+        self.getMaze.move(0, 20)
+        self.getMaze.setEnabled(False)    
         self.show()
 
     def closeEvent(self,event):
@@ -67,6 +68,9 @@ class MainGui(QtGui.QMainWindow):
         if self.address==(ip,port):
             self.closeTcpClient()
             self.address=None
+            self.getMaze.setEnabled(False)    
+            self.rpiLabel.setText("Not connected to r-pi")
+            self.rpiLabel.resize(self.rpiLabel.sizeHint())
             print("r-pi removed and clientSocket closed with ip="+str(ip)+" port="+str(port))
         else:
             print("r-pi catched with address"+str((ip,port)))
@@ -77,16 +81,11 @@ class MainGui(QtGui.QMainWindow):
                 print("old ip and port="+str(self.address))
                 self.address=(str(ip),port)
                 print("new ip and port="+str(self.address)+"\n")
+                self.getMaze.setEnabled(True)    
+                self.rpiLabel.setText("Connected to "+str(self.address))
+                self.rpiLabel.resize(self.rpiLabel.sizeHint())
             else:
                 pass
-        
-    
-    def closeTcpClient(self):
-        try:
-            self.clientSocket.close()
-            print("closed client")
-        finally:
-            pass
         
     def clientSendNumber(self):
         self.clientSend("number")
@@ -98,12 +97,13 @@ class MainGui(QtGui.QMainWindow):
         self.clientSocket.connect(self.address)
         self.clientSocket.send(json.dumps(data))
         data = self.clientSocket.recv(16384)  # limit reply to 16K
-        
         self.clientSocket.close()
         print("closed socket")
+        
         received = json.loads(data)
-        maze=Maze(received)
-        self.mazeView=MazeView(maze)
+        currentPos=received["currentpos"]
+        maze=Maze(received["maze"])
+        self.mazeView=MazeView(maze,currentPos)
         self.mazeView.repaint()
         self.mazeView.show()
         
@@ -123,7 +123,14 @@ class MainGui(QtGui.QMainWindow):
                 print tmp
             else:
                 print received
-
+    
+    def closeTcpClient(self):
+        try:
+            self.clientSocket.close()
+            print("closed client")
+        finally:
+            pass   
+        
 def main():
     app = QtGui.QApplication(sys.argv)
     gui = MainGui()

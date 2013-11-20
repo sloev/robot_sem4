@@ -9,9 +9,9 @@ from Maze.Maze import Maze
 from Maze.Dijkstra import Dijkstra
 
 class MazeView(QtGui.QWidget):
-    def __init__(self,maze=None):
+    def __init__(self,maze=None,currentPos=None):
         self.target=[0,0]
-        self.source=self.target
+        self.source=currentPos
         self.path=None
         self.visited=None
         self.mode=-1
@@ -29,7 +29,9 @@ class MazeView(QtGui.QWidget):
             self.modeButton.clicked.connect(self.modeChange)
             self.modeButton.resize(self.modeButton.sizeHint())
             self.modeButton.move(0, 0)    
-        
+            self.dijkstra=Dijkstra(self.mazeModel)
+
+                    
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
@@ -73,11 +75,11 @@ class MazeView(QtGui.QWidget):
         qp.end()
         
     def mouseReleaseEvent(self, event):
-        if self.mode==1:
+        if self.mode==9:
             self.path=None
             self.source=self.cordToCord([event.x(),event.y()])
             self.mode=2
-        elif self.mode==2:
+        elif self.mode==1:
             self.target=self.cordToCord([event.x(),event.y()])
             self.modeButton.setEnabled(True)
             self.mode=0
@@ -107,26 +109,16 @@ class MazeView(QtGui.QWidget):
         self.mode=1
         
     def findPath(self):
-        dijkstra=Dijkstra(self.mazeModel)
-        pathTuple=dijkstra.search(self.source,self.target)
+        pathTuple=self.dijkstra.search(self.source,self.target)
         path=pathTuple[0]
 
-#         lol="all paths the same/false at "
-#         for i in range(30):
-#             path=pathTuple[0]
-#             if lastPath!=None:
-#                 if lastPath.__str__()!=path.__str__():
-#                     lol=lol+","+str(i)
-#             lastPath=path
-#             paths.append(path)
-#         print lol
         print"made astar"
         if path ==None:
             print "no path"
         else:
             print"all paths the same="
             print path
-            path.pathToStack()
+            print path.pathToStack()
             self.path=path
         self.visited=pathTuple[1]
         self.repaint()

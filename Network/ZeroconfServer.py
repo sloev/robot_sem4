@@ -111,8 +111,11 @@ def printMaze():
 #             print str(value)    
 #             maze.set(x, y, value)
     print(maze)
+    currentPos=[0,0]
     print"finnished"
-    return json.dumps(maze.getDict())
+    mazeDict=maze.getDict()
+    returner={"currentpos":currentPos,"maze":mazeDict}
+    return json.dumps(returner)
     
 def main():
     server=ZeroconfTcpServer()
