@@ -13,7 +13,7 @@ Vin3                                =   0x0A
 sensorChannels=[Vin1,Vin2,Vin3]
 
 class TurnThread():
-    stepsPrCell=6018
+    stepsPrCell=4500
 
     def __init__(self,irSensors,wallchecker,dual_motors,left,right):
         self.dual_motors=dual_motors
