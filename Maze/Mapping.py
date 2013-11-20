@@ -125,7 +125,7 @@ class Mapping():
         return [north,east,south,west]
                 
     def getChoice(self,steps=None,walls=None):
-        if not self.mode:
+        if self.mode:
             return self.mappingChoice(steps, walls)
         else:
             return self.gotoChoice()
