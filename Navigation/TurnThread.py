@@ -60,7 +60,7 @@ class TurnThread():
     
     def goStraight(self):
         self.logger.info("straight")
-        self.dual_motors.setMotorParams(self.left, self.right, 1)
+        self.dual_motors.setMotorParams(self.left, self.right, 1,1)
         self.dual_motors.setPosition(self.stepsPrCell,self.stepsPrCell)
         while(self.dual_motors.isBusy()):
             self.logger.info("straight")
