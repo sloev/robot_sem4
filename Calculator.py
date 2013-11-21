@@ -12,6 +12,8 @@ from fileinput import input
 class Calculator():
     
 
+gpio.setup(16, gpio.out)
+gpio.setup(26, gpio.out)
 
     def __init__(self):
         self.wrong = 0
