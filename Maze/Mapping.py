@@ -188,19 +188,19 @@ class Mapping():
                 self.stack.pop()
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
-                self.direction=choice[1]
+                self.direction=choice[0]
             else:
                 pass
         else:
             if unexploredCells:
                 choice=self.makeChoice(unexploredCells)
                 self.stack.append(choice)
-                returnChoice=choice[2]
-                self.direction=choice[0]
-            elif self.stack:
-                choice=self.stack.pop()
                 returnChoice=choice[3]
                 self.direction=choice[1]
+            elif self.stack:
+                choice=self.stack.pop()
+                returnChoice=choice[2]
+                self.direction=choice[0]
             else:
                 pass
         print(
