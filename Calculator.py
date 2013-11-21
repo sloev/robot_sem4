@@ -96,6 +96,7 @@ class Calculator():
         print("Welcome to Daniel Hansen calculator!")
         print(" ")
         number = raw_input("How many calculations do you want?")
+        number = int(number)
         print("1: addition")
         print("2: subtraction")
         print("3: multiplication")
@@ -103,6 +104,7 @@ class Calculator():
         print("5: pow")
         print(" ")
         choice = raw_input("Enter your choice: ")
+        choice = int(choice)
          
         if(choice==1):
             for i in range(number):
