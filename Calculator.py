@@ -14,6 +14,7 @@ class Calculator():
     gpio.setmode(gpio.BOARD) 
     gpio.setup(16, gpio.OUT)
     gpio.setup(26, gpio.OUT)
+    gpio.setup(12, gpio.OUT)
 
     def __init__(self):
         self.wrong = 0
@@ -31,13 +32,15 @@ class Calculator():
             print('Correct')
             self.correct+=1
             gpio.output(16,True)
-            time.sleep(1)
+            gpio.output(12,True)
+            time.sleep(2)
             gpio.output(16,False)
+            gpio.output(12,False)
         else:
             print('Wrong')
             self.wrong+=1
             gpio.output(26,True)
-            time.sleep(1)
+            time.sleep(2)
             gpio.output(26,False)
             
             
