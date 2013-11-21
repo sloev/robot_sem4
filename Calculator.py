@@ -13,8 +13,11 @@ class Calculator():
     
     gpio.setmode(gpio.BOARD) 
     gpio.setup(16, gpio.OUT)
+    gpio.setwarnings(False)
     gpio.setup(26, gpio.OUT)
+    gpio.setwarnings(False)
     gpio.setup(12, gpio.OUT)
+    gpio.setwarnings(False)
 
     def __init__(self):
         self.wrong = 0
