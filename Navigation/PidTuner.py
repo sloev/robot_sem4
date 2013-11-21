@@ -194,7 +194,7 @@ class PidTuner():
                     lol=self.turnThread.checkForTurn(choice)
                     #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     self.pid.reset()
-                    self.stepCounter.resetSteps()
+                    self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
                 self.stepCounter.resetSteps()
