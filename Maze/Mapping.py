@@ -218,6 +218,12 @@ class Mapping():
             pass
         self.currentPosition=self.funcDict[self.direction](self.currentPosition)
 
+        print(
+              "dir="+str(self.direction)
+              +"\tpos"+str(self.currentPosition)
+              +"\tchoice"+str(returnChoice)
+              )
+
         self.lastPosition=self.currentPosition
 
         return returnChoice
