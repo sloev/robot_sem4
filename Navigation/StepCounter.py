@@ -19,7 +19,7 @@ class StepCounter():
     def __init__(self):
         self.stepsLeft = 0
         self.stepsRight = 0
-        
+        self.old=0
     
     '''
         Callable
@@ -33,6 +33,7 @@ class StepCounter():
         Reset step instance variables
     '''
     def resetSteps(self):
+        self.old=[self.stepsLeft,self.stepsRight]
         self.stepsLeft = 0
         self.stepsRight = 0
     
@@ -49,7 +50,8 @@ class StepCounter():
         Get average steps
     '''
     def getSteps(self):
-        return self._average(self.stepsLeft, self.stepsRight)
+        toCompute=[self.stepsLeft-self.old[0],self.stepsRight-self.old[1]]
+        return self._average(self.toCompute[0], self.toCompute[1])
     
     
 def main():
