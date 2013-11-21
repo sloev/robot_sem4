@@ -3,7 +3,8 @@ Created on 21/11/2013
 
 @author: Ivo
 '''
-
+import time 
+import RPi.GPIO as gpio
 from random import randrange
 from fileinput import input
 
@@ -27,9 +28,15 @@ class Calculator():
         if(answer==realAnswer):
             print('Correct')
             self.correct+=1
+            gpio.output(16,True)
+            time.sleep(1)
+            gpio.output(16,False)
         else:
             print('Wrong')
             self.wrong+=1
+            gpio.output(26,True)
+            time.sleep(1)
+            gpio.output(26,False)
             
             
     def subtract(self):
