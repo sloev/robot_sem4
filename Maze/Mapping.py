@@ -18,7 +18,7 @@ class Mapping():
         mode=0 er mapping
         mode=1 er goToPath
         '''
-        self.mode=1#mapping
+        self.mode=0#mapping
         self.maze=Maze()
         self.globalCompass=[0,1,2,3]#north/east/south/west
         self.startDirection=self.globalCompass[2]
