@@ -177,7 +177,7 @@ class PidTuner():
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     self.pid.doPid(sample)
                 else:
-                    steps=self.stepCounter.getSteps()
+                    steps=self.stepCounter.getSteps()-self.stepsPrCell
                     if self.firstCell:
                         steps+=self.stepsPrCell
                         self.firstCell=False
