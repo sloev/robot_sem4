@@ -18,7 +18,7 @@ class Calculator():
 
     def __init__(self):
         self.wrong = 0
-        self.correct = 0 
+        self.correct = 0   
         
         
     def add(self):
@@ -39,7 +39,7 @@ class Calculator():
         else:
             print('Wrong')
             self.wrong+=1
-            self.totallyWrong()
+            self.totallyWrong()         
             
             
     def subtract(self):
@@ -58,8 +58,7 @@ class Calculator():
             
             gpio.output(26,False)
             gpio.output(16,False)
-            
-            
+                    
     def pow(self):
         a = randrange(12)
         print("what is: " + str(a) + " ^ " + str(2))
@@ -72,11 +71,8 @@ class Calculator():
         else:
             print("wrong")
             self.wrong+=1
-        
-            
-            
-     
-    
+ 
+ 
     def multiply(self):
         a = randrange(10)
         b = randrange(10)
@@ -91,7 +87,7 @@ class Calculator():
             print("wrong")
             self.wrong+=1
             
-                
+          
     def divide(self):
         a = randrange
         b = randrange
@@ -115,10 +111,7 @@ class Calculator():
             gpio.output(12,False)
             time.sleep(0.1)
         gpio.output(26,False)
-            
-            
-            
-    
+                
     
     def calculations(self):
         
