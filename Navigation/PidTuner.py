@@ -176,10 +176,11 @@ class PidTuner():
                     self.pid.doPid(sample)
                 else:
                     lol=self.turnThread.checkForTurn(1)
+                    steps=self.stepCounter.getSteps()
                     sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                     walls=self.wallChecker.checkWalls(sample)  
                     
-                    choice = self.mapping.getChoice(self.stepCounter.getSteps(),walls)
+                    choice = self.mapping.getChoice(steps,walls)
                     self.stepCounter.resetSteps()
                     lol=self.turnThread.checkForTurn(choice)
                     print "choice=%d and turningSuccess=%d"%(choice,lol)
