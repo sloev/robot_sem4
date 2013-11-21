@@ -111,9 +111,9 @@ class Calculator():
         gpio.output(26,True)
         for i in range(5):
             gpio.output(12,True)
-            time.sleep(0.25)
+            time.sleep(0.1)
             gpio.output(12,False)
-            time.sleep(0.25)
+            time.sleep(0.1)
         gpio.output(26,False)
             
             
