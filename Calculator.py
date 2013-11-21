@@ -39,7 +39,7 @@ class Calculator():
         else:
             print('Wrong')
             self.wrong+=1
-            self.wrong()
+            self.totallyWrong()
             
             
     def subtract(self):
@@ -107,14 +107,14 @@ class Calculator():
             self.wrong+=1
             
             
-        def wrong():
-            gpio.output(26,True)
-            for i in range(5):
-                gpio.output(12,True)
-                time.sleep(0.25)
-                gpio.output(12,False)
-                time.sleep(0.25)
-            gpio.output(26,False)
+    def totallyWrong(self):
+        gpio.output(26,True)
+        for i in range(5):
+            gpio.output(12,True)
+            time.sleep(0.25)
+            gpio.output(12,False)
+            time.sleep(0.25)
+         gpio.output(26,False)
             
             
             
