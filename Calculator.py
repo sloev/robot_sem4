@@ -129,8 +129,8 @@ class Calculator():
         else:
             print("Invalid number!")
         
-        print("you had"+str(self.correct)+"correct answers")
-        print("you had"+str(self.wrong)+"wrong answers")
+        print("you had "+str(self.correct)+" correct answers")
+        print("you had "+str(self.wrong)+" wrong answers")
                 
     
 def main():
