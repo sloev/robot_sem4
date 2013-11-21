@@ -22,6 +22,7 @@ class TurnThread():
         self.left=left
         self.right=right
         self.funcDict={
+                       -1:self.goInto,
                        1 : self.goStraight,
                        2 : self.turnRight,
                        3 : self.turn180,
@@ -61,11 +62,19 @@ class TurnThread():
     def goStraight(self):
         self.logger.info("straight")
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
-        self.dual_motors.setPosition(self.stepsPrCell/2,self.stepsPrCell/2)
+        self.dual_motors.setPosition((self.stepsPrCell/3)*2,(self.stepsPrCell/3)*2)
         while(self.dual_motors.isBusy()):
             self.logger.info("straight")
             time.sleep(0.1)
         print("straight")
+    def goInto(self):
+        self.logger.info("straight")
+        self.dual_motors.setMotorParams(self.left, self.right, 1,1)
+        self.dual_motors.setPosition(self.stepsPrCell/2,self.stepsPrCell/2)
+        while(self.dual_motors.isBusy()):
+            self.logger.info("straight")
+            time.sleep(0.1)
+        print("straight")        
         
     def turn90(self,direction):
         self.dual_motors.softStop()
