@@ -114,7 +114,7 @@ class Calculator():
             time.sleep(0.25)
             gpio.output(12,False)
             time.sleep(0.25)
-         gpio.output(26,False)
+        gpio.output(26,False)
             
             
             
