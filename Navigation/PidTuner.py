@@ -169,7 +169,7 @@ class PidTuner():
             #debounce=self.wallChecker.compare()         
             'end of sampling section'
 #            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
-            print "walls="+str(walls)
+            #print "walls="+str(walls)
             if self.mode:#mapping mode
                 if(walls==[1, 1, 0]):
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
@@ -181,11 +181,11 @@ class PidTuner():
                         lol=self.turnThread.checkForTurn(-1)
                         sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                         walls=self.wallChecker.checkWalls(sample)  
-                    print "walls="+str(walls)
+                    #print "walls="+str(walls)
 
                     choice = self.mapping.getChoice(steps,walls)
                     lol=self.turnThread.checkForTurn(choice)
-                    print "choice=%d and turningSuccess=%d"%(choice,lol)
+                    #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     self.pid.reset()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
