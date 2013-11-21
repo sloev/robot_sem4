@@ -175,9 +175,9 @@ class PidTuner():
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     self.pid.doPid(sample)
                 else:
-                    lol=self.turnThread.checkForTurn(-1)
                     steps=self.stepCounter.getSteps()
                     if walls!=[1,1,1]:
+                        lol=self.turnThread.checkForTurn(-1)
                         sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                         walls=self.wallChecker.checkWalls(sample)  
                     print "walls="+str(walls)
