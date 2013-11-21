@@ -166,8 +166,7 @@ class Mapping():
         
         tmpWalls=self.wallsToInt([1,1,0])  
         cells=self.stepsToCells(steps)
-        if(self.startDirection==self.direction and self.startPosition == self.currentPosition):
-            cells+=1
+
         for i in range(cells):
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:

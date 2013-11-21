@@ -40,12 +40,14 @@ class PidTuner():
         dGain   right    h    n
            
     '''
+    stepsPrCell=6018
     def __init__(self):
         '''
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
         self.mode=1#mapping mode
+        self.firstCell=True
         direction=1
         self.left=not direction
         self.right=direction
@@ -176,6 +178,9 @@ class PidTuner():
                     self.pid.doPid(sample)
                 else:
                     steps=self.stepCounter.getSteps()
+                    if self.firstCell:
+                        steps+=self.stepsPrCell
+                        self.firstCell=False
                     print steps
                     self.stepCounter.resetSteps()
                     if walls!=[1,1,1]:
