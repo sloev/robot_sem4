@@ -177,8 +177,9 @@ class PidTuner():
                 else:
                     lol=self.turnThread.checkForTurn(-1)
                     steps=self.stepCounter.getSteps()
-                    sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
-                    walls=self.wallChecker.checkWalls(sample)  
+                    if walls!=[1,1,1]:
+                        sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
+                        walls=self.wallChecker.checkWalls(sample)  
                     print "walls="+str(walls)
 
                     choice = self.mapping.getChoice(steps,walls)
