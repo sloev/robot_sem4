@@ -188,7 +188,7 @@ class Mapping():
                 self.stack.pop()
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
-                self.direction=choice[1]
+                self.direction=choice[0]
             else:
                 pass
         else:
