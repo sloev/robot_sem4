@@ -51,7 +51,7 @@ class StepCounter():
     '''
     def getSteps(self):
         toCompute=[self.stepsLeft-self.old[0],self.stepsRight-self.old[1]]
-        return self._average(self.toCompute[0], self.toCompute[1])
+        return self._average(toCompute[0], toCompute[1])
     
     
 def main():
