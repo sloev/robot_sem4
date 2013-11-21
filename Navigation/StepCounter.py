@@ -48,6 +48,8 @@ class StepCounter():
             self.steps[0]=65535-self.old[0]+self.steps[0]
         if self.steps[1]<self.old[1]:
             self.steps[1]=65535-self.old[1]+self.steps[1]
+        self.steps[0]=self.steps[0]-self.old[0]
+        self.steps[1]=self.steps[1]-self.old[1]
         return (self.steps[0]+self.steps[1])/2
 
 def main():
