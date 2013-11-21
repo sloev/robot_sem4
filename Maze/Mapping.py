@@ -200,7 +200,7 @@ class Mapping():
             elif self.stack:
                 choice=self.stack.pop()
                 returnChoice=choice[3]
-                self.direction=choice[1]
+                self.direction=choice[0]
             else:
                 pass
         print(
