@@ -22,6 +22,7 @@ class Calculator():
         b = randrange(10)
         print('What is ' + str(a) + ' + ' + str(b))
         answer = raw_input("Enter your answer: ")
+        answer = int(answer)
         realAnswer = a + b
         if(answer==realAnswer):
             print('Correct')
@@ -36,6 +37,7 @@ class Calculator():
         b = randrange(10)
         print("what is" + str(a) + " - " + str(b))
         answer = raw_input("enter your answer: ")
+        answer = int(answer)
         realanswer = a - b
         if(answer==realanswer):
             print("correct")
@@ -50,6 +52,7 @@ class Calculator():
         print("what is: " + str(a) + " ^ " + str(2))
         realanswer =pow(a,2)
         answer = raw_input("enter your answer")
+        answer = int(answer)
         if(answer==realanswer):
             print("correct")
             self.correct+=1
@@ -67,6 +70,7 @@ class Calculator():
         print("what is" +str(a) + " * "  + str(b))
         realanswer = a * b
         answer = raw_input("enter your answer")
+        answer = int(answer)
         if(answer==realanswer):
             print("correct")
             self.correct+=1
@@ -81,6 +85,7 @@ class Calculator():
         print("what is" + str(a) + " / " + str(b))
         realanswer = a / b
         answer = raw_input("enter your answer")
+        answer = int(answer)
         if(answer==realanswer):
             print("correct")
             self.correct+=1
