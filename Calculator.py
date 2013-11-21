@@ -33,15 +33,13 @@ class Calculator():
             self.correct+=1
             gpio.output(16,True)
             gpio.output(12,True)
-            time.sleep(2)
+            time.sleep(1)
             gpio.output(16,False)
             gpio.output(12,False)
         else:
             print('Wrong')
             self.wrong+=1
-            gpio.output(26,True)
-            time.sleep(2)
-            gpio.output(26,False)
+            self.wrong()
             
             
     def subtract(self):
@@ -57,6 +55,9 @@ class Calculator():
         else:
             print("wrong")
             self.wrong+=1
+            
+            gpio.output(26,False)
+            gpio.output(16,False)
             
             
     def pow(self):
@@ -104,6 +105,17 @@ class Calculator():
         else:
             print("wrong")
             self.wrong+=1
+            
+            
+        def wrong():
+            gpio.output(26,True)
+            for i in range(5):
+                gpio.output(12,True)
+                time.sleep(0.25)
+                gpio.output(12,False)
+                time.sleep(0.25)
+            gpio.output(26,False)
+            
             
             
     
