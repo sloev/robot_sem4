@@ -182,7 +182,7 @@ class PidTuner():
                         steps+=self.stepsPrCell
                         self.firstCell=False
                     else:
-                        steps-=self.stepsPrCell
+                        pass#steps-=self.stepsPrCell
                     print steps
                     if walls!=[1,1,1]:
                         lol=self.turnThread.checkForTurn(-1)
