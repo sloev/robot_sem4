@@ -9,7 +9,7 @@ class Mapping():
     '''
     classdocs
     '''
-    stepsPrCell=6018
+    stepsPrCell=5500
 
     def __init__(self):
         self.mode=0#mapping mode
@@ -217,11 +217,7 @@ class Mapping():
         if returnChoice!=0:
             pass
         self.currentPosition=self.funcDict[self.direction](self.currentPosition)
-        print(
-              str(self.currentPosition)
-              +"\tdirection="+str(self.direction)
-              +"\tm-walls="+str(missingWalls)+"\tunex="+str(unexploredCells)+"\t"
-              )
+
         self.lastPosition=self.currentPosition
 
         return returnChoice
