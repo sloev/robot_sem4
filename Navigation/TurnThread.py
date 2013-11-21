@@ -61,7 +61,7 @@ class TurnThread():
     def goStraight(self):
         self.logger.info("straight")
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
-        self.dual_motors.setPosition(self.stepsPrCell,self.stepsPrCell)
+        self.dual_motors.setPosition(self.stepsPrCell/2,self.stepsPrCell/2)
         while(self.dual_motors.isBusy()):
             self.logger.info("straight")
             time.sleep(0.1)
@@ -76,11 +76,11 @@ class TurnThread():
         print("Driving out to turn")
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition(3600, 3580)
-        
-        while(self.dual_motors.isBusy()):
-            self.logger.info("turning")
-            time.sleep(0.1)
+#         self.dual_motors.setPosition(3600, 3580)
+#         
+#         while(self.dual_motors.isBusy()):
+#             self.logger.info("turning")
+#             time.sleep(0.1)
 
         print "Turning 90 NOW"
         self.dual_motors.turn90(direction,2)
