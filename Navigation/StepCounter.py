@@ -19,7 +19,7 @@ class StepCounter():
     def __init__(self):
         self.stepsLeft = 0
         self.stepsRight = 0
-        self.old=0
+        self.old=[0,0]
     
     '''
         Callable
