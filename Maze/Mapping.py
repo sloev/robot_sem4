@@ -96,7 +96,7 @@ class Mapping():
         east=0
         south=0
         west=0
-        if(self.startDirection==self.direction and self.startPosition == self.currentPosition):
+        if(self.startDirection==self.direction and self.startPosition == self.currentPosition):#south
             north=1
             east=walls[0]
             south=walls[2]
@@ -113,10 +113,10 @@ class Mapping():
                 south=walls[1]
                 north=walls[0]
             elif(self.direction==2):#south
-                west=walls[1]
+                north=0
                 east=walls[0]
                 south=walls[2]
-                north=0
+                west=walls[1]
             else:#west
                 west=walls[2]
                 east=0
