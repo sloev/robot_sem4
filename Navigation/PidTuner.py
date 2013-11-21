@@ -45,7 +45,7 @@ class PidTuner():
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
-        self.mode=1#mapping mode
+        self.mode=0#mapping mode
         direction=1
         self.left=not direction
         self.right=direction
