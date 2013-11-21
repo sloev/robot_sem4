@@ -203,11 +203,6 @@ class Mapping():
                 self.direction=choice[0]
             else:
                 pass
-        print(
-              str(self.currentPosition)
-              +"\tdirection="+str(self.direction)
-              +"\tm-walls="+str(missingWalls)+"\tunex="+str(unexploredCells)+"\t"
-              )
 #         print (
 #                "cells="+str(cells)
 #                +" "+str(self.currentPosition)
@@ -222,7 +217,11 @@ class Mapping():
         if returnChoice!=0:
             pass
         self.currentPosition=self.funcDict[self.direction](self.currentPosition)
-
+        print(
+              str(self.currentPosition)
+              +"\tdirection="+str(self.direction)
+              +"\tm-walls="+str(missingWalls)+"\tunex="+str(unexploredCells)+"\t"
+              )
         self.lastPosition=self.currentPosition
 
         return returnChoice

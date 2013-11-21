@@ -67,6 +67,7 @@ class TurnThread():
             self.logger.info("straight")
             time.sleep(0.1)
         print("straight")
+        
     def goInto(self):
         self.logger.info("straight")
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
