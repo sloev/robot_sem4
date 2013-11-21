@@ -36,7 +36,6 @@ class TurnThread():
             self.funcDict[choice]()
             return 1
         return 0
-
             
     def turnLeft(self):
         self.logger.info("left")

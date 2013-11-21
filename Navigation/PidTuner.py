@@ -45,7 +45,7 @@ class PidTuner():
         direction:
         if direction is 1 then the robot drives in the direction of its sensor head
         '''
-        self.mode=0#mapping mode
+        self.mode=1#mapping mode
         direction=1
         self.left=not direction
         self.right=direction
@@ -169,15 +169,16 @@ class PidTuner():
             #debounce=self.wallChecker.compare()         
             'end of sampling section'
 #            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
-
+            print "walls="+str(walls)
             if self.mode:#mapping mode
-                if(walls==[1, 1, 1]):
+                if(walls==[1, 1, 0]):
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     self.pid.doPid(sample)
                 else:
                     choice = self.mapping.getChoice(walls, self.stepCounter.getSteps())
                     self.stepCounter.resetSteps()
-                    self.turnThread.checkForTurn(choice)
+                    lol=self.turnThread.checkForTurn(choice)
+                    print "choice=%d and turningSuccess=%d"%(choice,lol)
                     self.pid.reset()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
