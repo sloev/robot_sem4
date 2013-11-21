@@ -11,7 +11,7 @@ from fileinput import input
 
 class Calculator():
     
-
+    gpio.setmode(gpio.BOARD) 
     gpio.setup(16, gpio.OUT)
     gpio.setup(26, gpio.OUT)
 
