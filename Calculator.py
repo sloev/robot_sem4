@@ -6,7 +6,7 @@ Created on 21/11/2013
 
 from random import randrange
 from fileinput import input
-from test.test_lzma import INPUT
+
 
 class Calculator():
     
