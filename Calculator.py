@@ -95,7 +95,7 @@ class Calculator():
         
         print("Welcome to Daniel Hansen calculator!")
         print(" ")
-        number = input("How many calculations do you want?")
+        number = raw_input("How many calculations do you want?")
         print("1: addition")
         print("2: subtraction")
         print("3: multiplication")
