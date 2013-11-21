@@ -118,7 +118,9 @@ class Calculator():
     
     def calculations(self):
         
-        print("Welcome to Daniel Hansen calculator!")
+        print("******************************************")
+        print("*  Welcome to Daniel Hansen calculator!  *")
+        print("******************************************")
         print(" ")
         number = raw_input("How many calculations do you want?")
         number = int(number)
