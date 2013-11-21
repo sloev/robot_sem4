@@ -21,7 +21,7 @@ class Calculator():
         a = randrange(10)
         b = randrange(10)
         print('What is ' + str(a) + ' + ' + str(b))
-        answer = input("Enter your answer: ")
+        answer = raw_input("Enter your answer: ")
         realAnswer = a + b
         if(answer==realAnswer):
             print('Correct')
@@ -35,7 +35,7 @@ class Calculator():
         a = randrange(10)
         b = randrange(10)
         print("what is" + str(a) + " - " + str(b))
-        answer = input ("enter your answer: ")
+        answer = raw_input("enter your answer: ")
         realanswer = a - b
         if(answer==realanswer):
             print("correct")
@@ -49,7 +49,7 @@ class Calculator():
         a = randrange(12)
         print("what is: " + str(a) + " ^ " + str(2))
         realanswer =pow(a,2)
-        answer = input("enter your answer")
+        answer = raw_input("enter your answer")
         if(answer==realanswer):
             print("correct")
             self.correct+=1
@@ -66,7 +66,7 @@ class Calculator():
         b = randrange(10)
         print("what is" +str(a) + " * "  + str(b))
         realanswer = a * b
-        answer = input ("enter your answer")
+        answer = raw_input("enter your answer")
         if(answer==realanswer):
             print("correct")
             self.correct+=1
@@ -80,7 +80,7 @@ class Calculator():
         b = randrange
         print("what is" + str(a) + " / " + str(b))
         realanswer = a / b
-        answer = input ("enter your answer")
+        answer = raw_input("enter your answer")
         if(answer==realanswer):
             print("correct")
             self.correct+=1
@@ -102,7 +102,7 @@ class Calculator():
         print("4: division")
         print("5: pow")
         print(" ")
-        choice = input("Enter your choice: ")
+        choice = raw_input("Enter your choice: ")
          
         if(choice==1):
             for i in range(number):
