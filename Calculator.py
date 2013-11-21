@@ -105,11 +105,11 @@ class Calculator():
             
     def totallyWrong(self):
         gpio.output(26,True)
-        for i in range(100):
+        for i in range(500):
             gpio.output(12,True)
-            time.sleep(0.01)
+            time.sleep(0.001)
             gpio.output(12,False)
-            time.sleep(0.01)
+            time.sleep(0.001)
         gpio.output(26,False)
                 
     
