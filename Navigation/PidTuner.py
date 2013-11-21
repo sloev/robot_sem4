@@ -176,6 +176,7 @@ class PidTuner():
                     self.pid.doPid(sample)
                 else:
                     steps=self.stepCounter.getSteps()
+                    print steps
                     self.stepCounter.resetSteps()
                     if walls!=[1,1,1]:
                         lol=self.turnThread.checkForTurn(-1)
