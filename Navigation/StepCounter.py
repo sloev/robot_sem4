@@ -41,7 +41,8 @@ class StepCounter():
         *Private function*
     '''
     def _average(self, stepsLeft, stepsRight):
-        return (stepsLeft + stepsRight) / 2
+        value= (stepsLeft + stepsRight) / 2
+        return value
         
     
     '''
