@@ -259,9 +259,9 @@ class Mapping():
         if self.direction in posibilities:
             return [back,self.direction,1,1] # som i [til brug, til stack, til turnthread]
         elif right in posibilities:
-            return [left,right,4,2]
+            return [left,right,2,4]
         elif left in posibilities:
-            return [right,left,2,4]
+            return [right,left,4,2]
         lol=[self.direction,back,1,3]
         #self.stack.append(lol)
         #self.stack.append(lol)
