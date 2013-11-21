@@ -206,19 +206,18 @@ class Mapping():
               str(self.currentPosition)
               +"\tdirection="+str(self.direction)
               +"\tm-walls="+str(missingWalls)+"\tunex="+str(unexploredCells)+"\t"
-              +str(self.stack)
               )
-        print (
-               "cells="+str(cells)
-               +" "+str(self.currentPosition)
-               +"\tdirection="+str(self.direction)
-               +"\twalls="+str(walls)+
-               "  \tglobalWalls="
-               +str(globalWalls)
-               +"\tm-walls="+str(missingWalls)+"    "
-               +"\tchoice="+str(choice)
-               +"  \tR-Choice="+str(returnChoice)
-               )
+#         print (
+#                "cells="+str(cells)
+#                +" "+str(self.currentPosition)
+#                +"\tdirection="+str(self.direction)
+#                +"\twalls="+str(walls)+
+#                "  \tglobalWalls="
+#                +str(globalWalls)
+#                +"\tm-walls="+str(missingWalls)+"    "
+#                +"\tchoice="+str(choice)
+#                +"  \tR-Choice="+str(returnChoice)
+#                )
         if returnChoice!=0:
             pass
         self.currentPosition=self.funcDict[self.direction](self.currentPosition)
