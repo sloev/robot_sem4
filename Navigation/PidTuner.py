@@ -179,7 +179,7 @@ class PidTuner():
                 else:
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
-                        steps+=self.stepsPrCell
+                        pass#steps+=self.stepsPrCell
                         self.firstCell=False
                     else:
                         pass#steps-=self.stepsPrCell
