@@ -182,7 +182,6 @@ class PidTuner():
                         steps+=self.stepsPrCell
                         self.firstCell=False
                     print steps
-                    self.stepCounter.resetSteps()
                     if walls!=[1,1,1]:
                         lol=self.turnThread.checkForTurn(-1)
                         sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
@@ -193,6 +192,7 @@ class PidTuner():
                     lol=self.turnThread.checkForTurn(choice)
                     #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     self.pid.reset()
+                    self.stepCounter.resetSteps()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
                 self.stepCounter.resetSteps()
