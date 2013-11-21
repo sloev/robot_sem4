@@ -17,43 +17,39 @@ class StepCounter():
         Constructor
     '''
     def __init__(self):
-        self.stepsLeft = 0
-        self.stepsRight = 0
+        self.steps=[0,0]
         self.old=[0,0]
     
     '''
         Callable
     '''
     def __call__(self, steps):
-        self.stepsLeft = steps[left]
-        self.stepsRight = steps[right]
-    
-   
+        self.steps=steps
+        
     '''
         Reset step instance variables
     '''
     def resetSteps(self):
-        self.old=[self.stepsLeft,self.stepsRight]
-        self.stepsLeft = 0
-        self.stepsRight = 0
+        self.old=self.steps
+        self.steps=[0,0]
+
     
     '''
         Calculate average steps using both wheels.
         *Private function*
     '''
-    def _average(self, stepsLeft, stepsRight):
-        value= (stepsLeft + stepsRight) / 2
-        return value
-        
+
     
     '''
         Get average steps
     '''
     def getSteps(self):
-        toCompute=[self.stepsLeft-self.old[0],self.stepsRight-self.old[1]]
-        return self._average(toCompute[0], toCompute[1])
-    
-    
+        if self.steps[0]<self.old[0]:
+            self.steps[0]=65535-self.old[0]+self.steps[0]
+        if self.steps[1]<self.old[1]:
+            self.steps[1]=65535-self.old[1]+self.steps[1]
+        return (self.steps[0]+self.steps[1])/2
+
 def main():
     test = StepCounter()
     test([5000, 7500])
