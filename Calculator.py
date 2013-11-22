@@ -12,11 +12,13 @@ from fileinput import input
 class Calculator():
     
     gpio.setmode(gpio.BOARD) 
-    gpio.setup(16, gpio.OUT)
+    gpio.setup(16, gpio.OUT) 'green'
     gpio.setwarnings(False)
-    gpio.setup(26, gpio.OUT)
+    gpio.setup(26, gpio.OUT) 
     gpio.setwarnings(False)
     gpio.setup(12, gpio.OUT)
+    gpio.setwarnings(False)
+    gpio.setup(10, gpio.IN)
     gpio.setwarnings(False)
 
     def __init__(self):
@@ -76,7 +78,6 @@ class Calculator():
             self.wrong+=1
             self.totallyWrong()
  
- 
     def multiply(self):
         a = randrange(10)
         b = randrange(10)
@@ -124,7 +125,14 @@ class Calculator():
         time.sleep(0.5)
         gpio.output(16,False)
         gpio.output(12,False)
-                
+    
+    def button(self):
+        if gpio.input(10, True)
+            gpio.output(24, True)
+            time.slep(1)
+            gpio.output(10,False)
+        else pass
+                         
     
     def calculations(self):
         
