@@ -131,12 +131,11 @@ class Calculator():
     def button(self):
         if gpio.input(10, True):
             gpio.output(24, True)
-            time.slep(1)
+            time.sleep(1)
             gpio.output(24,False)
         else:
             pass
                          
-    
     def calculations(self):
         
         print("******************************************")
