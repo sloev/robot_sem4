@@ -133,7 +133,8 @@ class Calculator():
             gpio.output(24, True)
             time.slep(1)
             gpio.output(24,False)
-        else pass
+        else:
+            pass
                          
     
     def calculations(self):
