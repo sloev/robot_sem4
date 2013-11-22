@@ -132,7 +132,7 @@ class Calculator():
         if gpio.input(10, True):
             gpio.output(24, True)
             time.slep(1)
-            gpio.output(10,False)
+            gpio.output(24,False)
         else pass
                          
     
