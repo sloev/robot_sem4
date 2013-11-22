@@ -34,11 +34,8 @@ class Calculator():
         if(answer==realAnswer):
             print('Correct')
             self.correct+=1
-            gpio.output(16,True)
-            gpio.output(12,True)
-            time.sleep(1)
-            gpio.output(16,False)
-            gpio.output(12,False)
+            self.totallyCorrect()
+            
         else:
             print('Wrong')
             self.wrong+=1
@@ -55,9 +52,11 @@ class Calculator():
         if(answer==realanswer):
             print("correct")
             self.correct+=1
+            self.totallyCorrect()
         else:
             print("wrong")
             self.wrong+=1
+            self.totallyWrong()
             
             gpio.output(26,False)
             gpio.output(16,False)
@@ -71,9 +70,11 @@ class Calculator():
         if(answer==realanswer):
             print("correct")
             self.correct+=1
+            self.totallyCorrect()
         else:
             print("wrong")
             self.wrong+=1
+            self.totallyWrong()
  
  
     def multiply(self):
@@ -86,10 +87,11 @@ class Calculator():
         if(answer==realanswer):
             print("correct")
             self.correct+=1
+            self.totallyCorrect()
         else:
             print("wrong")
             self.wrong+=1
-            
+            self.totallyWrong()
           
     def divide(self):
         a = randrange
@@ -101,10 +103,11 @@ class Calculator():
         if(answer==realanswer):
             print("correct")
             self.correct+=1
+            self.totallyCorrect()
         else:
             print("wrong")
             self.wrong+=1
-            
+            self.totallyWrong()
             
     def totallyWrong(self):
         gpio.output(26,True)
@@ -114,6 +117,13 @@ class Calculator():
             gpio.output(12,False)
             time.sleep(0.001)
         gpio.output(26,False)
+        
+    def totallyCorrect(self):
+        gpio.output(16,True)
+        gpio.output(12,True)
+        time.sleep(0.5)
+        gpio.output(16,False)
+        gpio.output(12,False)
                 
     
     def calculations(self):
