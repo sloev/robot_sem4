@@ -141,7 +141,7 @@ class Calculator():
                 
     def debounce(self):
         if gpio.input(8):
-            time.sleep(0.2)
+            time.sleep(0.5)
             if gpio.input(8):
                 return 1
         else: return 0
@@ -182,11 +182,11 @@ class Calculator():
                     for i in range(number):
                         self.pow()                
         
-            else:
-                print("Invalid number!")
+                else:
+                    print("Invalid number!")
             
-            print("you had "+str(self.correct)+" correct answers")
-            print("you had "+str(self.wrong)+" wrong answers")
+                print("you had "+str(self.correct)+" correct answers")
+                print("you had "+str(self.wrong)+" wrong answers")
                 
     
 def main():
