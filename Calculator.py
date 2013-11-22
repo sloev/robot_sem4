@@ -129,12 +129,11 @@ class Calculator():
         gpio.output(12,False)
     
     def button(self):
-        if gpio.input(8, True):
-            gpio.output(22, True)
-            time.sleep(1)
-            gpio.output(22,False)
-        else:
-            pass
+        while True:
+            if gpio.input(8, True):
+                gpio.output(22, True)
+                time.sleep(1)
+                gpio.output(22,False)
                          
     def calculations(self):
         
