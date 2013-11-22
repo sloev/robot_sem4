@@ -177,7 +177,8 @@ class Calculator():
     
 def main():
     calculater=Calculator()
-    calculater.calculations()
+    #calculater.calculations()
+    calculater.button()
     
 if __name__ == '__main__':
     main()
