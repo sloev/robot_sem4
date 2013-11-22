@@ -18,7 +18,7 @@ class Calculator():
     gpio.setwarnings(False)
     gpio.setup(12, gpio.OUT)
     gpio.setwarnings(False)
-    gpio.setup(10, gpio.IN)
+    gpio.setup(8, gpio.IN)
     gpio.setwarnings(False)
     gpio.setup(22, gpio.OUT)
     gpio.setwarnings(False)
@@ -129,7 +129,7 @@ class Calculator():
         gpio.output(12,False)
     
     def button(self):
-        if gpio.input(10, True):
+        if gpio.input(8, True):
             gpio.output(22, True)
             time.sleep(1)
             gpio.output(22,False)
