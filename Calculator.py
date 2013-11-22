@@ -131,10 +131,19 @@ class Calculator():
     
     def button(self):
         while True:
-            if gpio.input(8):
+            if self.debounce():
                 gpio.output(22, True)
-                time.sleep(1)
+                self.totallyWrong()
+                time.sleep(2)
                 gpio.output(22,False)
+                
+    def debounce(self):
+        if gpio.input(8):
+            time.sleep(0.1)
+            if gpio.input(8):
+                return 1
+        else: return 0
+                
                          
     def calculations(self):
         
