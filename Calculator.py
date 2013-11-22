@@ -136,6 +136,8 @@ class Calculator():
                 self.totallyWrong()
                 time.sleep(2)
                 gpio.output(22,False)
+                return 1
+            return 0
                 
     def debounce(self):
         if gpio.input(8):
