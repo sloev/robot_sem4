@@ -124,6 +124,7 @@ class Calculator():
     def totallyCorrect(self):
         gpio.output(16,True)
         gpio.output(12,True)
+        gpio.output(22, True)
         time.sleep(0.5)
         gpio.output(16,False)
         gpio.output(12,False)
