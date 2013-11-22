@@ -139,7 +139,7 @@ class Calculator():
                 
     def debounce(self):
         if gpio.input(8):
-            time.sleep(0.1)
+            time.sleep(0.2)
             if gpio.input(8):
                 return 1
         else: return 0
