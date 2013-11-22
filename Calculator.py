@@ -146,48 +146,51 @@ class Calculator():
                 
                          
     def calculations(self):
-        
-        print("******************************************")
-        print("*  Welcome to Daniel Hansen calculator!  *")
-        print("******************************************")
-        print(" ")
-        number = raw_input("How many calculations do you want?")
-        number = int(number)
-        print("1: addition")
-        print("2: subtraction")
-        print("3: multiplication")
-        print("4: division")
-        print("5: pow")
-        print(" ")
-        choice = raw_input("Enter your choice: ")
-        choice = int(choice)
+        while True:
+            if(self.button()):
+                print("******************************************")
+                print("*  Welcome to Daniel Hansen calculator!  *")
+                print("******************************************")
+                print(" ")
+                number = raw_input("How many calculations do you want?")
+                number = int(number)
+                print("1: addition")
+                print("2: subtraction")
+                print("3: multiplication")
+                print("4: division")
+                print("5: pow")
+                print(" ")
+                choice = raw_input("Enter your choice: ")
+                choice = int(choice)
          
-        if(choice==1):
-            for i in range(number):
-                self.add()
-        elif(choice==2):
-            for i in range(number):
-                self.subtract()
-        elif(choice==3):
-            for i in range(number):
-                self.multiply()
-        elif(choice==4):
-            for i in range(number):
-                self.divide()
-        elif(choice==5):
-            for i in range(number):
-                self.pow()                
-        else:
-            print("Invalid number!")
+                if(choice==1):
+                    for i in range(number):
+                        self.add()
+            
+                elif(choice==2):
+                    for i in range(number):
+                        self.subtract()
+                elif(choice==3):
+                    for i in range(number):
+                        self.multiply()
+                elif(choice==4):
+                    for i in range(number):
+                        self.divide()
+                elif(choice==5):
+                    for i in range(number):
+                        self.pow()                
         
-        print("you had "+str(self.correct)+" correct answers")
-        print("you had "+str(self.wrong)+" wrong answers")
+            else:
+                print("Invalid number!")
+            
+            print("you had "+str(self.correct)+" correct answers")
+            print("you had "+str(self.wrong)+" wrong answers")
                 
     
 def main():
     calculater=Calculator()
-    #calculater.calculations()
-    calculater.button()
+    calculater.calculations()
+    #calculater.button()
     
 if __name__ == '__main__':
     main()
