@@ -129,7 +129,7 @@ class Calculator():
         gpio.output(12,False)
     
     def button(self):
-        if gpio.input(10, True)
+        if gpio.input(10, True):
             gpio.output(24, True)
             time.slep(1)
             gpio.output(10,False)
