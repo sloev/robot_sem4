@@ -34,6 +34,7 @@ class TurnThread():
     
     def checkForTurn(self,choice):
         if choice in self.funcDict:
+            self.dual_motors.setAccelerations(self.left, self.right, 2)
             self.funcDict[choice]()
             return 1
         return 0
@@ -51,7 +52,6 @@ class TurnThread():
     def turn180(self):
         print("turning180")
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-        self.dual_motors.setAccelerations(self.left, self.right, 1)
 
         self.logger.info("180")
         self.dual_motors.softStop()
@@ -70,9 +70,8 @@ class TurnThread():
     def goInto(self):
         self.logger.info("gointo")
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
-        self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.softStop()
-        self.dual_motors.setPosition((self.stepsPrCell/2)+500,(self.stepsPrCell/2)+500)
+        #self.dual_motors.softStop()
+        self.dual_motors.setPosition((self.stepsPrCell/2)+530,(self.stepsPrCell/2)+500)
         while(self.dual_motors.isBusy()):
             self.logger.info("gointo")
             time.sleep(0.1)
