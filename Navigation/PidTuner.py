@@ -203,6 +203,7 @@ class PidTuner():
                 self.stepCounter.resetSteps()
                 if not self.turnThread.checkForTurn(choice[1]):
                     self.stepCounter(self.dual_motors.setPosition(choice[0], choice[0]))
+                    self.dual_motors.setAccelerations(self.left, self.right, 5)
                     self.pid.doPid(sample)
                 else:
                     self.pid.reset()
