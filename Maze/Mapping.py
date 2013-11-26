@@ -215,7 +215,7 @@ class Mapping():
 #                )
         if returnChoice!=0:
             pass
-        self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+        #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
 
         print(
               "dir="+str(self.direction)
