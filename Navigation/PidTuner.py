@@ -191,6 +191,8 @@ class PidTuner():
                     #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     if choice==0:
                         self.mode=0
+                        print "mapped Ok waiting for instructions\n heres the maze:"
+                        print self.mapping.getMaze()
                     self.pid.reset()
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
