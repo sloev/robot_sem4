@@ -92,8 +92,8 @@ class Mapping():
     def stepsToCells(self,steps):
         cells=steps/self.stepsPrCell
         decimals=cells % 1
-        if decimals > 0.55:
-            cells=int(round(cells))
+        if decimals > 0.40:
+            cells=int(cells)+1
         else:
             cells=int(cells)
         self.logger.info("cells/"+str(cells))
