@@ -160,7 +160,7 @@ class PidTuner():
     def doPid(self):
         try:
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-            self.dual_motors.setAccelerations(self.left, self.right, 5)
+            self.dual_motors.setAccelerations(self.left, self.right, 3)
 
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
