@@ -201,12 +201,7 @@ class PidTuner():
                         while(self.dual_motors.isBusy()):
                             self.pid.doPid(sample)
                             self.logger.info("driving out of 180")
-                            time.sleep(0.25)
-
-        
-        while(self.dual_motors.isBusy()):
-            self.logger.info("turning")
-            time.sleep(0.1)
+                            time.sleep(0.25)        
                     self.pid.reset()
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
