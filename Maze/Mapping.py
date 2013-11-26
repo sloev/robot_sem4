@@ -165,6 +165,8 @@ class Mapping():
         return returnChoice
 
     def mappingChoice(self,steps,walls):
+        self.logger.info("directionIn/"+str(self.direction))
+
         func=self.funcDict[self.direction]
         
         tmpWalls=self.wallsToInt([1,1,0])  
@@ -191,8 +193,8 @@ class Mapping():
 
         if len(missingWalls)==1:#180
             if self.stack:#still unexplored nodes
-                self.stack.pop()
                 self.logger.info("180")
+                #self.stack.pop()
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
@@ -235,6 +237,9 @@ class Mapping():
               +"\tpos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
               )
+        self.logger.info("returnChoice/"+str(returnChoice))
+        self.logger.info("currentpos/"+str(self.currentPosition))
+        self.logger.info("directionOut/"+str(self.direction))
 
         self.lastPosition=self.currentPosition
 
