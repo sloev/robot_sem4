@@ -71,14 +71,15 @@ class TurnThread():
         self.logger.info("gointo")
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition((self.stepsPrCell/5)*3,(self.stepsPrCell/5)*3)
-        while(self.dual_motors.isBusy()):
-            self.logger.info("gointo")
-            time.sleep(0.1)
         self.dual_motors.softStop()
         while(self.dual_motors.isBusy()):
             self.logger.info("gointo")
             time.sleep(0.1)
+        self.dual_motors.setPosition((self.stepsPrCell/5)*3,(self.stepsPrCell/5)*3)
+        while(self.dual_motors.isBusy()):
+            self.logger.info("gointo")
+            time.sleep(0.1)
+
         print("gointo")        
         
     def turn90(self,direction):
