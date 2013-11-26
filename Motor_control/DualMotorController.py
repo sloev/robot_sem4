@@ -51,7 +51,7 @@ class DualMotorController:
                 self.motorRight.setMotorParam(rightDir, rightMaxVel)
                 break
             except IOError:
-                print 'Error in setMotorParams'
+                pass#print 'Error in setMotorParams'
                 
                 
     def setAccelerations(self, leftDir, rightDir, acc):
@@ -62,7 +62,7 @@ class DualMotorController:
                 self.motorRight.setAcceleration(rightDir, acc)
                 break
             except IOError:
-                print 'Error in setAcceleration'
+                pass#print 'Error in setAcceleration'
         
     
     def getFullStatus1(self):
@@ -72,7 +72,7 @@ class DualMotorController:
                 var=[self.motorLeft.getFullStatus1(),self.motorRight.getFullStatus1()]
                 break
             except IOError:
-                print 'Error in GFS1'
+                pass#print 'Error in GFS1'
         return var
     
     def getFullStatus2(self):
@@ -83,7 +83,7 @@ class DualMotorController:
                 right=self.motorRight.getFullStatus2()
                 break
             except IOError:
-                print "GF2Error"
+                pass#print "GF2Error"
         var=[left,right]
         self.logger.info("/left/fullstatus2/"+str(left))
         self.logger.info("/right/fullstatus2/"+str(right))
@@ -127,7 +127,7 @@ class DualMotorController:
                 self.motorRight.setPosition(positionRight)
                 break
             except IOError:
-                print 'Error in setPosition'
+                pass#print 'Error in setPosition'
                 
         return [actPosLeft, actPosRight]
     
@@ -138,7 +138,7 @@ class DualMotorController:
                 self.motorRight.resetPosition()
                 break
             except IOError:
-                print 'Error in resetPosition'
+                pass#print 'Error in resetPosition'
         
     def getOfflinePosition(self):
         return [self.positionLeft,self.positionRight]
