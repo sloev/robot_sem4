@@ -40,7 +40,7 @@ class PidTuner():
         dGain   right    h    n
            
     '''
-    stepsPrCell=5000
+    stepsPrCell=5600
     def __init__(self):
         '''
         direction:
