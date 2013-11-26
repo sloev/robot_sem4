@@ -90,9 +90,9 @@ class Mapping():
         return 1
     
     def stepsToCells(self,steps):
-        cells=steps/self.stepsPrCell
+        cells=(steps*1.0)/(self.stepsPrCell*1.0)
         decimals=cells % 1
-        if decimals > 0.40:
+        if decimals > 0.70:
             cells=int(cells)+1
         else:
             cells=int(cells)
