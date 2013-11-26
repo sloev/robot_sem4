@@ -191,7 +191,7 @@ class Mapping():
 
         if len(missingWalls)==1:#180
             if self.stack:#still unexplored nodes
-                #self.stack.pop()
+                self.stack.pop()
                 self.logger.info("180")
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
