@@ -175,7 +175,6 @@ class Mapping():
         func=self.funcDict[self.direction]
         
         tmpWalls=self.wallsToInt([1,1,0]) 
-        globalWalls=self.wallsToInt(walls)            
         cells=self.stepsToCells(steps)+1
 
         for i in range(cells):
@@ -186,6 +185,8 @@ class Mapping():
             self.currentPosition=func(self.currentPosition)
          
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
+        globalWalls=self.wallsToInt(walls)            
+
         if not tmp:
             self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
         #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
