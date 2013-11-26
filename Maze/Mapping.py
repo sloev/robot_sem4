@@ -177,12 +177,13 @@ class Mapping():
             self.currentPosition=func(self.currentPosition)
             
         globalWalls=self.wallsToInt(walls)            
-        tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
         
+        tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
         if not tmp:
             self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
         print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
-        
+        self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+
         missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
         unexploredCells=self.findUnexploredCells(self.currentPosition,missingWalls)
         
