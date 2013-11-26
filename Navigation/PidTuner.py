@@ -192,16 +192,10 @@ class PidTuner():
                     if choice==0:
                         self.mode=0
                         print "mapped Ok waiting for instructions\n heres the maze:"
-                        print self.mapping.getMaze()
-                    elif walls==[1,1,1]:
-                        print "Driving out of turn"   
-                        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                        #self.dual_motors.setAccelerations(self.left, self.right, 1)
-                        self.dual_motors.setPosition(3650, 3630)
-                        while(self.dual_motors.isBusy()):
-                            self.pid.doPid(sample)
-                            time.sleep(0.25)        
+                        print self.mapping.getMaze()     
                     self.pid.reset()
+                    if walls==[1,1,1]:
+                        self.stepCounter.resetSteps(-800)
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode

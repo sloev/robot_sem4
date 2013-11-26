@@ -29,10 +29,11 @@ class StepCounter():
     '''
         Reset step instance variables
     '''
-    def resetSteps(self):
-        self.steps=[0,0]
-
-    
+    def resetSteps(self,steps=0):
+        if steps:
+            self.steps=[steps,steps]
+        else:
+            self.steps=[0,0]
     '''
         Calculate average steps using both wheels.
         *Private function*
