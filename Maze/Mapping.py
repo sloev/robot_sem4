@@ -132,6 +132,7 @@ class Mapping():
         return [north,east,south,west]
                 
     def getChoice(self,steps=None,walls=None):
+        steps=steps-800
         if not self.mode:
             return self.mappingChoice(steps, walls)
         else:
