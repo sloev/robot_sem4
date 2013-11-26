@@ -72,9 +72,6 @@ class TurnThread():
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
         self.dual_motors.softStop()
-        while(self.dual_motors.isBusy()):
-            self.logger.info("gointo")
-            time.sleep(0.1)
         self.dual_motors.setPosition((self.stepsPrCell/2)+500,(self.stepsPrCell/2)+500)
         while(self.dual_motors.isBusy()):
             self.logger.info("gointo")
