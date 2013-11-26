@@ -179,10 +179,10 @@ class Mapping():
         cells=self.stepsToCells(steps)+1
 
         for i in range(cells):
+            tmpWalls=self.wallsToInt([1,1,0]) 
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
-            tmpWalls=self.wallsToInt([1,1,0]) 
             self.currentPosition=func(self.currentPosition)
          
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])

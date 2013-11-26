@@ -35,7 +35,7 @@ class TurnThread():
     
     def checkForTurn(self,choice):
         if choice in self.funcDict:
-            self.dual_motors.setAccelerations(self.left, self.right, 2)
+            #self.dual_motors.setAccelerations(self.left, self.right, 2)
             self.funcDict[choice]()
             return 1
         return 0
