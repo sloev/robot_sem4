@@ -104,7 +104,7 @@ class Mapping():
         east=0
         south=0
         west=0
-        if(self.startDirection==self.direction and self.startPosition == self.currentPosition):#south
+        if(self.startPosition == self.currentPosition):#south
             north=1
             east=walls[0]
             south=walls[2]
