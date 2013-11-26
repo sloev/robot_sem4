@@ -4,6 +4,7 @@ Created on Nov 15, 2013
 @author: johannes
 '''
 from Maze import Maze
+import logging
 
 class Mapping():
     '''
@@ -18,6 +19,8 @@ class Mapping():
         mode=0 er mapping
         mode=1 er goToPath
         '''
+        self.logger=logging.getLogger("robot.Mapping")
+        self.logger.info("Mapping initialised")
         self.mode=0#mapping
         self.maze=Maze()
         self.globalCompass=[0,1,2,3]#north/east/south/west
@@ -172,11 +175,14 @@ class Mapping():
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
             self.currentPosition=func(self.currentPosition)
+            
         globalWalls=self.wallsToInt(walls)            
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
+        
         if not tmp:
             self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
         print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
+        
         missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
         unexploredCells=self.findUnexploredCells(self.currentPosition,missingWalls)
         
@@ -185,6 +191,7 @@ class Mapping():
         if len(missingWalls)==1:#180
             if self.stack:#still unexplored nodes
                 self.stack.pop()
+                self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
                 self.direction=choice[1]
@@ -194,10 +201,12 @@ class Mapping():
             if unexploredCells:
                 choice=self.makeChoice(unexploredCells)
                 self.stack.append(choice)
+                self.logger.info("stack/"+str(self.stack))
                 returnChoice=choice[3]
                 self.direction=choice[1]
             elif self.stack:
                 choice=self.stack.pop()
+                self.logger.info("stack/"+str(self.stack))
                 returnChoice=choice[2]
                 self.direction=choice[0]
             else:
