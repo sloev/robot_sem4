@@ -212,9 +212,11 @@ class Mapping():
             elif self.stack:
                 self.logger.info("backtracking")
                 choice=self.stack.pop()
-                self.logger.info("stack/"+str(self.stack))
-                returnChoice=choice[2]
-                self.direction=choice[0]
+                if self.stack: 
+                    choiceDirection=self.stack[len(self.stack)-1]
+                    self.logger.info("stack/"+str(self.stack))
+                    returnChoice=choice[2]
+                    self.direction=choiceDirection[0]
             else:
                 pass
 #         print (
