@@ -69,13 +69,13 @@ class TurnThread():
         print("straight")
         
     def goInto(self):
-        self.logger.info("straight")
+        self.logger.info("gointo")
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
         self.dual_motors.setPosition(self.stepsPrCell/2,self.stepsPrCell/2)
         while(self.dual_motors.isBusy()):
-            self.logger.info("straight")
+            self.logger.info("gointo")
             time.sleep(0.1)
-        print("straight")        
+        print("gointo")        
         
     def turn90(self,direction):
         self.dual_motors.softStop()

@@ -162,41 +162,35 @@ class PidTuner():
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
             self.dual_motors.setAccelerations(self.left, self.right, 5)
 
-            #self.printGains()
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
 
-            #print sample
             walls=self.wallChecker.checkWalls(sample)  
-            #debounce=self.wallChecker.compare()         
             'end of sampling section'
-#            self.dual_motors.setMotorParams(self.left, self.right, 2,2)
-            #print "walls="+str(walls)
             if self.mode:#mapping mode
                 if(walls==[1, 1, 0]):
-                    self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     self.pid.doPid(sample)
+                    self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 else:
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
-                        pass#steps+=self.stepsPrCell
+                        steps+=self.stepsPrCell
                         self.firstCell=False
-                    else:
-                        pass#steps-=self.stepsPrCell
                     print steps
                     if walls==[1,1,1]:
                         choice = self.mapping.getChoice(steps,walls)
-                        lol=self.turnThread.checkForTurn(choice)
+                        self.turnThread.checkForTurn(choice)
                         #pass
                     else:
-                        lol=self.turnThread.checkForTurn(-1)
+                        self.turnThread.checkForTurn(-1)
                         sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                         walls=self.wallChecker.checkWalls(sample)  
                         choice = self.mapping.getChoice(steps,walls)
-                        lol=self.turnThread.checkForTurn(choice)
+                        self.turnThread.checkForTurn(choice)
 
                     #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     self.pid.reset()
+                    self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
