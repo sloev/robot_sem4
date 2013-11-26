@@ -40,7 +40,7 @@ class PidTuner():
         dGain   right    h    n
            
     '''
-    stepsPrCell=6018
+    stepsPrCell=6000
     def __init__(self):
         '''
         direction:
@@ -174,7 +174,7 @@ class PidTuner():
                 else:
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
-                        #steps+=self.stepsPrCell
+                        steps+=self.stepsPrCell
                         self.firstCell=False
                     print steps
                     if walls==[1,1,1]:
