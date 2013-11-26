@@ -220,18 +220,19 @@ def main():
 
     print("\
         used to tune the pid gain factors using keyboard input\
-        \    npress q to save\
-        \    ntune    wheel    +    -    \
-        \    npGain   left     a    z    \
-        \    npGain   right    s    x    \
-        \    ndGain   left     d    c    \
-        \    ndGain   right    f    v    \
-        \    niGain   left     g    b    \
-        \    niGain   right    h    n    \
+        \n    npress q to save\
+        \n    ntune    wheel    +    -    \
+        \n    npGain   left     a    z    \
+        \n    npGain   right    s    x    \
+        \n    ndGain   left     d    c    \
+        \n    ndGain   right    f    v    \
+        \n    niGain   left     g    b    \
+        \n    niGain   right    h    n    \
         ")
     try:
+        pidtuner.printGains()
         while True:
-            time.sleep(0.025)
+            time.sleep(0.05)
     
             # get keyboard input, returns -1 if none available
             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:

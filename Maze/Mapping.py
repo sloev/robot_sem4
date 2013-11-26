@@ -29,6 +29,7 @@ class Mapping():
                 
         self.startPosition =[0,0]
         self.currentPosition=self.startPosition#x,y
+        
         self.lastWas180=False
         self.lastPosition=self.currentPosition
         self.funcDict={
@@ -181,6 +182,7 @@ class Mapping():
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
+            tmpWalls=self.wallsToInt([1,1,0]) 
             self.currentPosition=func(self.currentPosition)
          
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
