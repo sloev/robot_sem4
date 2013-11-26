@@ -132,7 +132,6 @@ class Mapping():
         return [north,east,south,west]
                 
     def getChoice(self,steps=None,walls=None):
-        steps=steps-800
         if not self.mode:
             return self.mappingChoice(steps, walls)
         else:
@@ -174,7 +173,8 @@ class Mapping():
 
         func=self.funcDict[self.direction]
         
-        tmpWalls=self.wallsToInt([1,1,0])  
+        tmpWalls=self.wallsToInt([1,1,0]) 
+        globalWalls=self.wallsToInt(walls)            
         cells=self.stepsToCells(steps)+1
 
         for i in range(cells):
@@ -182,8 +182,6 @@ class Mapping():
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
             self.currentPosition=func(self.currentPosition)
-            
-        globalWalls=self.wallsToInt(walls)            
          
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
         if not tmp:
