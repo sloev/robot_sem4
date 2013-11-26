@@ -163,7 +163,7 @@ class IR_Sensors_Controller():
                 'Sensor is a side sensor'
                 if(j == 0 or 1):
                     'Gap detected wait until sensor input settles'
-                    while(reading > lastSamples[j]+4):
+                    while(reading > lastSamples[j]+6):
                         lastSamples[j] = reading
                         reading = self.lookupCm(self.extractRawDistance(self.readSensorBlock(channels[j], ConversionResultReg)))
                     distances[j] += reading
