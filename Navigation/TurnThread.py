@@ -75,6 +75,10 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("gointo")
             time.sleep(0.1)
+        self.dual_motors.softStop()
+        while(self.dual_motors.isBusy()):
+            self.logger.info("gointo")
+            time.sleep(0.1)
         print("gointo")        
         
     def turn90(self,direction):
