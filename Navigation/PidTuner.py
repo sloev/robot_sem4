@@ -174,7 +174,7 @@ class PidTuner():
                 else:
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
-                        #steps+=self.stepsPrCell
+                        steps+=self.stepsPrCell
                         self.firstCell=False
                     print steps
                     if walls==[1,1,1]:
