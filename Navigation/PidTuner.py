@@ -198,6 +198,7 @@ class PidTuner():
                         self.stepCounter.resetSteps(-800)
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
+                    print self.mapping.getMaze()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
                 self.stepCounter.resetSteps()
