@@ -75,7 +75,7 @@ class TurnThread():
         while(self.dual_motors.isBusy()):
             self.logger.info("gointo")
             time.sleep(0.1)
-        self.dual_motors.setPosition((self.stepsPrCell/5)*3,(self.stepsPrCell/5)*3)
+        self.dual_motors.setPosition((self.stepsPrCell/2)+500,(self.stepsPrCell/2)+500)
         while(self.dual_motors.isBusy()):
             self.logger.info("gointo")
             time.sleep(0.1)
