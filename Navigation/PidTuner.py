@@ -196,7 +196,7 @@ class PidTuner():
                     elif walls==[1,1,1]:
                         print "Driving out of turn"   
                         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                        self.dual_motors.setAccelerations(self.left, self.right, 1)
+                        #self.dual_motors.setAccelerations(self.left, self.right, 1)
                         self.dual_motors.setPosition(3650, 3630)
                         while(self.dual_motors.isBusy()):
                             self.pid.doPid(sample)
