@@ -181,7 +181,7 @@ class Mapping():
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
         if not tmp:
             self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
-        self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+        #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
 
         missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
