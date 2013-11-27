@@ -7,6 +7,8 @@ from PyQt4 import QtGui,QtCore
 
 from Maze.Maze import Maze
 from Maze.Dijkstra import Dijkstra
+import socket
+import json
 
 class MazeView(QtGui.QWidget):
     def __init__(self,maze=None,currentPos=None):
@@ -35,7 +37,7 @@ class MazeView(QtGui.QWidget):
             self.modeButton.move(0, 0)    
             
             self.sendPath = QtGui.QPushButton('sendPath', self)
-            #self.sendPath.clicked.connect(self.clientSendMaze)
+            self.sendPath.clicked.connect(self.clientSendPath)
             self.sendPath.resize(self.sendPath.sizeHint())
             self.sendPath.move(self.width-self.sendPath.sizeHint().width(), 0)
             self.sendPath.setEnabled(False)    
@@ -145,6 +147,16 @@ class MazeView(QtGui.QWidget):
         self.modeButton.setEnabled(False)
         self.mode=1
         
+    def clientSendPath(self):
+        stack= self.path.pathToStack()
+
+        data = {'message':"path","params":stack}
+        print"sending path:\n"+str(stack)
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientSocket.connect(self.address)
+        self.clientSocket.send(json.dumps(data))
+        self.clientSocket.close()
+        
     def findPath(self):
         pathTuple=self.dijkstra.search(self.source,self.target)
         path=pathTuple[0]
@@ -155,7 +167,8 @@ class MazeView(QtGui.QWidget):
         else:
             print"all paths the same="
             print path
-            print path.pathToStack()
             self.path=path
         self.visited=pathTuple[1]
+        self.sendPath.setEnabled(False)    
         self.repaint()
+        

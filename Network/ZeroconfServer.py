@@ -56,7 +56,7 @@ class ZeroconfTcpServer():
                         if data!=0:
                             func=self.server.eventHandlers.get(data.get("message"))
                             if func!=None:
-                                response=func()
+                                response=func(data.get("params"))
                                 print("sending")
                                 self.request.sendall(response)
                 except Exception:
@@ -75,8 +75,10 @@ def printNumber():
     rint=random.randint(0,999)
     return json.dumps({'number':rint})
 
+def printPath(a=False):
+    print a
 
-def printMaze():
+def printMaze(a=None):
     print "maze called"
     maze=Maze()
     maze.set(0,0,13)
@@ -121,6 +123,7 @@ def main():
     server=ZeroconfTcpServer()
     server.addHandler("number", printNumber)
     server.addHandler("maze", printMaze)
+    server.addHandler("path", printPath)
     
     server.initThreads()
     server.start()
