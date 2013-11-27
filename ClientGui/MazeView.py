@@ -197,7 +197,7 @@ class MazeView(QtGui.QWidget):
         self.clientSocket.close()
         self.visited=None
         self.path=None
-        self.repaint()
+        #self.repaint()
         print "closed socket"
         
     def findPath(self):

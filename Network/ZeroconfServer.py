@@ -91,7 +91,7 @@ class funktioner():
         else:
             print params
             returner= {'status':"success"}
-            self.currentPosition=[randint(0,4),randint(0,4)]
+            self.currentPosition=[randint(0,3),randint(0,3)]
             return json.dumps(returner)
             
     
