@@ -112,6 +112,7 @@ class MainGui(QtGui.QMainWindow):
             self.mazeView.show()
             
         self.clientSocket.close()
+
         print("closed socket")
         #print maze
         

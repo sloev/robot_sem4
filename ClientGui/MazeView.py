@@ -6,7 +6,7 @@ Created on Nov 13, 2013
 from PyQt4 import QtGui,QtCore
 
 from Maze.Maze import Maze
-from Maze.Dijkstra import Dijkstra
+from Maze.Dijkstra import Dijkstra,Graph
 import socket
 import json
 from random import randint
@@ -21,6 +21,8 @@ class MazeView(QtGui.QWidget):
         self.mode=-1
         if(maze!=None):
             self.mazeModel=maze
+            self.graph=Graph(self.mazeModel)
+
             QtGui.QWidget.__init__(self)
             self.modelWidth = self.mazeModel.getWidth()
             self.modelHeight = self.mazeModel.getHeight()
@@ -51,7 +53,6 @@ class MazeView(QtGui.QWidget):
             self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width()-self.sendPath.sizeHint().width(), 0)
             self.receiveCurrentPos.setEnabled(False)    
             
-            self.dijkstra=Dijkstra(self.mazeModel)
 
                     
     def paintEvent(self, event):
@@ -205,7 +206,8 @@ class MazeView(QtGui.QWidget):
         
     def findPath(self):
         print "lol"
-        pathTuple=self.dijkstra.search(self.source,self.target)
+        dijkstra=Dijkstra()
+        pathTuple=dijkstra(self.source,self.target,self.graph)
         path=pathTuple[0]
 
         print"made astar"
