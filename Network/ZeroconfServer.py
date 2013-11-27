@@ -139,7 +139,7 @@ def main():
     server=ZeroconfTcpServer()
     server.addHandler("number", printNumber)
     server.addHandler("maze", printMaze)
-    server.addHandler("path", printPath)
+    server.addHandler("path", receivePath)
     server.addHandler("currentPosition", sendCurrentPosition)
     
     server.initThreads()
