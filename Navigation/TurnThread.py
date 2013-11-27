@@ -75,6 +75,7 @@ class TurnThread():
         self.dual_motors.setPosition(self.leftExtra+(self.stepsPrCell/2)+500,(self.stepsPrCell/2)+500)
 
         while(self.dual_motors.isBusy()):
+            print 'goInto'
             self.logger.info("gointo")
             time.sleep(0.1)
 
@@ -91,7 +92,7 @@ class TurnThread():
         print "Driving out of turn"   
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition(self.leftExtra+(self.stepsPrCell/2)+750,(self.stepsPrCell/2)+750)
+        self.dual_motors.setPosition(self.leftExtra+(self.stepsPrCell/2)+650,(self.stepsPrCell/2)+650)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
