@@ -196,7 +196,7 @@ class PidTuner():
                     self.pid.reset()
                     if walls==[1,1,1]:
                         self.stepCounter.resetSteps(-800)
-                    self.stepCounter.resetSteps()
+                        print self.stepCounter.getSteps()
                     self.dual_motors.resetPosition()
                     print self.mapping.getMaze()
             elif self.mode==2:#goTo mode
