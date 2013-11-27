@@ -118,16 +118,16 @@ class RobotNavigator():
     
     def doPid(self):
         try:
-            self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-            self.dual_motors.setAccelerations(self.left, self.right, 3)
-
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
-
             walls=self.wallChecker.checkWalls(sample)  
             'end of sampling section'
+            
             if self.mode:#mapping mode
                 if(walls==[1, 1, 0]):
+                    self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+                    self.dual_motors.setAccelerations(self.left, self.right, 3)
+
                     self.pid.doPid(sample)
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 else:
@@ -136,11 +136,7 @@ class RobotNavigator():
                         steps-=self.stepsPrCell
                         self.firstCell=False
                     print steps
-#                     if walls==[1,1,1]:
-#                         choice = self.mapping.getChoice(steps,walls)
-#                         self.turnThread.checkForTurn(choice)
-#                         #pass
-#                     else:
+
                     self.turnThread.checkForTurn(-1)
                     sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                     walls=self.wallChecker.checkWalls(sample)  
@@ -148,7 +144,7 @@ class RobotNavigator():
                     self.turnThread.checkForTurn(choice)
 
                     #print "choice=%d and turningSuccess=%d"%(choice,lol)
-                    if choice==0:
+                    if not choice:
                         self.mode=0
                         print "mapped Ok waiting for instructions\n heres the maze:"
                         print self.mapping.getMaze()     
@@ -161,12 +157,18 @@ class RobotNavigator():
                     #print self.mapping.getMaze()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
-                self.stepCounter.resetSteps()
-                if not self.turnThread.checkForTurn(choice[1]):
-                    self.stepCounter(self.dual_motors.setPosition(choice[0], choice[0]))
-                    self.dual_motors.setAccelerations(self.left, self.right, 5)
-                    self.pid.doPid(sample)
+                if not choice:
+                    self.mode=0
+                    self.Lock.clear()
                 else:
+                    self.turnThread.checkForTurn(-1)
+                    self.turnThread.checkForTurn(choice[1])
+                    self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+                    self.dual_motors.setAccelerations(self.left, self.right, 3)
+                    self.dual_motors.setPosition(choice[0], choice[0])
+                    while self.dual_motors.isBusy():
+                        self.pid.doPid(sample)
+                        time.sleep(0.001)
                     self.pid.reset()
                     
         except IOError as e:         
@@ -177,7 +179,7 @@ class RobotNavigator():
         self.dual_motors.softStop()
         self.server.stop()
 
-    def sendMaze(self):
+    def sendMaze(self,params=0):
         if self.Lock.is_set():
             return json.dumps({'error':"robot is busy"})
         else:
@@ -186,13 +188,15 @@ class RobotNavigator():
             mazeDict=maze.getDict()
             return {"currentpos":currentPos,"maze":mazeDict}
     
-    def receivePath(self):
-        if self.Lock.is_set():
+    def receivePath(self,params=0):
+        if self.Lock.is_set() or not params:
             return json.dumps({'error':"robot is busy"})
         else:
-            pass
+            self.mapping.receiveStack(params)
+            self.mode=2
+            self.Lock.set()
+            return json.dumps({'status':"success"})
             
-    
 def main():
 
     robot=RobotNavigator()
