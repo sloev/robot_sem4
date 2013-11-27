@@ -197,10 +197,12 @@ class MazeView(QtGui.QWidget):
         self.clientSocket.close()
         self.visited=None
         self.path=None
-        #self.repaint()
+        self.target=self.source
+        self.repaint()
         print "closed socket"
         
     def findPath(self):
+        print "lol"
         pathTuple=self.dijkstra.search(self.source,self.target)
         path=pathTuple[0]
 
