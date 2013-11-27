@@ -100,6 +100,8 @@ class Mapping():
         cells=int(cells)
         if decimals > 0.70 and cells<1:
             cells+=1
+        elif decimals > 0.70:
+            cells+=1
         self.logger.info("cells/"+str(cells))
         return cells
     
