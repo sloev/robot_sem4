@@ -77,7 +77,7 @@ def printNumber():
     rint=random.randint(0,999)
     return json.dumps({'number':rint})
 
-def receivePath(self,params=None):
+def receivePath(params=None):
     print "receiving path"
     print str(params)
     if not params:
@@ -89,7 +89,7 @@ def receivePath(self,params=None):
         return json.dumps(returner)
         
 
-def sendCurrentPosition(self,params=0):
+def sendCurrentPosition(params=None):
     currentPos=[0,0]
     returner= {'status':"success",'currentPosition':currentPos}
     return json.dumps(returner)
