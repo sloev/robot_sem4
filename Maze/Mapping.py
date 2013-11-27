@@ -70,7 +70,7 @@ class Mapping():
         
 
     def getLocalDirection(self,lastS,s):
-        print lastS
+        #print lastS
         left=lastS-1
         if left<0:
             left=3
@@ -90,8 +90,11 @@ class Mapping():
             return 3
         return 1
     
+    def currentPosition(self):
+        return self.currentPosition
+    
     def stepsToCells(self,steps):
-        print steps
+        #print steps
         cells=(steps*1.0)/(self.stepsPrCell*1.0)
         decimals=cells % 1
         cells=int(cells)
@@ -219,29 +222,14 @@ class Mapping():
             elif self.stack:
                 self.logger.info("backtracking")
                 choice=self.stack.pop()
-                #choiceDirection=self.stack[len(self.stack)-1]
                 choice=self.makeChoice([choice[0]])
 
                 self.logger.info("stack/"+str(self.stack))
                 returnChoice=choice[3]
                 self.direction=choice[1]
             else:
-                pass
-#         print (
-#                "cells="+str(cells)
-#                +" "+str(self.currentPosition)
-#                +"\tdirection="+str(self.direction)
-#                +"\twalls="+str(walls)+
-#                "  \tglobalWalls="
-#                +str(globalWalls)
-#                +"\tm-walls="+str(missingWalls)+"    "
-#                +"\tchoice="+str(choice)
-#                +"  \tR-Choice="+str(returnChoice)
-#                )
-        if returnChoice!=0:
-            pass
-        #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
-
+                print "finnished mapping"
+                return 0
         print(
               "dir="+str(self.direction)
               +"\tpos"+str(self.currentPosition)
@@ -378,6 +366,9 @@ def main():
 
     steps.append(cell)
     walls.append([1,0,1])
+    
+    steps.append(cell)
+    walls.append([1,0,0])
     
     steps.append(cell)
     walls.append([1,0,0])
