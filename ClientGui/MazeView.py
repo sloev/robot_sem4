@@ -21,7 +21,6 @@ class MazeView(QtGui.QWidget):
         self.mode=-1
         if(maze!=None):
             self.mazeModel=maze
-            self.graph=Graph(self.mazeModel)
 
             QtGui.QWidget.__init__(self)
             self.modelWidth = self.mazeModel.getWidth()
@@ -84,8 +83,8 @@ class MazeView(QtGui.QWidget):
         #qp.setPen(QtGui.QColor(0, 255, 255))
         qp.setPen(QtCore.Qt.NoPen)
 
-        if self.visited!=None:
-            inc=(255/len(self.visited))+1
+        if self.visited!=None and len(self.visited)>0:
+            inc=(255/len(self.visited))
             i=0
             for n in self.visited:
                 qp.setBrush(QtGui.QColor(255-inc*i,inc*i ,0))
@@ -127,7 +126,7 @@ class MazeView(QtGui.QWidget):
     def mouseReleaseEvent(self, event):
         if self.mode==1:
             self.target=self.cordToCord([event.x(),event.y()])
-            self.source=[randint(0,4),randint(0,4)]
+            self.source=[randint(0,3),randint(0,3)]
             self.modeButton.setEnabled(True)
             self.mode=0
             print("source="+str(self.source)+"target="+str(self.target))   
@@ -207,7 +206,9 @@ class MazeView(QtGui.QWidget):
     def findPath(self):
         print "lol"
         dijkstra=Dijkstra()
-        pathTuple=dijkstra(self.source,self.target,self.graph)
+        graph=Graph(self.mazeModel)
+
+        pathTuple=dijkstra(self.source,self.target,graph.graph,graph.nodes)
         path=pathTuple[0]
 
         print"made astar"

@@ -31,7 +31,6 @@ class MainGui(QtGui.QMainWindow):
         self.browser.runBrowser()
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        
         self.mitSignal.connect(self.updateIp)
 
         closeAction = QtGui.QAction('Close', self)

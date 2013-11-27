@@ -106,22 +106,19 @@ class Dijkstra():
         path=Path(parents)
         return path
            
-    def __call__(self,source,target,graphObj):
-        graph=graphObj.graph
-        nodes=graphObj.nodes
-        source=source
-        target=target
+    def __call__(self,source,target,graph,nodes):
+
         #print self.nodes
         openList=set()
 
         for i in range(4):
-            if nodes[self.source[0]][self.source[1]][i]:
+            if nodes[source[0]][source[1]][i]:
                 nodes[source[0]][source[1]][i].cost=0
                 self.start=nodes[source[0]][source[1]][i]
                 openList.add(self.start)
 
         for i in range(4):
-            if nodes[self.target[0]][self.target[1]][i]:
+            if nodes[target[0]][target[1]][i]:
                 self.end=nodes[target[0]][target[1]][i]
                 break
         visited=[]
