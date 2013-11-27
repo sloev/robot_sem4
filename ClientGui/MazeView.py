@@ -159,7 +159,7 @@ class MazeView(QtGui.QWidget):
     def clientSendPath(self):
         stack= self.path.pathToStack()
 
-        data = {'message':"path","params":stack}
+        data = {'message':"path",'params':stack}
         print"sending path:\n"+str(stack)
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.clientSocket.connect(self.address)

@@ -56,7 +56,9 @@ class ZeroconfTcpServer():
                         if data!=0:
                             func=self.server.eventHandlers.get(data.get("message"))
                             if func!=None:
-                                response=func(data.get("params"))
+                                params=data.get("params")
+                                print str(params)
+                                response=func(params)
                                 print("sending")
                                 self.request.sendall(response)
                 except Exception:
@@ -75,7 +77,7 @@ def printNumber():
     rint=random.randint(0,999)
     return json.dumps({'number':rint})
 
-def receivePath(self,params=0):
+def receivePath(self,params=None):
     if not params:
         returner= {'status':"error",'cause':"robot is busy"}
         return json.dumps(returner)
