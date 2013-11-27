@@ -29,6 +29,7 @@ class Mapping():
                 
         self.startPosition =[0,0]
         self.currentPosition=self.startPosition#x,y
+        
         self.lastWas180=False
         self.lastPosition=self.currentPosition
         self.funcDict={
@@ -69,7 +70,7 @@ class Mapping():
         
 
     def getLocalDirection(self,lastS,s):
-        print lastS
+        #print lastS
         left=lastS-1
         if left<0:
             left=3
@@ -89,7 +90,11 @@ class Mapping():
             return 3
         return 1
     
+    def currentPosition(self):
+        return self.currentPosition
+    
     def stepsToCells(self,steps):
+        #print steps
         cells=(steps*1.0)/(self.stepsPrCell*1.0)
         decimals=cells % 1
         cells=int(cells)
@@ -103,7 +108,7 @@ class Mapping():
         east=0
         south=0
         west=0
-        if(self.startDirection==self.direction and self.startPosition == self.currentPosition):#south
+        if(self.startPosition == self.currentPosition):#south
             north=1
             east=walls[0]
             south=walls[2]
@@ -174,16 +179,18 @@ class Mapping():
         func=self.funcDict[self.direction]
         
         tmpWalls=self.wallsToInt([1,1,0]) 
-        globalWalls=self.wallsToInt(walls)            
         cells=self.stepsToCells(steps)+1
 
         for i in range(cells):
+            tmpWalls=self.wallsToInt([1,1,0]) 
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
             self.currentPosition=func(self.currentPosition)
          
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
+        globalWalls=self.wallsToInt(walls)            
+
         if not tmp:
             self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
         #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
@@ -215,29 +222,14 @@ class Mapping():
             elif self.stack:
                 self.logger.info("backtracking")
                 choice=self.stack.pop()
-                #choiceDirection=self.stack[len(self.stack)-1]
                 choice=self.makeChoice([choice[0]])
 
                 self.logger.info("stack/"+str(self.stack))
                 returnChoice=choice[3]
                 self.direction=choice[1]
             else:
-                pass
-#         print (
-#                "cells="+str(cells)
-#                +" "+str(self.currentPosition)
-#                +"\tdirection="+str(self.direction)
-#                +"\twalls="+str(walls)+
-#                "  \tglobalWalls="
-#                +str(globalWalls)
-#                +"\tm-walls="+str(missingWalls)+"    "
-#                +"\tchoice="+str(choice)
-#                +"  \tR-Choice="+str(returnChoice)
-#                )
-        if returnChoice!=0:
-            pass
-        #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
-
+                print "finnished mapping"
+                return 0
         print(
               "dir="+str(self.direction)
               +"\tpos"+str(self.currentPosition)
@@ -313,91 +305,83 @@ class Mapping():
 def main():
     mapping=Mapping()
     cell=6018
+    steps=[]
+    walls=[]
+    steps.append(0)
+    walls.append([0,1,0])
     
-    steps=cell
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[0,1]
-    steps=0
+    steps.append(cell)
+    walls.append([0,1,1])
     
-    steps=cell
-    walls=[0,1,1]
-    mapping.getChoice(steps, walls)#[0,3]
+    steps.append(cell)
+    walls.append([0,1,1])
     
-    steps=cell
-    walls=[0,1,1]
-    mapping.getChoice(steps, walls)#[2,3]
+    steps.append(0)
+    walls.append([0,1,0])
     
-    steps=0
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[2,2]
+    steps.append(0)
+    walls.append([0,1,0])
     
-    steps=0
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[2,1]
+    steps.append(0)
+    walls.append([0,0,1])
     
-    steps=0
-    walls=[0,0,1]
-    mapping.getChoice(steps, walls)#[2,0]
+    steps.append(2000)
+    walls.append([1,0,1])
     
-    steps=2000
-    walls=[1,0,1]
-    mapping.getChoice(steps, walls)#[3,0]
+    steps.append(cell*2)
+    walls.append([1,1,1])
     
-    steps=cell*2    
-    walls=[1,1,1]
-    mapping.getChoice(steps, walls)#[3,3]
+    steps.append(cell*2)
+    walls.append([0,1,1])
     
-    steps=cell*2
-    walls=[0,1,1]
-    mapping.getChoice(steps, walls)#[3,0]
+    steps.append(2000)
+    walls.append([0,1,0])
     
-    steps=2000
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[2,0]
+    steps.append(2000)
+    walls.append([1,1,1])
     
-    steps=2000
-    walls=[1,1,1]
-    mapping.getChoice(steps, walls)#[1,0]
+    steps.append(2000)
+    walls.append([1,0,0])
     
-    steps=2000
-    walls=[1,0,0]
-    mapping.getChoice(steps, walls)#[2,0]
-    
-    steps=0
-    walls=[1,0,0]
-    mapping.getChoice(steps, walls)#[2,1]
+    steps.append(0)
+    walls.append([1,0,0])
 
-    steps=cell
-    walls=[0,0,1]
-    mapping.getChoice(steps, walls)#[0,1]
+    steps.append(cell)
+    walls.append([0,0,1])
     
-    steps=cell
-    walls=[0,0,1]
-    mapping.getChoice(steps, walls)#[2,1]
+    steps.append(cell)
+    walls.append([0,0,1])
     
-    steps=0
-    walls=[1,0,0]
-    mapping.getChoice(steps, walls)#[2,2]
+    steps.append(0)
+    walls.append([1,0,0])
     
-    steps=0
-    walls=[1,1,1]
-    mapping.getChoice(steps, walls)#[1,2]
+    steps.append(0)
+    walls.append([1,1,1])
 
-    steps=0
-    walls=[0,0,1]
-    print mapping.getChoice(steps, walls)#[2,2]
+    steps.append(0)
+    walls.append([0,0,1])
     
-    steps=0
-    walls=[1,0,1]
-    print mapping.getChoice(steps, walls)#[2,3]
+    steps.append(0)
+    walls.append([1,0,1])
 
-    steps=cell
-    walls=[1,0,1]
-    print mapping.getChoice(steps, walls)#[0,3]
+    steps.append(cell)
+    walls.append([1,0,1])
     
-    steps=cell
-    walls=[1,0,0]
-    print mapping.getChoice(steps, walls)#[0,3]
+    steps.append(cell)
+    walls.append([1,0,0])
+    
+    steps.append(cell)
+    walls.append([1,0,0])
+    
+    for i in range(len(walls)-1):
+        w=walls[i]
+        s=steps[i]
+        choice=mapping.getChoice(s, w)#[0,3]
+        print choice
+        if not choice:
+            print "exited at index %d" %i
+            break
+
     maze=mapping.getMaze()
 
     print maze

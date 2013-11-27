@@ -40,7 +40,7 @@ class PidTuner():
         dGain   right    h    n
            
     '''
-    stepsPrCell=4000
+    stepsPrCell=6000
     def __init__(self):
         '''
         direction:
@@ -160,7 +160,7 @@ class PidTuner():
     def doPid(self):
         try:
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-            self.dual_motors.setAccelerations(self.left, self.right, 5)
+            self.dual_motors.setAccelerations(self.left, self.right, 3)
 
             'start sampling section'
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
@@ -198,11 +198,13 @@ class PidTuner():
                         self.stepCounter.resetSteps(-800)
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
+                    print self.mapping.getMaze()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
                 self.stepCounter.resetSteps()
                 if not self.turnThread.checkForTurn(choice[1]):
                     self.stepCounter(self.dual_motors.setPosition(choice[0], choice[0]))
+                    self.dual_motors.setAccelerations(self.left, self.right, 5)
                     self.pid.doPid(sample)
                 else:
                     self.pid.reset()
@@ -220,18 +222,19 @@ def main():
 
     print("\
         used to tune the pid gain factors using keyboard input\
-        \    npress q to save\
-        \    ntune    wheel    +    -    \
-        \    npGain   left     a    z    \
-        \    npGain   right    s    x    \
-        \    ndGain   left     d    c    \
-        \    ndGain   right    f    v    \
-        \    niGain   left     g    b    \
-        \    niGain   right    h    n    \
+        \n    npress q to save\
+        \n    ntune    wheel    +    -    \
+        \n    npGain   left     a    z    \
+        \n    npGain   right    s    x    \
+        \n    ndGain   left     d    c    \
+        \n    ndGain   right    f    v    \
+        \n    niGain   left     g    b    \
+        \n    niGain   right    h    n    \
         ")
     try:
+        pidtuner.printGains()
         while True:
-            time.sleep(0.025)
+            time.sleep(0.001)
     
             # get keyboard input, returns -1 if none available
             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:

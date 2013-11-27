@@ -91,39 +91,35 @@ class Graph():
                         self.graph[self.nodes[x][y+1][0]].append((self.nodes[x][y][2],self.straightCost)) 
                     
 class Dijkstra():
-    def __init__(self,mazeModel):
-
-        self.mazeModel=mazeModel
-        self.graphObj=Graph(self.mazeModel)
+    def __init__(self):
+        pass
         #print self.graphObj
-        self.graph=self.graphObj.graph
-        self.nodes=self.graphObj.nodes
-
-
+        
     def retracePath(self,c):
-        def parentgen(c):
-            while c:
-                yield c
-                c = c.prev
-        result = [element for element in parentgen(c)]
-        path=Path(result)
+
+        parents=[]
+        parents.append(c)
+        parent=c.prev
+        while parent!=None:
+            parents.append(parent)
+            parent=parent.prev
+        path=Path(parents)
         return path
            
-    def search(self,source,target):
-        self.source=source
-        self.target=target
+    def __call__(self,source,target,graph,nodes):
+
         #print self.nodes
         openList=set()
 
         for i in range(4):
-            if self.nodes[self.source[0]][self.source[1]][i]:
-                self.nodes[source[0]][source[1]][i].cost=0
-                self.start=self.nodes[source[0]][source[1]][i]
+            if nodes[source[0]][source[1]][i]:
+                nodes[source[0]][source[1]][i].cost=0
+                self.start=nodes[source[0]][source[1]][i]
                 openList.add(self.start)
 
         for i in range(4):
-            if self.nodes[self.target[0]][self.target[1]][i]:
-                self.end=self.nodes[target[0]][target[1]][i]
+            if nodes[target[0]][target[1]][i]:
+                self.end=nodes[target[0]][target[1]][i]
                 break
         visited=[]
         closedList = set()
@@ -138,7 +134,7 @@ class Dijkstra():
             openList.remove(current)
             closedList.add(current)
             
-            for p in self.graph[current]:
+            for p in graph[current]:
                 n=p[0]
                 cost=p[1]
                 dist=current.cost+cost
@@ -148,6 +144,7 @@ class Dijkstra():
                     openList.add(n)
         print visited
         return [None,visited]
+    
 def main():
     pass
     
