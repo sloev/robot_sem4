@@ -46,10 +46,10 @@ class MazeView(QtGui.QWidget):
             self.sendPath.move(self.width-self.sendPath.sizeHint().width(), 0)
             self.sendPath.setEnabled(False)    
 
-            self.receiveCurrentPos = QtGui.QPushButton('getCurrentPosition', self)
+            self.receiveCurrentPos = QtGui.QPushButton('getPosition', self)
             self.receiveCurrentPos.clicked.connect(self.getCurrentPosition)
             self.receiveCurrentPos.resize(self.receiveCurrentPos.sizeHint())
-            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width()-self.sendPath.sizeHint().width(), 0)
+            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width()-self.sendPath.sizeHint().width()+5, 0)
             self.receiveCurrentPos.setEnabled(False)    
             
 
@@ -126,12 +126,13 @@ class MazeView(QtGui.QWidget):
     def mouseReleaseEvent(self, event):
         if self.mode==1:
             self.target=self.cordToCord([event.x(),event.y()])
-            self.source=[randint(0,3),randint(0,3)]
+#            self.source=[randint(0,3),randint(0,3)]
             self.modeButton.setEnabled(True)
             self.mode=0
             print("source="+str(self.source)+"target="+str(self.target))   
             self.findPath()
-        #self.repaint()
+            self.sendPath.setEnabled(True)    
+        self.repaint()
           
     def cordToCord(self,cord):
         value=[0,0]
@@ -220,5 +221,4 @@ class MazeView(QtGui.QWidget):
             self.path=path
             #self.sendPath.setEnabled(True)    
         self.visited=pathTuple[1]
-        self.repaint()
         
