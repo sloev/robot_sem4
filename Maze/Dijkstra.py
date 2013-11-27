@@ -105,8 +105,13 @@ class Dijkstra():
             while c:
                 yield c
                 c = c.prev
-        result = [element for element in parentgen(c)]
-        path=Path(result)
+        parents=[]
+        parents.append(c)
+        parent=c.prev
+        while parent!=None:
+            parents.append(parent)
+            parent=parent.prev
+        path=Path(parents)
         return path
            
     def search(self,source,target):
@@ -148,6 +153,7 @@ class Dijkstra():
                     openList.add(n)
         print visited
         return [None,visited]
+    
 def main():
     pass
     

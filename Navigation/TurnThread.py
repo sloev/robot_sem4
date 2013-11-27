@@ -90,7 +90,7 @@ class TurnThread():
         
         print "Driving out of turn"   
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-        #self.dual_motors.setAccelerations(self.left, self.right, 1)
+        self.dual_motors.setAccelerations(self.left, self.right, 1)
         self.dual_motors.setPosition(self.leftExtra+(self.stepsPrCell/3)*2,(self.stepsPrCell/3)*2)
         
         while(self.dual_motors.isBusy()):

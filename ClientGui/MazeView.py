@@ -9,6 +9,7 @@ from Maze.Maze import Maze
 from Maze.Dijkstra import Dijkstra
 import socket
 import json
+from random import randint
 
 class MazeView(QtGui.QWidget):
     def __init__(self,maze=None,currentPos=None,address=None):
@@ -47,7 +48,7 @@ class MazeView(QtGui.QWidget):
             self.receiveCurrentPos = QtGui.QPushButton('getCurrentPosition', self)
             self.receiveCurrentPos.clicked.connect(self.getCurrentPosition)
             self.receiveCurrentPos.resize(self.receiveCurrentPos.sizeHint())
-            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width()-self.sendPath.sizeHint().width()-5, 0)
+            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width()-self.sendPath.sizeHint().width(), 0)
             self.receiveCurrentPos.setEnabled(False)    
             
             self.dijkstra=Dijkstra(self.mazeModel)
@@ -83,7 +84,7 @@ class MazeView(QtGui.QWidget):
         qp.setPen(QtCore.Qt.NoPen)
 
         if self.visited!=None:
-            inc=255/len(self.visited)
+            inc=(255/len(self.visited))+1
             i=0
             for n in self.visited:
                 qp.setBrush(QtGui.QColor(255-inc*i,inc*i ,0))
@@ -125,6 +126,7 @@ class MazeView(QtGui.QWidget):
     def mouseReleaseEvent(self, event):
         if self.mode==1:
             self.target=self.cordToCord([event.x(),event.y()])
+            self.source=[randint(0,4),randint(0,4)]
             self.modeButton.setEnabled(True)
             self.mode=0
             print("source="+str(self.source)+"target="+str(self.target))   
@@ -213,7 +215,7 @@ class MazeView(QtGui.QWidget):
             print"all paths the same="
             print path
             self.path=path
+            #self.sendPath.setEnabled(True)    
         self.visited=pathTuple[1]
-        self.sendPath.setEnabled(True)    
         self.repaint()
         
