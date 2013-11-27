@@ -77,7 +77,14 @@ def printNumber():
 
 def printPath(a=False):
     print a
-
+    
+def sendCurrentPosition(self,params=0):
+    if self.Lock.is_set():
+        return json.dumps({'status':"error",'cause':"robot is busy"})
+    else:
+        currentPos=self.mapping.currentPosition()
+        return {'status':"success",'currentPosition':currentPos}
+    
 def printMaze(a=None):
     print "maze called"
     maze=Maze()
@@ -124,6 +131,7 @@ def main():
     server.addHandler("number", printNumber)
     server.addHandler("maze", printMaze)
     server.addHandler("path", printPath)
+    server.addHandler("currentPosition", sendCurrentPosition)
     
     server.initThreads()
     server.start()

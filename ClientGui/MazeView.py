@@ -37,11 +37,19 @@ class MazeView(QtGui.QWidget):
             self.modeButton.resize(self.modeButton.sizeHint())
             self.modeButton.move(0, 0)    
             
+
             self.sendPath = QtGui.QPushButton('sendPath', self)
             self.sendPath.clicked.connect(self.clientSendPath)
             self.sendPath.resize(self.sendPath.sizeHint())
             self.sendPath.move(self.width-self.sendPath.sizeHint().width(), 0)
             self.sendPath.setEnabled(False)    
+
+            self.receiveCurrentPos = QtGui.QPushButton('getCurrentPosition', self)
+            self.receiveCurrentPos.clicked.connect(self.getCurrentPosition)
+            self.receiveCurrentPos.resize(self.receiveCurrentPos.sizeHint())
+            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width(), 0)
+            self.receiveCurrentPos.setEnabled(False)    
+            
             self.dijkstra=Dijkstra(self.mazeModel)
 
                     
@@ -156,7 +164,41 @@ class MazeView(QtGui.QWidget):
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.clientSocket.connect(self.address)
         self.clientSocket.send(json.dumps(data))
+        data = self.clientSocket.recv(16384)  # limit reply to 16K
+        
+        received = json.loads(data)
+        status=received.get("status")
+        if status=="error":
+            print "error: "+received.get("cause")
+        else:
+            print status        
         self.clientSocket.close()
+        self.receiveCurrentPos.setEnabled(True)
+        self.sendPath.setEnabled(False)        
+        self.modeButton.setEnabled(False)
+        print "closed socket"
+        
+    def getCurrentPosition(self):
+        data = {'message':"currentPosition"}
+        print"getting currentposition"
+        self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientSocket.connect(self.address)
+        self.clientSocket.send(json.dumps(data))
+        data = self.clientSocket.recv(16384)  # limit reply to 16K
+        
+        received = json.loads(data)
+        status=received.get("status")
+        if status=="error":
+            print "error: "+received.get("cause")
+        else:
+            print status   
+            tmp=received.get("currentPosition")
+            self.source =[ tmp[str(0)],tmp[str(1)] ]
+            print "source="+str(self.source)
+            self.receiveCurrentPos.setEnabled(False)
+            self.modeButton.setEnabled(True)     
+        self.clientSocket.close()
+        print "closed socket"
         
     def findPath(self):
         pathTuple=self.dijkstra.search(self.source,self.target)

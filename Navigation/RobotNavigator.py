@@ -58,6 +58,7 @@ class RobotNavigator():
         self.server=ZeroconfTcpServer()
         self.server.addHandler("maze", self.sendMaze)
         self.server.addHandler("path", self.receivePath)
+        self.server.addHandler("currentPosition", self.sendCurrentPosition())
     
         self.server.initThreads()
         self.server.start()
@@ -143,7 +144,6 @@ class RobotNavigator():
                     choice = self.mapping.getChoice(steps,walls)
                     self.turnThread.checkForTurn(choice)
 
-                    #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     if not choice:
                         self.mode=0
                         print "mapped Ok waiting for instructions\n heres the maze:"
@@ -154,7 +154,6 @@ class RobotNavigator():
                         self.stepCounter.resetSteps(-800)
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
-                    #print self.mapping.getMaze()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
                 if not choice:
@@ -170,10 +169,8 @@ class RobotNavigator():
                         self.pid.doPid(sample)
                         time.sleep(0.001)
                     self.pid.reset()
-                    
         except IOError as e:         
             print("error in doPid: "+str(e))
-
         
     def stop(self):
         self.dual_motors.softStop()
@@ -181,16 +178,23 @@ class RobotNavigator():
 
     def sendMaze(self,params=0):
         if self.Lock.is_set():
-            return json.dumps({'error':"robot is busy"})
+            return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
             maze=self.mapping.getMaze() 
             currentPos=self.mapping.currentPosition()
             mazeDict=maze.getDict()
-            return {"currentpos":currentPos,"maze":mazeDict}
+            return {'status':"success","currentpos":currentPos,"maze":mazeDict}
+        
+    def sendCurrentPosition(self,params=0):
+        if self.Lock.is_set():
+            return json.dumps({'status':"error",'cause':"robot is busy"})
+        else:
+            currentPos=self.mapping.currentPosition()
+            return {'status':"success",'currentPosition':currentPos}
     
     def receivePath(self,params=0):
         if self.Lock.is_set() or not params:
-            return json.dumps({'error':"robot is busy"})
+            return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
             self.mapping.receiveStack(params)
             self.mode=2

@@ -97,17 +97,23 @@ class MainGui(QtGui.QMainWindow):
         self.clientSocket.connect(self.address)
         self.clientSocket.send(json.dumps(data))
         data = self.clientSocket.recv(16384)  # limit reply to 16K
-        self.clientSocket.close()
-        print("closed socket")
         
         received = json.loads(data)
-        currentPos=received["currentpos"]
-        maze=Maze(received["maze"])
-        self.mazeView=MazeView(maze,currentPos,self.address)
-        self.mazeView.repaint()
-        self.mazeView.show()
-        
-        print maze
+        status=received.get("status")
+        if status=="error":
+            print "error: "+received.get("cause")
+        else:
+            print status        
+            currentPos=received.get("currentpos")
+            maze=Maze(received.get("maze"))
+
+            self.mazeView=MazeView(maze,currentPos,self.address)
+            self.mazeView.repaint()
+            self.mazeView.show()
+            
+        self.clientSocket.close()
+        print("closed socket")
+        #print maze
         
     def clientSend(self,string):
         received="nothing received"
