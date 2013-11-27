@@ -194,8 +194,7 @@ class MazeView(QtGui.QWidget):
             print "error: "+received.get("cause")
         else:
             print status   
-            tmp=received.get("currentPosition")
-            self.source =[ tmp[str(0)],tmp[str(1)] ]
+            self.source=received.get("currentPosition")
             print "source="+str(self.source)
             self.receiveCurrentPos.setEnabled(False)
             self.modeButton.setEnabled(True)     
