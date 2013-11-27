@@ -47,7 +47,7 @@ class MazeView(QtGui.QWidget):
             self.receiveCurrentPos = QtGui.QPushButton('getCurrentPosition', self)
             self.receiveCurrentPos.clicked.connect(self.getCurrentPosition)
             self.receiveCurrentPos.resize(self.receiveCurrentPos.sizeHint())
-            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width(), 0)
+            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width()-self.sendPath.sizeHint().width()-5, 0)
             self.receiveCurrentPos.setEnabled(False)    
             
             self.dijkstra=Dijkstra(self.mazeModel)

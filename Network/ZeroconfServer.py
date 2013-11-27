@@ -75,15 +75,24 @@ def printNumber():
     rint=random.randint(0,999)
     return json.dumps({'number':rint})
 
-def printPath(a=False):
-    print a
-    
+def receivePath(self,params=0):
+    if self.Lock.is_set() or not params:
+        returner= {'status':"error",'cause':"robot is busy"}
+        return json.dumps(returner)
+    else:
+        print params
+        returner= {'status':"success"}
+        return json.dumps(returner)
+        
+
 def sendCurrentPosition(self,params=0):
     if self.Lock.is_set():
-        return json.dumps({'status':"error",'cause':"robot is busy"})
+        returner ={'status':"error",'cause':"robot is busy"}
+        return json.dumps(returner)
     else:
-        currentPos=self.mapping.currentPosition()
-        return {'status':"success",'currentPosition':currentPos}
+        currentPos=[0,0]
+        returner= {'status':"success",'currentPosition':currentPos}
+        return json.dumps(returner)
     
 def printMaze(a=None):
     print "maze called"
@@ -123,7 +132,7 @@ def printMaze(a=None):
     currentPos=[0,0]
     print"finnished"
     mazeDict=maze.getDict()
-    returner={"currentpos":currentPos,"maze":mazeDict}
+    returner={'status':"success","currentpos":currentPos,"maze":mazeDict}
     return json.dumps(returner)
     
 def main():
