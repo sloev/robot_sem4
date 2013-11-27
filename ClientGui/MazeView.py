@@ -22,23 +22,39 @@ class MazeView(QtGui.QWidget):
             self.modelHeight = self.mazeModel.getHeight()
             self.boxsize = 50
             self.width=self.modelWidth * self.boxsize + 10
-            self.height=self.modelHeight * self.boxsize + 40
+            if self.width<400:
+                self.boxsize=(400-10)/self.modelWidth
+                self.width=self.modelWidth * self.boxsize + 10
+                self.height=self.modelHeight * self.boxsize + 40               
+                
             self.setFixedSize(self.width, self.height)
             
             self.modeButton = QtGui.QPushButton('select and make path', self)
             self.modeButton.clicked.connect(self.modeChange)
             self.modeButton.resize(self.modeButton.sizeHint())
             self.modeButton.move(0, 0)    
+            
+            self.sendPath = QtGui.QPushButton('sendPath', self)
+            #self.sendPath.clicked.connect(self.clientSendMaze)
+            self.sendPath.resize(self.sendPath.sizeHint())
+            self.sendPath.move(self.width-self.sendPath.sizeHint().width(), 0)
+            self.sendPath.setEnabled(False)    
             self.dijkstra=Dijkstra(self.mazeModel)
 
                     
     def paintEvent(self, event):
         qp = QtGui.QPainter()
         qp.begin(self)
+        qp.setRenderHint(QtGui.QPainter.Antialiasing) 
+
         b=self.boxsize
         qp.fillRect(0, 30, self.modelWidth * b + 10, self.modelHeight * b + 30, QtGui.QColor(0, 0, 0))
         qp.translate(QtCore.QPointF(5.5, 35.5))
-        qp.setPen(QtGui.QColor(255, 255, 255))
+        pen = QtGui.QPen(QtCore.Qt.white, 2, QtCore.Qt.SolidLine)
+        pen.setCapStyle(QtCore.Qt.RoundCap);
+        pen.setJoinStyle(QtCore.Qt.RoundJoin);
+
+        qp.setPen(pen)
         qp.drawRect(0,0,self.modelWidth * b,self.modelHeight * b)
 
         for y in range(self.modelHeight):
@@ -48,17 +64,29 @@ class MazeView(QtGui.QWidget):
                     qp.drawLine(x*b, y*b, (x+1)*b, y*b)
                 if cell & 0b0001:
                     qp.drawLine(x*b, y*b, x*b, (y+1)*b)
+                if(cell & 0b0010) >>1:
+                    qp.drawLine(x*b, (y+1)*b, (x+1)*b, (y+1)*b)
+                if (cell & 0b0100) >>2:
+                    qp.drawLine((x+1)*b, y*b, (x+1)*b, (y+1)*b)
         #qp.setPen(QtGui.QColor(0, 255, 255))
+        qp.setPen(QtCore.Qt.NoPen)
+
         if self.visited!=None:
+            inc=255/len(self.visited)
             i=0
             for n in self.visited:
-                qp.setBrush(QtGui.QColor(255-(255/len(self.visited))*i,((255/len(self.visited))*i) ,0))
+                qp.setBrush(QtGui.QColor(255-inc*i,inc*i ,0))
                 p1=QtCore.QPointF(n.x*b+(b/2), n.y*b+(b/2))
-                qp.drawEllipse(p1,self.boxsize/8,self.boxsize/8)
+                qp.drawEllipse(p1,self.boxsize/10,self.boxsize/10)
                 i+=1
         lastN=None
         if self.path!=None:
-            qp.setPen(QtGui.QColor(255, 255, 0))
+            pen.setStyle(QtCore.Qt.DotLine)
+            pen.setColor(QtGui.QColor(255,255,0))
+            pen.setWidth(3)
+            #pen.setWidth(3);
+            qp.setPen(pen)
+            
             for n in self.path.getPath():
                 if lastN!=None:
                     x=n.x
@@ -66,12 +94,21 @@ class MazeView(QtGui.QWidget):
                     qp.drawLine(lastN.x*b+(b/2), lastN.y*b+(b/2), n.x*b+(b/2), n.y*b+(b/2))
                 lastN=n
         if self.mode!=-1:
+            qp.setPen(QtCore.Qt.NoPen)
+     
+
             qp.setBrush(QtGui.QColor(255, 0, 0))
-            p1=QtCore.QPointF(int(self.source[0]*self.boxsize+self.boxsize/2),int(self.source[1]*self.boxsize+30-self.boxsize/8))
+            qp.setFont(QtGui.QFont('Arialblack', 20))
+
+            p1=QtCore.QPointF(self.source[0]*b+(b/2), self.source[1]*b+(b/2))
+            p2=QtCore.QPointF(self.target[0]*b+(b/2), self.target[1]*b+(b/2))
             qp.drawEllipse(p1,self.boxsize/4,self.boxsize/4)
+            
             qp.setBrush(QtGui.QColor(0, 255, 0))
-            p2=QtCore.QPointF(int(self.target[0]*self.boxsize+self.boxsize/2),int(self.target[1]*self.boxsize+30-self.boxsize/8))
             qp.drawEllipse(p2,self.boxsize/4,self.boxsize/4)
+            qp.setPen(QtCore.Qt.black)
+            qp.drawText(p1.x()-10,p1.y()-5,20,20,QtCore.Qt.AlignCenter,"S")
+            qp.drawText(p2.x()-10,p2.y()-5,20,20,QtCore.Qt.AlignCenter,"T")
         qp.end()
         
     def mouseReleaseEvent(self, event):
