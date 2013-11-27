@@ -196,6 +196,7 @@ class MazeView(QtGui.QWidget):
             self.modeButton.setEnabled(True)     
         self.clientSocket.close()
         self.visited=None
+        self.path=None
         self.repaint()
         print "closed socket"
         
