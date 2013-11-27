@@ -187,7 +187,7 @@ class PidTuner():
                     walls=self.wallChecker.checkWalls(sample)  
                     choice = self.mapping.getChoice(steps,walls)
                     self.turnThread.checkForTurn(choice)
-
+                    print sample
                     #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     if choice==0:
                         self.mode=0
