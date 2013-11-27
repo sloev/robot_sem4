@@ -123,17 +123,13 @@ class MazeView(QtGui.QWidget):
         qp.end()
         
     def mouseReleaseEvent(self, event):
-        if self.mode==9:
-            self.path=None
-            self.source=self.cordToCord([event.x(),event.y()])
-            self.mode=2
-        elif self.mode==1:
+        if self.mode==1:
             self.target=self.cordToCord([event.x(),event.y()])
             self.modeButton.setEnabled(True)
             self.mode=0
             print("source="+str(self.source)+"target="+str(self.target))   
             self.findPath()
-        self.repaint()
+        #self.repaint()
           
     def cordToCord(self,cord):
         value=[0,0]
@@ -199,6 +195,8 @@ class MazeView(QtGui.QWidget):
             self.receiveCurrentPos.setEnabled(False)
             self.modeButton.setEnabled(True)     
         self.clientSocket.close()
+        self.visited=None
+        self.repaint()
         print "closed socket"
         
     def findPath(self):
