@@ -11,7 +11,8 @@ import socket
 import json
 
 class MazeView(QtGui.QWidget):
-    def __init__(self,maze=None,currentPos=None):
+    def __init__(self,maze=None,currentPos=None,address=None):
+        self.address=address
         self.target=[0,0]
         self.source=currentPos
         self.path=None
@@ -169,6 +170,6 @@ class MazeView(QtGui.QWidget):
             print path
             self.path=path
         self.visited=pathTuple[1]
-        self.sendPath.setEnabled(False)    
+        self.sendPath.setEnabled(True)    
         self.repaint()
         

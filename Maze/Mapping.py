@@ -91,6 +91,7 @@ class Mapping():
         return 1
     
     def stepsToCells(self,steps):
+        print steps
         cells=(steps*1.0)/(self.stepsPrCell*1.0)
         decimals=cells % 1
         cells=int(cells)
@@ -316,91 +317,80 @@ class Mapping():
 def main():
     mapping=Mapping()
     cell=6018
+    steps=[]
+    walls=[]
+    steps.append(0)
+    walls.append([0,1,0])
     
-    steps=cell
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[0,1]
-    steps=0
+    steps.append(cell)
+    walls.append([0,1,1])
     
-    steps=cell
-    walls=[0,1,1]
-    mapping.getChoice(steps, walls)#[0,3]
+    steps.append(cell)
+    walls.append([0,1,1])
     
-    steps=cell
-    walls=[0,1,1]
-    mapping.getChoice(steps, walls)#[2,3]
+    steps.append(0)
+    walls.append([0,1,0])
     
-    steps=0
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[2,2]
+    steps.append(0)
+    walls.append([0,1,0])
     
-    steps=0
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[2,1]
+    steps.append(0)
+    walls.append([0,0,1])
     
-    steps=0
-    walls=[0,0,1]
-    mapping.getChoice(steps, walls)#[2,0]
+    steps.append(2000)
+    walls.append([1,0,1])
     
-    steps=2000
-    walls=[1,0,1]
-    mapping.getChoice(steps, walls)#[3,0]
+    steps.append(cell*2)
+    walls.append([1,1,1])
     
-    steps=cell*2    
-    walls=[1,1,1]
-    mapping.getChoice(steps, walls)#[3,3]
+    steps.append(cell*2)
+    walls.append([0,1,1])
     
-    steps=cell*2
-    walls=[0,1,1]
-    mapping.getChoice(steps, walls)#[3,0]
+    steps.append(2000)
+    walls.append([0,1,0])
     
-    steps=2000
-    walls=[0,1,0]
-    mapping.getChoice(steps, walls)#[2,0]
+    steps.append(2000)
+    walls.append([1,1,1])
     
-    steps=2000
-    walls=[1,1,1]
-    mapping.getChoice(steps, walls)#[1,0]
+    steps.append(2000)
+    walls.append([1,0,0])
     
-    steps=2000
-    walls=[1,0,0]
-    mapping.getChoice(steps, walls)#[2,0]
-    
-    steps=0
-    walls=[1,0,0]
-    mapping.getChoice(steps, walls)#[2,1]
+    steps.append(0)
+    walls.append([1,0,0])
 
-    steps=cell
-    walls=[0,0,1]
-    mapping.getChoice(steps, walls)#[0,1]
+    steps.append(cell)
+    walls.append([0,0,1])
     
-    steps=cell
-    walls=[0,0,1]
-    mapping.getChoice(steps, walls)#[2,1]
+    steps.append(cell)
+    walls.append([0,0,1])
     
-    steps=0
-    walls=[1,0,0]
-    mapping.getChoice(steps, walls)#[2,2]
+    steps.append(0)
+    walls.append([1,0,0])
     
-    steps=0
-    walls=[1,1,1]
-    mapping.getChoice(steps, walls)#[1,2]
+    steps.append(0)
+    walls.append([1,1,1])
 
-    steps=0
-    walls=[0,0,1]
-    print mapping.getChoice(steps, walls)#[2,2]
+    steps.append(0)
+    walls.append([0,0,1])
     
-    steps=0
-    walls=[1,0,1]
-    print mapping.getChoice(steps, walls)#[2,3]
+    steps.append(0)
+    walls.append([1,0,1])
 
-    steps=cell
-    walls=[1,0,1]
-    print mapping.getChoice(steps, walls)#[0,3]
+    steps.append(cell)
+    walls.append([1,0,1])
     
-    steps=cell
-    walls=[1,0,0]
-    print mapping.getChoice(steps, walls)#[0,3]
+    steps.append(cell)
+    walls.append([1,0,0])
+    
+    for i in range(len(walls)-1):
+        w=walls[i]
+        s=steps[i]
+        choice=mapping.getChoice(s, w)#[0,3]
+        print choice
+        if not choice:
+            print "exited at index %d" %i
+            break
+
     maze=mapping.getMaze()
 
     print maze

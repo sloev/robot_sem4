@@ -103,7 +103,7 @@ class MainGui(QtGui.QMainWindow):
         received = json.loads(data)
         currentPos=received["currentpos"]
         maze=Maze(received["maze"])
-        self.mazeView=MazeView(maze,currentPos)
+        self.mazeView=MazeView(maze,currentPos,self.address)
         self.mazeView.repaint()
         self.mazeView.show()
         
