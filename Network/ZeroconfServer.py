@@ -78,6 +78,8 @@ def printNumber():
     return json.dumps({'number':rint})
 
 def receivePath(self,params=None):
+    print "receiving path"
+    print str(params)
     if not params:
         returner= {'status':"error",'cause':"robot is busy"}
         return json.dumps(returner)
