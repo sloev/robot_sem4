@@ -90,7 +90,9 @@ class Mapping():
             return 3
         return 1
     
-    def currentPosition(self):
+    def getCurrentPosition(self):
+        print "mapping getCurrentPosition"
+        print"currentPos="+str(self.currentPosition)
         return self.currentPosition
     
     def stepsToCells(self,steps):
