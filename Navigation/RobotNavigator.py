@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: ascii -*-
 '''
 Created on Oct 15, 2013
 
