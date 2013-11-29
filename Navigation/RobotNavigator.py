@@ -162,7 +162,7 @@ class RobotNavigator():
                     self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
-                if not choice[1]:
+                if choice==[0,0]:
                     self.mode=0
                     self.Lock.clear()
                 else:
