@@ -135,8 +135,8 @@ class RobotNavigator():
                 else:
                     self.dual_motors.softStop()
                     while(self.dual_motors.isBusy()):
-                        self.logger.info("gointo")
                         time.sleep(0.1)
+                        
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
                         steps-=self.stepsPrCell
