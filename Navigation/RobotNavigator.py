@@ -63,7 +63,7 @@ class RobotNavigator():
         self.server.initThreads()
         self.server.start()
         self.Lock=threading.Event()
-        self.Lock.set()#lås for tcp communication
+        self.Lock.set()#locks for tcp communication
 
         try:
             os.remove("/home/pi/robot_sem4/robot.log")
