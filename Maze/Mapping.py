@@ -237,6 +237,8 @@ class Mapping():
                 self.direction=choice[1]
             else:
                 print "finnished mapping"
+                func=self.funcDict[self.direction]
+                self.currentPosition=func(self.currentPosition)
                 return 0
         print(
               "dir="+str(self.direction)

@@ -27,10 +27,11 @@ class MazeView(QtGui.QWidget):
             self.modelHeight = self.mazeModel.getHeight()
             self.boxsize = 50
             self.width=self.modelWidth * self.boxsize + 10
-            if self.width<400:
-                self.boxsize=(400-10)/self.modelWidth
+
+            if self.width<250:
+                self.boxsize=(250-10)/self.modelWidth
                 self.width=self.modelWidth * self.boxsize + 10
-                self.height=self.modelHeight * self.boxsize + 40               
+                self.height=self.modelHeight * self.boxsize + 90          
                 
             self.setFixedSize(self.width, self.height)
             
@@ -43,14 +44,16 @@ class MazeView(QtGui.QWidget):
             self.sendPath = QtGui.QPushButton('sendPath', self)
             self.sendPath.clicked.connect(self.clientSendPath)
             self.sendPath.resize(self.sendPath.sizeHint())
-            self.sendPath.move(self.width-self.sendPath.sizeHint().width(), 0)
+            self.sendPath.move(0,25)
             self.sendPath.setEnabled(False)    
 
             self.receiveCurrentPos = QtGui.QPushButton('getPosition', self)
             self.receiveCurrentPos.clicked.connect(self.getCurrentPosition)
             self.receiveCurrentPos.resize(self.receiveCurrentPos.sizeHint())
-            self.receiveCurrentPos.move(self.width-self.receiveCurrentPos.sizeHint().width()-self.sendPath.sizeHint().width()+5, 0)
-            self.receiveCurrentPos.setEnabled(False)    
+            self.receiveCurrentPos.move(0,50)
+            self.receiveCurrentPos.setEnabled(False)   
+            
+            self.mazeYStart=80
             
 
                     
@@ -58,10 +61,10 @@ class MazeView(QtGui.QWidget):
         qp = QtGui.QPainter()
         qp.begin(self)
         qp.setRenderHint(QtGui.QPainter.Antialiasing) 
-
         b=self.boxsize
-        qp.fillRect(0, 30, self.modelWidth * b + 10, self.modelHeight * b + 30, QtGui.QColor(0, 0, 0))
-        qp.translate(QtCore.QPointF(5.5, 35.5))
+        
+        qp.fillRect(0, self.mazeYStart, self.modelWidth * b + 10, self.modelHeight * b + self.mazeYStart, QtGui.QColor(0, 0, 0))
+        qp.translate(QtCore.QPointF(5.5, self.mazeYStart+5.5))
         pen = QtGui.QPen(QtCore.Qt.white, 2, QtCore.Qt.SolidLine)
         pen.setCapStyle(QtCore.Qt.RoundCap);
         pen.setJoinStyle(QtCore.Qt.RoundJoin);
@@ -144,7 +147,7 @@ class MazeView(QtGui.QWidget):
                 else:
                     break
             for y in range(self.height):
-                tmpy=y*self.boxsize+35.5
+                tmpy=y*self.boxsize+self.mazeYStart+5.5
                 if cord[1]>=tmpy:
                     value[1]=y
                 else:
