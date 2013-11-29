@@ -67,6 +67,7 @@ class ZeroconfTcpServer():
                                 self.request.sendall(response)
                 except Exception:
                     pass
+                print "finnished handling tcp request"
 
         while True:
             try:
