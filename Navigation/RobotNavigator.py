@@ -215,12 +215,14 @@ class RobotNavigator():
             return json.dumps(returner)
     
     def receivePath(self,params=0):
-        if self.Lock.is_set() or not params:
+        if self.Lock.is_set():
             return json.dumps({'status':"error",'cause':"robot is busy"})
+            print "receive path failed "
         else:
             self.Lock.set()
             self.mapping.receiveStack(params)
             self.mode=2
+            print "receive path success"
             return json.dumps({'status':"success"})
             
 def main():
