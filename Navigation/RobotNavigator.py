@@ -132,7 +132,8 @@ class RobotNavigator():
 
             'end of sampling section'
             #print "walls"+str(walls)
-            if self.mode:#mapping mode
+            if self.mode==1:#mapping mode
+                print "MODE 1"
                 if(walls==[1, 1, 0]):
                     self.pid.doPid(sample)
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
@@ -161,6 +162,7 @@ class RobotNavigator():
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode
+                print "MODE 2"
                 choice=self.mapping.getChoice()
                 if choice==[0,0]:
                     self.mode=0
