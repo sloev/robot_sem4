@@ -47,6 +47,7 @@ class Path(object):
         string="[\tpath\t]\n"
         string+="cost=%d" % self.cost+"\n"
         for a in self.path:
+            string+="["+str(a.x)+","+str(a.y)+"]\t"
             string+=str(a)+"\tGcost =\t"+str(a.cost)+"\t"
             if a.dillemma:
                 string+="dillemma"
