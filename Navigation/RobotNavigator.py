@@ -183,7 +183,6 @@ class RobotNavigator():
         self.server.stop()
 
     def sendMaze(self,params=0):
-        print 
         if self.Lock.is_set():
             return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
