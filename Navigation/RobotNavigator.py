@@ -170,6 +170,7 @@ class RobotNavigator():
                 else:
                     choice=self.mapping.getChoice()
                     if choice==[0,0]:
+                        self.Lock.set()
                         self.mode=0
                         self.Lock.clear()
                         print "out of mode 2 clearet lock"
@@ -215,7 +216,7 @@ class RobotNavigator():
             return json.dumps(returner)
     
     def receivePath(self,params=0):
-        if self.Lock.is_set():
+        if self.Lock.is_set() or self.mode==2:
             return json.dumps({'status':"error",'cause':"robot is busy"})
             print "receive path failed "
         else:
@@ -223,6 +224,7 @@ class RobotNavigator():
             print "lock set in receivePath"
             self.mapping.receiveStack(params)
             self.mode=2
+            self.Lock.clear()
             print "receive path success"
             return json.dumps({'status':"success"})
             
