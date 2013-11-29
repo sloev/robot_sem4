@@ -156,6 +156,7 @@ class Mapping():
         if self.stack:
             choice=self.stack.pop()
 #            self.currentPosition=func(self.currentPosition)
+            returnChoice=[0,0]
             lastChoice=choice[1]
             while True:
                 if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1:
@@ -168,9 +169,6 @@ class Mapping():
             returnChoice[1]=choice[1]
             self.direction=choice[0]
             #self.currentPosition=func(self.currentPosition)
-        else:
-            pass
-
         print(
               "dir="+str(self.direction)
               +"\tpos"+str(self.currentPosition)

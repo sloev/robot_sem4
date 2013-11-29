@@ -162,11 +162,11 @@ class RobotNavigator():
                     self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode
                 choice=self.mapping.getChoice()
-                if not choice:
+                if not choice[1]:
                     self.mode=0
                     self.Lock.clear()
                 else:
-                    self.turnThread.checkForTurn(-1)
+                    #self.turnThread.checkForTurn(-1)
                     self.turnThread.checkForTurn(choice[1])
                     self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
                     self.dual_motors.setAccelerations(self.left, self.right, 3)
