@@ -133,7 +133,6 @@ class RobotNavigator():
             'end of sampling section'
             #print "walls"+str(walls)
             if self.mode==1:#mapping mode
-                print "MODE 1"
                 if(walls==[1, 1, 0]):
                     self.pid.doPid(sample)
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
@@ -162,21 +161,21 @@ class RobotNavigator():
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode
-                print "MODE 2"
-                choice=self.mapping.getChoice()
-                if choice==[0,0]:
-                    self.mode=0
-                    self.Lock.clear()
+                if(walls==[1, 1, 0]):
+                    self.pid.doPid(sample)
+                    #self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 else:
-                    #self.turnThread.checkForTurn(-1)
-                    self.turnThread.checkForTurn(choice[1])
-                    self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                    self.dual_motors.setAccelerations(self.left, self.right, 3)
-                    self.dual_motors.setPosition(choice[0], choice[0])
-                    while self.dual_motors.isBusy():
-                        self.pid.doPid(sample)
-                        time.sleep(0.001)
-                    self.pid.reset()
+                    choice=self.mapping.getChoice()
+                    if choice==[0,0]:
+                        self.mode=0
+                        self.Lock.clear()
+                    else:
+                        self.turnThread.checkForTurn(choice[1])
+                        self.pid.reset()
+                        self.dual_motors.setPosition(choice[0], choice[0])
+#                         while self.dual_motors.isBusy():
+#                             self.pid.doPid(sample)
+#                             time.sleep(0.001)
         except IOError as e:         
             print("error in doPid: "+str(e))
         
