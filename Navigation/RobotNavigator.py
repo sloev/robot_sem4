@@ -205,7 +205,7 @@ class RobotNavigator():
             return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
             self.Lock.set()
-            currentPos=self.mapping.currentPosition()
+            currentPos=self.mapping.getCurrentPosition()
             returner= {'status':"success",'currentPosition':currentPos}
             self.Lock.clear()
             return json.dumps(returner)
