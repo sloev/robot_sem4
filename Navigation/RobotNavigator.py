@@ -190,9 +190,13 @@ class RobotNavigator():
             self.Lock.set()
             print "sendMaze got lock"
             maze=self.mapping.getMaze() 
+            print "sendMaze got maze"+str(maze)
             currentPos=self.mapping.currentPosition()
+            print "sendMaze got current position"+str(currentPos)
             mazeDict=maze.getDict()
+            print "sendMaze got dict:"+str(mazeDict)
             returner={'status':"success",'currentpos':currentPos,'maze':mazeDict}
+            print "returner"+str(returner)
             self.Lock.clear()
             return json.dumps(returner)    
         
