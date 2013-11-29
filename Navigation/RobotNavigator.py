@@ -227,7 +227,7 @@ def main():
     try:
         robot.printGains()
         while True:
-            time.sleep(0.01)
+            time.sleep(0.001)
             robot.doPid()
     except KeyboardInterrupt:
         robot.stop()
