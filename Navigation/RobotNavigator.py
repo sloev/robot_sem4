@@ -157,6 +157,7 @@ class RobotNavigator():
                         print "mapped Ok waiting for instructions\n heres the maze:"
                         print self.mapping.getMaze()     
                         self.Lock.clear()#muliggor tcp communication
+                        print "lock cleared in mode 1"
                     self.pid.reset()
                     if walls==[1,1,1]:
                         self.stepCounter.resetSteps(-800)
@@ -176,9 +177,6 @@ class RobotNavigator():
                         self.turnThread.checkForTurn(choice[1])
                         self.pid.reset()
                         self.dual_motors.setPosition(choice[0], choice[0])
-#                         while self.dual_motors.isBusy():
-#                             self.pid.doPid(sample)
-#                             time.sleep(0.001)
         except IOError as e:         
             print("error in doPid: "+str(e))
         
@@ -209,9 +207,11 @@ class RobotNavigator():
             return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
             self.Lock.set()
+            print "lock set in currentpos"
             currentPos=self.mapping.getCurrentPosition()
             returner= {'status':"success",'currentPosition':currentPos}
             self.Lock.clear()
+            print "lock cleared in currentpos"
             return json.dumps(returner)
     
     def receivePath(self,params=0):
@@ -220,6 +220,7 @@ class RobotNavigator():
             print "receive path failed "
         else:
             self.Lock.set()
+            print "lock set in receivePath"
             self.mapping.receiveStack(params)
             self.mode=2
             print "receive path success"
