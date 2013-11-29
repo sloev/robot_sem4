@@ -133,9 +133,6 @@ class RobotNavigator():
                     self.pid.doPid(sample)
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 else:
-                    self.dual_motors.softStop()
-                    while(self.dual_motors.isBusy()):
-                        time.sleep(0.1)
                         
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
@@ -224,7 +221,7 @@ def main():
     try:
         robot.printGains()
         while True:
-            time.sleep(0.001)
+            time.sleep(0.01)
             robot.doPid()
     except KeyboardInterrupt:
         robot.stop()
