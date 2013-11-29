@@ -191,7 +191,7 @@ class RobotNavigator():
             print "sendMaze got lock"
             maze=self.mapping.getMaze() 
             print "sendMaze got maze"+str(maze)
-            currentPos=self.mapping.currentPosition()
+            currentPos=self.mapping.getCurrentPosition()
             print "sendMaze got current position"+str(currentPos)
             mazeDict=maze.getDict()
             print "sendMaze got dict:"+str(mazeDict)
