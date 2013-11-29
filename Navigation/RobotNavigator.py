@@ -124,7 +124,7 @@ class RobotNavigator():
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
             walls=self.wallChecker.checkWalls(sample)  
             'end of sampling section'
-            
+            print "walls"+str(walls)
             if self.mode:#mapping mode
                 if(walls==[1, 1, 0]):
                     self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
