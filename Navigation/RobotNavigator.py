@@ -79,42 +79,46 @@ class RobotNavigator():
         formatter = logging.Formatter('%(asctime)s/%(name)s/%(message)s')
         fh.setFormatter(formatter)
         logger.addHandler(fh)
+        inited=False
+        while not inited:
+            try:
+                'sensors'
+                self.ir_sensors = IR_Sensors_Controller(0x20)
+                #self.ir_sensors.setConfigurationRegister(0x00,0x7F)
         
-        'sensors'
-        self.ir_sensors = IR_Sensors_Controller(0x20)
-        #self.ir_sensors.setConfigurationRegister(0x00,0x7F)
-
-        'motors'
-        self.dual_motors=DualMotorController(0x60,0x61)
-        self.dual_motors.hardStop()
-        self.dual_motors.getFullStatus1()
-        self.dual_motors.setOtpParam()
-        self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
-        self.dual_motors.resetPosition()
-        #self.dual_motors.runInit()
-        time.sleep(2)
-        
-        'pid and direction'
-        self.pid=Pid(self.left,self.right,self.ir_sensors, self.dual_motors)
-        
-        'wallchecker'
-        self.wallChecker=WallsChecker(self.pid.getMinMaxSetpoint(),self.left,self.right,self.front)
-        
-        'turnThread'
-        self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
-        
-        'StepCounter'
-        self.stepCounter = StepCounter()
-        
-        'Mapping'
-        self.mapping = Mapping()
-        
-        'load gainfactors'
-        gainfactors=self.pid.getGainFactors()
-        self.pGain=gainfactors[0]
-        self.dGain=gainfactors[1]
-        self.iGain=gainfactors[2]
-        
+                'motors'
+                self.dual_motors=DualMotorController(0x60,0x61)
+                self.dual_motors.hardStop()
+                self.dual_motors.getFullStatus1()
+                self.dual_motors.setOtpParam()
+                self.dual_motors.setMotorParams(self.left, self.right, 2, 2)
+                self.dual_motors.resetPosition()
+                #self.dual_motors.runInit()
+                time.sleep(2)
+                
+                'pid and direction'
+                self.pid=Pid(self.left,self.right,self.ir_sensors, self.dual_motors)
+                
+                'wallchecker'
+                self.wallChecker=WallsChecker(self.pid.getMinMaxSetpoint(),self.left,self.right,self.front)
+                
+                'turnThread'
+                self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
+                
+                'StepCounter'
+                self.stepCounter = StepCounter()
+                
+                'Mapping'
+                self.mapping = Mapping()
+                
+                'load gainfactors'
+                gainfactors=self.pid.getGainFactors()
+                self.pGain=gainfactors[0]
+                self.dGain=gainfactors[1]
+                self.iGain=gainfactors[2]
+                inited=True
+            except IOError as e:         
+                print("error in doPid: "+str(e))
     def printGains(self):
         print("gains="+str(self.pid.getGainFactors()))
     
