@@ -169,6 +169,7 @@ class Mapping():
                     else:
                         returnChoice[0]+=self.stepsPrCell
                 else:
+                    returnChoice[0]+=self.stepsPrCell/2
                     choice[1]=lastChoice
                     break
             returnChoice[1]=choice[1]
