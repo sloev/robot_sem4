@@ -133,6 +133,10 @@ class RobotNavigator():
                     self.pid.doPid(sample)
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 else:
+                    self.dual_motors.softStop()
+                    while(self.dual_motors.isBusy()):
+                        self.logger.info("gointo")
+                        time.sleep(0.1)
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
                         steps-=self.stepsPrCell
