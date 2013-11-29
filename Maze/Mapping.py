@@ -157,13 +157,16 @@ class Mapping():
         if self.stack:
             choice=self.stack.pop()
 #            self.currentPosition=func(self.currentPosition)
-            returnChoice=[0,0]
+            returnChoice[0]=1
             lastChoice=choice[1]
             while True:
-                if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1 and not self.stack[len(self.stack)-1][2]:
-                    returnChoice[0]+=self.stepsPrCell
-                    choice=self.stack.pop()
-                    cells+=1
+                if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1:
+                    if not self.stack[len(self.stack)-1][2]:
+                        returnChoice[0]+=self.stepsPrCell
+                        choice=self.stack.pop()
+                        cells+=1
+                    else:
+                        returnChoice[0]+=self.stepsPrCell
                 else:
                     choice[1]=lastChoice
                     break

@@ -222,6 +222,8 @@ class MazeView(QtGui.QWidget):
             print"all paths the same="
             print path
             self.path=path
+            print self.path.pathToStack()
+
             #self.sendPath.setEnabled(True)    
         self.visited=pathTuple[1]
         
