@@ -148,7 +148,7 @@ class RobotNavigator():
                         self.mode=0
                         print "mapped Ok waiting for instructions\n heres the maze:"
                         print self.mapping.getMaze()     
-                        self.Lock.clear()#muligg¿r tcp communication
+                        self.Lock.clear()#muliggor tcp communication
                     self.pid.reset()
                     if walls==[1,1,1]:
                         self.stepCounter.resetSteps(-800)
