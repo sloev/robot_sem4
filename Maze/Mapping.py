@@ -107,7 +107,7 @@ class Mapping():
         self.logger.info("cells/"+str(cells))
         return cells
     
-    def wallsToInt(self,walls):
+    def wallsToGlobalWalls(self,walls):
         north=0
         east=0
         south=0
@@ -139,6 +139,10 @@ class Mapping():
                 south=walls[0]
                 north=walls[1]
         return [north,east,south,west]
+    
+    def wallsToInt(self,walls):
+        value=(((walls[0]<<3) | (walls[1]<<2)) | (walls[2]<<1)) | (walls[3])        
+        return value
                 
     def getChoice(self,steps=None,walls=None):
         if not self.mode:
@@ -182,21 +186,21 @@ class Mapping():
 
         func=self.funcDict[self.direction]
         
-        tmpWalls=self.wallsToInt([1,1,0]) 
+        tmpWalls=self.wallsToGlobalWalls([1,1,0]) 
         cells=self.stepsToCells(steps)+1
 
         for i in range(cells):
-            tmpWalls=self.wallsToInt([1,1,0]) 
+            tmpWalls=self.wallsToInt(self.wallsToGlobalWalls([1,1,0]))
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
             self.currentPosition=func(self.currentPosition)
          
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
-        globalWalls=self.wallsToInt(walls)            
+        globalWalls=self.wallsToGlobalWalls(walls)            
 
         if not tmp:
-            self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
+            self.maze.set(self.currentPosition[0], self.currentPosition[1], self.wallsToInt(globalWalls))
         #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
 
