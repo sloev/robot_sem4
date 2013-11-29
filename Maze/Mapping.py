@@ -10,7 +10,7 @@ class Mapping():
     '''
     classdocs
     '''
-    stepsPrCell=6000
+    stepsPrCell=6500
 
     def __init__(self):
         self.mode=0#mapping mode
@@ -157,8 +157,9 @@ class Mapping():
         if self.stack:
             choice=self.stack.pop()
 #            self.currentPosition=func(self.currentPosition)
-           # returnChoice[0]=0#self.stepsPrCell
             lastChoice=choice[1]
+            if choice[1]==1 or choice[1]==3:
+                returnChoice[0]=self.stepsPrCell
             while True:
                 if len(self.stack)>0 and (self.stack[len(self.stack)-1][1]==1 or self.stack[len(self.stack)-1][1]==3):
                     if not self.stack[len(self.stack)-1][2]:
