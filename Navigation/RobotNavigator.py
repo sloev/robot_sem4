@@ -131,7 +131,7 @@ class RobotNavigator():
             self.dual_motors.setAccelerations(self.left, self.right, 3)
 
             'end of sampling section'
-            print "walls"+str(walls)
+            #print "walls"+str(walls)
             if self.mode:#mapping mode
                 if(walls==[1, 1, 0]):
                     self.pid.doPid(sample)
