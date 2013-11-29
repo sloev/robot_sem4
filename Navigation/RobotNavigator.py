@@ -63,7 +63,7 @@ class RobotNavigator():
         self.server=ZeroconfTcpServer()
         self.server.addHandler("maze", self.sendMaze)
         self.server.addHandler("path", self.receivePath)
-        self.server.addHandler("currentPosition", self.sendCurrentPosition())
+        self.server.addHandler("currentPosition", self.sendCurrentPosition)
         self.server.initThreads()
         self.server.start()
         try:
