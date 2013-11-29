@@ -157,10 +157,10 @@ class Mapping():
         if self.stack:
             choice=self.stack.pop()
 #            self.currentPosition=func(self.currentPosition)
-            returnChoice[0]=1
+           # returnChoice[0]=0#self.stepsPrCell
             lastChoice=choice[1]
             while True:
-                if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1:
+                if len(self.stack)>0 and (self.stack[len(self.stack)-1][1]==1 or self.stack[len(self.stack)-1][1]==3):
                     if not self.stack[len(self.stack)-1][2]:
                         returnChoice[0]+=self.stepsPrCell
                         choice=self.stack.pop()
