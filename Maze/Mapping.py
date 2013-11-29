@@ -63,9 +63,10 @@ class Mapping():
             
         for i in range(len(self.stack)):
             j=len(self.stack)-i-1
-            item=self.stack[j]
-            self.stack[j]=[item,self.getLocalDirection(lastS,item)]
-            lastS=item
+            direction=self.stack[j][0]
+            dillemma=self.stack[j][1]
+            self.stack[j]=[direction,self.getLocalDirection(lastS,direction),dillemma]
+            lastS=direction
         print self.stack
         
 
@@ -83,9 +84,9 @@ class Mapping():
             direction180+=4        
         
         if left==s:
-            return 4
-        elif right==s:
             return 2
+        elif right==s:
+            return 4
         elif direction180==s:
             return 3
         return 1
@@ -159,7 +160,7 @@ class Mapping():
             returnChoice=[0,0]
             lastChoice=choice[1]
             while True:
-                if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1:
+                if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1 and not self.stack[len(self.stack)-1][2]:
                     returnChoice[0]+=self.stepsPrCell
                     choice=self.stack.pop()
                     cells+=1
