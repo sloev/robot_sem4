@@ -56,8 +56,7 @@ class RobotNavigator():
         self.front=2
         
 
-        self.server.initThreads()
-        self.server.start()
+
         self.Lock=threading.Event()
         self.Lock.set()#locks for tcp communication
 
@@ -65,7 +64,8 @@ class RobotNavigator():
         self.server.addHandler("maze", self.sendMaze)
         self.server.addHandler("path", self.receivePath)
         self.server.addHandler("currentPosition", self.sendCurrentPosition())
-
+        self.server.initThreads()
+        self.server.start()
         try:
             os.remove("/home/pi/robot_sem4/robot.log")
         except OSError:
