@@ -29,13 +29,12 @@ class Path(object):
         #string=""
         
         for n in self.path:
-#             if lastN != None:
-#                 if lastN.x==n.x and lastN.y==n.y:
-#                     #string+="%d"%n.d
-#                     stack.append([n.d,n.dillemma])
-#             else:                      
-                #string+="%d"%n.d
-            stack.append([n.d,n.dillemma])
+            if lastN != None:
+                if lastN.x==n.x and lastN.y==n.y:
+                    #string+="%d"%n.d
+                    stack.append([n.d,n.dillemma])
+            else:                      
+                stack.append([n.d,n.dillemma])
             #string+="\n"
             lastN=n
         stack.reverse()
