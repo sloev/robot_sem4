@@ -187,7 +187,7 @@ class PidTuner():
                     walls=self.wallChecker.checkWalls(sample)  
                     choice = self.mapping.getChoice(steps,walls)
                     self.turnThread.checkForTurn(choice)
-
+                    print sample
                     #print "choice=%d and turningSuccess=%d"%(choice,lol)
                     if choice==0:
                         self.mode=0
@@ -196,7 +196,7 @@ class PidTuner():
                     self.pid.reset()
                     if walls==[1,1,1]:
                         self.stepCounter.resetSteps(-800)
-                    self.stepCounter.resetSteps()
+                        print self.stepCounter.getSteps()
                     self.dual_motors.resetPosition()
                     print self.mapping.getMaze()
             elif self.mode==2:#goTo mode
