@@ -171,6 +171,7 @@ class RobotNavigator():
                     if choice==[0,0]:
                         self.mode=0
                         self.Lock.clear()
+                        print "out of mode 2 clearet lock"
                     else:
                         self.turnThread.checkForTurn(choice[1])
                         self.pid.reset()
