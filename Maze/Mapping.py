@@ -10,7 +10,7 @@ class Mapping():
     '''
     classdocs
     '''
-    stepsPrCell=7000
+    stepsPrCell=6500
 
     def __init__(self):
         self.mode=0#mapping mode
