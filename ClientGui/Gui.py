@@ -96,7 +96,7 @@ class MainGui(QtGui.QMainWindow):
         self.clientSocket.connect(self.address)
         self.clientSocket.send(json.dumps(data))
         data = self.clientSocket.recv(16384)  # limit reply to 16K
-        
+        print data
         received = json.loads(data)
         status=received.get("status")
         if status=="error":

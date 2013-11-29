@@ -183,13 +183,14 @@ class RobotNavigator():
         self.server.stop()
 
     def sendMaze(self,params=0):
+        print 
         if self.Lock.is_set():
             return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
             maze=self.mapping.getMaze() 
             currentPos=self.mapping.currentPosition()
             mazeDict=maze.getDict()
-            returner={'status':"success","currentpos":currentPos,"maze":mazeDict}
+            returner={'status':"success",'currentpos':currentPos,'maze':mazeDict}
             return json.dumps(returner)    
         
     def sendCurrentPosition(self,params=0):
