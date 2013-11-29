@@ -128,7 +128,7 @@ class RobotNavigator():
             sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
             walls=self.wallChecker.checkWalls(sample)  
             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-            self.dual_motors.setAccelerations(self.left, self.right, 3)
+            #self.dual_motors.setAccelerations(self.left, self.right, 3)
 
             'end of sampling section'
             #print "walls"+str(walls)
@@ -161,7 +161,7 @@ class RobotNavigator():
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
             elif self.mode==2:#goTo mode
-                if(walls==[1, 1, 0]):
+                if(walls==[1, 1, 0] and self.dual_motors.isBusy()):
                     self.pid.doPid(sample)
                     #self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 else:
