@@ -118,23 +118,53 @@ class RobotNavigator():
                 self.pGain=gainfactors[0]
                 self.dGain=gainfactors[1]
                 self.iGain=gainfactors[2]
+                
+                'stateMachineThread'
+                self.stateThread=threading.Thread(target=self.doMapping)
+                self.stateThread.daemon = True
+                self.stateThread.start()
                 inited=True
             except IOError as e:         
                 print("error in doPid: "+str(e))
+                
     def printGains(self):
         print("gains="+str(self.pid.getGainFactors()))
+       
+    def doPathing(self):
+        while not self.Lock.is_set():
+            self.Lock.wait(0.001)
+            try:
+                sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
+                walls=self.wallChecker.checkWalls(sample)  
+                self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+                if(walls==[1, 1, 0] and self.dual_motors.isBusy()):
+                    self.pid.doPid(sample)
+                    #self.stepCounter(self.dual_motors.setPosition(32767, 32767))
+                else:
+                    choice=self.mapping.getChoice()
+                    if choice==[0,0]:
+                        print "out of mode 2 clearet lock"
+                        self.Lock.set()
+                    else:
+                        self.turnThread.checkForTurn(choice[1])
+                        self.pid.reset()
+                        self.dual_motors.setPosition(choice[0], choice[0])
+            except IOError as e:         
+                print("error in doPid: "+str(e))
+        self.Lock.clear()
+      
+    def doMapping(self):
+        while not self.Lock.is_set():
+            self.Lock.wait(0.001)
+            try:
+                'start sampling section'
+                sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
+                walls=self.wallChecker.checkWalls(sample)  
+                self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+                #self.dual_motors.setAccelerations(self.left, self.right, 3)
     
-    def doPid(self):
-        try:
-            'start sampling section'
-            sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
-            walls=self.wallChecker.checkWalls(sample)  
-            self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-            #self.dual_motors.setAccelerations(self.left, self.right, 3)
+                'end of sampling section'
 
-            'end of sampling section'
-            #print "walls"+str(walls)
-            if self.mode==1:#mapping mode
                 if(walls==[1, 1, 0]):
                     self.pid.doPid(sample)
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
@@ -153,45 +183,31 @@ class RobotNavigator():
                     self.turnThread.checkForTurn(choice)
 
                     if not choice:
-                        self.mode=0
                         print "mapped Ok waiting for instructions\n heres the maze:"
                         print self.mapping.getMaze()     
-                        self.Lock.clear()#muliggor tcp communication
                         print "lock cleared in mode 1"
+                        self.Lock.set()
                     self.pid.reset()
                     if walls==[1,1,1]:
                         self.stepCounter.resetSteps(-800)
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
-            elif self.mode==2:#goTo mode
-                if(walls==[1, 1, 0] and self.dual_motors.isBusy()):
-                    self.pid.doPid(sample)
-                    #self.stepCounter(self.dual_motors.setPosition(32767, 32767))
-                else:
-                    choice=self.mapping.getChoice()
-                    if choice==[0,0]:
-                        self.Lock.set()
-                        self.mode=0
-                        self.Lock.clear()
-                        print "out of mode 2 clearet lock"
-                    else:
-                        self.turnThread.checkForTurn(choice[1])
-                        self.pid.reset()
-                        self.dual_motors.setPosition(choice[0], choice[0])
-        except IOError as e:         
-            print("error in doPid: "+str(e))
-        
+            except IOError as e:         
+                print("error in doPid: "+str(e))
+        self.Lock.clear()
+            
+            
     def stop(self):
+        self.Lock.set()
+        self.stateThread.join()
         self.dual_motors.softStop()
         self.server.stop()
 
     def sendMaze(self,params=0):
         print "in sendMaze"
-        if self.Lock.is_set():
+        if self.stateThread.is_alive():
             return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
-            self.Lock.set()
-            print "sendMaze got lock"
             maze=self.mapping.getMaze() 
             print "sendMaze got maze"+str(maze)
             currentPos=self.mapping.getCurrentPosition()
@@ -200,31 +216,24 @@ class RobotNavigator():
             print "sendMaze got dict:"+str(mazeDict)
             returner={'status':"success",'currentpos':currentPos,'maze':mazeDict}
             print "returner"+str(returner)
-            self.Lock.clear()
             return json.dumps(returner)    
         
     def sendCurrentPosition(self,params=0):
-        if self.Lock.is_set():
+        if self.stateThread.is_alive():
             return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
-            self.Lock.set()
-            print "lock set in currentpos"
             currentPos=self.mapping.getCurrentPosition()
             returner= {'status':"success",'currentPosition':currentPos}
-            self.Lock.clear()
-            print "lock cleared in currentpos"
             return json.dumps(returner)
     
     def receivePath(self,params=0):
-        if self.Lock.is_set() or self.mode==2:
+        if self.stateThread.is_alive():
             return json.dumps({'status':"error",'cause':"robot is busy"})
-            print "receive path failed "
         else:
-            self.Lock.set()
-            print "lock set in receivePath"
             self.mapping.receiveStack(params)
-            self.mode=2
-            self.Lock.clear()
+            self.stateThread=threading.Thread(target=self.doPathing)
+            self.stateThread.daemon = True
+            self.stateThread.start()
             print "receive path success"
             return json.dumps({'status':"success"})
             
@@ -246,8 +255,8 @@ def main():
     try:
         robot.printGains()
         while True:
-            time.sleep(0.001)
-            robot.doPid()
+            time.sleep(1)
+            #robot.doPid()
     except KeyboardInterrupt:
         robot.stop()
         
