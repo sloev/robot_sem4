@@ -32,7 +32,7 @@ class Pid():
     '''
         Constructor
     '''
-    def __init__(self,left,right,ir_sensors, dual_motors):
+    def __init__(self,left,right,ir_sensors, dual_motors,cmMin,cmMax,setPoint):
         self.left=left
         self.right=right
         self.front=2
@@ -41,9 +41,9 @@ class Pid():
         self.logger.info("Initializing Pid")
         self.ir_sensors=ir_sensors
         self.dual_motors=dual_motors
-        self.setPoint=14.9
-        self.cmMax=25
-        self.cmMin=5
+        self.setPoint=setPoint
+        self.cmMax=cmMax
+        self.cmMin=cmMin
         
         self.lastError=[0,0] #last error 
         self.iError=[0,0]
@@ -62,9 +62,6 @@ class Pid():
             self.iGain=gainFactors[2]
             self.logger.info("gainFactors loaded from pickle")
         self.logger.info("Initializing Pid DONE")
-        
-    def getMinMaxSetpoint(self):
-        return [self.cmMin,self.cmMax,self.setPoint]
         
     '''
         Resets the integral error

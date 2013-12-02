@@ -56,7 +56,10 @@ class RobotNavigator():
         self.left=not direction
         self.right=direction
         self.front=2
-        
+        setPoint=14.9
+        cmMaxPid=35
+        cmMaxWallChecker=25
+        cmMin=5
 
 
         self.Lock=threading.Event()
@@ -99,10 +102,10 @@ class RobotNavigator():
                 time.sleep(2)
                 
                 'pid and direction'
-                self.pid=Pid(self.left,self.right,self.ir_sensors, self.dual_motors)
+                self.pid=Pid(self.left,self.right,self.ir_sensors, self.dual_motors,cmMin,cmMaxPid,setPoint)
                 
                 'wallchecker'
-                self.wallChecker=WallsChecker(self.pid.getMinMaxSetpoint(),self.left,self.right,self.front)
+                self.wallChecker=WallsChecker(self.left,self.right,self.front,cmMin,cmMaxWallChecker,setPoint)
                 
                 'turnThread'
                 self.turnThread=TurnThread(self.ir_sensors,self.wallChecker,self.dual_motors,self.left,self.right)
@@ -139,7 +142,6 @@ class RobotNavigator():
                 self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
                 if(walls==[1, 1, 0] and self.dual_motors.isBusy()):
                     self.pid.doPid(sample)
-                    #self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 else:
                     choice=self.mapping.getChoice()
                     if choice==[0,0]:
@@ -161,7 +163,6 @@ class RobotNavigator():
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
                 self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                #self.dual_motors.setAccelerations(self.left, self.right, 3)
     
                 'end of sampling section'
 
@@ -195,7 +196,6 @@ class RobotNavigator():
             except IOError as e:         
                 print("error in doPid: "+str(e))
         self.Lock.clear()
-            
             
     def stop(self):
         self.Lock.set()
@@ -256,7 +256,6 @@ def main():
         robot.printGains()
         while True:
             time.sleep(1)
-            #robot.doPid()
     except KeyboardInterrupt:
         robot.stop()
         
