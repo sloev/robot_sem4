@@ -159,7 +159,7 @@ class Mapping():
             cells=choice[1]
             returnChoice[0]=cells*self.stepsPrCell
             choice=self.makeChoice([choice[0]])
-            returnChoice=choice[3]
+            returnChoice[1]=choice[3]
             self.direction=choice[1]
             #returnChoice[1]=choice[1]
             #self.direction=choice[0]
