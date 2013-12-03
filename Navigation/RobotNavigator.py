@@ -145,7 +145,7 @@ class RobotNavigator():
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
                 print "has sampled"
-                if(not first and walls==[1, 1, 0]) and self.dual_motors.isBusy():
+                while(not first and walls==[1, 1, 0]) and self.dual_motors.isBusy():
                     if mode:
                         self.dual_motors.setPosition(32767,32767)
                     sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)

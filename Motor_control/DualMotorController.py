@@ -120,9 +120,9 @@ class DualMotorController:
         
         positionLeft = actPosLeft + incLeftPos
         positionRight = actPosRight + incRightPos
-        print str(positionLeft)+" "+str(actPosLeft)
-        print str(positionRight)+" "+str(actPosRight)
-        print "\n"
+        #print str(positionLeft)+" "+str(actPosLeft)
+        #print str(positionRight)+" "+str(actPosRight)
+        #print "\n"
         
         while True:
             try:
