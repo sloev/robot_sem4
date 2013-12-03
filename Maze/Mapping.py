@@ -156,7 +156,7 @@ class Mapping():
         cells=0
         if self.stack:
             choice=self.stack.pop()
-            cells=choice[2]
+            cells=choice[1]
             returnChoice[0]=cells*self.stepsPrCell
             choice=self.makeChoice([choice[0]])
             returnChoice=choice[3]
