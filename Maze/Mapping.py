@@ -168,7 +168,10 @@ class Mapping():
               +"\tpos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
               )
-        for i in range(realCells):
+        if returnChoice!=[0,0]:
+            for i in range(realCells):
+                self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+        else:
             self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         return returnChoice
 
