@@ -141,7 +141,7 @@ class RobotNavigator():
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
                 self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                if(walls==[1, 1, 0] and self.dual_motors.isBusy()):
+                if(walls==[1, 1, 0]):
                     self.pid.doPid(sample)
                 else:
                     choice=self.mapping.getChoice()
@@ -151,6 +151,7 @@ class RobotNavigator():
                     else:
                         self.turnThread.checkForTurn(choice[1])
                         self.pid.reset()
+                        
                         self.dual_motors.setPosition(choice[0], choice[0])
             except IOError as e:         
                 print("error in doPid: "+str(e))
