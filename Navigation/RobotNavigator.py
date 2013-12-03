@@ -58,7 +58,7 @@ class RobotNavigator():
         self.front=2
         setPoint=14.9
         cmMaxPid=35
-        cmMaxWallChecker=25
+        cmMaxWallChecker=30
         cmMin=5
 
 
