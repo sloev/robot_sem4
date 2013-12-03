@@ -168,9 +168,8 @@ class Mapping():
               +"\tpos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
               )
-        if returnChoice!=[0,0]:
-            for i in range(realCells):
-                self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+        for i in range(realCells):
+            self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         return returnChoice
 
     def mappingChoice(self,steps,walls):
