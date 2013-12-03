@@ -156,7 +156,7 @@ class RobotNavigator():
                     self.Lock.wait(0.001)
                 else:
                     #print "making choice"
-                    choice=self.mapping.getChoice(self.stepCounter.getSteps())
+                    choice=self.mapping.getChoice(self.stepCounter.getSteps(),None)
                     print choice
                     if choice[1]==0:
                         #print "out of mode 2 clearet lock"

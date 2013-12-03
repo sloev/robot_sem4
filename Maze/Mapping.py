@@ -149,7 +149,7 @@ class Mapping():
         if not self.mode:
             return self.mappingChoice(steps, walls)
         else:
-            return self.gotoChoice()
+            return self.gotoChoice(steps)
         
     def gotoChoice(self,steps):
         returnChoice=[0,0]#steps,local direction
