@@ -136,15 +136,20 @@ class RobotNavigator():
     def doPathing(self):
         print "running Paathing thread"
         while not self.Lock.is_set():
+            print "no lock"
             self.Lock.wait(0.001)
             try:
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
                 self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
+                print "has sampled"
                 if(walls==[1, 1, 0]):
                     self.pid.doPid(sample)
+                    print "do pid"
                 else:
+                    print "making choice"
                     choice=self.mapping.getChoice()
+                    print choice
                     if choice==[0,0]:
                         print "out of mode 2 clearet lock"
                         self.Lock.set()
