@@ -178,7 +178,7 @@ class DualMotorController:
                 pass
 def main():
 
-    motors=DualMotorController(0x60,0x64)
+    motors=DualMotorController(0x64,0x61)
     motors.hardStop()
     motors.getFullStatus1()
     motors.setOtpParam()
