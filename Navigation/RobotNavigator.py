@@ -137,8 +137,6 @@ class RobotNavigator():
         print "running Paathing thread"
         mode=1
         first=True
-        self.stepCounter.resetSteps(-800)            
-        self.dual_motors.resetPosition()
         while not self.Lock.is_set():
             #print "no lock"
             self.Lock.wait(0.001)
@@ -148,19 +146,19 @@ class RobotNavigator():
                 walls=self.wallChecker.checkWalls(sample)
                 #print "has sampled"
                 if mode:
-                    self.stepCounter(self.dual_motors.setPosition(32767, 32767))
+                    self.dual_motors.setPosition(32767, 32767)
                 if walls==[1,1,0] and not first and self.dual_motors.isBusy():
                     if mode:
-                        self.stepCounter(self.dual_motors.setPosition(32767, 32767))
+                        self.dual_motors.setPosition(32767, 32767)
                     sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                     walls=self.wallChecker.checkWalls(sample)  
                     self.pid.doPid(sample)
                     self.Lock.wait(0.001)
                 else:
                     #print "making choice"
-                    choice=self.mapping.getChoice(self.stepCounter.getSteps(),None)
+                    choice=self.mapping.getChoice()
                     print choice
-                    if choice[1]==0:
+                    if choice==[0,0]:
                         #print "out of mode 2 clearet lock"
                         self.Lock.set()
                     else:
@@ -173,12 +171,9 @@ class RobotNavigator():
                         if choice[0]!=0:
                             steps=choice[0]-self.stepsPrCell/2
                             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                            self.stepCounter(self.dual_motors.setPosition(steps+800,steps+800))
+                            self.dual_motors.setPosition(steps,steps)
                             mode=0
                     first=False
-                    #self.stepCounter.resetSteps(-800)
-                    self.stepCounter.resetSteps(-800)
-                    self.dual_motors.resetPosition()
             except IOError as e:         
                 print("error in doPid: "+str(e))
         print "closing Paathing thread"

@@ -44,15 +44,15 @@ class Path(object):
                 if lastN.x!=n.x or lastN.y!=n.y:
                     if not firstDillemma :
                         cellCounter+=1  
-                        stack[0]=[n.d,cellCounter]
+                        stack[0]=[n.d,cellCounter,stack[0][2],stack[0][3]]
                         print cellCounter
                         if n.dillemma:
                             firstDillemma=True
                             print "dillemma"
                     elif firstDillemma and n.dillemma:
-                        stack.append([n.d,0])
+                        stack.append([n.d,0,n.x,n.y])
             else:
-                stack.append([n.d,0])
+                stack.append([n.d,0,n.x,n.y])
             lastN=n
         #stack.reverse()
         #print string

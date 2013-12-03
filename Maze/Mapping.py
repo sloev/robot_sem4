@@ -59,17 +59,8 @@ class Mapping():
     def receiveStack(self,path):        
         self.mode=1#path finding go to mode
         self.stack=path#self.pathToStack()
-#         lastS=self.direction
-#             
-#         for i in range(len(self.stack)):
-#             j=len(self.stack)-i-1
-#             direction=self.stack[j][0]
-#             steps=self.stack[j][1]
-#             self.stack[j]=[direction,steps]#self.getLocalDirection(lastS,direction),steps]
-#             lastS=direction
         print self.stack
         
-
     def getLocalDirection(self,lastS,s):
         #print lastS
         left=lastS-1
@@ -149,13 +140,11 @@ class Mapping():
         if not self.mode:
             return self.mappingChoice(steps, walls)
         else:
-            return self.gotoChoice(steps)
+            return self.gotoChoice()
         
-    def gotoChoice(self,steps):
+    def gotoChoice(self):
         returnChoice=[0,0]#steps,local direction
         cells=0
-        realCells=self.stepsToCells(steps)+1
-        print "steps"+str(steps)+" cells="+str(realCells)
         if self.stack:
             choice=self.stack.pop()
             cells=choice[1]
@@ -163,14 +152,12 @@ class Mapping():
             calcChoice=self.makeChoice([choice[0]])
             returnChoice[1]=calcChoice[3]
             self.direction=calcChoice[1]
+            self.currentPosition=[choice[2],choice[3]]
         print(
               "dir="+str(self.direction)
               +"\tpos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
               )
-        if returnChoice!=[0,0]:
-            for i in range(realCells):
-                self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         return returnChoice
 
     def mappingChoice(self,steps,walls):
