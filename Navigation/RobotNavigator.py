@@ -134,6 +134,7 @@ class RobotNavigator():
         print("gains="+str(self.pid.getGainFactors()))
        
     def doPathing(self):
+        print "running Paathing thread"
         while not self.Lock.is_set():
             self.Lock.wait(0.001)
             try:
@@ -153,9 +154,11 @@ class RobotNavigator():
                         self.dual_motors.setPosition(choice[0], choice[0])
             except IOError as e:         
                 print("error in doPid: "+str(e))
+        print "closing Paathing thread"
         self.Lock.clear()
       
     def doMapping(self):
+        print "running mapping thread"
         while not self.Lock.is_set():
             self.Lock.wait(0.001)
             try:
@@ -195,6 +198,7 @@ class RobotNavigator():
                     self.dual_motors.resetPosition()
             except IOError as e:         
                 print("error in doPid: "+str(e))
+        print "closing mapping thread"
         self.Lock.clear()
             
     def stop(self):
