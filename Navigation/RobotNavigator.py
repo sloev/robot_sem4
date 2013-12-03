@@ -154,13 +154,13 @@ class RobotNavigator():
                     walls=self.wallChecker.checkWalls(sample)  
                     self.pid.doPid(sample)
                     self.Lock.wait(0.001)
-                    #print "do pid"
+                    print "do pid"
                 else:
                     first=False
                     #print "making choice"
                     choice=self.mapping.getChoice()
-                    #print choice
-                    if choice==[0,0]:
+                    print choice
+                    if choice[1]==0:
                         #print "out of mode 2 clearet lock"
                         self.Lock.set()
                     else:
