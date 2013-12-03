@@ -58,7 +58,7 @@ class RobotNavigator():
         self.front=2
         setPoint=14.9
         cmMaxPid=35
-        cmMaxWallChecker=28
+        cmMaxWallChecker=25
         cmMin=5
 
 
@@ -137,11 +137,11 @@ class RobotNavigator():
         print "running Paathing thread"
         mode=1
         first=True
-        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         while not self.Lock.is_set():
             #print "no lock"
             self.Lock.wait(0.001)
             try:
+                self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)
                 #print "has sampled"
@@ -169,6 +169,7 @@ class RobotNavigator():
                         mode=1
                         if choice[0]!=0:
                             steps=choice[0]-self.stepsPrCell/2
+                            self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
                             self.dual_motors.setPosition(steps,steps)
                             mode=0
             except IOError as e:         
