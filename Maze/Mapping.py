@@ -155,7 +155,7 @@ class Mapping():
             self.currentPosition=[choice[2],choice[3]]
         print(
               "dir="+str(self.direction)
-              +"\tpos"+str(self.currentPosition)
+              +"\tpoos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
               )
         return returnChoice
