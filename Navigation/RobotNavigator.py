@@ -146,17 +146,17 @@ class RobotNavigator():
                 walls=self.wallChecker.checkWalls(sample)
                 #print "has sampled"
                 if mode:
-                    self.dual_motors.setPosition(32767,32767)
+                    self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                 if walls==[1,1,0] and not first and self.dual_motors.isBusy():
                     if mode:
-                        self.dual_motors.setPosition(32767,32767)
+                        self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                     walls=self.wallChecker.checkWalls(sample)  
                     self.pid.doPid(sample)
                     self.Lock.wait(0.001)
                 else:
                     #print "making choice"
-                    choice=self.mapping.getChoice()
+                    choice=self.mapping.getChoice(self.stepCounter.getSteps())
                     print choice
                     if choice[1]==0:
                         #print "out of mode 2 clearet lock"
@@ -167,12 +167,16 @@ class RobotNavigator():
                         self.turnThread.checkForTurn(choice[1])
                         self.pid.reset()
                         mode=1
+                            
                         if choice[0]!=0:
                             steps=choice[0]-self.stepsPrCell/2
                             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                            self.dual_motors.setPosition(steps,steps)
+                            self.stepCounter(self.dual_motors.setPosition(steps,steps))
                             mode=0
                     first=False
+                    #self.stepCounter.resetSteps(-800)
+                    self.stepCounter.resetSteps()
+                    self.dual_motors.resetPosition()
             except IOError as e:         
                 print("error in doPid: "+str(e))
         print "closing Paathing thread"

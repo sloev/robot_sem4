@@ -151,9 +151,11 @@ class Mapping():
         else:
             return self.gotoChoice()
         
-    def gotoChoice(self):
+    def gotoChoice(self,steps):
         returnChoice=[0,0]#steps,local direction
         cells=0
+        realCells=self.stepsToCells(steps)+1
+
         if self.stack:
             choice=self.stack.pop()
             cells=choice[1]
@@ -167,7 +169,7 @@ class Mapping():
               +"\tchoice"+str(returnChoice)
               )
         if returnChoice!=[0,0]:
-            for i in range(cells):
+            for i in range(realCells):
                 self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         return returnChoice
 
