@@ -154,7 +154,6 @@ class RobotNavigator():
                     walls=self.wallChecker.checkWalls(sample)  
                     self.pid.doPid(sample)
                     self.Lock.wait(0.001)
-                    print "do pid"
                 else:
                     #print "making choice"
                     choice=self.mapping.getChoice()
