@@ -58,7 +58,7 @@ class RobotNavigator():
         self.front=2
         setPoint=14.9
         cmMaxPid=35
-        cmMaxWallChecker=25
+        cmMaxWallChecker=26
         cmMin=5
 
 
@@ -193,8 +193,7 @@ class RobotNavigator():
                 if(walls==[1, 1, 0]):
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     self.pid.doPid(sample)
-                else:
-                        
+                else:  
                     steps=self.stepCounter.getSteps()
                     if self.firstCell:
                         steps-=self.stepsPrCell
