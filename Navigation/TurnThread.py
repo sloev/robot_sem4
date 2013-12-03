@@ -56,9 +56,13 @@ class TurnThread():
 
         self.logger.info("180")
         self.dual_motors.softStop()
+        while(self.dual_motors.isBusy()):
+            time.sleep(0.1)
+            print "busy"
         self.dual_motors.turn180(2) 
         while(self.dual_motors.isBusy()):
             time.sleep(0.1)
+            print "turning 180"
     
     def goStraight(self):
         self.logger.info("straight")
