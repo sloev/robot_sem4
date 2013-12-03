@@ -139,12 +139,12 @@ class RobotNavigator():
         first=True
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         while not self.Lock.is_set():
-            print "no lock"
+            #print "no lock"
             self.Lock.wait(0.001)
             try:
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)
-                print "has sampled"
+                #print "has sampled"
                 if mode:
                     self.dual_motors.setPosition(32767,32767)
                 if walls==[1,1,0] and not first and self.dual_motors.isBusy():
@@ -154,14 +154,14 @@ class RobotNavigator():
                     walls=self.wallChecker.checkWalls(sample)  
                     self.pid.doPid(sample)
                     self.Lock.wait(0.001)
-                    print "do pid"
+                    #print "do pid"
                 else:
                     first=False
-                    print "making choice"
+                    #print "making choice"
                     choice=self.mapping.getChoice()
-                    print choice
+                    #print choice
                     if choice==[0,0]:
-                        print "out of mode 2 clearet lock"
+                        #print "out of mode 2 clearet lock"
                         self.Lock.set()
                     else:
                         self.turnThread.checkForTurn(choice[1])

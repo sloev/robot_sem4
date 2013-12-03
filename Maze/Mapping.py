@@ -156,9 +156,13 @@ class Mapping():
         returnChoice=[0,0]#steps,local direction
         if self.stack:
             choice=self.stack.pop()
-            returnChoice[0]=choice[2]
+            cells=choice[2]
+            returnChoice[0]=cells
             returnChoice[1]=choice[1]
             self.direction=choice[0]
+            cells
+
+                
             #self.currentPosition=func(self.currentPosition)
         print(
               "dir="+str(self.direction)
