@@ -184,7 +184,7 @@ def main():
     motors.setOtpParam()
     motors.setMotorParams(0, 1, 1, 1)
     motors.resetPosition()
-    motors.setPosition(12000, 12000)
+    motors.setPosition(6000, 6000)
     while(motors.isBusy()):
         time.sleep(0.01)
     print"finnished"
