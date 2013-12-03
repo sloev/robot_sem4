@@ -137,6 +137,8 @@ class RobotNavigator():
         print "running Paathing thread"
         mode=1
         first=True
+        self.stepCounter.resetSteps(-800)            
+        self.dual_motors.resetPosition()
         while not self.Lock.is_set():
             #print "no lock"
             self.Lock.wait(0.001)
@@ -175,7 +177,7 @@ class RobotNavigator():
                             mode=0
                     first=False
                     #self.stepCounter.resetSteps(-800)
-                    self.stepCounter.resetSteps()
+                    self.stepCounter.resetSteps(-800)
                     self.dual_motors.resetPosition()
             except IOError as e:         
                 print("error in doPid: "+str(e))
