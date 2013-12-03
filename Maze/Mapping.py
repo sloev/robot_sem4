@@ -152,11 +152,10 @@ class Mapping():
             return self.gotoChoice()
         
     def gotoChoice(self):
-        cells=1
         returnChoice=[0,0]#steps,local direction
         if self.stack:
             choice=self.stack.pop()
-            cells+=choice[2]
+            cells=choice[2]+self.stepsPrCell
             returnChoice[0]=cells
             returnChoice[1]=choice[1]
             self.direction=choice[0]
