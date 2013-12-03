@@ -63,7 +63,7 @@ class RobotNavigator():
 
 
         self.Lock=threading.Event()
-        self.Lock.set()#locks for tcp communication
+        self.Lock.clear()#locks for tcp communication
 
         self.server=ZeroconfTcpServer()
         self.server.addHandler("maze", self.sendMaze)
