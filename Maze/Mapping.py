@@ -65,7 +65,7 @@ class Mapping():
             j=len(self.stack)-i-1
             direction=self.stack[j][0]
             steps=self.stack[j][1]
-            self.stack[j]=[direction,self.getLocalDirection(lastS,direction),steps*self.stepsPrCell]
+            self.stack[j]=[direction,self.getLocalDirection(lastS,direction),steps]
             lastS=direction
         print self.stack
         
@@ -153,10 +153,11 @@ class Mapping():
         
     def gotoChoice(self):
         returnChoice=[0,0]#steps,local direction
+        cells=1
         if self.stack:
             choice=self.stack.pop()
-            cells=choice[2]+self.stepsPrCell
-            returnChoice[0]=cells
+            cells=choice[2]
+            returnChoice[0]=cells*self.stepsPrCell
             returnChoice[1]=choice[1]
             self.direction=choice[0]
             cells
