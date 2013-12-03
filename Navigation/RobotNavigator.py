@@ -168,9 +168,9 @@ class RobotNavigator():
                         self.pid.reset()
                         mode=1
                         if choice[0]!=0:
-                            self.dual_motors.setPosition(choice[0],choice[0])
+                            steps=choice[0]-self.stepsPrCell/2
+                            self.dual_motors.setPosition(steps,steps)
                             mode=0
-
             except IOError as e:         
                 print("error in doPid: "+str(e))
         print "closing Paathing thread"
