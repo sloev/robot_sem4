@@ -135,18 +135,26 @@ class RobotNavigator():
        
     def doPathing(self):
         print "running Paathing thread"
+        mode=1
+        first=True
+        self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         while not self.Lock.is_set():
             print "no lock"
             self.Lock.wait(0.001)
             try:
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
-                self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
                 print "has sampled"
-                if(walls==[1, 1, 0]):
+                if(not first and walls==[1, 1, 0]) and self.dual_motors.isBusy():
+                    if mode:
+                        self.dual_motors.setPosition(32767,32767)
+                    sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
+                    walls=self.wallChecker.checkWalls(sample)  
                     self.pid.doPid(sample)
+                    self.Lock.wait(0.001)
                     print "do pid"
                 else:
+                    first=False
                     print "making choice"
                     choice=self.mapping.getChoice()
                     print choice
@@ -156,8 +164,11 @@ class RobotNavigator():
                     else:
                         self.turnThread.checkForTurn(choice[1])
                         self.pid.reset()
-                        
-                        self.dual_motors.setPosition(choice[0], choice[0])
+                        mode=1
+                        if choice[0]!=0:
+                            self.dual_motors.setPosition(choice[0],choice[0])
+                            mode=0
+
             except IOError as e:         
                 print("error in doPid: "+str(e))
         print "closing Paathing thread"

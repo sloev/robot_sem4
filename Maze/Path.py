@@ -15,7 +15,7 @@ class Path(object):
         Constructor
         '''
         self.path=path
-        self.path.reverse()
+        #self.path.reverse()
         self.cost=self.calculateCost()
         
     def calculateCost(self):       
@@ -27,17 +27,34 @@ class Path(object):
         stack=[]
         lastN=None
         #string=""
-        
-        for n in self.path:
-            if lastN != None:
-                if lastN.x==n.x and lastN.y==n.y:
-                    #string+="%d"%n.d
-                    stack.append([n.d,n.dillemma])
-            else:                      
-                stack.append([n.d,n.dillemma])
-            #string+="\n"
+        cellCounter=0
+#         for n in self.path:
+#             if lastN != None:
+#                 if lastN.x==n.x and lastN.y==n.y:
+#                     #string+="%d"%n.d
+#                     stack.append([n.d,n.dillemma])
+#             else:                      
+#                 stack.append([n.d,n.dillemma])
+#             #string+="\n"
+#             lastN=n
+        firstDillemma=False
+        for i in range(len(self.path)):
+            n=self.path[i]
+            if lastN!=None:
+                if lastN.x!=n.x or lastN.y!=n.y:
+                    if not firstDillemma :
+                        cellCounter+=1  
+                        stack[0]=[n.d,cellCounter]
+                        print cellCounter
+                        if n.dillemma:
+                            firstDillemma=True
+                            print "dillemma"
+                    elif firstDillemma and n.dillemma:
+                        stack.append([n.d,0])
+            else:
+                stack.append([n.d,0])
             lastN=n
-        stack.reverse()
+        #stack.reverse()
         #print string
         return stack
             
