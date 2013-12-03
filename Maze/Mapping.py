@@ -167,7 +167,7 @@ class Mapping():
         
         tmpWalls=self.wallsToGlobalWalls([1,1,0]) 
         cells=self.stepsToCells(steps)+1
-
+        print "cells="+str(cells)
         for i in range(cells):
             tmpWalls=self.wallsToInt(self.wallsToGlobalWalls([1,1,0]))
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
