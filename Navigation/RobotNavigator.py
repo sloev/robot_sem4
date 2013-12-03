@@ -156,7 +156,6 @@ class RobotNavigator():
                     self.Lock.wait(0.001)
                     print "do pid"
                 else:
-                    first=False
                     #print "making choice"
                     choice=self.mapping.getChoice()
                     print choice
@@ -164,7 +163,7 @@ class RobotNavigator():
                         #print "out of mode 2 clearet lock"
                         self.Lock.set()
                     else:
-                        if choice[0]!=3:
+                        if choice[0]!=3 and not first:
                             self.turnThread.checkForTurn(-1)
                         self.turnThread.checkForTurn(choice[1])
                         self.pid.reset()
@@ -174,6 +173,7 @@ class RobotNavigator():
                             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
                             self.dual_motors.setPosition(steps,steps)
                             mode=0
+                    first=False
             except IOError as e:         
                 print("error in doPid: "+str(e))
         print "closing Paathing thread"
