@@ -186,8 +186,8 @@ class RobotNavigator():
                 print "end of sampling section"
                 print walls
                 if(walls==[1, 1, 0]):
-                    self.pid.doPid(sample)
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
+                    self.pid.doPid(sample)
                 else:
                         
                     steps=self.stepCounter.getSteps()
