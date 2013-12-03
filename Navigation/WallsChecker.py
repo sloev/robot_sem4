@@ -5,7 +5,7 @@ Created on Oct 30, 2013
 '''
 import logging
 class WallsChecker():
-    def __init__(self,left,right,front,setPoint,cmMin,cmMax):
+    def __init__(self,left,right,front,cmMin,cmMax,setPoint):
         self.logger=logging.getLogger("robot.wallsChecker")
         self.min=cmMin
         self.max=cmMax
