@@ -58,7 +58,7 @@ class RobotNavigator():
         self.front=2
         setPoint=14.9
         cmMaxPid=35
-        cmMaxWallChecker=25
+        cmMaxWallChecker=28
         cmMin=5
 
 
@@ -155,19 +155,18 @@ class RobotNavigator():
             except IOError as e:         
                 print("error in doPid: "+str(e))
         print "closing Paathing thread"
-        self.Lock.clear()
       
     def doMapping(self):
         print "running mapping thread"
         while not self.Lock.is_set():
             self.Lock.wait(0.001)
             try:
-                'start sampling section'
+                print "start sampling section"
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
                 self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
     
-                'end of sampling section'
+                print "end of sampling section"
                 print walls
                 if(walls==[1, 1, 0]):
                     self.pid.doPid(sample)
@@ -188,7 +187,7 @@ class RobotNavigator():
 
                     if not choice:
                         print "mapped Ok waiting for instructions\n heres the maze:"
-                        print self.mapping.getMaze()     
+                        print self.mapping.getMaze()
                         print "lock cleared in mode 1"
                         self.Lock.set()
                     self.pid.reset()
@@ -199,7 +198,6 @@ class RobotNavigator():
             except IOError as e:         
                 print("error in doPid: "+str(e))
         print "closing mapping thread"
-        self.Lock.clear()
             
     def stop(self):
         self.Lock.set()
@@ -228,6 +226,7 @@ class RobotNavigator():
         else:
             currentPos=self.mapping.getCurrentPosition()
             returner= {'status':"success",'currentPosition':currentPos}
+            self.Lock.clear()
             return json.dumps(returner)
     
     def receivePath(self,params=0):
@@ -235,6 +234,7 @@ class RobotNavigator():
             return json.dumps({'status':"error",'cause':"robot is busy"})
         else:
             self.mapping.receiveStack(params)
+            self.Lock.clear()
             self.stateThread=threading.Thread(target=self.doPathing)
             self.stateThread.daemon = True
             self.stateThread.start()
@@ -242,7 +242,6 @@ class RobotNavigator():
             return json.dumps({'status':"success"})
             
 def main():
-
     robot=RobotNavigator()
 
     print("\

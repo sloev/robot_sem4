@@ -26,12 +26,10 @@ class MazeView(QtGui.QWidget):
             self.modelWidth = self.mazeModel.getWidth()
             self.modelHeight = self.mazeModel.getHeight()
             self.boxsize = 50
-            self.width=self.modelWidth * self.boxsize + 10
-
             if self.width<250:
                 self.boxsize=(250-10)/self.modelWidth
-                self.width=self.modelWidth * self.boxsize + 10
-                self.height=self.modelHeight * self.boxsize + 90          
+            self.width=self.modelWidth * self.boxsize + 10
+            self.height=self.modelHeight * self.boxsize + 90         
                 
             self.setFixedSize(self.width, self.height)
             
