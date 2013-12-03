@@ -155,7 +155,7 @@ class Mapping():
         returnChoice=[0,0]#steps,local direction
         cells=0
         realCells=self.stepsToCells(steps)+1
-
+        print "steps"+str(steps)+" cells="+str(realCells)
         if self.stack:
             choice=self.stack.pop()
             cells=choice[1]

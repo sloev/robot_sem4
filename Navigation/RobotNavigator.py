@@ -173,7 +173,7 @@ class RobotNavigator():
                         if choice[0]!=0:
                             steps=choice[0]-self.stepsPrCell/2
                             self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
-                            self.stepCounter(self.dual_motors.setPosition(steps,steps))
+                            self.stepCounter(self.dual_motors.setPosition(steps+800,steps+800))
                             mode=0
                     first=False
                     #self.stepCounter.resetSteps(-800)
