@@ -140,7 +140,7 @@ class Motor_I2C:
         pass
     
 def main():
-    motor = Motor_I2C(0x60, 0x61)
+    motor = Motor_I2C(0x60, 0x64)
 #    motor.getFullStatus1()
 #    motor.setOTPParam()
 #    motor.resetToDefault()   
