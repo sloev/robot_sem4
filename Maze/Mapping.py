@@ -65,7 +65,7 @@ class Mapping():
             j=len(self.stack)-i-1
             direction=self.stack[j][0]
             steps=self.stack[j][1]
-            self.stack[j]=[direction,self.getLocalDirection(lastS,direction),steps]
+            self.stack[j]=[direction,self.getLocalDirection(lastS,direction),steps*self.stepsPrCell]
             lastS=direction
         print self.stack
         
