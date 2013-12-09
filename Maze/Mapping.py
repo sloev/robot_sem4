@@ -92,9 +92,9 @@ class Mapping():
         cells=(steps*1.0)/(self.stepsPrCell*1.0)
         decimals=cells % 1
         cells=int(cells)
-        if decimals > 0.75 and cells<1:
+        if decimals > 0.68 and cells<1:
             cells+=1
-        elif decimals > 0.75:
+        elif decimals > 0.68:
             cells+=1
         self.logger.info("cells/"+str(cells))
         return cells
