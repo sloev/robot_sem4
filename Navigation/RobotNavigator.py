@@ -214,6 +214,7 @@ class RobotNavigator():
                     self.pid.reset()
                     if walls==[1,1,1]:
                         self.stepCounter.resetSteps(-800)
+                        self.turnThread.checkForTurn(-1)
                     self.stepCounter.resetSteps()
                     self.dual_motors.resetPosition()
             except IOError as e:         
