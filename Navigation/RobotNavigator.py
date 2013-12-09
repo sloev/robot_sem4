@@ -183,13 +183,13 @@ class RobotNavigator():
         while not self.Lock.is_set():
             self.Lock.wait(0.001)
             try:
-                print "start sampling section"
+                #print "start sampling section"
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
                 walls=self.wallChecker.checkWalls(sample)  
                 self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
     
-                print "end of sampling section"
-                print walls
+                #print "end of sampling section"
+                #print walls
                 if(walls==[1, 1, 0]):
                     self.stepCounter(self.dual_motors.setPosition(32767, 32767))
                     self.pid.doPid(sample)
