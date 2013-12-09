@@ -196,7 +196,7 @@ class Mapping():
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
-                self.direction=choice[0][1]
+                self.direction=choice[1]
             else:
                 pass
         else:
