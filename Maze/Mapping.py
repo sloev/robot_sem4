@@ -10,7 +10,7 @@ class Mapping():
     '''
     classdocs
     '''
-    stepsPrCell=6500
+    stepsPrCell=6000
 
     def __init__(self):
         self.mode=0#mapping mode
@@ -192,16 +192,17 @@ class Mapping():
             if self.stack:#still unexplored nodes
                 self.logger.info("180")
                 self.stack.pop()
+
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
-                self.direction=choice[1]
+                self.direction=choice[0][1]
             else:
                 pass
         else:
             if unexploredCells:
                 self.logger.info("exploring")
-                choice=self.makeChoice(unexploredCells)
+                choice=[self.makeChoice(unexploredCells),self.currentPosition]
                 self.stack.append(choice)
                 self.logger.info("stack/"+str(self.stack))
                 returnChoice=choice[3]
@@ -209,11 +210,12 @@ class Mapping():
             elif self.stack:
                 self.logger.info("backtracking")
                 choice=self.stack.pop()
-                choice=self.makeChoice([choice[0]])
+                choice=self.makeChoice([choice[0][0]])
+                self.currentPosition=choice[1]
 
                 self.logger.info("stack/"+str(self.stack))
-                returnChoice=choice[3]
-                self.direction=choice[1]
+                returnChoice=choice[0][3]
+                self.direction=choice[0][1]
             else:
                 print "finnished mapping"
                 #func=self.funcDict[self.direction]
