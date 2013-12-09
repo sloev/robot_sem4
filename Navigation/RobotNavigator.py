@@ -205,10 +205,10 @@ class RobotNavigator():
                     walls=self.wallChecker.checkWalls(sample)  
                     choice = self.mapping.getChoice(steps,walls)
                     self.turnThread.checkForTurn(choice)
+                    print self.mapping.getMaze()
 
                     if not choice:
                         print "mapped Ok waiting for instructions\n heres the maze:"
-                        print self.mapping.getMaze()
                         print "lock cleared in mode 1"
                         self.Lock.set()
                     self.pid.reset()
