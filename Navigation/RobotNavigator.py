@@ -139,7 +139,7 @@ class RobotNavigator():
         first=True
         while not self.Lock.is_set():
             #print "no lock"
-            self.Lock.wait(0.001)
+            self.Lock.wait(0.01)
             try:
                 self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
@@ -181,7 +181,7 @@ class RobotNavigator():
     def doMapping(self):
         print "running mapping thread"
         while not self.Lock.is_set():
-            self.Lock.wait(0.001)
+            self.Lock.wait(0.01)
             try:
                 #print "start sampling section"
                 sample=self.ir_sensors.multiChannelReadCm(sensorChannels,1)
