@@ -205,8 +205,8 @@ class Mapping():
                 choice=[self.makeChoice(unexploredCells),self.currentPosition]
                 self.stack.append(choice)
                 self.logger.info("stack/"+str(self.stack))
-                returnChoice=choice[3]
-                self.direction=choice[1]
+                returnChoice=choice[0][3]
+                self.direction=choice[0][1]
             elif self.stack:
                 self.logger.info("backtracking")
                 choice=self.stack.pop()
