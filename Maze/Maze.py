@@ -43,7 +43,7 @@ class Maze():
         string=""
         for y in range(self.getHeight()):
             for x in range(self.getWidth()):
-                string+=str(self.get(x, y))+"      \t"
+                string+=str(self.get(x, y))+" \t \t"
             string+="\n"
         return string
     
