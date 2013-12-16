@@ -31,7 +31,7 @@ currentByte           = 0x92
 class Motor_I2C:
     def __init__(self, devAddress):
         self.devAddress=devAddress
-        self.bus = smbus.SMBus(1)
+        #self.bus = smbus.SMBus(1)
 
             
         '''Status of circuit and stepper motor'''

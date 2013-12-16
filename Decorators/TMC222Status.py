@@ -23,7 +23,7 @@ class TMC222Status(object):
 
     '''Constructor'''    
     def __init__(self, f):
-        self.bus = smbus.SMBus(1)
+        #self.bus = smbus.SMBus(1)
         print "\n"
         print "Daniel Machon's awesome decorator initialized!"
         self.f = f
