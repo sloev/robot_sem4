@@ -3,14 +3,11 @@ Created on Nov 1, 2013
 
 @author: johannes
 '''
-import select
 import random
 import time
 import SocketServer
-import socket
 import json
 import threading
-import sys, errno
 from Network.Bonjour import Bonjour
 from Maze.Maze import Maze
 
