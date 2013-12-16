@@ -3,14 +3,11 @@ Created on Nov 1, 2013
 
 @author: johannes
 '''
-import select
 import random
 import time
 import SocketServer
-import socket
 import json
 import threading
-import sys, errno
 from Network.Bonjour import Bonjour
 from Maze.Maze import Maze
 
@@ -56,15 +53,18 @@ class ZeroconfTcpServer():
                         #data=self.request.recv(1024)      try:
                         data = json.loads(self.request.recv(1024).strip())
                         if data!=0:
-                            func=self.server.eventHandlers.get(data.get("message"))
+                            funcName=data.get("message")
+                            print funcName
+                            func=self.server.eventHandlers.get(funcName)
                             if func!=None:
                                 params=data.get("params")
-                                print str(params)
+                                #print str(params)
                                 response=func(params)
-                                print("sending")
+                                print("tcp sending sending"+funcName)
                                 self.request.sendall(response)
                 except Exception:
                     pass
+                print "finnished handling tcp request"
 
         while True:
             try:

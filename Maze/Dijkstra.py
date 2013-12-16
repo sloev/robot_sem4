@@ -37,7 +37,7 @@ class Graph():
         self.distances=set()
         self.straightCost=1
         self.cornerCost=3
-        self.makeWAR()
+        self.makeGraph()
         
     def __str__(self):
         string=""
@@ -54,7 +54,7 @@ class Graph():
             string=string+"\n"
         return string
 
-    def makeWAR(self):          
+    def makeGraph(self):          
         for y in range(self.mazeModel.getHeight()):
             for x in range(self.mazeModel.getWidth()):  
                 walls=self.mazeModel.get(x,y)  

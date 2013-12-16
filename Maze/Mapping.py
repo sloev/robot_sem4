@@ -59,16 +59,8 @@ class Mapping():
     def receiveStack(self,path):        
         self.mode=1#path finding go to mode
         self.stack=path#self.pathToStack()
-        lastS=self.direction
-            
-        for i in range(len(self.stack)):
-            j=len(self.stack)-i-1
-            item=self.stack[j]
-            self.stack[j]=[item,self.getLocalDirection(lastS,item)]
-            lastS=item
         print self.stack
         
-
     def getLocalDirection(self,lastS,s):
         #print lastS
         left=lastS-1
@@ -83,14 +75,16 @@ class Mapping():
             direction180+=4        
         
         if left==s:
-            return 4
-        elif right==s:
             return 2
+        elif right==s:
+            return 4
         elif direction180==s:
             return 3
         return 1
     
-    def currentPosition(self):
+    def getCurrentPosition(self):
+        print "mapping getCurrentPosition"
+        print"currentPos="+str(self.currentPosition)
         return self.currentPosition
     
     def stepsToCells(self,steps):
@@ -98,14 +92,14 @@ class Mapping():
         cells=(steps*1.0)/(self.stepsPrCell*1.0)
         decimals=cells % 1
         cells=int(cells)
-        if decimals > 0.75 and cells<1:
+        if decimals > 0.68 and cells<1:
             cells+=1
-        elif decimals > 0.75:
+        elif decimals > 0.68:
             cells+=1
         self.logger.info("cells/"+str(cells))
         return cells
     
-    def wallsToInt(self,walls):
+    def wallsToGlobalWalls(self,walls):
         north=0
         east=0
         south=0
@@ -137,6 +131,10 @@ class Mapping():
                 south=walls[0]
                 north=walls[1]
         return [north,east,south,west]
+    
+    def wallsToInt(self,walls):
+        value=(((walls[0]<<3) | (walls[1]<<2)) | (walls[2]<<1)) | (walls[3])        
+        return value
                 
     def getChoice(self,steps=None,walls=None):
         if not self.mode:
@@ -145,34 +143,21 @@ class Mapping():
             return self.gotoChoice()
         
     def gotoChoice(self):
-        cells=1
         returnChoice=[0,0]#steps,local direction
+        cells=0
         if self.stack:
             choice=self.stack.pop()
-#            self.currentPosition=func(self.currentPosition)
-            lastChoice=choice[1]
-            while True:
-                if len(self.stack)>0 and self.stack[len(self.stack)-1][1]==1:
-                    returnChoice[0]+=self.stepsPrCell
-                    choice=self.stack.pop()
-                    cells+=1
-                else:
-                    choice[1]=lastChoice
-                    break
-            returnChoice[1]=choice[1]
-            self.direction=choice[0]
-            #self.currentPosition=func(self.currentPosition)
-        else:
-            pass
-
+            cells=choice[1]
+            returnChoice[0]=cells*self.stepsPrCell
+            calcChoice=self.makeChoice([choice[0]])
+            returnChoice[1]=calcChoice[3]
+            self.direction=calcChoice[1]
+            self.currentPosition=[choice[2],choice[3]]
         print(
               "dir="+str(self.direction)
-              +"\tpos"+str(self.currentPosition)
+              +"\tpoos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
               )
-        if returnChoice!=[0,0]:
-            for i in range(cells):
-                self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         return returnChoice
 
     def mappingChoice(self,steps,walls):
@@ -180,21 +165,21 @@ class Mapping():
 
         func=self.funcDict[self.direction]
         
-        tmpWalls=self.wallsToInt([1,1,0]) 
+        tmpWalls=self.wallsToGlobalWalls([1,1,0]) 
         cells=self.stepsToCells(steps)+1
-
+        print "cells="+str(cells)
         for i in range(cells):
-            tmpWalls=self.wallsToInt([1,1,0]) 
+            tmpWalls=self.wallsToInt(self.wallsToGlobalWalls([1,1,0]))
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
             self.currentPosition=func(self.currentPosition)
          
         tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
-        globalWalls=self.wallsToInt(walls)            
+        globalWalls=self.wallsToGlobalWalls(walls)            
 
         if not tmp:
-            self.maze.set(self.currentPosition[0], self.currentPosition[1], globalWalls)
+            self.maze.set(self.currentPosition[0], self.currentPosition[1], self.wallsToInt(globalWalls))
         #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
         print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
 
@@ -207,6 +192,7 @@ class Mapping():
             if self.stack:#still unexplored nodes
                 self.logger.info("180")
                 self.stack.pop()
+
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3      
@@ -216,21 +202,24 @@ class Mapping():
         else:
             if unexploredCells:
                 self.logger.info("exploring")
-                choice=self.makeChoice(unexploredCells)
+                choice=[self.makeChoice(unexploredCells),self.currentPosition]
                 self.stack.append(choice)
                 self.logger.info("stack/"+str(self.stack))
-                returnChoice=choice[3]
-                self.direction=choice[1]
+                returnChoice=choice[0][3]
+                self.direction=choice[0][1]
             elif self.stack:
                 self.logger.info("backtracking")
                 choice=self.stack.pop()
-                choice=self.makeChoice([choice[0]])
+                choice=self.makeChoice([choice[0][0]])
+                self.currentPosition=choice[1]
 
                 self.logger.info("stack/"+str(self.stack))
-                returnChoice=choice[3]
-                self.direction=choice[1]
+                returnChoice=choice[0][3]
+                self.direction=choice[0][1]
             else:
                 print "finnished mapping"
+                #func=self.funcDict[self.direction]
+                #self.currentPosition=func(self.currentPosition)
                 return 0
         print(
               "dir="+str(self.direction)

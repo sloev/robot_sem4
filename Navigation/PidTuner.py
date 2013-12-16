@@ -234,7 +234,7 @@ def main():
     try:
         pidtuner.printGains()
         while True:
-            time.sleep(0.001)
+            time.sleep(0.01)
     
             # get keyboard input, returns -1 if none available
             while sys.stdin in select.select([sys.stdin], [], [], 0)[0]:

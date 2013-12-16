@@ -15,7 +15,7 @@ class Path(object):
         Constructor
         '''
         self.path=path
-        self.path.reverse()
+        #self.path.reverse()
         self.cost=self.calculateCost()
         
     def calculateCost(self):       
@@ -27,19 +27,34 @@ class Path(object):
         stack=[]
         lastN=None
         #string=""
-        
-        for n in self.path:
-            if lastN != None:
-                if lastN.x==n.x and lastN.y==n.y:
-                    #string+="%d"%n.d
-                    stack.append(n.d)
-            else:                      
-                #string+="%d"%n.d
-                pass
-                stack.append(n.d)
-            #string+="\n"
+        cellCounter=0
+#         for n in self.path:
+#             if lastN != None:
+#                 if lastN.x==n.x and lastN.y==n.y:
+#                     #string+="%d"%n.d
+#                     stack.append([n.d,n.dillemma])
+#             else:                      
+#                 stack.append([n.d,n.dillemma])
+#             #string+="\n"
+#             lastN=n
+        firstDillemma=False
+        for i in range(len(self.path)):
+            n=self.path[i]
+            if lastN!=None:
+                if lastN.x!=n.x or lastN.y!=n.y:
+                    if not firstDillemma :
+                        cellCounter+=1  
+                        stack[0]=[n.d,cellCounter,stack[0][2],stack[0][3]]
+                        print cellCounter
+                        if n.dillemma:
+                            firstDillemma=True
+                            print "dillemma"
+                    elif firstDillemma and n.dillemma:
+                        stack.append([n.d,0,n.x,n.y])
+            else:
+                stack.append([n.d,0,n.x,n.y])
             lastN=n
-        stack.reverse()
+        #stack.reverse()
         #print string
         return stack
             
@@ -47,6 +62,7 @@ class Path(object):
         string="[\tpath\t]\n"
         string+="cost=%d" % self.cost+"\n"
         for a in self.path:
+            string+="["+str(a.x)+","+str(a.y)+"]\t"
             string+=str(a)+"\tGcost =\t"+str(a.cost)+"\t"
             if a.dillemma:
                 string+="dillemma"

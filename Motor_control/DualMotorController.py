@@ -120,7 +120,7 @@ class DualMotorController:
         
         positionLeft = actPosLeft + incLeftPos
         positionRight = actPosRight + incRightPos
-        
+
         while True:
             try:
                 self.motorLeft.setPosition(positionLeft)
@@ -178,50 +178,16 @@ class DualMotorController:
                 pass
 def main():
 
-    motors=DualMotorController(0x60,0x61)
-
-    times=1
-    if(len(sys.argv)>2):
-        speed=int(sys.argv[1])
-        times=int(sys.argv[2])
-        print ("times ="+str(times)  +"speed"+str(speed))      
-
+    motors=DualMotorController(0x61,0x64)
+    motors.hardStop()
+    motors.getFullStatus1()
     motors.setOtpParam()
-    #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-    tmp=motors.getFullStatus2()
-    #print("busy="+motors.isBusy(tmp))
-    motors.setMotorParams(1, 1, speed, speed)
-    motors.runInit()
-    time.sleep(5)
-    for i in range(0,times):
-        print("turning 180")
-        motors.turn180(speed)
-        time.sleep(4)
-        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-        time.sleep(0.1)
-        
-    for i in range(0,times):
-        print("turning left")
-        motors.turn90(1,speed)
-        time.sleep(4)
-        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-        time.sleep(0.1)
-
-    for i in range(0,times):
-        print("turning right")
-        motors.turn90(0,speed)
-        time.sleep(4)
-        #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-        time.sleep(0.1)
-    motors.setPosition(12000, 12000)
-    time.sleep(10)
-        
-   # print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-
-   # motors.turn90(0, 5)
-    #time.sleep(6)
-    #print(str(motors.getFullStatus1()[0][:])+"\n"+str(motors.getFullStatus1()[1][:]))
-    #motors.setPosition(2000, 2000)
+    motors.setMotorParams(0, 1, 1, 1)
+    motors.resetPosition()
+    motors.setPosition(6000, 6000)
+    while(motors.isBusy()):
+        time.sleep(0.01)
+    print"finnished"
 
 if __name__ == '__main__':
     main()

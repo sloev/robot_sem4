@@ -56,13 +56,17 @@ class TurnThread():
 
         self.logger.info("180")
         self.dual_motors.softStop()
+        while(self.dual_motors.isBusy()):
+            time.sleep(0.1)
+            print "busy"
         self.dual_motors.turn180(2) 
         while(self.dual_motors.isBusy()):
             time.sleep(0.1)
+            print "turning 180"
     
     def goStraight(self):
         self.logger.info("straight")
-        self.dual_motors.setPosition(self.leftExtra+(self.stepsPrCell/3)*2,(self.stepsPrCell/3)*2)
+        self.dual_motors.setPosition((self.stepsPrCell/3)*2,(self.stepsPrCell/3)*2)
         while(self.dual_motors.isBusy()):
             self.logger.info("straight")
             time.sleep(0.1)
@@ -71,11 +75,11 @@ class TurnThread():
     def goInto(self):
         self.logger.info("gointo")
         self.dual_motors.setMotorParams(self.left, self.right, 1,1)
-        #self.dual_motors.softStop()
-        self.dual_motors.setPosition(self.leftExtra+(self.stepsPrCell/2)+500,(self.stepsPrCell/2)+500)
+
+
+        self.dual_motors.setPosition((self.stepsPrCell/2)+600,(self.stepsPrCell/2)+600)
 
         while(self.dual_motors.isBusy()):
-            print 'goInto'
             self.logger.info("gointo")
             time.sleep(0.1)
 
@@ -92,7 +96,7 @@ class TurnThread():
         print "Driving out of turn"   
         self.dual_motors.setMotorParams(self.left, self.right, 1, 1)
         self.dual_motors.setAccelerations(self.left, self.right, 1)
-        self.dual_motors.setPosition(self.leftExtra+(self.stepsPrCell/2)+650,(self.stepsPrCell/2)+650)
+        self.dual_motors.setPosition((self.stepsPrCell/2)+650,(self.stepsPrCell/2)+650)
         
         while(self.dual_motors.isBusy()):
             self.logger.info("turning")
