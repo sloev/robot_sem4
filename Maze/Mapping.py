@@ -212,11 +212,11 @@ class Mapping():
                 self.logger.info("backtracking")
                 choice=self.stack.pop()
                 self.currentPosition=choice[1]
-                choice=self.makeChoice([choice[0]])
+                choice=self.makeChoice([choice[0][0]])
 
                 self.logger.info("stack/"+str(self.stack))
-                returnChoice=choice[3]
-                self.direction=choice[1]
+                returnChoice=choice[2]
+                self.direction=choice[0]
             else:
                 print "finnished mapping"
                 #func=self.funcDict[self.direction]
