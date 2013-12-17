@@ -179,7 +179,7 @@ class DualMotorController:
 def main(argv):
     steps=6000
     try:
-        steps=int(argv[0])
+        steps=int(argv[1])
     finally:
         pass
     
