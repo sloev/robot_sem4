@@ -176,18 +176,23 @@ class DualMotorController:
                 break
             except IOError:
                 pass
-def main():
-
+def main(argv):
+    steps=6000
+    try:
+        steps=int(argv[1])
+    finally:
+        pass
+    
     motors=DualMotorController(0x62,0x64)
     motors.hardStop()
     motors.getFullStatus1()
     motors.setOtpParam()
     motors.setMotorParams(0, 1, 1, 1)
     motors.resetPosition()
-    motors.setPosition(6000, 6000)
+    motors.setPosition(steps, steps)
     while(motors.isBusy()):
         time.sleep(0.01)
     print"finnished"
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
