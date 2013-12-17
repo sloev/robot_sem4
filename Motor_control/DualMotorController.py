@@ -179,7 +179,7 @@ class DualMotorController:
 def main(argv):
     steps=6000
     try:
-        steps=int(argv[1])
+        steps=int(argv[0])
     finally:
         pass
     
@@ -195,4 +195,4 @@ def main(argv):
     print"finnished"
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main(sys.argv)
