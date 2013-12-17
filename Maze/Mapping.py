@@ -217,6 +217,7 @@ class Mapping():
                 unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
                 if not unex:
                     choice=self.stack.pop()
+                    print "stack current pos ="+str(choice[1])
                 #self.currentPosition=choice[1]
                 choice=self.makeChoice([choice[0][0]])
 
