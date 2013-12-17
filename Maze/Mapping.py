@@ -191,7 +191,10 @@ class Mapping():
         if len(missingWalls)==1:#180
             if self.stack:#still unexplored nodes
                 self.logger.info("180")
-                tmp=self.stack.pop()
+                stackChoice=self.stack[len(self.stack)-1]
+                unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
+                if not unex:
+                    tmp=self.stack.pop()
 
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
@@ -210,8 +213,11 @@ class Mapping():
                 self.direction=choice[0][1]
             elif self.stack:
                 self.logger.info("backtracking")
-                choice=self.stack.pop()
-                self.currentPosition=choice[1]
+                stackChoice=self.stack[len(self.stack)-1]
+                unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
+                if not unex:
+                    choice=self.stack.pop()
+                #self.currentPosition=choice[1]
                 choice=self.makeChoice([choice[0][0]])
 
                 self.logger.info("stack/"+str(self.stack))
