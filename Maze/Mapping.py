@@ -197,7 +197,9 @@ class Mapping():
                     pass#tmp=self.stack.pop()
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
-                returnChoice=3     
+                returnChoice=3
+                print "stack current pos ="+str(stackChoice[1])
+
                 #self.currentPosition=tmp[1] 
                 self.direction=choice[1]
             else:
