@@ -239,6 +239,7 @@ class Mapping():
               "dir="+str(self.direction)
               +"\tpos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
+              +"backtracking"+str(self.isBacktracking)
               )
         self.logger.info("returnChoice/"+str(returnChoice))
         self.logger.info("currentpos/"+str(self.currentPosition))
