@@ -199,7 +199,7 @@ class Mapping():
                 returnChoice=3
                 print "stack current pos ="+str(stackChoice[1])
 
-                self.currentPosition=tmp[1] 
+                self.currentPosition=stackChoice[1] 
                 self.direction=choice[1]
             else:
                 pass
