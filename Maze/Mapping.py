@@ -30,6 +30,8 @@ class Mapping():
         self.startPosition =[0,0]
         self.currentPosition=self.startPosition#x,y
         
+        self.isBacktracking=False
+        
         self.lastWas180=False
         self.lastPosition=self.currentPosition
         self.funcDict={
@@ -168,24 +170,25 @@ class Mapping():
         tmpWalls=self.wallsToGlobalWalls([1,1,0]) 
         cells=self.stepsToCells(steps)+1
         print "cells="+str(cells)
-        for i in range(cells):
-            tmpWalls=self.wallsToInt(self.wallsToGlobalWalls([1,1,0]))
-            tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
-            if not tmp:
-                self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
-            self.currentPosition=func(self.currentPosition)
-         
-        tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
         globalWalls=self.wallsToGlobalWalls(walls)            
-
-        if not tmp:
-            self.maze.set(self.currentPosition[0], self.currentPosition[1], self.wallsToInt(globalWalls))
-        #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
-        print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
-
+        if not self.isBacktracking:
+            for i in range(cells):
+                tmpWalls=self.wallsToInt(self.wallsToGlobalWalls([1,1,0]))
+                tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
+                if not tmp:
+                    self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
+                self.currentPosition=func(self.currentPosition)
+             
+            tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
+    
+            if not tmp:
+                self.maze.set(self.currentPosition[0], self.currentPosition[1], self.wallsToInt(globalWalls))
+            #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
+            print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
+       
         missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
         unexploredCells=self.findUnexploredCells(self.currentPosition,missingWalls)
-        
+            
         returnChoice=0
 
         if len(missingWalls)==1:#180
@@ -201,6 +204,7 @@ class Mapping():
 
                 self.currentPosition=stackChoice[1] 
                 self.direction=choice[1]
+                self.isBacktracking=True
             else:
                 pass
         else:
@@ -211,6 +215,7 @@ class Mapping():
                 self.logger.info("stack/"+str(self.stack))
                 returnChoice=choice[0][3]
                 self.direction=choice[0][1]
+                self.isBacktracking=False
             elif self.stack:
                 self.logger.info("backtracking")
                 stackChoice=self.stack[len(self.stack)-1]
@@ -218,12 +223,13 @@ class Mapping():
                 if not unex:
                     choice=self.stack.pop()
                     print "stack current pos ="+str(choice[1])
-                #self.currentPosition=choice[1]
+                    self.currentPosition=choice[1]
                 choice=self.makeChoice([choice[0][0]])
 
                 self.logger.info("stack/"+str(self.stack))
                 returnChoice=choice[3]
                 self.direction=choice[1]
+                self.isBacktracking=True
             else:
                 print "finnished mapping"
                 #func=self.funcDict[self.direction]
