@@ -242,8 +242,6 @@ class Mapping():
                 self.isBacktracking=True
             else:
                 print "finnished mapping"
-                #func=self.funcDict[self.direction]
-                #self.currentPosition=func(self.currentPosition)
                 return 0
         print(
               "dir="+str(self.direction)
