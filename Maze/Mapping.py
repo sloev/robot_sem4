@@ -240,6 +240,14 @@ class Mapping():
                 returnChoice=choice[3]
                 self.direction=choice[1]
                 self.isBacktracking=True
+                
+                stackUnexplored=False
+                for s in self.stack:
+                    tmp=self.backtrackFindUnexploredCells(s[1])
+                    if len(tmp)>0:
+                        stackUnexplored=True
+                if not stackUnexplored:
+                    self.stack=[]
             else:
                 print "finnished mapping"
                 return 0
@@ -297,12 +305,12 @@ class Mapping():
         if back < 0:
             back+=4
             #print "direction="+str(self.direction)+"back before="+str(back)+" back after"+str(back2)
-        if self.direction in posibilities:
-            return [back,self.direction,1,1] # som i [til brug, til stack, til turnthread]
-        elif right in posibilities:
+        if right in posibilities:
             return [left,right,2,4]
         elif left in posibilities:
             return [right,left,4,2]
+        elif self.direction in posibilities:
+            return [back,self.direction,1,1] # som i [til brug, til stack, til turnthread]
         lol=[self.direction,back,1,3]
         #self.stack.append(lol)
         #self.stack.append(lol)
