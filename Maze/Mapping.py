@@ -196,9 +196,10 @@ class Mapping():
                 self.logger.info("180")
                 stackChoice=self.stack[len(self.stack)-1]
                 unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
+                self.logger.info("stack/before/"+str(self.stack))
                 if not unex:
                     choice=self.stack.pop()
-                self.logger.info("stack/"+str(self.stack))
+                self.logger.info("stack/after/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3
                 print "stack current pos ="+str(stackChoice[1])
@@ -213,8 +214,9 @@ class Mapping():
                 print "exploring"
                 self.logger.info("exploring")
                 choice=[self.makeChoice(unexploredCells),self.currentPosition]
+                self.logger.info("stack/before/"+str(self.stack))
                 self.stack.append(choice)
-                self.logger.info("stack/"+str(self.stack))
+                self.logger.info("stack/after/"+str(self.stack))
                 returnChoice=choice[0][3]
                 self.direction=choice[0][1]
                 self.isBacktracking=False
@@ -223,13 +225,14 @@ class Mapping():
                 self.logger.info("backtracking")
                 stackChoice=self.stack[len(self.stack)-1]
                 unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
+                self.logger.info("stack/before/"+str(self.stack))
                 if not unex:
                     choice=self.stack.pop()
                     print "stack current pos ="+str(choice[1])
                     self.currentPosition=choice[1]
                 choice=self.makeChoice([choice[0][0]])
 
-                self.logger.info("stack/"+str(self.stack))
+                self.logger.info("stack/after/"+str(self.stack))
                 returnChoice=choice[3]
                 self.direction=choice[1]
                 self.isBacktracking=True
@@ -242,7 +245,7 @@ class Mapping():
               "dir="+str(self.direction)
               +"\tpos"+str(self.currentPosition)
               +"\tchoice"+str(returnChoice)
-              +"backtracking"+str(self.isBacktracking)
+              +"\tbacktracking"+str(self.isBacktracking)
               )
         self.logger.info("returnChoice/"+str(returnChoice))
         self.logger.info("currentpos/"+str(self.currentPosition))
