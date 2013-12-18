@@ -196,7 +196,8 @@ class Mapping():
                 self.logger.info("180")
                 stackChoice=self.stack[len(self.stack)-1]
                 unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
- 
+                if not unex:
+                    choice=self.stack.pop()
                 self.logger.info("stack/"+str(self.stack))
                 choice=self.makeChoice(missingWalls)
                 returnChoice=3
