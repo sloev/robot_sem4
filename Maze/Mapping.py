@@ -224,7 +224,7 @@ class Mapping():
                 print "backtracking"
                 self.logger.info("mode/backtracking")
                 choice=self.stack[len(self.stack)-1]
-                unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
+                unex=self.findUnexploredCells(choice[1],[0,0,0,0])
                 self.logger.info("stack/before/"+str(self.stack))
                 if not unex:
                     self.stack.pop()
