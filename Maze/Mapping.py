@@ -210,6 +210,7 @@ class Mapping():
                 pass
         else:
             if unexploredCells:
+                print "exploring"
                 self.logger.info("exploring")
                 choice=[self.makeChoice(unexploredCells),self.currentPosition]
                 self.stack.append(choice)
@@ -218,6 +219,7 @@ class Mapping():
                 self.direction=choice[0][1]
                 self.isBacktracking=False
             elif self.stack:
+                print "backtracking"
                 self.logger.info("backtracking")
                 stackChoice=self.stack[len(self.stack)-1]
                 unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
