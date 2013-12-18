@@ -185,17 +185,20 @@ class Mapping():
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], self.wallsToInt(globalWalls))
             #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
             print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
-       
+                        
+        self.logger.info("globalWalls/"+str(globalWalls))
         missingWalls=self.findMissingWalls(self.currentPosition,globalWalls)
+        self.logger.info("missingGlobalWalls/"+str(missingWalls))
         unexploredCells=self.findUnexploredCells(self.currentPosition,missingWalls)
-            
+        self.logger.info("unexploredCells/"+str(unexploredCells))
+
         returnChoice=0
 
         if len(missingWalls)==1:#180
             if self.stack:#still unexplored nodes
                 self.logger.info("mode/180")
                 stackChoice=self.stack[len(self.stack)-1]
-                unex=self.findUnexploredCells(stackChoice[1],[0,0,0,0])
+                unex=self.backtrackFindUnexploredCells(stackChoice[1])
                 self.logger.info("stack/before/"+str(self.stack))
                 if not unex:
                     choice=self.stack.pop()
@@ -224,12 +227,13 @@ class Mapping():
                 print "backtracking"
                 self.logger.info("mode/backtracking")
                 choice=self.stack[len(self.stack)-1]
-                unex=self.findUnexploredCells(choice[1],[0,0,0,0])
+                unex=self.backtrackFindUnexploredCells(choice[1])
                 self.logger.info("stack/before/"+str(self.stack))
                 if not unex:
                     self.stack.pop()
-                    print "stack current pos ="+str(choice[1])
-                    self.currentPosition=choice[1]
+                    print"popped"
+                print "stack current pos ="+str(choice[1])
+                self.currentPosition=choice[1]
                 choice=self.makeChoice([choice[0][0]])
 
                 self.logger.info("stack/after/"+str(self.stack))
@@ -267,6 +271,17 @@ class Mapping():
         for d in missingWalls:
             xy=self.funcDict[d](pos)
             if xy[0]>=0 and xy[1]>=0:
+                tmp=self.maze.get(xy[0], xy[1])
+                if not tmp:
+                    posibilities.append(d)
+        return posibilities
+
+    def backtrackFindUnexploredCells(self,pos):
+        posibilities=[]
+        walls=tmp=self.maze.get(pos[0], pos[1])
+        for d in range(4):
+            if not (walls &(1<<(3-d))):
+                xy=self.funcDict[d](pos)
                 tmp=self.maze.get(xy[0], xy[1])
                 if not tmp:
                     posibilities.append(d)
