@@ -92,7 +92,7 @@ class RobotNavigator():
                 #self.ir_sensors.setConfigurationRegister(0x00,0x7F)
         
                 'motors'
-                self.dual_motors=DualMotorController(0x64,0x60)
+                self.dual_motors=DualMotorController(0x61,0x60)
                 self.dual_motors.hardStop()
                 self.dual_motors.getFullStatus1()
                 self.dual_motors.setOtpParam()
