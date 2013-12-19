@@ -178,12 +178,16 @@ class DualMotorController:
                 pass
 def main(argv):
     steps=6000
+    leftadd=100
+    rightadd=150
     try:
         steps=int(argv[1])
+        leftadd=int(argv[2])
+        rightadd=int(argv[3])
     finally:
         pass
     
-    motors=DualMotorController(0x62,0x64)
+    motors=DualMotorController(leftadd,rightadd)
     motors.hardStop()
     motors.getFullStatus1()
     motors.setOtpParam()
