@@ -19,8 +19,8 @@ class DualMotorController:
     def __init__(self, add1, add2):
         self.logger = logging.getLogger('robot.dualMotors')
 
-        self.turn90Steps=1270
-        self.turn180Steps=2540
+        self.turn90Steps=1370
+        self.turn180Steps=2640
         
         self.logger.info("Initializing DualMotorController")
         self.motorLeft = Motor_I2C(add1)
