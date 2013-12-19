@@ -42,7 +42,7 @@ class MainGui(QtGui.QMainWindow):
         fileMenu = menubar.addMenu('&File')
         fileMenu.addAction(closeAction)
     
-        self.setGeometry(300,300,300,50) 
+        self.setGeometry(20,320,300,50) 
         self.setWindowTitle('LUL') 
         self.browser.addClientEventHandler(self.mitSignal.emit)  
         
