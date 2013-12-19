@@ -184,19 +184,17 @@ def main(argv):
         steps=int(argv[1])
         leftadd=int(argv[2])
         rightadd=int(argv[3])
-    finally:
-        pass
-    
-    motors=DualMotorController(0x60,0x62)
-    motors.hardStop()
-    motors.getFullStatus1()
-    motors.setOtpParam()
-    motors.setMotorParams(0, 1, 1, 1)
-    motors.resetPosition()
-    motors.setPosition(steps, steps)
-    while(motors.isBusy()):
-        time.sleep(0.01)
-    print"finnished"
 
+        motors=DualMotorController(leftadd,rightadd)
+        motors.hardStop()
+        motors.getFullStatus1()
+        motors.setOtpParam()
+        motors.setMotorParams(0, 1, 1, 1)
+        motors.resetPosition()
+        motors.setPosition(steps, steps)
+        while(motors.isBusy()):
+            time.sleep(0.01)
+    finally:
+        print"finnished"
 if __name__ == '__main__':
     main(sys.argv)
