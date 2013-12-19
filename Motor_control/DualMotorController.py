@@ -191,6 +191,7 @@ def main(argv):
         motors.setOtpParam()
         motors.setMotorParams(0, 1, 1, 1)
         motors.resetPosition()
+        motors.setAccelerations(0, 1, 1)
         motors.setPosition(steps, steps)
         while(motors.isBusy()):
             time.sleep(0.01)
