@@ -178,12 +178,11 @@ class Mapping():
                 if not tmp:
                     self.maze.set(self.currentPosition[0], self.currentPosition[1], tmpWalls)
                 self.currentPosition=func(self.currentPosition)
-             
+                
             tmp=self.maze.get(self.currentPosition[0], self.currentPosition[1])
-    
+            globalWalls=self.wallsToGlobalWalls(walls)            
             if not tmp:
                 self.maze.set(self.currentPosition[0], self.currentPosition[1], self.wallsToInt(globalWalls))
-            #self.currentPosition=self.funcDict[self.direction](self.currentPosition)
             print "after incrementation current pos="+str(self.currentPosition)+" dir="+str(self.direction)
                         
         self.logger.info("globalWalls/"+str(globalWalls))
