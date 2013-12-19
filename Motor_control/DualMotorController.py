@@ -187,7 +187,7 @@ def main(argv):
     finally:
         pass
     
-    motors=DualMotorController(leftadd,rightadd)
+    motors=DualMotorController(0x60,0x61)
     motors.hardStop()
     motors.getFullStatus1()
     motors.setOtpParam()
