@@ -240,15 +240,19 @@ class Mapping():
                 self.direction=choice[1]
                 self.isBacktracking=True
                 
+                stackUnexplored=False
                 for i in range(len(self.stack)-1):
                     j=(len(self.stack)-1)-i
                     if j<0:
                         j=0
                     tmp=self.backtrackFindUnexploredCells(self.stack[j][1])
                     if len(tmp)<1:
-                        self.stack.pop()
+                        pass
                     else:
+                        stackUnexplored=True
                         break
+                if not stackUnexplored:
+                    self.stack=[]
             else:
                 print "finnished mapping"
                 return 0
